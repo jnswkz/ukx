@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>UKX - Login</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;500;600&family=Inter:wght@700&family=Jaro&family=Jaldi:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Page Background -->
+    <div class="login-bg" data-node-id="217:692">
+        <img src="https://www.figma.com/api/mcp/asset/d9aa7ae1-dc87-4303-bd60-e65b0ccfc61f" alt="" class="login-bg-img" />
+    </div>
+    
+    <!-- Login Page Container -->
+    <div class="login-page" data-node-id="188:641">
+        <!-- Login Form -->
+        <div class="login-box" data-node-id="277:858">
+            <h1 class="login-box-title" data-node-id="277:860">Login</h1>
+            <p class="login-box-subtitle" data-node-id="277:861">
+                Dont have an account? <a href="#" id="signupLink" class="signup-link">Sign up</a>
+            </p>
+            
+            <!-- Social Login Buttons -->
+            <button class="social-login-btn facebook-login" id="facebookLoginBtn" data-node-id="277:888">
+                <img src="https://www.figma.com/api/mcp/asset/6ba3d791-d85d-42d7-b66e-81003bf65e6f" alt="Facebook" class="social-icon" />
+                <span>Login with facebook</span>
+            </button>
+            
+            <button class="social-login-btn google-login" id="googleLoginBtn" data-node-id="277:893">
+                <img src="https://www.figma.com/api/mcp/asset/756e789b-d6e1-4ba1-841c-054d70d5116a" alt="Google" class="social-icon" />
+                <span>Login with Google</span>
+            </button>
+            
+            <!-- OR Divider -->
+            <div class="login-divider" data-node-id="277:866">
+                <span class="divider-line"></span>
+                <span class="divider-text">OR</span>
+                <span class="divider-line"></span>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="login-form-figma">
+                <div class="form-group-figma">
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-input-figma" 
+                        placeholder="Your email"
+                        required
+                        data-node-id="277:868"
+                    >
+                </div>
+                
+                <div class="form-group-figma">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input-figma" 
+                        placeholder="Your password"
+                        required
+                        data-node-id="277:874"
+                    >
+                </div>
+                
+                <a href="#" id="forgotPasswordLink" class="forgot-password-link" data-node-id="277:876">
+                    Forgot password
+                </a>
+                
+                <button type="submit" class="login-submit-btn" data-node-id="277:871">
+                    LOGIN
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script src="../js/login.js"></script>
+</body>
+</html>

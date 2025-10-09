@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>UKX - Sign Up</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;500;600&family=Inter:wght@700&family=Jaro&family=Jaldi:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Signup Page Background -->
+    <div class="signup-bg" data-node-id="223:693">
+        <img src="https://www.figma.com/api/mcp/asset/fd154b3b-21b9-4ba2-905e-f317dcfe6cb3" alt="" class="signup-bg-img" />
+    </div>
+    
+    <!-- Signup Page Container -->
+    <div class="signup-page" data-node-id="223:692">
+        <!-- Signup Form -->
+        <div class="signup-box" data-node-id="223:753">
+            <h1 class="signup-box-title" data-node-id="I223:723;195:641">Register</h1>
+            <p class="signup-box-subtitle" data-node-id="I223:723;196:642">
+                Already have an account? <a href="login.html" id="signinLink" class="signin-link">Sign in</a>
+            </p>
+            
+            <!-- Signup Form -->
+            <form id="signupForm" class="signup-form-figma">
+                <div class="name-fields-row">
+                    <div class="form-group-signup">
+                        <input 
+                            type="text" 
+                            id="firstName" 
+                            name="firstName" 
+                            class="form-input-name" 
+                            placeholder="First name"
+                            required
+                            data-node-id="231:779"
+                        >
+                    </div>
+                    
+                    <div class="form-group-signup">
+                        <input 
+                            type="text" 
+                            id="lastName" 
+                            name="lastName" 
+                            class="form-input-name" 
+                            placeholder="Last name"
+                            required
+                            data-node-id="231:780"
+                        >
+                    </div>
+                </div>
+                
+                <div class="form-group-signup">
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-input-signup" 
+                        placeholder="Your email"
+                        required
+                        data-node-id="231:1091"
+                    >
+                </div>
+                
+                <div class="form-group-signup">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input-signup" 
+                        placeholder="Password"
+                        required
+                        minlength="6"
+                        data-node-id="231:1187"
+                    >
+                </div>
+                
+                <div class="form-group-signup">
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        name="confirmPassword" 
+                        class="form-input-signup" 
+                        placeholder="Confirm password"
+                        required
+                        minlength="6"
+                        data-node-id="231:1225"
+                    >
+                </div>
+                
+                <button type="submit" class="signup-submit-btn" data-node-id="I223:723;198:684">
+                    SIGN UP
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script src="../js/signup.js"></script>
+</body>
+</html>
