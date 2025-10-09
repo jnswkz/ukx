@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeThemeToggle();
 
     // ========== Smooth Scroll ==========
-    initializeSmoothScroll();
+    // Smooth scroll is handled by CSS scroll-behavior.
 });
 
 /**
@@ -169,6 +169,39 @@ function initializeButtons() {
     });
     
     console.log('Buttons initialized');
+}
+
+/**
+ * Initialize theme toggle functionality
+ */
+function initializeThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    
+    // Check for saved theme preference or default to dark
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            console.log('Theme switched to:', newTheme);
+        });
+    }
+    
+    console.log('Theme toggle initialized, current theme:', currentTheme);
+}
+
+/**
+ * Initialize smooth scroll behavior
+ */
+function initializeSmoothScroll() {
+    // This is handled by CSS scroll-behavior, but adding for completeness
+    console.log('Smooth scroll enabled');
 }
 
 /**
