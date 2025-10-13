@@ -112,7 +112,7 @@ function initializeButtons() {
             console.log('Login clicked');
             // Only redirect if not already on login page
             if (!window.location.pathname.endsWith('login.html')) {
-                window.location.href = 'pages/login.html';
+                window.location.href = '/pages/login.html';
             }
         });
     }
@@ -128,7 +128,7 @@ function initializeButtons() {
             btn.addEventListener('click', function() {
                 console.log('Signup clicked');
                 // Navigate to signup page
-                window.location.href = 'pages/signup.html';
+                window.location.href = '/pages/signup.html';
             });
         }
     });
@@ -275,3 +275,5 @@ window.UKX = {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = window.UKX;
 }
+
+export {initializeButtons };
