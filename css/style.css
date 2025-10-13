@@ -1,3 +1,85 @@
+/* ========== Hamburger Menu & Mobile Nav ========== */
+
+.nav-hamburger {
+    /* Hidden by default on desktop - override nav-icon-btn */
+    display: none !important;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Show hamburger only on tablet and smaller screens */
+@media (max-width: 1024px) {
+    .nav-hamburger {
+        display: inline-flex !important;
+    }
+}
+
+.nav-mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(46, 52, 64, 0.98);
+    z-index: 2000;
+    transition: opacity 0.3s ease;
+}
+.nav-mobile-menu.open {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+.nav-mobile-menu-content {
+    width: 80vw;
+    max-width: 340px;
+    background: var(--color-background-elevated);
+    box-shadow: -2px 0 16px rgba(0,0,0,0.18);
+    padding: 32px 24px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    height: 100vh;
+    position: relative;
+}
+.nav-mobile-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: var(--color-accent-primary);
+    cursor: pointer;
+    z-index: 1;
+}
+.nav-mobile-menu .nav-link,
+.nav-mobile-menu .nav-login-btn,
+.nav-mobile-menu .nav-signup-btn {
+    font-size: 18px;
+    width: 100%;
+    text-align: left;
+    margin: 0;
+}
+.nav-mobile-menu .nav-signup-btn {
+    margin-top: 8px;
+}
+
+@media (max-width: 1024px) {
+    /* Hide desktop nav items and show mobile controls */
+    .nav-menu {
+        display: none !important;
+    }
+    .nav-actions .nav-login-btn,
+    .nav-actions .nav-signup-btn {
+        display: none !important;
+    }
+}
 /* ========== Login Page Background from Figma ========== */
 .login-bg {
     position: fixed;
@@ -422,6 +504,14 @@ body {
     border: none;
 }
 
+#navHamburger {
+    color: var(--color-accent-primary);
+}
+
+[data-theme="light"] #navHamburger {
+    color: var(--color-text-primary);
+}
+
 .btn-secondary,
 .btn-primary {
     font-family: var(--font-primary);
@@ -666,12 +756,10 @@ body {
 
 .btn-feature:hover {
     background: var(--color-accent-primary);
-    color: var(--color-text-inverse);
+    color: #fff;
     border-color: var(--color-accent-primary);
-}
-
-.btn-feature:hover {
-    background: #444444;
+    box-shadow: 0 2px 8px rgba(var(--accent-primary-rgb, 136, 192, 208), 0.18);
+    filter: brightness(1.1);
 }
 
 /* ========== FAQ Section ========== */
@@ -936,7 +1024,7 @@ body {
 /* ========== Responsive Design ========== */
 
 /* Large Tablets and Below (1120px) */
-@media (max-width: 1120px) {
+@media (max-width: 900px) {
     .nav-container,
     .hero-container,
     .features-grid,
@@ -954,7 +1042,7 @@ body {
 }
 
 /* Tablets (968px) */
-@media (max-width: 968px) {
+@media (max-width: 900px) {
     /* Hero Section */
     .hero-container {
         grid-template-columns: 1fr;
