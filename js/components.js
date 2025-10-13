@@ -23,8 +23,50 @@ async function loadNavbar() {
     }
 }
 
+// Load footer component
+async function loadFooter() {
+    const footerPlaceholder = document.getElementById('footer-placeholder');
+    if (!footerPlaceholder) return;
+
+    try {
+        const response = await fetch('/components/footer.html');
+        if (!response.ok) throw new Error('Failed to load footer');
+        const html = await response.text();
+        footerPlaceholder.innerHTML = html;
+    } catch (error) {
+        console.error('Error loading footer:', error);
+    }
+}
+
 // Initialize navbar event listeners and functionality
 function initializeNavbar() {
+    // Hamburger menu logic
+    const hamburger = document.getElementById('navHamburger');
+    const mobileMenu = document.getElementById('navMobileMenu');
+    const mobileClose = document.getElementById('navMobileClose');
+    if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+    }
+    if (mobileClose && mobileMenu) {
+        mobileClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+    }
+    // Mobile login/signup
+    const loginBtnMobile = document.getElementById('loginBtnMobile');
+    if (loginBtnMobile) {
+        loginBtnMobile.addEventListener('click', () => {
+            window.location.href = '/pages/login.html';
+        });
+    }
+    const signupBtnMobile = document.getElementById('signupBtnMobile');
+    if (signupBtnMobile) {
+        signupBtnMobile.addEventListener('click', () => {
+            window.location.href = '/pages/signup.html';
+        });
+    }
     // Theme toggle functionality is now handled in main.js
     if (typeof window.initializeThemeToggle === 'function') {
         window.initializeThemeToggle();
@@ -60,4 +102,5 @@ function initializeNavbar() {
 // Auto-load components when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     loadNavbar();
+    loadFooter();
 });

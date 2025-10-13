@@ -85,12 +85,14 @@ function initializeNavigation() {
     window.addEventListener('scroll', function() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
-        if (scrollTop > lastScrollTop && scrollTop > 100) {
-            // Scrolling down
-            navBar.style.transform = 'translateY(-100%)';
-        } else {
-            // Scrolling up
-            navBar.style.transform = 'translateY(0)';
+        if (navBar) {
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scrolling down
+                navBar.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                navBar.style.transform = 'translateY(0)';
+            }
         }
         
         lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
