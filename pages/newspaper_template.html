@@ -5,13 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>UKX - Smart Investment, Strong Future</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/newspaper_template.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;500;600&family=Inter:wght@700&display=swap" rel="stylesheet">
+    <script type="module" src="/js/newspaper_template.js"></script>
+    <script src="/js/components.js"></script>
 </head>
 
 <body>
-    <div id="nav-placeholder"></div>
-    <script type="module" src="/js/newspaper_template.js"></script>
-    <script src="/js/components.js"></script>
+    <div id="navbar-placeholder"></div>
+   
+    <main class="page-content">
+        <div id="Newspaper-title" >
+            <h1 class="newspaper-title">Newspaper Title</h1>
+        </div>
+        <div id="Newspaper-info" class="newspaper-meta">
+            <span class="newspaper-info-author" id="meta-author">author</span>
+            <span class="newspaper-info-date" id="meta-date">dd/mm/yyyy</span>
+            <span class="newspaper-info-tags" id="meta-tags" data-tags="tag1,tag2"> 
+                <!-- tags will be rendered here -->
+            </span>
+        </div>
+        <div id="Newspaper" class="newspaper-container">
+            
+        </div>
+    </main>
+    
 </body>
+</html>

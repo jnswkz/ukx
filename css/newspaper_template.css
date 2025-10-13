@@ -1,0 +1,62 @@
+.newspaper-title{
+    text-align: left;
+    color: #FFF;
+    font-family: "JetBrains Mono";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.newspaper-info-author, .newspaper-info-date, .newspaper-info-tags{
+    color: rgba(255, 255, 255, 0.70);
+    font-family: "JetBrains Mono";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    
+}
+/* Inline meta: author / date / tags on one line */
+.newspaper-meta {
+    display: flex;
+    gap: 42px; /* horizontal gap between author / date / tags */
+    align-items: center;
+    margin-top: 6px; /* small vertical gap from title */
+}
+
+.newspaper-info-tags {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.newspaper-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.85);
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-family: var(--font-primary);
+}
+/* Keep page content below the fixed navbar. If nav height changes, update --nav-height */
+:root { --nav-height: 88px; }
+.page-content {
+    padding-top: var(--nav-height);
+    padding-left: 46px; /* left gap requested */
+    padding-right: 20px;
+}
+
+.newspaper-container {
+    margin-top: 18px; /* space under the infos */
+    min-height: calc(100vh - var(--nav-height) - 108px); /* full height minus navbar and top margin */
+    display: flex;
+    flex-direction: column;
+    padding: 24px; 
+    border-radius: 18px;
+    background: #434C5E;
+    width: calc(100% - 322px); 
+    box-sizing: border-box;
+    margin-right: 322px; /* side bar space */
+}
