@@ -1,0 +1,641 @@
+/* ========================================
+   UKX Crypto Wallet - Responsive Styles
+   Media Queries for All Breakpoints
+   ======================================== */
+
+/* ========================================
+   Breakpoint: Large Tablets (900px)
+   ======================================== */
+@media (max-width: 900px) {
+    .nav-container,
+    .hero-container,
+    .features-grid,
+    .faq-container,
+    .cta-container,
+    .footer-container {
+        max-width: 100%;
+        padding-left: var(--spacing-lg);
+        padding-right: var(--spacing-lg);
+    }
+    
+    .features-grid {
+        gap: var(--spacing-lg);
+    }
+    
+    /* Hero Section */
+    .hero-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-2xl);
+        text-align: center;
+    }
+    
+    .hero-image {
+        width: 100%;
+        max-width: 466px;
+        margin: 0 auto;
+    }
+    
+    .hero-content {
+        align-items: center;
+    }
+    
+    .hero-buttons {
+        justify-content: center;
+    }
+    
+    /* Features */
+    .features-grid {
+        grid-template-columns: 1fr;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .feature-card {
+        padding: var(--spacing-2xl) var(--spacing-lg);
+    }
+    
+    /* Navigation */
+    .nav-container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .nav-logo {
+        width: 60px;
+        height: 53px;
+    }
+    
+    .nav-logo img {
+        height: 53px;
+        width: 60px;
+    }
+    
+    .nav-menu {
+        display: none;
+    }
+    
+    .nav-actions {
+        gap: var(--spacing-sm);
+    }
+    
+    .nav-login-btn {
+        display: none;
+    }
+    
+    .nav-signup-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    /* FAQ */
+    .faq-item {
+        padding: var(--spacing-lg) var(--spacing-lg);
+    }
+    
+    .faq-item-header {
+        gap: var(--spacing-lg);
+    }
+    
+    .faq-number {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+    
+    /* Footer */
+    .footer-contact {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        width: 100%;
+    }
+    
+    .contact-item {
+        justify-content: center;
+    }
+    
+    /* Dashboard */
+    .portfolio-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-lg);
+    }
+    
+    .transactions-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-lg);
+    }
+    
+    .balance-item,
+    .transaction-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-lg);
+    }
+    
+    .balance-amounts,
+    .transaction-amount {
+        text-align: left;
+    }
+    
+    /* News & Article */
+    .news-featured-card {
+        grid-template-columns: 1fr;
+    }
+    
+    .news-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    
+    .news-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   Breakpoint: Mobile Landscape (768px)
+   ======================================== */
+@media (max-width: 768px) {
+    /* Typography Scale Down */
+    .hero-title {
+        font-size: 36px;
+        line-height: 48px;
+    }
+    
+    .section-title {
+        font-size: 36px;
+        line-height: 48px;
+    }
+    
+    .cta-title {
+        font-size: 36px;
+        line-height: 48px;
+    }
+    
+    .feature-title {
+        font-size: 24px;
+    }
+    
+    .faq-question {
+        font-size: 18px;
+    }
+    
+    /* Sections Padding */
+    .hero-section,
+    .features-section,
+    .faq-section,
+    .cta-section {
+        padding: var(--spacing-2xl) var(--spacing-md);
+    }
+    
+    /* Navigation */
+    .nav-container {
+        height: 64px;
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .nav-logo {
+        width: 52px;
+        height: 46px;
+    }
+    
+    .nav-logo img {
+        height: 46px;
+        width: 52px;
+    }
+    
+    .nav-actions {
+        gap: 8px;
+    }
+    
+    .nav-icon-btn {
+        width: auto;
+        height: auto;
+    }
+    
+    .nav-icon-btn img,
+    .nav-icon {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .nav-signup-btn {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+    
+    /* Auth */
+    .login-box,
+    .signup-box {
+        width: 90vw;
+        padding: 30px 25px;
+    }
+    
+    .login-box-title,
+    .signup-box-title {
+        font-size: 28px;
+    }
+    
+    .login-box-subtitle,
+    .signup-box-subtitle {
+        font-size: 14px;
+    }
+    
+    .social-login-btn {
+        height: 56px;
+        font-size: 13px;
+    }
+    
+    .name-fields-row {
+        gap: 12px;
+    }
+    
+    .form-input-name {
+        height: 48px;
+        font-size: 14px;
+    }
+    
+    .form-input-signup {
+        height: 50px;
+        font-size: 14px;
+    }
+    
+    /* News */
+    .news-header-title {
+        font-size: 28px;
+    }
+    
+    .news-featured-card {
+        padding: 20px;
+        gap: 20px;
+    }
+    
+    .news-featured-title {
+        font-size: 22px;
+    }
+    
+    .news-featured-excerpt {
+        font-size: 14px;
+    }
+    
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .news-bottom-card {
+        grid-template-columns: 1fr;
+    }
+    
+    .news-bottom-card-image {
+        aspect-ratio: 16/9;
+    }
+    
+    .article-title {
+        font-size: 32px;
+    }
+    
+    .article-section-title {
+        font-size: 24px;
+    }
+    
+    .article-related-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   Breakpoint: Mobile Portrait (640px)
+   ======================================== */
+@media (max-width: 640px) {
+    /* Typography Further Scale */
+    .hero-title {
+        font-size: 28px;
+        line-height: 36px;
+    }
+    
+    .hero-subtitle,
+    .hero-stats {
+        font-size: 14px;
+        line-height: 24px;
+    }
+    
+    .section-title {
+        font-size: 28px;
+        line-height: 36px;
+    }
+    
+    .section-description {
+        font-size: 16px;
+    }
+    
+    .cta-title {
+        font-size: 28px;
+        line-height: 36px;
+    }
+    
+    /* Navigation */
+    .nav-container {
+        height: 60px;
+        padding: 0 12px;
+    }
+    
+    .nav-logo {
+        width: 45px;
+        height: 40px;
+    }
+    
+    .nav-logo img {
+        height: 40px;
+        width: 45px;
+    }
+    
+    .nav-actions {
+        gap: 6px;
+    }
+    
+    .nav-icon-btn img,
+    .nav-icon {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .btn-secondary,
+    .btn-primary,
+    .nav-signup-btn {
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+    
+    .nav-login-btn {
+        display: none;
+    }
+    
+    /* Hero */
+    .hero-section {
+        padding: 100px var(--spacing-md) var(--spacing-lg);
+    }
+    
+    .hero-image {
+        height: auto;
+        aspect-ratio: 466/461;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: var(--spacing-sm);
+    }
+    
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        width: 100%;
+        padding: 16px var(--spacing-lg);
+    }
+    
+    /* Features */
+    .feature-card {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+    
+    .feature-title {
+        font-size: 22px;
+    }
+    
+    .feature-description {
+        font-size: 13px;
+    }
+    
+    /* FAQ */
+    .faq-item {
+        padding: var(--spacing-md) var(--spacing-sm);
+    }
+    
+    .faq-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+    
+    .faq-number {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+    
+    .faq-question {
+        font-size: 16px;
+    }
+    
+    .faq-answer {
+        font-size: 14px;
+    }
+    
+    .faq-toggle {
+        position: absolute;
+        right: var(--spacing-sm);
+        top: var(--spacing-md);
+    }
+    
+    /* Footer */
+    .footer-section {
+        padding: var(--spacing-xl) var(--spacing-sm);
+    }
+    
+    .footer-social {
+        flex-direction: column;
+        text-align: center;
+        padding: var(--spacing-md);
+    }
+    
+    .social-buttons {
+        justify-content: center;
+    }
+    
+    .contact-item {
+        font-size: 14px;
+    }
+    
+    .contact-item span {
+        font-size: 14px;
+    }
+    
+    /* Auth */
+    .login-box,
+    .signup-box {
+        padding: 25px 20px;
+    }
+    
+    .login-box-title,
+    .signup-box-title {
+        font-size: 24px;
+    }
+    
+    .login-box-subtitle,
+    .signup-box-subtitle {
+        font-size: 13px;
+    }
+    
+    .social-login-btn {
+        height: 52px;
+        font-size: 12px;
+    }
+    
+    .name-fields-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .form-input-name {
+        height: 48px;
+        font-size: 13px;
+    }
+    
+    .form-input-figma,
+    .form-input-signup {
+        height: 48px;
+        font-size: 13px;
+    }
+    
+    .login-submit-btn,
+    .signup-submit-btn {
+        height: 52px;
+        font-size: 18px;
+    }
+    
+    /* News */
+    .news-header {
+        padding: 30px 16px 20px;
+    }
+    
+    .news-header-title {
+        font-size: 24px;
+    }
+    
+    .news-featured {
+        padding: 30px 16px;
+    }
+    
+    .news-featured-card {
+        padding: 16px;
+    }
+    
+    .news-featured-title {
+        font-size: 20px;
+    }
+    
+    .news-grid-section {
+        padding: 0 16px 30px;
+    }
+    
+    .news-bottom-section {
+        padding: 30px 16px;
+    }
+    
+    .article-header {
+        padding: 30px 16px;
+    }
+    
+    .article-title {
+        font-size: 26px;
+    }
+    
+    .article-content {
+        padding: 40px 16px;
+    }
+    
+    .article-section-title {
+        font-size: 20px;
+    }
+    
+    .article-paragraph {
+        font-size: 15px;
+    }
+}
+
+/* ========================================
+   Breakpoint: Small Mobile (480px)
+   ======================================== */
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 24px;
+        line-height: 32px;
+    }
+    
+    .section-title {
+        font-size: 24px;
+        line-height: 32px;
+    }
+    
+    .cta-title {
+        font-size: 24px;
+        line-height: 32px;
+    }
+    
+    .nav-container {
+        height: 56px;
+    }
+    
+    .nav-logo {
+        width: 40px;
+        height: 35px;
+    }
+    
+    .nav-logo img {
+        height: 35px;
+        width: 40px;
+    }
+    
+    .nav-actions {
+        gap: 4px;
+    }
+    
+    .nav-icon-btn img,
+    .nav-icon {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .nav-signup-btn {
+        font-size: 12px;
+        padding: 5px 8px;
+    }
+    
+    .features-section::before,
+    .faq-section::before {
+        width: 100%;
+    }
+}
+
+/* ========================================
+   Breakpoint: Landscape Orientation
+   ======================================== */
+@media (max-height: 600px) and (orientation: landscape) {
+    .hero-section {
+        padding: 120px var(--spacing-md) var(--spacing-md);
+    }
+    
+    .hero-container {
+        gap: var(--spacing-lg);
+    }
+    
+    .hero-image {
+        max-width: 300px;
+        height: auto;
+    }
+}
+
+/* ========================================
+   Breakpoint: News & Article Responsive
+   ======================================== */
+@media (max-width: 1024px) {
+    .news-featured-card {
+        grid-template-columns: 1fr;
+    }
+    
+    .news-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    
+    .news-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,216 @@
+/* ========================================
+   UKX Crypto Wallet - Landing Page Sections
+   Hero, Features, FAQ, and CTA
+   ======================================== */
+
+/* ========== Hero Section ========== */
+.hero-section {
+    padding: 120px var(--spacing-lg) var(--spacing-3xl);
+    min-height: 600px;
+    position: relative;
+}
+
+.hero-container {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 466px 1fr;
+    gap: var(--spacing-3xl);
+    align-items: center;
+}
+
+.hero-image {
+    position: relative;
+    width: 466px;
+    height: 461px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.hero-title {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 64px;
+    color: var(--color-text-primary);
+    letter-spacing: 0.38px;
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 64px;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.38px;
+    margin: 0;
+}
+
+.hero-stats {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 64px;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.38px;
+    margin: 0;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 13px;
+    margin-top: var(--spacing-lg);
+}
+
+/* ========== Features Section ========== */
+.features-section {
+    padding: var(--spacing-3xl) var(--spacing-lg);
+    position: relative;
+    margin-top: 100px;
+}
+
+.features-grid {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xl);
+    position: relative;
+    z-index: 1;
+}
+
+/* ========== FAQ Section ========== */
+.faq-section {
+    padding: var(--spacing-3xl) var(--spacing-lg);
+    position: relative;
+    margin-top: 100px;
+}
+
+.faq-container {
+    max-width: 1070px;
+    margin: 0 auto;
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-lg);
+    position: relative;
+    z-index: 1;
+}
+
+.faq-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.faq-item {
+    padding: var(--spacing-2xl) var(--spacing-3xl);
+}
+
+.faq-item-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-2xl);
+}
+
+.faq-number {
+    background: var(--color-background-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-secondary);
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.faq-item.open .faq-number {
+    color: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+}
+
+.faq-question-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.faq-question {
+    font-family: var(--font-secondary);
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.faq-item.open .faq-question {
+    color: var(--color-accent-primary);
+}
+
+.faq-answer {
+    font-family: var(--font-secondary);
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin: 0;
+    display: none;
+}
+
+.faq-item.open .faq-answer {
+    display: block;
+}
+
+/* ========== CTA Section ========== */
+.cta-section {
+    padding: var(--spacing-3xl) var(--spacing-lg);
+    text-align: center;
+    margin-top: 100px;
+}
+
+.cta-container {
+    max-width: 996px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xl);
+}
+
+.cta-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 64px;
+    color: var(--color-text-primary);
+    letter-spacing: 0.38px;
+    margin: 0;
+}
+
+.cta-description {
+    font-family: var(--font-secondary);
+    font-size: 18px;
+    line-height: 24px;
+    color: var(--color-text-secondary);
+    letter-spacing: -0.108px;
+    margin: 0;
+}

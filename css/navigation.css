@@ -1,0 +1,317 @@
+/* ========================================
+   UKX Crypto Wallet - Navigation Styles
+   Navbar, Logo, Menu, Actions, Hamburger
+   ======================================== */
+
+/* ========== Navigation Bar ========== */
+.nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--color-nav-bg);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+    will-change: transform;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--spacing-lg);
+    height: 72px;
+}
+
+/* ========== Logo ========== */
+.nav-logo {
+    flex-shrink: 0;
+    width: 100px;
+    height: 88px;
+}
+
+.nav-logo img {
+    height: 88px;
+    width: 100px;
+    object-fit: contain;
+}
+
+/* Dark mode: show light logo, hide dark logo */
+.nav-logo .logo-dark {
+    display: none;
+}
+
+.nav-logo .logo-light {
+    display: block;
+}
+
+/* Light mode: show dark logo, hide light logo */
+[data-theme="light"] .nav-logo .logo-light {
+    display: none;
+}
+
+[data-theme="light"] .nav-logo .logo-dark {
+    display: block;
+}
+
+/* ========== Navigation Menu ========== */
+.nav-menu {
+    display: flex;
+    gap: 24px;
+    margin-left: 60px;
+    margin-right: auto;
+}
+
+.nav-link {
+    font-family: var(--font-primary);
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--nord5);
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--nord6);
+}
+
+[data-theme="light"] .nav-bar {
+    background: var(--color-nav-bg);
+    border-bottom-color: var(--color-nav-border);
+}
+
+[data-theme="light"] .nav-link {
+    color: var(--nord0);
+}
+
+[data-theme="light"] .nav-link:hover,
+[data-theme="light"] .nav-link:focus-visible {
+    color: var(--nord1);
+}
+
+/* ========== Navigation Actions ========== */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.nav-icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-icon-btn:hover {
+    opacity: 0.8;
+    background: transparent;
+}
+
+.nav-icon-btn img {
+    width: 16px;
+    height: 16px;
+}
+
+/* Icon wrapper for visibility on light backgrounds */
+.icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+[data-theme="light"] .icon-wrap {
+    background: var(--icon-bg);
+    border-color: var(--icon-border);
+}
+
+.nav-icon {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+.nav-icon--light {
+    display: none;
+}
+
+[data-theme="light"] .nav-icon--light {
+    display: block;
+}
+
+[data-theme="light"] .nav-icon--dark {
+    display: none;
+}
+
+/* ========== Navigation Buttons ========== */
+.nav-login-btn {
+    background: transparent;
+    border: none;
+    color: var(--nord5);
+    font-family: var(--font-primary);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    padding: 6px 0;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.nav-login-btn:hover,
+.nav-login-btn:focus-visible {
+    color: var(--nord6);
+}
+
+.nav-signup-btn {
+    background: var(--nord4);
+    border: 1px solid var(--nord0);
+    border-radius: var(--radius-sm);
+    color: var(--nord0);
+    font-family: var(--font-primary);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.nav-signup-btn:hover,
+.nav-signup-btn:focus-visible {
+    background: var(--nord5);
+    border-color: var(--nord1);
+}
+
+[data-theme="light"] .nav-login-btn {
+    color: var(--nord2);
+}
+
+[data-theme="light"] .nav-login-btn:hover,
+[data-theme="light"] .nav-login-btn:focus-visible {
+    color: var(--nord1);
+}
+
+[data-theme="light"] .nav-signup-btn {
+    background: var(--nord0);
+    border-color: var(--nord0);
+    color: var(--nord5);
+}
+
+[data-theme="light"] .nav-signup-btn:hover,
+[data-theme="light"] .nav-signup-btn:focus-visible {
+    background: var(--nord1);
+    border-color: var(--nord1);
+}
+
+[data-theme="light"] .nav-icon-btn {
+    background: transparent;
+    border: none;
+}
+
+/* ========== Hamburger Menu & Mobile Nav ========== */
+.nav-hamburger {
+    display: none !important;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Show hamburger only on tablet and smaller screens */
+@media (max-width: 1024px) {
+    .nav-hamburger {
+        display: inline-flex !important;
+    }
+}
+
+.nav-mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(46, 52, 64, 0.98);
+    z-index: 2000;
+    transition: opacity 0.3s ease;
+}
+
+.nav-mobile-menu.open {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+
+.nav-mobile-menu-content {
+    width: 80vw;
+    max-width: 340px;
+    background: var(--color-background-elevated);
+    box-shadow: -2px 0 16px rgba(0,0,0,0.18);
+    padding: 32px 24px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    height: 100vh;
+    position: relative;
+}
+
+.nav-mobile-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: var(--color-accent-primary);
+    cursor: pointer;
+    z-index: 1;
+}
+
+.nav-mobile-menu .nav-link,
+.nav-mobile-menu .nav-login-btn,
+.nav-mobile-menu .nav-signup-btn {
+    font-size: 18px;
+    width: 100%;
+    text-align: left;
+    margin: 0;
+}
+
+.nav-mobile-menu .nav-signup-btn {
+    margin-top: 8px;
+}
+
+#navHamburger {
+    color: var(--color-accent-primary);
+}
+
+[data-theme="light"] #navHamburger {
+    color: var(--color-text-primary);
+}
+
+@media (max-width: 1024px) {
+    /* Hide desktop nav items and show mobile controls */
+    .nav-menu {
+        display: none !important;
+    }
+    .nav-actions .nav-login-btn,
+    .nav-actions .nav-signup-btn {
+        display: none !important;
+    }
+}

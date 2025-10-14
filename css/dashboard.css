@@ -1,0 +1,202 @@
+/* ========================================
+   UKX Crypto Wallet - Dashboard Styles
+   Wallet Dashboard, Portfolio, Balances, Transactions
+   ======================================== */
+
+/* ========== Wallet Dashboard ========== */
+.wallet-dashboard {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2E3440 0%, #1A1A1A 100%);
+    color: var(--color-grey-90);
+}
+
+.dashboard-main {
+    padding: 120px var(--spacing-lg) var(--spacing-3xl);
+}
+
+.dashboard-container {
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+/* ========== Portfolio Section ========== */
+.portfolio-section {
+    margin-bottom: var(--spacing-3xl);
+}
+
+.portfolio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-grey-neutral-800);
+}
+
+.portfolio-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 48px;
+    color: var(--color-white);
+    margin: 0;
+}
+
+.portfolio-total {
+    text-align: right;
+}
+
+.total-label {
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    color: var(--color-grey-90);
+    display: block;
+    margin-bottom: var(--spacing-xs);
+}
+
+.total-amount {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--color-green-50);
+}
+
+/* ========== Balances Section ========== */
+.balances-section,
+.transactions-section {
+    margin-bottom: var(--spacing-3xl);
+}
+
+.balances-list,
+.transactions-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.balance-item,
+.transaction-item {
+    background: linear-gradient(180deg, var(--color-bg-card) 0%, rgba(36, 36, 36, 0) 100%);
+    border: 1px solid var(--color-grey-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.balance-item {
+    padding: var(--spacing-lg) var(--spacing-xl);
+}
+
+.balance-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.balance-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--color-grey-neutral-800);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--color-white);
+}
+
+.balance-details h3 {
+    font-family: var(--font-secondary);
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--color-white);
+    margin: 0 0 var(--spacing-xs) 0;
+}
+
+.balance-details p {
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    color: var(--color-grey-90);
+    margin: 0;
+}
+
+.balance-amounts {
+    text-align: right;
+}
+
+.balance-amount {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--color-green-50);
+    display: block;
+    margin-bottom: var(--spacing-xs);
+}
+
+.balance-locked {
+    font-family: var(--font-secondary);
+    font-size: 12px;
+    color: var(--color-grey-90);
+}
+
+/* ========== Transactions Section ========== */
+.transactions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.transaction-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.transaction-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--color-grey-neutral-800);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.transaction-details h4 {
+    font-family: var(--font-secondary);
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--color-white);
+    margin: 0 0 var(--spacing-xs) 0;
+}
+
+.transaction-details p {
+    font-family: var(--font-secondary);
+    font-size: 12px;
+    color: var(--color-grey-90);
+    margin: 0;
+}
+
+.transaction-amount {
+    text-align: right;
+}
+
+.transaction-amount .amount {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--color-green-50);
+    display: block;
+}
+
+.transaction-amount .status {
+    font-family: var(--font-secondary);
+    font-size: 12px;
+    color: var(--color-grey-90);
+}

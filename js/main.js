@@ -1,6 +1,42 @@
 // UKX Crypto Wallet - Main Application Logic
 // Landing Page Interactions and Event Handlers
 
+console.log('main.js: Script loaded');
+
+/**
+ * Initialize theme toggle functionality
+ * DEFINED FIRST so it's available immediately when components.js needs it
+ */
+function initializeThemeToggle() {
+    console.log('initializeThemeToggle called');
+    const themeToggle = document.getElementById('themeToggle');
+    
+    // Check for saved theme preference or default to dark
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    
+    if (themeToggle) {
+        console.log('Theme toggle button found, adding event listener');
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            console.log('Theme switched to:', newTheme);
+        });
+    } else {
+        console.warn('Theme toggle button not found in DOM');
+    }
+    
+    console.log('Theme toggle initialized, current theme:', currentTheme);
+}
+
+// Expose the function globally IMMEDIATELY
+window.initializeThemeToggle = initializeThemeToggle;
+console.log('main.js: initializeThemeToggle exposed on window');
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('UKX Landing Page initialized');
 
@@ -14,8 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeButtons();
 
     // ========== Theme Toggle ==========
-    initializeThemeToggle();
-
+    // Theme toggle is now initialized in components.js after navbar loads
+    // to ensure the button exists in the DOM before we try to access it
+    
     // ========== Smooth Scroll ==========
     // Smooth scroll is handled by CSS scroll-behavior.
 });
@@ -174,31 +211,6 @@ function initializeButtons() {
 }
 
 /**
- * Initialize theme toggle functionality
- */
-function initializeThemeToggle() {
-    const themeToggle = document.getElementById('themeToggle');
-    
-    // Check for saved theme preference or default to dark
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    
-    if (themeToggle) {
-        themeToggle.addEventListener('click', function() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            
-            console.log('Theme switched to:', newTheme);
-        });
-    }
-    
-    console.log('Theme toggle initialized, current theme:', currentTheme);
-}
-
-/**
  * Initialize smooth scroll behavior
  */
 function initializeSmoothScroll() {
@@ -275,5 +287,3 @@ window.UKX = {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = window.UKX;
 }
-
-export {initializeButtons };

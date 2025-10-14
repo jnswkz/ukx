@@ -1,0 +1,212 @@
+/* ========================================
+   UKX Crypto Wallet - Base Styles
+   CSS Reset, Variables, and Core Setup
+   ======================================== */
+
+/* ========== CSS Reset & Base ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========== CSS Variables ========== */
+:root {
+    /* ========== Nord Color Palette (from Figma) ========== */
+    /* Polar Night - Dark backgrounds */
+    --nord0: #2E3440;  /* Origin color - darkest shade */
+    --nord1: #3B4252;  /* Brighter shade */
+    --nord2: #434C5E;  /* Even brighter shade */
+    --nord3: #4C566A;  /* Brightest shade */
+    
+    /* Snow Storm - Light foregrounds and text */
+    --nord4: #D8DEE9;  /* Origin color - light */
+    --nord5: #E5E9F0;  /* Brighter shade */
+    --nord6: #ECEFF4;  /* Brightest shade */
+    
+    /* Frost - Blue accents */
+    --nord7: #8FBCBB;  /* Calm frozen water */
+    --nord8: #88C0D0;  /* Primary accent - pure ice */
+    --nord9: #81A1C1;  /* Darkened arctic waters */
+    --nord10: #5E81AC; /* Deep arctic ocean */
+    
+    /* Aurora - Colorful accents */
+    --nord11: #BF616A; /* Red */
+    --nord12: #D08770; /* Orange */
+    --nord13: #EBCB8B; /* Yellow */
+    --nord14: #A3BE8C; /* Green */
+    --nord15: #B48EAD; /* Purple */
+    
+    /* ========== Dark Mode (Default) ========== */
+    --color-background: var(--nord0);
+    --color-background-elevated: var(--nord1);
+    --color-background-card: var(--nord1);
+    --color-surface: var(--nord2);
+    --color-border: var(--nord3);
+    --color-text-primary: var(--nord6);
+    --color-text-secondary: var(--nord4);
+    --color-text-muted: var(--nord3);
+    --color-text-inverse: var(--nord0);
+    
+    /* Accent colors (same for both modes) */
+    --color-accent-primary: var(--nord8);
+    --color-accent-secondary: var(--nord10);
+    --color-success: var(--nord14);
+    --color-warning: var(--nord13);
+    --color-error: var(--nord11);
+    --color-info: var(--nord9);
+    --color-purple: var(--nord15);
+    
+    /* Button colors */
+    --color-button-primary-bg: var(--nord10);
+    --color-button-primary-hover: var(--nord9);
+    --color-button-primary-text: var(--nord6);
+    --color-button-secondary-bg: var(--nord14);
+    --color-button-secondary-hover: #8FAE7A;
+    --color-button-secondary-text: var(--nord0);
+    
+    /* Navigation */
+    --color-nav-bg: var(--nord1);
+    --color-nav-border: var(--nord3);
+    
+    /* Legacy color variables (for backwards compatibility) */
+    --color-white: #FFFFFF;
+    --color-grey-90: var(--nord4);
+    --color-grey-10: var(--nord0);
+    --color-grey-15: var(--nord1);
+    --color-grey-80: var(--nord2);
+    --color-grey-border: var(--nord3);
+    --color-grey-neutral-800: var(--nord3);
+    --color-green-50: #9EFF00;
+    --color-green-70: #C5FF66;
+    --color-blue-primary: var(--nord10);
+    --color-green-secondary: var(--nord14);
+    --color-bg-card: var(--nord1);
+    
+    /* Typography */
+    --font-primary: 'JetBrains Mono', monospace;
+    --font-secondary: 'Barlow', sans-serif;
+    --font-display: 'Inter', sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 20px;
+    --spacing-xl: 24px;
+    --spacing-2xl: 30px;
+    --spacing-3xl: 50px;
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 10px;
+    --radius-lg: 12px;
+    --radius-xl: 15px;
+    
+    /* Icon background helper for light mode */
+    --icon-bg-light: rgba(38, 38, 38, 0.9);
+    --icon-border-light: rgba(0,0,0,0.12);
+}
+
+/* ========== Light Mode Theme ========== */
+[data-theme="light"] {
+    --color-background: var(--nord6);
+    --color-background-elevated: var(--nord5);
+    --color-background-card: var(--nord5);
+    --color-surface: var(--nord4);
+    --color-border: var(--nord3);
+    --color-text-primary: var(--nord0);
+    --color-text-secondary: var(--nord2);
+    --color-text-muted: var(--nord3);
+    --color-text-inverse: var(--nord6);
+    
+    /* Buttons in light mode */
+    --color-button-primary-bg: var(--nord10);
+    --color-button-primary-hover: var(--nord9);
+    --color-button-primary-text: var(--nord6);
+    --color-button-secondary-bg: var(--nord14);
+    --color-button-secondary-hover: #8FAE7A;
+    --color-button-secondary-text: var(--nord0);
+    
+    /* Navigation in light mode */
+    --color-nav-bg: var(--nord5);
+    --color-nav-border: var(--nord3);
+
+    /* Icon helpers for light theme */
+    --icon-bg: var(--icon-bg-light);
+    --icon-border: var(--icon-border-light);
+}
+
+/* ========== System Preference Detection ========== */
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+        --color-background: var(--nord6);
+        --color-background-elevated: var(--nord5);
+        --color-background-card: var(--nord5);
+        --color-surface: var(--nord4);
+        --color-border: var(--nord3);
+        --color-text-primary: var(--nord0);
+        --color-text-secondary: var(--nord2);
+        --color-text-muted: var(--nord3);
+        --color-text-inverse: var(--nord6);
+        
+        --color-nav-bg: rgba(236, 239, 244, 0.95);
+        --color-nav-border: var(--nord4);
+    }
+}
+
+/* ========== HTML & Body Base ========== */
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-primary);
+    background: var(--color-background);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ========== Accessibility ========== */
+
+/* Improve touch targets for mobile */
+@media (hover: none) and (pointer: coarse) {
+    button,
+    a,
+    .nav-link,
+    .faq-toggle {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* Focus styles for accessibility */
+*:focus {
+    outline: 2px solid var(--color-green-50);
+    outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
+*:focus-visible {
+    outline: 2px solid var(--color-green-50);
+    outline-offset: 2px;
+}
+
+/* ========== Page Container ========== */
+.landing-page {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    max-width: 1920px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--color-background) 0%, var(--color-background-elevated) 50%, var(--color-surface) 100%);
+    transition: background 0.3s ease;
+}
