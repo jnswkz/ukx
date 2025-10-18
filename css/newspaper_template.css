@@ -56,7 +56,10 @@ html {
 
 /* Ensure headings scroll into view below the fixed navbar */
 #Newspaper h2 {
+    /* Ensure headings scroll into view below the fixed navbar */
     scroll-margin-top: calc(var(--nav-height) + 12px);
+    /* Small vertical gap to separate h2 from surrounding content for readability */
+    margin-block: 30px;
 }
 
 .newspaper-container {
