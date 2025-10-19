@@ -114,7 +114,7 @@ html {
     width: 282px;
     position: fixed;
     right: 20px;
-    top: calc(var(--nav-height) + 18px); /* below navbar and margin */
+    top: calc(var(--nav-height) + 40px); /* below navbar and margin */
     background: var(--paper-bg);
     border-radius: 18px;
     padding: 24px;
@@ -164,4 +164,8 @@ html {
     color: var(--paper-muted-strong);
     font-size: 13px;
     font-family: var(--font-primary, "JetBrains Mono");
+}
+
+@media (max-width: 1099px) {
+    #sidebar { display: none !important; }
 }
