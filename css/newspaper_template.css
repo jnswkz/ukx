@@ -43,6 +43,10 @@
 /* Keep page content below the fixed navbar. If nav height changes, update --nav-height */
 :root {
     --nav-height: 88px;
+    /* Approximate footer height used to keep fixed sidebar above the footer.
+       You can tweak this value if your footer is taller/shorter. */
+    --footer-height: 220px;
+    --sidebar-bottom-gap: 20px; /* space between sidebar and footer */
 
     /* Newspaper color tokens (dark-mode defaults) */
     --paper-bg: #434C5E;
@@ -120,6 +124,10 @@ html {
     padding: 24px;
     box-sizing: border-box;
     min-height: 200px;
+
+    max-height: calc(100vh - var(--nav-height) - var(--footer-height) - var(--sidebar-bottom-gap));
+    overflow: auto;
+    z-index: 15;
 }
 
 /* Sidebar content styles */
