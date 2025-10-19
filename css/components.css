@@ -127,13 +127,21 @@
     object-fit: contain;
 }
 
-[data-theme="light"] .feature-icon {
-    background: var(--icon-bg);
-    border: 1px solid var(--icon-border);
-    border-radius: 8px;
-    padding: 6px;
-    width: 62px;
-    height: 62px;
+
+/* Base behavior: show light icons by default */
+[class*="icon--light"] {
+    display: block;
+}
+[class*="icon--dark"] {
+    display: none;
+}
+
+/* Dark theme: reverse the pattern */
+[data-theme="dark"] [class*="icon--light"] {
+    display: none;
+}
+[data-theme="dark"] [class*="icon--dark"] {
+    display: block;
 }
 
 /* Social Buttons */
@@ -261,3 +269,21 @@
     height: 1px;
     background: var(--color-border);
 }
+
+[data-theme="dark"] .icon-expand--light {
+    display: none;
+}
+
+[data-theme="dark"] .icon-expand--dark {
+    display: block;
+}
+
+[data-theme="light"] .icon-expand--dark {
+    display: none;
+}
+
+[data-theme="light"] .icon-expand--light {
+    display: block;
+}
+
+
