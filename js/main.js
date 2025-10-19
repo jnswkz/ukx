@@ -287,5 +287,3 @@ window.UKX = {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = window.UKX;
 }
-
-export {initializeButtons}

@@ -1,5 +1,3 @@
-import { initializeButtons } from './main.js';
-
 fetch('/components/navbar.html')
     .then(r => r.ok ? r.text() : Promise.reject(r.status))
     .then(html => {
