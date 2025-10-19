@@ -32,3 +32,8 @@ build/
 # Backups
 backups/
 *.backup
+
+
+# python virtual enviroment
+.venv/
+venv/
