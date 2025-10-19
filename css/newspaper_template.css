@@ -1,6 +1,6 @@
 .newspaper-title{
     text-align: left;
-    color: #FFF;
+    color: var(--paper-text);
     font-family: "JetBrains Mono";
     font-size: 32px;
     font-style: normal;
@@ -9,7 +9,7 @@
 }
 
 .newspaper-info-author, .newspaper-info-date, .newspaper-info-tags{
-    color: rgba(255, 255, 255, 0.70);
+    color: var(--paper-muted);
     font-family: "JetBrains Mono";
     font-size: 16px;
     font-style: normal;
@@ -33,15 +33,50 @@
 
 .newspaper-tag {
     display: inline-block;
-    background: rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.85);
+    background: var(--tag-bg);
+    color: var(--tag-text);
     padding: 4px 8px;
     border-radius: 999px;
     font-size: 13px;
     font-family: var(--font-primary);
 }
 /* Keep page content below the fixed navbar. If nav height changes, update --nav-height */
-:root { --nav-height: 88px; }
+:root {
+    --nav-height: 88px;
+
+    /* Newspaper color tokens (dark-mode defaults) */
+    --paper-bg: #434C5E;
+    --paper-text: rgba(255,255,255,0.95);
+    --paper-muted: rgba(255,255,255,0.70);
+    --paper-muted-strong: rgba(255,255,255,0.60);
+    --tag-bg: rgba(255,255,255,0.06);
+    --tag-text: rgba(255,255,255,0.85);
+    /* Table of contents / sidebar link tokens */
+    --toc-link-color: rgba(255, 255, 255, 0.85);
+    --toc-hover-bg: rgba(255, 255, 255, 0.06);
+    --toc-active-color: #FFFFFF;
+    --toc-active-bg: rgba(255, 255, 255, 0.08);
+    --toc-active-inset: rgba(87, 83, 83, 0.9);
+}
+
+/* Light theme overrides (adopts pattern used in navigation.css) */
+[data-theme="light"] .newspaper-container,
+[data-theme="light"] .sidebar,
+[data-theme="light"] .page-content,
+[data-theme="light"] #Newspaper {
+    --paper-bg: #e5e9f0;
+    --paper-text: rgba(15, 23, 36, 0.95);
+    --paper-muted: rgba(15, 23, 36, 0.60);
+    --paper-muted-strong: rgba(15, 23, 36, 0.45);
+    --tag-bg: rgba(15, 23, 36, 0.04);
+    --tag-text: rgba(15, 23, 36, 0.85);
+    /* Light mode overrides for TOC/sidebar */
+    --toc-link-color: rgba(15, 23, 36, 0.85);
+    --toc-hover-bg: rgba(15, 23, 36, 0.04);
+    --toc-active-color: rgba(15, 23, 36, 0.95);
+    --toc-active-bg: rgba(15, 23, 36, 0.06);
+    --toc-active-inset: rgba(15, 23, 36, 0.08);
+}
 
 /* Smooth scrolling for in-page anchors */
 html {
@@ -69,7 +104,7 @@ html {
     flex-direction: column;
     padding: 24px;
     border-radius: 18px;
-    background: #434C5E;
+    background: var(--paper-bg);
     width: calc(100% - 322px);
     box-sizing: border-box;
     margin-right: 322px; /* side bar space */
@@ -80,7 +115,7 @@ html {
     position: fixed;
     right: 20px;
     top: calc(var(--nav-height) + 18px); /* below navbar and margin */
-    background: #434C5E;
+    background: var(--paper-bg);
     border-radius: 18px;
     padding: 24px;
     box-sizing: border-box;
@@ -89,7 +124,7 @@ html {
 
 /* Sidebar content styles */
 .sidebar-title {
-    color: rgba(255, 255, 255, 0.70);
+    color: var(--paper-muted);
     font-family: var(--font-primary, "JetBrains Mono");
     font-size: 14px;
     margin-bottom: 12px;
@@ -106,7 +141,7 @@ html {
 
 .sidebar-toc a {
     display: block;
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--toc-link-color);
     text-decoration: none;
     padding: 6px 8px;
     border-radius: 8px;
@@ -115,18 +150,18 @@ html {
 }
 
 .sidebar-toc a:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--toc-hover-bg);
 }
 
 .sidebar-toc a.active {
-    color: #FFF;
+    color: var(--toc-active-color);
     font-weight: 600;
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: inset 2px 0 0 rgba(255, 255, 255, 0.9);
+    background: var(--toc-active-bg);
+    box-shadow: inset 2px 0 0 var(--toc-active-inset);
 }
 
 .sidebar .empty-state {
-    color: rgba(255, 255, 255, 0.60);
+    color: var(--paper-muted-strong);
     font-size: 13px;
     font-family: var(--font-primary, "JetBrains Mono");
 }

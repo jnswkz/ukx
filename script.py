@@ -2,6 +2,7 @@ import frontmatter
 from markdown_it import MarkdownIt
 from bs4 import BeautifulSoup
 from datetime import datetime
+import json
 
 md = MarkdownIt("commonmark")
 
@@ -57,9 +58,21 @@ def render_html(meta: dict, content: str) -> str:
     container.clear()
     fragment = BeautifulSoup(new_content, 'html.parser')
     container.append(fragment)
-
     slugify = lambda s: s.lower().replace(' ', '-')
     output_filename = f"./pages/{slugify(title)}.html"
     with open(output_filename, 'w') as outf:
         outf.write(str(soup))
+
+    with open('./data/article_data.json', 'w') as json_file:
+        entry = {
+            "title": title,
+            "author": author,
+            "date": _date.strftime("%Y-%m-%d"),
+            "tags": _tags,
+            "filename": f"{slugify(title)}.html"
+        }
+        json_file.write(json.dumps(entry) + ",\n")
+
     print(f'Generated {output_filename}')
+
+render_html(meta, new_content)
