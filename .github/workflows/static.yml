@@ -33,18 +33,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Create deployment directory
+        run: |
+          mkdir -p _site
+          cp -r index.html pages/ css/ js/ assets/ components/ modules/ data/ _site/
+          cp .nojekyll _site/ 2>/dev/null || true
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload only the static site files, excluding unnecessary directories
-          path: './'
-          exclude: |
-            .git/
-            .github/
-            backups/
-            docs/
-            script.py
-            template.md
+          path: '_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
