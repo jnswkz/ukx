@@ -1,5 +1,6 @@
 # GitHub Copilot instructions (local only)
 .github/
+!.github/workflows/
 
 # Python
 __pycache__/

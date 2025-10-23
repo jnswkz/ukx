@@ -1,4 +1,4 @@
-fetch('/components/navbar.html')
+fetch('./components/navbar.html')
     .then(r => r.ok ? r.text() : Promise.reject(r.status))
     .then(html => {
         const placeholder = document.getElementById('navbar-placeholder') || document.getElementById('nav-placeholder');

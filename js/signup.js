@@ -72,7 +72,7 @@ function initializeSignupForm() {
             console.log('User data:', { firstName, lastName, email });
             
             alert('Registration successful! Welcome to UKX.');
-            window.location.href = '/pages/dashboard.html';
+            window.location.href = './pages/dashboard.html';
         });
     }
 }
@@ -87,7 +87,7 @@ function initializeSigninLink() {
         signinLink.addEventListener('click', function(e) {
             e.preventDefault();
             console.log('Sign in link clicked');
-            window.location.href = '/pages/login.html';
+            window.location.href = './pages/login.html';
         });
     }
 }

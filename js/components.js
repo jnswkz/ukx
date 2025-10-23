@@ -10,7 +10,7 @@ async function loadNavbar() {
     if (!navbarPlaceholder) return;
 
     try {
-        const response = await fetch('/components/navbar.html');
+        const response = await fetch('./components/navbar.html');
         if (!response.ok) throw new Error('Failed to load navbar');
         
         const html = await response.text();
@@ -29,7 +29,7 @@ async function loadFooter() {
     if (!footerPlaceholder) return;
 
     try {
-        const response = await fetch('/components/footer.html');
+        const response = await fetch('./components/footer.html');
         if (!response.ok) throw new Error('Failed to load footer');
         const html = await response.text();
         footerPlaceholder.innerHTML = html;
@@ -58,13 +58,13 @@ function initializeNavbar() {
     const loginBtnMobile = document.getElementById('loginBtnMobile');
     if (loginBtnMobile) {
         loginBtnMobile.addEventListener('click', () => {
-            window.location.href = '/pages/login.html';
+            window.location.href = './pages/login.html';
         });
     }
     const signupBtnMobile = document.getElementById('signupBtnMobile');
     if (signupBtnMobile) {
         signupBtnMobile.addEventListener('click', () => {
-            window.location.href = '/pages/signup.html';
+            window.location.href = './pages/signup.html';
         });
     }
     // Theme toggle functionality is now handled in main.js
@@ -80,7 +80,7 @@ function initializeNavbar() {
     const loginBtn = document.getElementById('loginBtn');
     if (loginBtn) {
         loginBtn.addEventListener('click', () => {
-            window.location.href = '/pages/login.html';
+            window.location.href = './pages/login.html';
         });
     }
 
@@ -88,7 +88,7 @@ function initializeNavbar() {
     const signupBtn = document.getElementById('signupBtn');
     if (signupBtn) {
         signupBtn.addEventListener('click', () => {
-            window.location.href = '/pages/signup.html';
+            window.location.href = './pages/signup.html';
         });
     }
 
@@ -98,7 +98,7 @@ function initializeNavbar() {
         if (navLogo) {
             navLogo.style.cursor = 'pointer';
             navLogo.addEventListener('click', () => {
-                window.location.href = '/index.html';
+                window.location.href = './index.html';
             });
         }
 }
