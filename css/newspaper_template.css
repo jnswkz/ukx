@@ -1,3 +1,9 @@
+.layout{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+}
+
 .newspaper-title{
     text-align: left;
     color: var(--paper-text);
@@ -109,9 +115,10 @@ html {
     padding: 24px;
     border-radius: 18px;
     background: var(--paper-bg);
-    width: calc(100% - 322px);
+    width: calc(100% - 302px); /* full width minus sidebar and gap */
     box-sizing: border-box;
-    margin-right: 322px; /* side bar space */
+    margin-right: 0px; /* side bar space */
+    grid-column: 1;
 }
 
 .sidebar{
@@ -128,6 +135,7 @@ html {
     max-height: calc(100vh - var(--nav-height) - var(--footer-height) - var(--sidebar-bottom-gap));
     overflow: auto;
     z-index: 15;
+    grid-column: 2;
 }
 
 /* Sidebar content styles */
@@ -175,5 +183,9 @@ html {
 }
 
 @media (max-width: 1099px) {
-    #sidebar { display: none !important; }
+  .layout {
+    grid-template-columns: 1fr; /* main takes all columns */
+  }
+  #sidebar { display: none; }     /* remove from layout */
+  .newspaper-container { grid-column: 1; width: auto;}    /* span full width */
 }
