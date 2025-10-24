@@ -36,6 +36,9 @@
 /* 9. Responsive Design - All Media Queries */
 @import url('responsive.css');
 
+/* 10. Newspaper Template - Specific Styles */
+@import url('newspaper_template.css');
+
 /* ========================================
    Module Organization Summary:
    
