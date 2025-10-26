@@ -16,7 +16,7 @@
 
 .newspaper-info-author, .newspaper-info-date, .newspaper-info-tags{
     color: var(--paper-muted);
-    font-family: "JetBrains Mono";
+    font-family: "JetBrains Mono";  
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
