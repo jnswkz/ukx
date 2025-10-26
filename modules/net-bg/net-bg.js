@@ -56,14 +56,6 @@ function move_points() {
     }
 }
 
-setInterval(() => {
-    move_points();
-    for (let i=0; i<list_of_points.length; i++) {
-        const point = list_of_points[i];
-        spawn_point(ctx, point.x, point.y);
-    }
-
-}, 10);
 
 let mousex = canvas.width / 2;
 let mousey = canvas.height / 2;
@@ -77,18 +69,6 @@ canvas.addEventListener('mousemove', function(event) {
   mousey = event.clientY - rect.top;
 });
 
-setInterval(() => {
-    spawn_point(ctx, mousex, mousey);
-    for (let i=0; i<list_of_points.length; i++) {
-        const point = list_of_points[i];
-        const dx = point.x - mousex;
-        const dy = point.y - mousey;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < 200) {
-            drawline(point.x, point.y, mousex, mousey, 'highlight');
-        }
-    }
-}, 10);
 
 function drawline(x1, y1, x2, y2, type='normal') {
     if (type === 'highlight') {
@@ -101,8 +81,24 @@ function drawline(x1, y1, x2, y2, type='normal') {
     ctx.lineTo(x2, y2);
     ctx.stroke();
 }
-
 setInterval(() => {
+    move_points();
+    for (let i=0; i<list_of_points.length; i++) {
+        const point = list_of_points[i];
+        spawn_point(ctx, point.x, point.y);
+    }
+
+    spawn_point(ctx, mousex, mousey);
+    for (let i=0; i<list_of_points.length; i++) {
+        const point = list_of_points[i];
+        const dx = point.x - mousex;
+        const dy = point.y - mousey;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < 200) {
+            drawline(point.x, point.y, mousex, mousey, 'highlight');
+        }
+    }
+
     for (let i=0; i<list_of_points.length; i++) {
         const pointA = list_of_points[i];
         for (let j=i+1; j<list_of_points.length; j++) {
