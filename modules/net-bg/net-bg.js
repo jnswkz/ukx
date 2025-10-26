@@ -29,7 +29,12 @@ for (let i = 0; i < 150; i++) {
 }
 
 function move_points() {
+    
     ctx.clearRect(0, 0, width, height);
+    
+    // ctx.font = '16px Arial';
+    // ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+    // ctx.fillText('Click to add more points', 10, height - 20); // change text here!
     
     // set a direction to move points in 4 directions, and only move straight   
     for (let i=0; i<list_of_points.length; i++) {
@@ -55,7 +60,6 @@ function move_points() {
 
     }
 }
-
 
 let mousex = canvas.width / 2;
 let mousey = canvas.height / 2;
@@ -87,6 +91,9 @@ function drawline(x1, y1, x2, y2, type='normal') {
     ctx.lineTo(x2, y2);
     ctx.stroke();
 }
+
+
+
 setInterval(() => {
     move_points();
     for (let i=0; i<list_of_points.length; i++) {
