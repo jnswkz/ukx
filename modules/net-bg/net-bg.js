@@ -69,6 +69,12 @@ canvas.addEventListener('mousemove', function(event) {
   mousey = event.clientY - rect.top;
 });
 
+canvas.addEventListener('click', function(event) {
+    const rect = canvas.getBoundingClientRect();
+    const clickx = event.clientX - rect.left;
+    const clicky = event.clientY - rect.top;
+    list_of_points.push({x: clickx, y: clicky});
+});
 
 function drawline(x1, y1, x2, y2, type='normal') {
     if (type === 'highlight') {
