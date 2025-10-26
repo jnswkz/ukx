@@ -63,7 +63,7 @@ setInterval(() => {
         spawn_point(ctx, point.x, point.y);
     }
 
-}, 25);
+}, 10);
 
 let mousex = canvas.width / 2;
 let mousey = canvas.height / 2;
@@ -88,7 +88,7 @@ setInterval(() => {
             drawline(point.x, point.y, mousex, mousey, 'highlight');
         }
     }
-}, 25);
+}, 10);
 
 function drawline(x1, y1, x2, y2, type='normal') {
     if (type === 'highlight') {
@@ -116,4 +116,4 @@ setInterval(() => {
         }
     }
 }
-, 25);
+, 10);
