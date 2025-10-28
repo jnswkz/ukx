@@ -53,10 +53,10 @@ function move_points() {
                 point.y -= 1;
                 break;
         }
-        if (point.x < 0) point.x = width;
-        if (point.x > width) point.x = 0;
-        if (point.y < 0) point.y = height;
-        if (point.y > height) point.y = 0;
+        if (point.x < 0 || point.x > width || point.y < 0 || point.y > height) {
+            point.x = getRandomInt(0, width);
+            point.y = getRandomInt(0, height);
+        }
 
     }
 }
