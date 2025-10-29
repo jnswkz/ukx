@@ -15,14 +15,32 @@
     <div>
         <canvas id="line-graph-2" width="1000" height="500"></canvas>
     </div>
-    <script src="../graphjs/line.js">
-    </script>
+
+    <div>
+        <canvas id="bar-graph-1" width="800" height="400"></canvas>
+    </div>
+
+    <div>
+        <canvas id="bar-graph-2" width="1000" height="500"></canvas>
+    </div>
+
+    <script src="../graphjs/line.js"></script>
+    <script src="../graphjs/bar.js"></script>
     <script>
-            const data = {
+        const data = {
             x: ['Oct-1', 'Oct-2', 'Oct-3', 'Oct-4', 'Oct-5', 'Oct-6', 'Oct-7'],
             y: [10, 15, 13, 17, 22, 18, 25]
         };
+
         drawLineGraph("line-graph-1", data, 'rgba(59, 66, 82, 1)', 'rgba(163, 190, 140, 1)', 'rgba(180, 142, 173, 1)');
         drawLineGraph("line-graph-2", data, 'rgba(229, 233, 240, 1)', 'rgba(208, 135, 112, 1)', 'rgba(180, 142, 173, 1)');
+
+        const barData = {
+            x: ['Oct-2022', 'Nov-2022', 'Dec-2022', 'Jan-2023', 'Feb-2023', 'Mar-2023', 'Apr-2023'],
+            y: [5, 12, 9, 14, 18, 11, 20]
+        };
+
+        drawBarChart("bar-graph-1", barData, 'rgba(54, 162, 235, 0.8)', 'rgba(75, 192, 192, 0.8)');
+        drawBarChart("bar-graph-2", barData, 'rgba(255, 159, 64, 0.9)', 'rgba(255, 205, 86, 0.9)');
     </script>
 </body>
