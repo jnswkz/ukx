@@ -52,7 +52,7 @@ def render_html(meta: dict, content: str) -> str:
     fragment = BeautifulSoup(new_content, 'html.parser')
     container.append(fragment)
     slugify = lambda s: s.lower().replace(' ', '-')
-    output_filename = f"./pages/{slugify(title)}.html"
+    output_filename = f"./pages/news/{slugify(title)}.html"
     with open(output_filename, 'w') as outf:
         outf.write(str(soup))
 
