@@ -8,7 +8,13 @@
 </html>
 
 <body>
-    <canvas id="line-graph" width="800" height="400"></canvas>
+    <div>
+        <canvas id="line-graph-1" width="800" height="400"></canvas>
+    </div>
+    
+    <div>
+        <canvas id="line-graph-2" width="1000" height="500"></canvas>
+    </div>
     <script src="../graphjs/line.js">
     </script>
     <script>
@@ -16,6 +22,7 @@
             x: ['Oct-1', 'Oct-2', 'Oct-3', 'Oct-4', 'Oct-5', 'Oct-6', 'Oct-7'],
             y: [10, 15, 13, 17, 22, 18, 25]
         };
-        drawLineGraph(data, 'rgba(59, 66, 82, 1)', 'rgba(163, 190, 140, 1)', 'rgba(180, 142, 173, 1)');
+        drawLineGraph("line-graph-1", data, 'rgba(59, 66, 82, 1)', 'rgba(163, 190, 140, 1)', 'rgba(180, 142, 173, 1)');
+        drawLineGraph("line-graph-2", data, 'rgba(229, 233, 240, 1)', 'rgba(208, 135, 112, 1)', 'rgba(180, 142, 173, 1)');
     </script>
 </body>

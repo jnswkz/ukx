@@ -1,5 +1,5 @@
 
-function drawLineGraph(data, backgroundColor, lineColor, pointColor) {
+function drawLineGraph(canvasID, data, backgroundColor, lineColor, pointColor) {
 
     function spawn_point(ctx, x, y) {
         console.log(`Spawned point at (${x}, ${y})`);
@@ -23,7 +23,7 @@ function drawLineGraph(data, backgroundColor, lineColor, pointColor) {
 
 
 
-    const canvas = document.getElementById('line-graph');
+    const canvas = document.getElementById(canvasID);
     const ctx = canvas.getContext('2d');
     const width = canvas.width;
     const height = canvas.height;
