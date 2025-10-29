@@ -93,7 +93,8 @@ if __name__ == "__main__":
                 post = frontmatter.load(entry.path)
                 meta = post.metadata
                 content = post.content
-                new_content = handle_md_content(content)
+                # new_content = 
+                new_content = md.render(handle_md_content(content))
                 render_html(meta, new_content)
 
     # print('\n'.join([e.name for e in sorted(list_entries, key=lambda x: x.name)]))
