@@ -1,4 +1,5 @@
-{
+[
+  {
     "title": "Exploring Cross-Chain Yield Farming in Decentralized Finance",
     "author": "News Feeder",
     "date": "2025-05-23",
@@ -9,4 +10,1205 @@
         "Blockchain"
     ],
     "filename": "exploring-cross-chain-yield-farming-in-decentralized-finance.html"
-}
+  },
+  {
+    "title": "Understanding Layer 2 Scaling Solutions for Ethereum",
+    "author": "Blockchain Reporter",
+    "date": "2025-06-21",
+    "tags": [
+      "Layer-2",
+      "Ethereum",
+      "Scaling",
+      "Blockchain"
+    ],
+    "filename": "understanding-layer-2-scaling-solutions-for-ethereum.html"
+  },
+  {
+    "title": "Proof of Stake Consensus Mechanisms",
+    "author": "Token Times",
+    "date": "2025-09-26",
+    "tags": [
+      "Proof-of-Stake",
+      "Consensus",
+      "Blockchain",
+      "Energy"
+    ],
+    "filename": "proof-of-stake-consensus-mechanisms.html"
+  },
+  {
+    "title": "Decentralized Autonomous Organizations Explained",
+    "author": "Crypto Monitor",
+    "date": "2024-12-25",
+    "tags": [
+      "DAO",
+      "Governance",
+      "Decentralization",
+      "Web3"
+    ],
+    "filename": "decentralized-autonomous-organizations-explained.html"
+  },
+  {
+    "title": "Real-World Asset Tokenization Benefits",
+    "author": "Crypto Insights",
+    "date": "2024-12-14",
+    "tags": [
+      "RWA",
+      "Tokenization",
+      "Investment",
+      "DeFi"
+    ],
+    "filename": "real-world-asset-tokenization-benefits.html"
+  },
+  {
+    "title": "Smart Contracts and Blockchain Automation",
+    "author": "Chain Explorer",
+    "date": "2025-05-18",
+    "tags": [
+      "Smart-Contracts",
+      "Automation",
+      "Blockchain",
+      "DeFi"
+    ],
+    "filename": "smart-contracts-and-blockchain-automation.html"
+  },
+  {
+    "title": "DeFi Yield Farming Strategies",
+    "author": "Block Chronicle",
+    "date": "2024-11-13",
+    "tags": [
+      "DeFi",
+      "Yield-Farming",
+      "Liquidity",
+      "APY"
+    ],
+    "filename": "defi-yield-farming-strategies.html"
+  },
+  {
+    "title": "NFT Utility Beyond Digital Art",
+    "author": "Crypto Educator",
+    "date": "2025-03-11",
+    "tags": [
+      "NFT",
+      "Utility",
+      "Gaming",
+      "Metaverse"
+    ],
+    "filename": "nft-utility-beyond-digital-art.html"
+  },
+  {
+    "title": "Cryptocurrency Staking for Passive Income",
+    "author": "Blockchain Observer",
+    "date": "2025-01-27",
+    "tags": [
+      "Staking",
+      "Passive-Income",
+      "PoS",
+      "Rewards"
+    ],
+    "filename": "cryptocurrency-staking-for-passive-income.html"
+  },
+  {
+    "title": "Blockchain Interoperability Solutions",
+    "author": "Decentralized Daily",
+    "date": "2025-04-12",
+    "tags": [
+      "Interoperability",
+      "Cross-Chain",
+      "Blockchain",
+      "Bridges"
+    ],
+    "filename": "blockchain-interoperability-solutions.html"
+  },
+  {
+    "title": "Decentralized Exchanges and AMM Models",
+    "author": "Blockchain Reporter",
+    "date": "2025-08-29",
+    "tags": [
+      "DEX",
+      "Trading",
+      "DeFi",
+      "AMM"
+    ],
+    "filename": "decentralized-exchanges-and-amm-models.html"
+  },
+  {
+    "title": "Web3 and the Metaverse Revolution",
+    "author": "Decentralized Daily",
+    "date": "2025-05-16",
+    "tags": [
+      "Web3",
+      "Metaverse",
+      "VR",
+      "Decentralization"
+    ],
+    "filename": "web3-and-the-metaverse-revolution.html"
+  },
+  {
+    "title": "Central Bank Digital Currencies",
+    "author": "DeFi Report",
+    "date": "2025-10-06",
+    "tags": [
+      "CBDC",
+      "Digital-Currency",
+      "Government",
+      "Finance"
+    ],
+    "filename": "central-bank-digital-currencies.html"
+  },
+  {
+    "title": "Zero-Knowledge Proofs for Privacy",
+    "author": "Web3 Insights",
+    "date": "2025-07-29",
+    "tags": [
+      "Zero-Knowledge",
+      "Privacy",
+      "Cryptography",
+      "Blockchain"
+    ],
+    "filename": "zero-knowledge-proofs-for-privacy.html"
+  },
+  {
+    "title": "Blockchain Gaming and Play-to-Earn",
+    "author": "Block Chronicle",
+    "date": "2025-10-04",
+    "tags": [
+      "Gaming",
+      "Play-to-Earn",
+      "NFT",
+      "GameFi"
+    ],
+    "filename": "blockchain-gaming-and-play-to-earn.html"
+  },
+  {
+    "title": "DeFi Insurance Protocol Design",
+    "author": "Crypto Educator",
+    "date": "2025-05-24",
+    "tags": [
+      "Insurance",
+      "DeFi",
+      "Risk-Management",
+      "Security"
+    ],
+    "filename": "defi-insurance-protocol-design.html"
+  },
+  {
+    "title": "Tokenomics and Crypto Economics",
+    "author": "Block Chronicle",
+    "date": "2025-06-11",
+    "tags": [
+      "Tokenomics",
+      "Economics",
+      "Token-Design",
+      "DeFi"
+    ],
+    "filename": "tokenomics-and-crypto-economics.html"
+  },
+  {
+    "title": "Blockchain Oracles Connecting Data",
+    "author": "Digital Asset News",
+    "date": "2025-06-13",
+    "tags": [
+      "Oracles",
+      "Chainlink",
+      "Data",
+      "Smart-Contracts"
+    ],
+    "filename": "blockchain-oracles-connecting-data.html"
+  },
+  {
+    "title": "Decentralized Identity Systems",
+    "author": "Chain Explorer",
+    "date": "2025-09-30",
+    "tags": [
+      "Identity",
+      "Privacy",
+      "Web3",
+      "Self-Sovereign"
+    ],
+    "filename": "decentralized-identity-systems.html"
+  },
+  {
+    "title": "Algorithmic Stablecoin Mechanisms",
+    "author": "Decentralized Daily",
+    "date": "2025-03-04",
+    "tags": [
+      "Stablecoins",
+      "Algorithmic",
+      "DeFi",
+      "Stability"
+    ],
+    "filename": "algorithmic-stablecoin-mechanisms.html"
+  },
+  {
+    "title": "Blockchain Scalability Trilemma",
+    "author": "DeFi Analyst",
+    "date": "2025-04-09",
+    "tags": [
+      "Scalability",
+      "Trilemma",
+      "Blockchain",
+      "Technology"
+    ],
+    "filename": "blockchain-scalability-trilemma.html"
+  },
+  {
+    "title": "Crypto Custody and Security Solutions",
+    "author": "Crypto Monitor",
+    "date": "2025-04-15",
+    "tags": [
+      "Custody",
+      "Security",
+      "Institutional",
+      "Wallets"
+    ],
+    "filename": "crypto-custody-and-security-solutions.html"
+  },
+  {
+    "title": "Bitcoin Lightning Network Technology",
+    "author": "DeFi Report",
+    "date": "2025-08-03",
+    "tags": [
+      "Bitcoin",
+      "Lightning",
+      "Payments",
+      "Layer-2"
+    ],
+    "filename": "bitcoin-lightning-network-technology.html"
+  },
+  {
+    "title": "Ethereum Merge and Proof of Stake",
+    "author": "Crypto Insights",
+    "date": "2025-08-15",
+    "tags": [
+      "Ethereum",
+      "ETH2",
+      "Upgrade",
+      "PoS"
+    ],
+    "filename": "ethereum-merge-and-proof-of-stake.html"
+  },
+  {
+    "title": "Supply Chain Blockchain Applications",
+    "author": "Web3 Insights",
+    "date": "2024-12-08",
+    "tags": [
+      "Supply-Chain",
+      "Enterprise",
+      "Logistics",
+      "Tracking"
+    ],
+    "filename": "supply-chain-blockchain-applications.html"
+  },
+  {
+    "title": "Cryptocurrency Derivatives Trading",
+    "author": "Decentralized Daily",
+    "date": "2025-09-03",
+    "tags": [
+      "Derivatives",
+      "Trading",
+      "DeFi",
+      "Finance"
+    ],
+    "filename": "cryptocurrency-derivatives-trading.html"
+  },
+  {
+    "title": "Decentralized Social Media Platforms",
+    "author": "Digital Finance Reporter",
+    "date": "2025-08-10",
+    "tags": [
+      "Social-Media",
+      "Decentralization",
+      "Content",
+      "Web3"
+    ],
+    "filename": "decentralized-social-media-platforms.html"
+  },
+  {
+    "title": "Tokenized Securities and STOs",
+    "author": "Token Analysis",
+    "date": "2025-05-30",
+    "tags": [
+      "Securities",
+      "Tokenization",
+      "Regulation",
+      "STO"
+    ],
+    "filename": "tokenized-securities-and-stos.html"
+  },
+  {
+    "title": "Cryptocurrency Mining Operations",
+    "author": "Blockchain Reporter",
+    "date": "2025-09-15",
+    "tags": [
+      "Mining",
+      "PoW",
+      "Bitcoin",
+      "Security"
+    ],
+    "filename": "cryptocurrency-mining-operations.html"
+  },
+  {
+    "title": "Blockchain Governance Models",
+    "author": "Token Times",
+    "date": "2025-07-09",
+    "tags": [
+      "Governance",
+      "Voting",
+      "Protocol",
+      "DAO"
+    ],
+    "filename": "blockchain-governance-models.html"
+  },
+  {
+    "title": "Crypto Regulatory Frameworks",
+    "author": "Token Times",
+    "date": "2025-06-22",
+    "tags": [
+      "Regulation",
+      "Compliance",
+      "Legal",
+      "Policy"
+    ],
+    "filename": "crypto-regulatory-frameworks.html"
+  },
+  {
+    "title": "Flash Loans in DeFi Protocols",
+    "author": "Token Analysis",
+    "date": "2025-01-13",
+    "tags": [
+      "Flash-Loans",
+      "DeFi",
+      "Arbitrage",
+      "Innovation"
+    ],
+    "filename": "flash-loans-in-defi-protocols.html"
+  },
+  {
+    "title": "Blockchain Forensics and Analysis",
+    "author": "Decentralized Daily",
+    "date": "2025-09-08",
+    "tags": [
+      "Forensics",
+      "Analytics",
+      "Compliance",
+      "Privacy"
+    ],
+    "filename": "blockchain-forensics-and-analysis.html"
+  },
+  {
+    "title": "Atomic Swaps Cross-Chain Trading",
+    "author": "DeFi Analyst",
+    "date": "2025-02-17",
+    "tags": [
+      "Atomic-Swaps",
+      "Cross-Chain",
+      "Trading",
+      "Trustless"
+    ],
+    "filename": "atomic-swaps-cross-chain-trading.html"
+  },
+  {
+    "title": "Crypto Market Making Strategies",
+    "author": "DeFi Report",
+    "date": "2025-07-04",
+    "tags": [
+      "Market-Making",
+      "Liquidity",
+      "Trading",
+      "DeFi"
+    ],
+    "filename": "crypto-market-making-strategies.html"
+  },
+  {
+    "title": "Cryptocurrency Tax Obligations",
+    "author": "Token Analysis",
+    "date": "2025-04-16",
+    "tags": [
+      "Taxes",
+      "Compliance",
+      "Reporting",
+      "Legal"
+    ],
+    "filename": "cryptocurrency-tax-obligations.html"
+  },
+  {
+    "title": "Blockchain Privacy Technologies",
+    "author": "Blockchain Reporter",
+    "date": "2024-11-10",
+    "tags": [
+      "Privacy",
+      "Confidentiality",
+      "Technology",
+      "Regulation"
+    ],
+    "filename": "blockchain-privacy-technologies.html"
+  },
+  {
+    "title": "Blockchain Voting Systems",
+    "author": "Crypto Monitor",
+    "date": "2025-03-08",
+    "tags": [
+      "Voting",
+      "Democracy",
+      "Security",
+      "Governance"
+    ],
+    "filename": "blockchain-voting-systems.html"
+  },
+  {
+    "title": "Cryptocurrency Lending Platforms",
+    "author": "Crypto Insights",
+    "date": "2025-07-07",
+    "tags": [
+      "Lending",
+      "Yield",
+      "Interest",
+      "DeFi"
+    ],
+    "filename": "cryptocurrency-lending-platforms.html"
+  },
+  {
+    "title": "Crypto Portfolio Management",
+    "author": "DeFi Report",
+    "date": "2025-05-03",
+    "tags": [
+      "Portfolio",
+      "Investment",
+      "Strategy",
+      "Risk"
+    ],
+    "filename": "crypto-portfolio-management.html"
+  },
+  {
+    "title": "Blockchain in Healthcare Data",
+    "author": "DeFi Report",
+    "date": "2025-09-20",
+    "tags": [
+      "Healthcare",
+      "Medical",
+      "Data",
+      "Privacy"
+    ],
+    "filename": "blockchain-in-healthcare-data.html"
+  },
+  {
+    "title": "Decentralized File Storage Systems",
+    "author": "Crypto Monitor",
+    "date": "2025-02-21",
+    "tags": [
+      "Storage",
+      "IPFS",
+      "Decentralization",
+      "Web3"
+    ],
+    "filename": "decentralized-file-storage-systems.html"
+  },
+  {
+    "title": "Cross-Chain Bridge Protocols",
+    "author": "Blockchain Observer",
+    "date": "2025-02-15",
+    "tags": [
+      "Bridges",
+      "Interoperability",
+      "Cross-Chain",
+      "DeFi"
+    ],
+    "filename": "cross-chain-bridge-protocols.html"
+  },
+  {
+    "title": "Cryptocurrency Exchange Evolution",
+    "author": "Blockchain Reporter",
+    "date": "2025-01-01",
+    "tags": [
+      "Exchanges",
+      "Trading",
+      "Infrastructure",
+      "Liquidity"
+    ],
+    "filename": "cryptocurrency-exchange-evolution.html"
+  },
+  {
+    "title": "Blockchain Energy Trading Markets",
+    "author": "Token Analysis",
+    "date": "2025-05-09",
+    "tags": [
+      "Energy",
+      "Trading",
+      "Sustainability",
+      "P2P"
+    ],
+    "filename": "blockchain-energy-trading-markets.html"
+  },
+  {
+    "title": "NFT Marketplaces and Platforms",
+    "author": "DeFi Analyst",
+    "date": "2025-05-25",
+    "tags": [
+      "NFT",
+      "Marketplace",
+      "Trading",
+      "Digital-Art"
+    ],
+    "filename": "nft-marketplaces-and-platforms.html"
+  },
+  {
+    "title": "Blockchain Scalability Solutions",
+    "author": "Digital Ledger",
+    "date": "2025-01-31",
+    "tags": [
+      "Scalability",
+      "Performance",
+      "Technology",
+      "Solutions"
+    ],
+    "filename": "blockchain-scalability-solutions.html"
+  },
+  {
+    "title": "Crypto Compliance Requirements",
+    "author": "Block Chronicle",
+    "date": "2025-08-02",
+    "tags": [
+      "Compliance",
+      "Regulation",
+      "AML",
+      "KYC"
+    ],
+    "filename": "crypto-compliance-requirements.html"
+  },
+  {
+    "title": "Cryptocurrency Wallet Security",
+    "author": "Web3 Writer",
+    "date": "2025-04-22",
+    "tags": [
+      "Wallets",
+      "Security",
+      "Private-Keys",
+      "Protection"
+    ],
+    "filename": "cryptocurrency-wallet-security.html"
+  },
+  {
+    "title": "Blockchain Consensus Mechanisms",
+    "author": "DeFi Report",
+    "date": "2025-04-07",
+    "tags": [
+      "Consensus",
+      "Algorithms",
+      "Security",
+      "Decentralization"
+    ],
+    "filename": "blockchain-consensus-mechanisms.html"
+  },
+  {
+    "title": "DeFi Protocol Infrastructure",
+    "author": "Blockchain Reporter",
+    "date": "2025-10-10",
+    "tags": [
+      "DeFi",
+      "Protocols",
+      "Finance",
+      "Infrastructure"
+    ],
+    "filename": "defi-protocol-infrastructure.html"
+  },
+  {
+    "title": "Cryptocurrency Payment Processing",
+    "author": "Token Times",
+    "date": "2025-03-02",
+    "tags": [
+      "Payments",
+      "Commerce",
+      "Processing",
+      "Adoption"
+    ],
+    "filename": "cryptocurrency-payment-processing.html"
+  },
+  {
+    "title": "Blockchain Identity Verification",
+    "author": "Web3 Insights",
+    "date": "2025-07-17",
+    "tags": [
+      "Identity",
+      "Verification",
+      "Authentication",
+      "Digital"
+    ],
+    "filename": "blockchain-identity-verification.html"
+  },
+  {
+    "title": "Stablecoin Price Mechanisms",
+    "author": "Crypto Insights",
+    "date": "2025-03-16",
+    "tags": [
+      "Stablecoins",
+      "USDT",
+      "USDC",
+      "Digital-Dollar"
+    ],
+    "filename": "stablecoin-price-mechanisms.html"
+  },
+  {
+    "title": "Blockchain Gaming Economics",
+    "author": "Crypto Monitor",
+    "date": "2025-06-26",
+    "tags": [
+      "Gaming",
+      "Economics",
+      "Virtual-Economy",
+      "Tokens"
+    ],
+    "filename": "blockchain-gaming-economics.html"
+  },
+  {
+    "title": "Crypto Market Manipulation",
+    "author": "Digital Ledger",
+    "date": "2025-03-30",
+    "tags": [
+      "Manipulation",
+      "Trading",
+      "Markets",
+      "Regulation"
+    ],
+    "filename": "crypto-market-manipulation.html"
+  },
+  {
+    "title": "Digital Credential Verification",
+    "author": "Crypto Chronicle",
+    "date": "2025-05-18",
+    "tags": [
+      "Certificates",
+      "Education",
+      "Credentials",
+      "Verification"
+    ],
+    "filename": "digital-credential-verification.html"
+  },
+  {
+    "title": "Mining Pool Collaboration",
+    "author": "DeFi Report",
+    "date": "2025-10-07",
+    "tags": [
+      "Mining",
+      "Pools",
+      "Collaboration",
+      "Hashrate"
+    ],
+    "filename": "mining-pool-collaboration.html"
+  },
+  {
+    "title": "Decentralized Prediction Markets",
+    "author": "Crypto Educator",
+    "date": "2025-06-15",
+    "tags": [
+      "Prediction-Markets",
+      "Forecasting",
+      "Decentralization",
+      "Wisdom-of-Crowds"
+    ],
+    "filename": "decentralized-prediction-markets.html"
+  },
+  {
+    "title": "Supply Chain Finance Blockchain",
+    "author": "Digital Asset News",
+    "date": "2025-04-10",
+    "tags": [
+      "Supply-Chain",
+      "Finance",
+      "Trade",
+      "Working-Capital"
+    ],
+    "filename": "supply-chain-finance-blockchain.html"
+  },
+  {
+    "title": "Crypto Custody Insurance",
+    "author": "Crypto Chronicle",
+    "date": "2025-03-11",
+    "tags": [
+      "Insurance",
+      "Custody",
+      "Protection",
+      "Security"
+    ],
+    "filename": "crypto-custody-insurance.html"
+  },
+  {
+    "title": "Blockchain Document Timestamping",
+    "author": "Web3 Insights",
+    "date": "2025-01-22",
+    "tags": [
+      "Timestamping",
+      "Proof",
+      "Documents",
+      "Verification"
+    ],
+    "filename": "blockchain-document-timestamping.html"
+  },
+  {
+    "title": "Cryptocurrency Inheritance Planning",
+    "author": "Chain Explorer",
+    "date": "2025-05-09",
+    "tags": [
+      "Inheritance",
+      "Estate-Planning",
+      "Digital-Assets",
+      "Security"
+    ],
+    "filename": "cryptocurrency-inheritance-planning.html"
+  },
+  {
+    "title": "Decentralized Cloud Computing",
+    "author": "Web3 Insights",
+    "date": "2025-05-26",
+    "tags": [
+      "Cloud-Computing",
+      "Decentralization",
+      "Processing",
+      "Infrastructure"
+    ],
+    "filename": "decentralized-cloud-computing.html"
+  },
+  {
+    "title": "Carbon Credits on Blockchain",
+    "author": "Token Times",
+    "date": "2024-11-18",
+    "tags": [
+      "Carbon-Credits",
+      "Environment",
+      "Sustainability",
+      "Trading"
+    ],
+    "filename": "carbon-credits-on-blockchain.html"
+  },
+  {
+    "title": "Cryptocurrency Arbitrage Trading",
+    "author": "Digital Ledger",
+    "date": "2025-03-18",
+    "tags": [
+      "Arbitrage",
+      "Trading",
+      "Profit",
+      "Markets"
+    ],
+    "filename": "cryptocurrency-arbitrage-trading.html"
+  },
+  {
+    "title": "Music Rights Blockchain Management",
+    "author": "Crypto Insights",
+    "date": "2025-10-28",
+    "tags": [
+      "Music",
+      "Royalties",
+      "Rights",
+      "Artists"
+    ],
+    "filename": "music-rights-blockchain-management.html"
+  },
+  {
+    "title": "Crypto Payment Card Solutions",
+    "author": "Crypto Monitor",
+    "date": "2025-10-09",
+    "tags": [
+      "Payment-Cards",
+      "Spending",
+      "Adoption",
+      "Commerce"
+    ],
+    "filename": "crypto-payment-card-solutions.html"
+  },
+  {
+    "title": "Blockchain Academic Research",
+    "author": "Blockchain Observer",
+    "date": "2025-01-14",
+    "tags": [
+      "Research",
+      "Academic",
+      "Technology",
+      "Innovation"
+    ],
+    "filename": "blockchain-academic-research.html"
+  },
+  {
+    "title": "AI and Blockchain Art Creation",
+    "author": "Digital Asset News",
+    "date": "2025-04-14",
+    "tags": [
+      "Art",
+      "AI",
+      "Creativity",
+      "NFT"
+    ],
+    "filename": "ai-and-blockchain-art-creation.html"
+  },
+  {
+    "title": "Event Ticketing on Blockchain",
+    "author": "Blockchain Observer",
+    "date": "2025-09-26",
+    "tags": [
+      "Ticketing",
+      "Events",
+      "NFT",
+      "Secondary-Market"
+    ],
+    "filename": "event-ticketing-on-blockchain.html"
+  },
+  {
+    "title": "Crypto Privacy Regulations",
+    "author": "Decentralized Daily",
+    "date": "2025-04-10",
+    "tags": [
+      "Privacy",
+      "Regulation",
+      "Rights",
+      "Law-Enforcement"
+    ],
+    "filename": "crypto-privacy-regulations.html"
+  },
+  {
+    "title": "Gaming Guilds Organization",
+    "author": "Web3 Insights",
+    "date": "2025-05-08",
+    "tags": [
+      "Gaming",
+      "Guilds",
+      "DAO",
+      "Cooperation"
+    ],
+    "filename": "gaming-guilds-organization.html"
+  },
+  {
+    "title": "Anti-Fraud Cryptocurrency Measures",
+    "author": "Digital Ledger",
+    "date": "2025-07-06",
+    "tags": [
+      "Fraud",
+      "Protection",
+      "Security",
+      "Safety"
+    ],
+    "filename": "anti-fraud-cryptocurrency-measures.html"
+  },
+  {
+    "title": "Decentralized Science Research",
+    "author": "Crypto Educator",
+    "date": "2025-06-21",
+    "tags": [
+      "Science",
+      "Research",
+      "DeSci",
+      "Funding"
+    ],
+    "filename": "decentralized-science-research.html"
+  },
+  {
+    "title": "Interoperability Protocol Standards",
+    "author": "Decentralized Daily",
+    "date": "2025-06-30",
+    "tags": [
+      "Interoperability",
+      "Standards",
+      "Protocols",
+      "Integration"
+    ],
+    "filename": "interoperability-protocol-standards.html"
+  },
+  {
+    "title": "Market Psychology in Crypto",
+    "author": "Decentralized Daily",
+    "date": "2025-10-24",
+    "tags": [
+      "Psychology",
+      "Trading",
+      "Behavior",
+      "Markets"
+    ],
+    "filename": "market-psychology-in-crypto.html"
+  },
+  {
+    "title": "Farm to Table Blockchain Tracking",
+    "author": "Web3 Writer",
+    "date": "2025-05-15",
+    "tags": [
+      "Food-Safety",
+      "Supply-Chain",
+      "Traceability",
+      "Agriculture"
+    ],
+    "filename": "farm-to-table-blockchain-tracking.html"
+  },
+  {
+    "title": "Autonomous Corporate Structures",
+    "author": "DeFi Analyst",
+    "date": "2025-06-02",
+    "tags": [
+      "DAC",
+      "Business",
+      "Automation",
+      "Organization"
+    ],
+    "filename": "autonomous-corporate-structures.html"
+  },
+  {
+    "title": "Crypto Philanthropy Donations",
+    "author": "DeFi Report",
+    "date": "2024-12-07",
+    "tags": [
+      "Philanthropy",
+      "Donations",
+      "Charity",
+      "Impact"
+    ],
+    "filename": "crypto-philanthropy-donations.html"
+  },
+  {
+    "title": "Intellectual Property Blockchain",
+    "author": "Digital Finance Reporter",
+    "date": "2024-11-12",
+    "tags": [
+      "IP",
+      "Copyright",
+      "Patents",
+      "Creative-Works"
+    ],
+    "filename": "intellectual-property-blockchain.html"
+  },
+  {
+    "title": "Lending Rate Markets Crypto",
+    "author": "Digital Asset News",
+    "date": "2025-05-07",
+    "tags": [
+      "Lending",
+      "Interest-Rates",
+      "Markets",
+      "Yield"
+    ],
+    "filename": "lending-rate-markets-crypto.html"
+  },
+  {
+    "title": "Digital Advertising Blockchain",
+    "author": "Crypto Chronicle",
+    "date": "2025-04-03",
+    "tags": [
+      "Advertising",
+      "Marketing",
+      "Transparency",
+      "AdTech"
+    ],
+    "filename": "digital-advertising-blockchain.html"
+  },
+  {
+    "title": "Reputation Systems Decentralized",
+    "author": "Crypto Educator",
+    "date": "2025-03-28",
+    "tags": [
+      "Reputation",
+      "Trust",
+      "Identity",
+      "Social"
+    ],
+    "filename": "reputation-systems-decentralized.html"
+  },
+  {
+    "title": "On-Chain Market Indicators",
+    "author": "Web3 Writer",
+    "date": "2025-04-04",
+    "tags": [
+      "Indicators",
+      "Analysis",
+      "On-Chain",
+      "Trading"
+    ],
+    "filename": "on-chain-market-indicators.html"
+  },
+  {
+    "title": "Authentication on Blockchain",
+    "author": "Token Analysis",
+    "date": "2025-06-17",
+    "tags": [
+      "Authentication",
+      "Verification",
+      "Anti-Counterfeiting",
+      "Security"
+    ],
+    "filename": "authentication-on-blockchain.html"
+  },
+  {
+    "title": "Quantum Computing Blockchain Threats",
+    "author": "Crypto Monitor",
+    "date": "2025-09-15",
+    "tags": [
+      "Quantum",
+      "Security",
+      "Cryptography",
+      "Future"
+    ],
+    "filename": "quantum-computing-blockchain-threats.html"
+  },
+  {
+    "title": "Charity Transparency Blockchain",
+    "author": "Digital Finance Reporter",
+    "date": "2025-08-23",
+    "tags": [
+      "Charity",
+      "Transparency",
+      "Social-Impact",
+      "Accountability"
+    ],
+    "filename": "charity-transparency-blockchain.html"
+  },
+  {
+    "title": "Decentralized Domain Systems",
+    "author": "Web3 Writer",
+    "date": "2025-03-28",
+    "tags": [
+      "DNS",
+      "Domains",
+      "Censorship-Resistance",
+      "Web3"
+    ],
+    "filename": "decentralized-domain-systems.html"
+  },
+  {
+    "title": "Hardware Wallet Security",
+    "author": "Web3 Writer",
+    "date": "2025-08-19",
+    "tags": [
+      "Hardware-Wallets",
+      "Security",
+      "Cold-Storage",
+      "Protection"
+    ],
+    "filename": "hardware-wallet-security.html"
+  },
+  {
+    "title": "Academic Credentials Blockchain",
+    "author": "Web3 Insights",
+    "date": "2025-08-18",
+    "tags": [
+      "Education",
+      "Credentials",
+      "Verification",
+      "Blockchain"
+    ],
+    "filename": "academic-credentials-blockchain.html"
+  },
+  {
+    "title": "Automated Market Making Algorithms",
+    "author": "Chain Analyst",
+    "date": "2025-03-17",
+    "tags": [
+      "Algorithms",
+      "Market-Making",
+      "Automation",
+      "Trading"
+    ],
+    "filename": "automated-market-making-algorithms.html"
+  },
+  {
+    "title": "Voting Security Blockchain",
+    "author": "Crypto Educator",
+    "date": "2025-01-17",
+    "tags": [
+      "Voting",
+      "Security",
+      "Elections",
+      "Democracy"
+    ],
+    "filename": "voting-security-blockchain.html"
+  },
+  {
+    "title": "Insurance Risk Sharing Protocols",
+    "author": "Web3 Insights",
+    "date": "2025-06-27",
+    "tags": [
+      "Insurance",
+      "Risk",
+      "Protocols",
+      "Decentralization"
+    ],
+    "filename": "insurance-risk-sharing-protocols.html"
+  },
+  {
+    "title": "Crypto Accounting Standards",
+    "author": "DeFi Analyst",
+    "date": "2025-05-27",
+    "tags": [
+      "Accounting",
+      "Standards",
+      "Finance",
+      "Reporting"
+    ],
+    "filename": "crypto-accounting-standards.html"
+  },
+  {
+    "title": "Renewable Energy Certificates",
+    "author": "Blockchain Observer",
+    "date": "2025-06-29",
+    "tags": [
+      "Renewable-Energy",
+      "Certificates",
+      "Sustainability",
+      "Environment"
+    ],
+    "filename": "renewable-energy-certificates.html"
+  },
+  {
+    "title": "Self-Regulating Decentralized Markets",
+    "author": "Blockchain Reporter",
+    "date": "2025-10-08",
+    "tags": [
+      "Markets",
+      "Autonomous",
+      "Trading",
+      "Self-Regulation"
+    ],
+    "filename": "self-regulating-decentralized-markets.html"
+  },
+  {
+    "title": "Maritime Logistics Blockchain",
+    "author": "Crypto Chronicle",
+    "date": "2025-01-18",
+    "tags": [
+      "Maritime",
+      "Shipping",
+      "Logistics",
+      "Trade"
+    ],
+    "filename": "maritime-logistics-blockchain.html"
+  },
+  {
+    "title": "Legacy Inheritance Planning",
+    "author": "Crypto Chronicle",
+    "date": "2025-05-02",
+    "tags": [
+      "Inheritance",
+      "Estate",
+      "Legacy",
+      "Planning"
+    ],
+    "filename": "legacy-inheritance-planning.html"
+  },
+  {
+    "title": "Cross-Game Asset Interoperability",
+    "author": "Digital Finance Reporter",
+    "date": "2025-01-10",
+    "tags": [
+      "Gaming",
+      "Interoperability",
+      "Assets",
+      "NFT"
+    ],
+    "filename": "cross-game-asset-interoperability.html"
+  },
+  {
+    "title": "Alternative Credit Scoring Systems",
+    "author": "Crypto Monitor",
+    "date": "2024-11-03",
+    "tags": [
+      "Credit",
+      "Scoring",
+      "Finance",
+      "Risk-Assessment"
+    ],
+    "filename": "alternative-credit-scoring-systems.html"
+  }
+]

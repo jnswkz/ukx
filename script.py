@@ -1,3 +1,4 @@
+import os
 import frontmatter
 from markdown_it import MarkdownIt
 from bs4 import BeautifulSoup
@@ -6,13 +7,6 @@ import json
 
 md = MarkdownIt("commonmark")
 
-post = frontmatter.load('template.md')
-
-meta = post.metadata
-
-content = post.content
-
-# print(meta, content)
 
 def handle_md_content(content: str) -> str:
     lines = content.split('\n')
@@ -26,7 +20,6 @@ def handle_md_content(content: str) -> str:
         else:
             new_lines.append(line)
     return '\n'.join(new_lines)
-new_content = md.render(handle_md_content(content))
 
 # print(new_content)
 
@@ -59,20 +52,49 @@ def render_html(meta: dict, content: str) -> str:
     fragment = BeautifulSoup(new_content, 'html.parser')
     container.append(fragment)
     slugify = lambda s: s.lower().replace(' ', '-')
-    output_filename = f"./pages/{slugify(title)}.html"
+    output_filename = f"./pages/news/{slugify(title)}.html"
     with open(output_filename, 'w') as outf:
         outf.write(str(soup))
 
-    with open('./data/article_data.json', 'w') as json_file:
-        entry = {
-            "title": title,
-            "author": author,
-            "date": _date.strftime("%Y-%m-%d"),
-            "tags": _tags,
-            "filename": f"{slugify(title)}.html"
-        }
-        json_file.write(json.dumps(entry) + ",\n")
+    data_path = './data/article_data.json'
+    entry = {
+        "title": title,
+        "author": author,
+        "date": _date.strftime("%Y-%m-%d"),
+        "tags": _tags,
+        "filename": f"{slugify(title)}.html"
+    }
+
+    try:
+        with open(data_path, 'r', encoding='utf-8') as jf:
+            try:
+                data = json.load(jf)
+                if not isinstance(data, list):
+                    data = []
+            except json.JSONDecodeError:
+                data = []
+    except FileNotFoundError:
+        data = []
+
+    data.append(entry)
+    os.makedirs(os.path.dirname(data_path), exist_ok=True)
+    with open(data_path, 'w', encoding='utf-8') as json_file:
+        json.dump(data, json_file, ensure_ascii=False, indent=2)
 
     print(f'Generated {output_filename}')
 
-render_html(meta, new_content)
+if __name__ == "__main__":
+    input_dir = './md/'
+    with os.scandir(input_dir) as entries:
+        list_entries = []
+        for entry in sorted(entries, key=lambda e: e.name):
+            if entry.name.endswith('.md') and entry.is_file():
+                # list_entries.append(entry)
+                post = frontmatter.load(entry.path)
+                meta = post.metadata
+                content = post.content
+                # new_content = 
+                new_content = md.render(handle_md_content(content))
+                render_html(meta, new_content)
+
+    # print('\n'.join([e.name for e in sorted(list_entries, key=lambda x: x.name)]))
