@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar Chart Test</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #chart-container {
+            width: 80%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div id="chart-container">
+        <canvas id="bar-chart" width="600" height="400"></canvas>
+    </div>
+
+    <script type="module">
+        import { drawBarChart } from './bar.js';
+
+        // Sample data for the bar chart (BTC volume over time)
+        const sampleData = [
+            { label: '10:00', value: 1000000000, time: '2025-10-29 10:00' },
+            { label: '11:00', value: 1200000000, time: '2025-10-29 11:00' },
+            { label: '12:00', value: 1100000000, time: '2025-10-29 12:00' },
+            { label: '13:00', value: 1300000000, time: '2025-10-29 13:00' },
+            { label: '14:00', value: 1250000000, time: '2025-10-29 14:00' }
+        ];
+
+        // ID of the canvas element
+        const canvasId = 'bar-chart';
+
+        // Title for the chart
+        const chartTitle = 'BTC Volume Over Time';
+
+        // Draw the bar chart
+        drawBarChart(sampleData, canvasId, chartTitle);
+    </script>
+</body>
+</html>

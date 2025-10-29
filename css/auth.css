@@ -245,7 +245,7 @@
 
 .signup-box {
     position: relative;
-    width: 600px;
+    width: 700px;
     max-width: 90vw;
     background: url('../assets/login_box_bg.jpg') center center / cover no-repeat;
     backdrop-filter: blur(30px);
@@ -380,4 +380,3 @@
 }
 
 /* ==================Login responsive for mobile======================*/
-
