@@ -80,7 +80,7 @@ canvas.addEventListener('click', function(event) {
     list_of_points.push({x: clickx, y: clicky});
 });
 
-function drawline(x1, y1, x2, y2, type='normal') {
+function draw_line(x1, y1, x2, y2, type='normal') {
     if (type === 'highlight') {
         ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
     } else {
@@ -108,7 +108,7 @@ setInterval(() => {
         const dy = point.y - mousey;
         const distance = Math.sqrt(dx * dx + dy * dy);
         if (distance < 200) {
-            drawline(point.x, point.y, mousex, mousey, 'highlight');
+            draw_line(point.x, point.y, mousex, mousey, 'highlight');
         }
     }
 
@@ -120,7 +120,7 @@ setInterval(() => {
             const dy = pointA.y - pointB.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             if (distance < 150) {
-                drawline(pointA.x, pointA.y, pointB.x, pointB.y);
+                draw_line(pointA.x, pointA.y, pointB.x, pointB.y);
             }
         }
     }
