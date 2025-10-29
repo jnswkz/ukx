@@ -38,3 +38,7 @@ backups/
 # python virtual enviroment
 .venv/
 venv/
+
+# markdown
+
+*.md
