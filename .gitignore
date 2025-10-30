@@ -41,4 +41,4 @@ venv/
 
 # markdown
 
-*.md
+md/*
