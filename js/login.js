@@ -47,7 +47,7 @@ function initializeLoginForm() {
 
             // For MVP, just redirect to dashboard (no real authentication)
             console.log('Login successful (simulated)');
-            window.location.href = './pages/dashboard.html';
+            window.location.href = './dashboard.html';
         });
     }
 }
@@ -65,7 +65,7 @@ function initializeSocialLogins() {
             console.log('Facebook login clicked');
             // For MVP, redirect to dashboard
             alert('Facebook login - Coming soon!\nRedirecting to dashboard...');
-            window.location.href = './pages/dashboard.html';
+            window.location.href = './dashboard.html';
         });
     }
 
@@ -75,7 +75,7 @@ function initializeSocialLogins() {
             console.log('Google login clicked');
             // For MVP, redirect to dashboard
             alert('Google login - Coming soon!\nRedirecting to dashboard...');
-            window.location.href = './pages/dashboard.html';
+            window.location.href = './dashboard.html';
         });
     }
 }
@@ -91,7 +91,7 @@ function initializeSignupLink() {
             e.preventDefault();
             console.log('Signup clicked');
             // Redirect to signup page
-            window.location.href = './pages/signup.html';
+            window.location.href = './signup.html';
         });
     }
 }

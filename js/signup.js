@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize signin link
     initializeSigninLink();
+
+    // Initialize social signup buttons
+    initializeSocialSignup();
 });
 
 /**
@@ -72,7 +75,7 @@ function initializeSignupForm() {
             console.log('User data:', { firstName, lastName, email });
             
             alert('Registration successful! Welcome to UKX.');
-            window.location.href = './pages/dashboard.html';
+            window.location.href = './dashboard.html';
         });
     }
 }
@@ -87,7 +90,7 @@ function initializeSigninLink() {
         signinLink.addEventListener('click', function(e) {
             e.preventDefault();
             console.log('Sign in link clicked');
-            window.location.href = './pages/login.html';
+            window.location.href = './login.html';
         });
     }
 }
@@ -98,4 +101,30 @@ function initializeSigninLink() {
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+}
+
+/**
+ * Initialize social signup buttons
+ */
+function initializeSocialSignup() {
+    const facebookSignupBtn = document.getElementById('facebookSignupBtn');
+    const googleSignupBtn = document.getElementById('googleSignupBtn');
+
+    if (facebookSignupBtn) {
+        facebookSignupBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Facebook signup clicked');
+            alert('Facebook signup feature coming soon!');
+            // TODO: Integrate with Facebook OAuth API
+        });
+    }
+
+    if (googleSignupBtn) {
+        googleSignupBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Google signup clicked');
+            alert('Google signup feature coming soon!');
+            // TODO: Integrate with Google OAuth API
+        });
+    }
 }
