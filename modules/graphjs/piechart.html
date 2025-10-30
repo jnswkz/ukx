@@ -1,0 +1,85 @@
+<!-- <!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>Pie Chart - Canvas</title>
+</head>
+<body>
+
+<canvas id="pieChart" width="400" height="400" style="border:1px solid #000000;"></canvas>
+
+<script>
+// ====== DỮ LIỆU (thay tại đây) ======
+const data = [
+  { label: "A", value: 40, color: "red" },
+  { label: "B", value: 25, color: "#36A2EB" },
+  { label: "C", value: 20, color: "#FFCE56" },
+  { label: "D", value: 15, color: "#4BC0C0" },
+  { label: "E", value: 100, color: "blue" },
+];
+
+// ====== VẼ PIE CHART BẰNG CANVAS ======
+const canvas = document.getElementById("pieChart");
+const ctx = canvas.getContext("2d");
+const radius = canvas.width / 2;
+
+const total = data.reduce((sum, d) => sum + d.value, 0);
+let startAngle = 0; 
+data.forEach(d => {
+  const sliceAngle = (d.value / total) * 2 * Math.PI;
+
+  // Vẽ lát
+  ctx.beginPath();
+  ctx.moveTo(radius, radius);
+  ctx.arc(radius, radius, radius, startAngle, startAngle + sliceAngle);
+  ctx.fillStyle = d.color;
+  ctx.fill();
+
+  // Vẽ label %
+  const midAngle = startAngle + sliceAngle / 2;
+  const textX = radius + Math.cos(midAngle) * (radius*0.75);
+  const textY = radius + Math.sin(midAngle) * (radius*0.75);
+
+  ctx.fillStyle = "white";
+  ctx.font = "14px Arial";
+  ctx.fillText(Math.round((d.value/total)*100) + "%", textX-10, textY+5 );
+  ctx.fillText("Lồn", textX-10, textY+20 );
+
+  startAngle += sliceAngle;
+});
+</script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>Pie Chart Hover Tooltip</title>
+<style>
+  #tooltip {
+    position: absolute;
+    background: rgba(0,0,0,0.75);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    pointer-events: none;
+    display: none;
+  }
+</style>
+</head>
+<body>
+<div class="row">
+  Radius: 
+  <input id="radius" type="range" min="200" max="800" value="500" oninput="resizeCanvas()">
+  <span id="radiusVal">500</span> px
+</div>
+
+<canvas id="pieChart" width="400" height="400" style="cursor: pointer;border:1px solid #ff0000;" ></canvas>
+<div id="tooltip"></div>
+
+<script src="./pie.js"></script>
+</body>
+</html>
