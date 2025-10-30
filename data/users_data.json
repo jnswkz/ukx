@@ -1,0 +1,3473 @@
+[
+  {
+    "user_id": 1,
+    "name": "Đỗ Nam Trum",
+    "age": 46,
+    "wallet_id": "addraji0y6dpbhsahxthv3a3zmf8mdd4v30t9",
+    "coin_holdings": {
+      "XRP": 1571.672,
+      "LTC": 2206.459,
+      "BTC": 1.867138,
+      "DOT": 7969.737
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1ofv177udktmonrvbjfvyb6li076a3kkrz",
+        "coin_type": "LTC",
+        "amount": -678.903,
+        "transaction_date": "2025-05-18"
+      },
+      {
+        "counterparty_wallet_id": "0xobk3g84utdd2ec2ihoy7dv7c9hx3d43e7b7p0",
+        "coin_type": "DOT",
+        "amount": 308.168,
+        "transaction_date": "2025-08-03"
+      },
+      {
+        "counterparty_wallet_id": "0xzp6lfewvznvksp2ex5t5p5o3o0llj8yrddp0nec",
+        "coin_type": "DOT",
+        "amount": 165.15,
+        "transaction_date": "2025-09-04"
+      },
+      {
+        "counterparty_wallet_id": "0xt076g5g79or7875aud9k9tr74qgefqjg02u",
+        "coin_type": "XRP",
+        "amount": 127.619,
+        "transaction_date": "2025-10-29"
+      }
+    ]
+  },
+  {
+    "user_id": 2,
+    "name": "Trần Đức Nhung",
+    "age": 55,
+    "wallet_id": "bc1t3w5uzbikcidkwnnhj7xvg0fn9xuy41ib",
+    "coin_holdings": {
+      "ADA": 1009.45,
+      "AVAX": 6198.963,
+      "USDT": 45015.92,
+      "BNB": 3184.682
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1ccprhvlz049enulqjidknwi5flul1rsrla8s8hm",
+        "coin_type": "USDT",
+        "amount": 5677.24,
+        "transaction_date": "2025-07-29"
+      },
+      {
+        "counterparty_wallet_id": "bc1b4ehou6qlz2rwgwaj1g1r1dwwo8nbhnal3gywi",
+        "coin_type": "USDT",
+        "amount": -4655.34,
+        "transaction_date": "2025-07-31"
+      },
+      {
+        "counterparty_wallet_id": "addrehe2atn2twdl9zs13c9xqym52xg8p6beffl",
+        "coin_type": "BNB",
+        "amount": 9.808,
+        "transaction_date": "2025-08-28"
+      },
+      {
+        "counterparty_wallet_id": "addrlemx15z8vmuhxid4n1u3493wxa73jgzlma5uofwb",
+        "coin_type": "BNB",
+        "amount": -840.91,
+        "transaction_date": "2025-09-26"
+      }
+    ]
+  },
+  {
+    "user_id": 3,
+    "name": "Đỗ Thị Xuân",
+    "age": 19,
+    "wallet_id": "bc1jh75lxo6qjiujv6oh9sdbdw2pcn9t84azytjxe",
+    "coin_holdings": {
+      "MATIC": 7694.311,
+      "AVAX": 2135.479,
+      "XRP": 376.197
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1p6qf5q14j1ripzim6cfnfholqc3o18a5ur7ko64t",
+        "coin_type": "AVAX",
+        "amount": -504.656,
+        "transaction_date": "2025-05-14"
+      },
+      {
+        "counterparty_wallet_id": "bc182kkzmpjrht7zewviytwbozd1at7o75rh8lx6",
+        "coin_type": "AVAX",
+        "amount": 891.98,
+        "transaction_date": "2025-06-02"
+      },
+      {
+        "counterparty_wallet_id": "bc174v1qx8ertb74rs7gu0env5sn961j88q",
+        "coin_type": "AVAX",
+        "amount": 467.378,
+        "transaction_date": "2025-06-22"
+      },
+      {
+        "counterparty_wallet_id": "addrlp8ii7ewbxxgaearms3jn050e6mpsj9wr",
+        "coin_type": "XRP",
+        "amount": -655.639,
+        "transaction_date": "2025-09-22"
+      }
+    ]
+  },
+  {
+    "user_id": 4,
+    "name": "Lê Hải Nhung",
+    "age": 48,
+    "wallet_id": "bc1q85jsg65kxvf1t2tala753lc58drc11ert",
+    "coin_holdings": {
+      "BTC": 0.15809,
+      "BNB": 3700.658,
+      "DOT": 437.656,
+      "LTC": 2075.673
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addru2gc5wi6fqjja26yfpmvxpj4hnriuu9k9xjuy0",
+        "coin_type": "LTC",
+        "amount": -368.47,
+        "transaction_date": "2025-05-16"
+      },
+      {
+        "counterparty_wallet_id": "bc1ofv177udktmonrvbjfvyb6li076a3kkrz",
+        "coin_type": "DOT",
+        "amount": -580.738,
+        "transaction_date": "2025-06-07"
+      },
+      {
+        "counterparty_wallet_id": "bc1vg5vmf60yknfu84xyjoa21a6xvaj2k8xpnmjqy3",
+        "coin_type": "DOT",
+        "amount": 705.218,
+        "transaction_date": "2025-06-19"
+      },
+      {
+        "counterparty_wallet_id": "bc1otqtxhi15cqzcuctsuflsehuds3qsqcq30o30",
+        "coin_type": "LTC",
+        "amount": -882.144,
+        "transaction_date": "2025-10-20"
+      }
+    ]
+  },
+  {
+    "user_id": 5,
+    "name": "Đặng Văn Tú",
+    "age": 26,
+    "wallet_id": "bc15pht0hl9xpseimvihcwi64ciyhe7ur23gdppq0y9",
+    "coin_holdings": {
+      "USDT": 32209.5,
+      "BNB": 2123.056,
+      "ETH": 2.8117,
+      "DOGE": 3628.607
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1rpzlk3e4xyf9igfu8iogxpbwhvnzh13cd5glq",
+        "coin_type": "DOGE",
+        "amount": -214.65,
+        "transaction_date": "2025-09-19"
+      },
+      {
+        "counterparty_wallet_id": "0xe9p3jpxgh30153sflse45bg34iq7zj3sweb",
+        "coin_type": "DOGE",
+        "amount": 247.452,
+        "transaction_date": "2025-09-28"
+      },
+      {
+        "counterparty_wallet_id": "bc1a984uvkyrmjljx8xgsic43olfark6o0u9",
+        "coin_type": "BNB",
+        "amount": -812.117,
+        "transaction_date": "2025-10-01"
+      }
+    ]
+  },
+  {
+    "user_id": 6,
+    "name": "Đỗ Thu Trung",
+    "age": 36,
+    "wallet_id": "0xom5igqpki7p5tb94874frhocn9j2qp89",
+    "coin_holdings": {
+      "BNB": 9927.83,
+      "DOT": 8674.351,
+      "MATIC": 1713.962
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrezduxlez896dysal8m1g9fk2st0sx5wvfgyw6z",
+        "coin_type": "BNB",
+        "amount": -922.74,
+        "transaction_date": "2025-05-31"
+      },
+      {
+        "counterparty_wallet_id": "0xarlw3mg25cfzfdsnczxvml90pxrlzu6wmx3",
+        "coin_type": "BNB",
+        "amount": 625.096,
+        "transaction_date": "2025-06-22"
+      },
+      {
+        "counterparty_wallet_id": "addrire8qjnv8z2flu7u6n7hv3izky22ubtxcx",
+        "coin_type": "BNB",
+        "amount": 525.098,
+        "transaction_date": "2025-06-23"
+      },
+      {
+        "counterparty_wallet_id": "0xc9t199dxj37c9h42m44gv3z6bz8uug95rlrd",
+        "coin_type": "BNB",
+        "amount": 381.32,
+        "transaction_date": "2025-09-27"
+      }
+    ]
+  },
+  {
+    "user_id": 7,
+    "name": "Võ Ngọc An",
+    "age": 45,
+    "wallet_id": "addrfk8ut0cvs4f8cgvyie6ivwpvs7hzioykl1cq99c",
+    "coin_holdings": {
+      "ADA": 2302.568,
+      "BTC": 2.005948,
+      "DOGE": 7897.66,
+      "XRP": 3818.553
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xe094d6rupw2w5506rr5pcxa5s00i85syw",
+        "coin_type": "ADA",
+        "amount": 522.163,
+        "transaction_date": "2025-07-26"
+      },
+      {
+        "counterparty_wallet_id": "bc1fln4rxyj38xrg2gzr7txcb48y1o4izasnwyw",
+        "coin_type": "BTC",
+        "amount": -0.477664,
+        "transaction_date": "2025-09-01"
+      },
+      {
+        "counterparty_wallet_id": "bc131yihair4cowgzrixa11dpg8sbi4q2y9v",
+        "coin_type": "DOGE",
+        "amount": -261.516,
+        "transaction_date": "2025-10-29"
+      }
+    ]
+  },
+  {
+    "user_id": 8,
+    "name": "Hoàng Thu Quân",
+    "age": 31,
+    "wallet_id": "0xj755nf4zw9xa3kx7eedtjvzhwjr64dpja1wj0tpa",
+    "coin_holdings": {
+      "DOGE": 3708.428,
+      "AVAX": 5553.564,
+      "DOT": 2545.239,
+      "USDT": 15401.99
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xe094d6rupw2w5506rr5pcxa5s00i85syw",
+        "coin_type": "USDT",
+        "amount": 8557.24,
+        "transaction_date": "2025-05-15"
+      },
+      {
+        "counterparty_wallet_id": "bc15mn32u1iq2bajdm5fc79m96zpxvpbl9ot7txkdo",
+        "coin_type": "DOGE",
+        "amount": 392.158,
+        "transaction_date": "2025-05-21"
+      },
+      {
+        "counterparty_wallet_id": "addr26rjrny20479t6vxdp5gjlqm5k8p4q0b8ic8bbi4",
+        "coin_type": "AVAX",
+        "amount": -787.151,
+        "transaction_date": "2025-06-12"
+      },
+      {
+        "counterparty_wallet_id": "0xxr2dhylurtp0lzjjeget1ghr09skdgigatj9tze",
+        "coin_type": "AVAX",
+        "amount": -784.194,
+        "transaction_date": "2025-09-19"
+      }
+    ]
+  },
+  {
+    "user_id": 9,
+    "name": "Đỗ Thành Yên",
+    "age": 43,
+    "wallet_id": "0xt4ufel6246hid25owf75935a0l7253j2d5",
+    "coin_holdings": {
+      "AVAX": 6406.51,
+      "MATIC": 4395.331,
+      "BTC": 0.505066,
+      "USDT": 32878.52
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addr82n2atqyyv37dia5u6hc36kof8krd5eqy08p0f",
+        "coin_type": "AVAX",
+        "amount": 617.114,
+        "transaction_date": "2025-05-11"
+      },
+      {
+        "counterparty_wallet_id": "bc1p6qf5q14j1ripzim6cfnfholqc3o18a5ur7ko64t",
+        "coin_type": "BTC",
+        "amount": -0.353775,
+        "transaction_date": "2025-07-21"
+      },
+      {
+        "counterparty_wallet_id": "bc15pht0hl9xpseimvihcwi64ciyhe7ur23gdppq0y9",
+        "coin_type": "BTC",
+        "amount": 0.655364,
+        "transaction_date": "2025-09-20"
+      },
+      {
+        "counterparty_wallet_id": "addrt3imj70e3p15ahdbvzb0oih5csk30lvylkfxhk",
+        "coin_type": "MATIC",
+        "amount": 738.241,
+        "transaction_date": "2025-10-13"
+      }
+    ]
+  },
+  {
+    "user_id": 10,
+    "name": "Vũ Kim Quân",
+    "age": 54,
+    "wallet_id": "bc1h7m35ixokc1msy4la5ju9bvm2p9e6gbps3y",
+    "coin_holdings": {
+      "SOL": 5067.319,
+      "USDT": 27975.67,
+      "XRP": 5036.66
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0x3d8w3zp08j3trp0j43d5iqvnb4gh2m5zja8dzr",
+        "coin_type": "XRP",
+        "amount": -876.732,
+        "transaction_date": "2025-06-05"
+      },
+      {
+        "counterparty_wallet_id": "bc180b6ugvs8q349dxbz9svn7n1ybwmlunj48vfcx7l",
+        "coin_type": "XRP",
+        "amount": -966.225,
+        "transaction_date": "2025-06-08"
+      },
+      {
+        "counterparty_wallet_id": "bc1rpzlk3e4xyf9igfu8iogxpbwhvnzh13cd5glq",
+        "coin_type": "SOL",
+        "amount": -961.433,
+        "transaction_date": "2025-07-05"
+      },
+      {
+        "counterparty_wallet_id": "addrldslcb8qsspye9r1f63ai9hasez2nx1wvbd4b",
+        "coin_type": "USDT",
+        "amount": 4845.6,
+        "transaction_date": "2025-08-25"
+      }
+    ]
+  },
+  {
+    "user_id": 11,
+    "name": "Đỗ Ngọc Long",
+    "age": 33,
+    "wallet_id": "addrncxll4zklookep7y6wktakpuxqphr62gdsw",
+    "coin_holdings": {
+      "ETH": 8.3227,
+      "XRP": 1793.073,
+      "ADA": 3145.589,
+      "AVAX": 2193.476
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc131yihair4cowgzrixa11dpg8sbi4q2y9v",
+        "coin_type": "AVAX",
+        "amount": 765.423,
+        "transaction_date": "2025-06-14"
+      },
+      {
+        "counterparty_wallet_id": "0x361i2hgj11yedwb2bne6loh25nsjf678k52qc1i",
+        "coin_type": "XRP",
+        "amount": -738.427,
+        "transaction_date": "2025-08-31"
+      },
+      {
+        "counterparty_wallet_id": "0xoz0kz4z7whwkmy9x8sylemruyp04k43saf",
+        "coin_type": "XRP",
+        "amount": -210.745,
+        "transaction_date": "2025-09-09"
+      },
+      {
+        "counterparty_wallet_id": "addrifhv1xg1r11q7uww5wfcpkjcslqc3c54ws",
+        "coin_type": "ADA",
+        "amount": 780.044,
+        "transaction_date": "2025-09-30"
+      }
+    ]
+  },
+  {
+    "user_id": 12,
+    "name": "Hồ Kim Tú",
+    "age": 35,
+    "wallet_id": "bc131yihair4cowgzrixa11dpg8sbi4q2y9v",
+    "coin_holdings": {
+      "BNB": 5262.097,
+      "MATIC": 4237.527,
+      "USDT": 46988.76,
+      "BTC": 0.082374
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrbmc97c7bo119xp9n56nyxtxmgtt0iaaky",
+        "coin_type": "MATIC",
+        "amount": -976.625,
+        "transaction_date": "2025-05-05"
+      },
+      {
+        "counterparty_wallet_id": "bc1b4ehou6qlz2rwgwaj1g1r1dwwo8nbhnal3gywi",
+        "coin_type": "MATIC",
+        "amount": -583.103,
+        "transaction_date": "2025-08-08"
+      },
+      {
+        "counterparty_wallet_id": "bc182kkzmpjrht7zewviytwbozd1at7o75rh8lx6",
+        "coin_type": "USDT",
+        "amount": 5508.21,
+        "transaction_date": "2025-08-31"
+      },
+      {
+        "counterparty_wallet_id": "addrf7jxjn6fokzixzareiyaz39pecn0dl5e11e9",
+        "coin_type": "BTC",
+        "amount": -0.689521,
+        "transaction_date": "2025-10-27"
+      }
+    ]
+  },
+  {
+    "user_id": 13,
+    "name": "Lê Anh Khánh",
+    "age": 32,
+    "wallet_id": "bc1p6qf5q14j1ripzim6cfnfholqc3o18a5ur7ko64t",
+    "coin_holdings": {
+      "AVAX": 5557.847,
+      "SOL": 8564.524,
+      "BNB": 1968.672
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc180b6ugvs8q349dxbz9svn7n1ybwmlunj48vfcx7l",
+        "coin_type": "BNB",
+        "amount": 401.41,
+        "transaction_date": "2025-05-07"
+      },
+      {
+        "counterparty_wallet_id": "bc1rc6zs62ywe1g983ep9p9w4j66cnoljq52ws",
+        "coin_type": "BNB",
+        "amount": -786.406,
+        "transaction_date": "2025-08-15"
+      },
+      {
+        "counterparty_wallet_id": "0x1xmxb9yo18pajssuuqo1vsmado8e7flqh",
+        "coin_type": "AVAX",
+        "amount": 424.413,
+        "transaction_date": "2025-09-26"
+      }
+    ]
+  },
+  {
+    "user_id": 14,
+    "name": "Hoàng Thanh An",
+    "age": 44,
+    "wallet_id": "addr26rjrny20479t6vxdp5gjlqm5k8p4q0b8ic8bbi4",
+    "coin_holdings": {
+      "ADA": 1997.592,
+      "LTC": 5763.186,
+      "MATIC": 6494.818
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xn3oeuvtyt8qzpky32orwixz2c9ros7yt2m6tw",
+        "coin_type": "MATIC",
+        "amount": 868.916,
+        "transaction_date": "2025-05-20"
+      },
+      {
+        "counterparty_wallet_id": "bc1asifpwioxd9css9toqw9ja2m0w10lbt3g2qzw3c1",
+        "coin_type": "LTC",
+        "amount": -674.827,
+        "transaction_date": "2025-06-28"
+      },
+      {
+        "counterparty_wallet_id": "0xoz0kz4z7whwkmy9x8sylemruyp04k43saf",
+        "coin_type": "LTC",
+        "amount": 384.166,
+        "transaction_date": "2025-08-18"
+      }
+    ]
+  },
+  {
+    "user_id": 15,
+    "name": "Phan Minh Xuân",
+    "age": 46,
+    "wallet_id": "addrire8qjnv8z2flu7u6n7hv3izky22ubtxcx",
+    "coin_holdings": {
+      "AVAX": 4145.751,
+      "MATIC": 1847.023,
+      "DOGE": 240.78,
+      "DOT": 7280.446
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addracy15pdtz91x70fqldb2uuijnwpaytxw1vzc7d2k",
+        "coin_type": "DOT",
+        "amount": 108.409,
+        "transaction_date": "2025-05-25"
+      },
+      {
+        "counterparty_wallet_id": "addrogn1w1ht7pze9vifttd96qe3rzsj49itn7s55j2",
+        "coin_type": "AVAX",
+        "amount": -312.824,
+        "transaction_date": "2025-08-28"
+      },
+      {
+        "counterparty_wallet_id": "addrh1fkj4yk1b3d5050ui22kx7n89ltajw2",
+        "coin_type": "AVAX",
+        "amount": 171.076,
+        "transaction_date": "2025-10-04"
+      },
+      {
+        "counterparty_wallet_id": "bc1p6qf5q14j1ripzim6cfnfholqc3o18a5ur7ko64t",
+        "coin_type": "AVAX",
+        "amount": -550.692,
+        "transaction_date": "2025-10-24"
+      }
+    ]
+  },
+  {
+    "user_id": 16,
+    "name": "Dương Minh Uyên",
+    "age": 46,
+    "wallet_id": "0x3d8w3zp08j3trp0j43d5iqvnb4gh2m5zja8dzr",
+    "coin_holdings": {
+      "AVAX": 5912.401,
+      "DOGE": 4570.869,
+      "USDT": 37470.69
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrf7jxjn6fokzixzareiyaz39pecn0dl5e11e9",
+        "coin_type": "AVAX",
+        "amount": -290.328,
+        "transaction_date": "2025-06-16"
+      },
+      {
+        "counterparty_wallet_id": "0xtaxp0wfoy4dd1vn8lfjdtvv2y4xkss0kb",
+        "coin_type": "USDT",
+        "amount": -9093.79,
+        "transaction_date": "2025-06-29"
+      },
+      {
+        "counterparty_wallet_id": "addrlp8ii7ewbxxgaearms3jn050e6mpsj9wr",
+        "coin_type": "AVAX",
+        "amount": 444.651,
+        "transaction_date": "2025-07-29"
+      },
+      {
+        "counterparty_wallet_id": "0x856wpr97y2lofn1r4kz36u8ueihx74d0gjyv5g10",
+        "coin_type": "DOGE",
+        "amount": 307.055,
+        "transaction_date": "2025-10-30"
+      }
+    ]
+  },
+  {
+    "user_id": 17,
+    "name": "Võ Thanh Khoa",
+    "age": 44,
+    "wallet_id": "0xxr2dhylurtp0lzjjeget1ghr09skdgigatj9tze",
+    "coin_holdings": {
+      "XRP": 8285.984,
+      "BNB": 2213.718,
+      "USDT": 4052.57,
+      "AVAX": 6256.977
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addr82n2atqyyv37dia5u6hc36kof8krd5eqy08p0f",
+        "coin_type": "USDT",
+        "amount": 1563.89,
+        "transaction_date": "2025-06-16"
+      },
+      {
+        "counterparty_wallet_id": "addrfmpkxvhagkc4lorxdtg5nqjqijc1ydmt8vt43pt",
+        "coin_type": "AVAX",
+        "amount": -701.97,
+        "transaction_date": "2025-06-27"
+      },
+      {
+        "counterparty_wallet_id": "0x361i2hgj11yedwb2bne6loh25nsjf678k52qc1i",
+        "coin_type": "BNB",
+        "amount": -114.805,
+        "transaction_date": "2025-07-06"
+      },
+      {
+        "counterparty_wallet_id": "bc1asifpwioxd9css9toqw9ja2m0w10lbt3g2qzw3c1",
+        "coin_type": "USDT",
+        "amount": -1920.61,
+        "transaction_date": "2025-10-13"
+      }
+    ]
+  },
+  {
+    "user_id": 18,
+    "name": "Huỳnh Thành Mai",
+    "age": 49,
+    "wallet_id": "bc15uqpgb7r3ocwbfuk9e1v2isqp49kwv08h",
+    "coin_holdings": {
+      "DOT": 8437.028,
+      "BTC": 2.379158,
+      "ADA": 569.823,
+      "ETH": 11.637
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrlp8ii7ewbxxgaearms3jn050e6mpsj9wr",
+        "coin_type": "ETH",
+        "amount": 0.969,
+        "transaction_date": "2025-08-27"
+      },
+      {
+        "counterparty_wallet_id": "0xvwoplod9r7anqjluujmiyqfy751yw7nh8r",
+        "coin_type": "DOT",
+        "amount": 974.726,
+        "transaction_date": "2025-08-28"
+      },
+      {
+        "counterparty_wallet_id": "bc1otqtxhi15cqzcuctsuflsehuds3qsqcq30o30",
+        "coin_type": "ETH",
+        "amount": 3.6907,
+        "transaction_date": "2025-10-22"
+      }
+    ]
+  },
+  {
+    "user_id": 19,
+    "name": "Nguyễn Hải Yên",
+    "age": 53,
+    "wallet_id": "0xxfgcaqvkizzqy72wx7ptx63cfl0ukeyz7src",
+    "coin_holdings": {
+      "SOL": 1995.249,
+      "DOT": 8876.321,
+      "AVAX": 8637.94
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1oonncildzmfb7r31qw6ahf7vp1ieixwc",
+        "coin_type": "AVAX",
+        "amount": 398.829,
+        "transaction_date": "2025-08-29"
+      },
+      {
+        "counterparty_wallet_id": "addrire8qjnv8z2flu7u6n7hv3izky22ubtxcx",
+        "coin_type": "SOL",
+        "amount": -327.891,
+        "transaction_date": "2025-09-18"
+      },
+      {
+        "counterparty_wallet_id": "bc1t3w5uzbikcidkwnnhj7xvg0fn9xuy41ib",
+        "coin_type": "SOL",
+        "amount": -689.965,
+        "transaction_date": "2025-09-21"
+      }
+    ]
+  },
+  {
+    "user_id": 20,
+    "name": "Võ Phương Dũng",
+    "age": 26,
+    "wallet_id": "0x0vaiy4va13u1gspk9p38qoldforxo1bdje153a",
+    "coin_holdings": {
+      "BNB": 8057.199,
+      "ADA": 4392.802,
+      "DOGE": 1937.723,
+      "LTC": 6895.607
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xe094d6rupw2w5506rr5pcxa5s00i85syw",
+        "coin_type": "LTC",
+        "amount": -545.02,
+        "transaction_date": "2025-06-27"
+      },
+      {
+        "counterparty_wallet_id": "addr6uxqm334l1vznqdxamw2tnd6r30ojhe4h3gm",
+        "coin_type": "ADA",
+        "amount": -899.17,
+        "transaction_date": "2025-06-28"
+      },
+      {
+        "counterparty_wallet_id": "addr82n2atqyyv37dia5u6hc36kof8krd5eqy08p0f",
+        "coin_type": "ADA",
+        "amount": -327.062,
+        "transaction_date": "2025-07-03"
+      },
+      {
+        "counterparty_wallet_id": "bc1oonncildzmfb7r31qw6ahf7vp1ieixwc",
+        "coin_type": "ADA",
+        "amount": 533.482,
+        "transaction_date": "2025-07-07"
+      }
+    ]
+  },
+  {
+    "user_id": 21,
+    "name": "Huỳnh Hải Cường",
+    "age": 52,
+    "wallet_id": "addrogn1w1ht7pze9vifttd96qe3rzsj49itn7s55j2",
+    "coin_holdings": {
+      "BNB": 1549.774,
+      "DOGE": 2838.46,
+      "DOT": 4103.947,
+      "LTC": 3227.02
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1p6qf5q14j1ripzim6cfnfholqc3o18a5ur7ko64t",
+        "coin_type": "BNB",
+        "amount": -659.632,
+        "transaction_date": "2025-06-18"
+      },
+      {
+        "counterparty_wallet_id": "addru2gc5wi6fqjja26yfpmvxpj4hnriuu9k9xjuy0",
+        "coin_type": "BNB",
+        "amount": 111.52,
+        "transaction_date": "2025-09-11"
+      },
+      {
+        "counterparty_wallet_id": "addrf7jxjn6fokzixzareiyaz39pecn0dl5e11e9",
+        "coin_type": "BNB",
+        "amount": 836.017,
+        "transaction_date": "2025-09-27"
+      }
+    ]
+  },
+  {
+    "user_id": 22,
+    "name": "Võ Hải Xuân",
+    "age": 44,
+    "wallet_id": "bc17s3kkv9rftmttqlgzui1b0z3nx39rbsv55psq",
+    "coin_holdings": {
+      "AVAX": 5294.918,
+      "BTC": 1.836017,
+      "MATIC": 8346.22,
+      "SOL": 788.574
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc19dde3cup8ijl2z0ljch2vffqot8hljefy3zb4ld",
+        "coin_type": "BTC",
+        "amount": -0.746362,
+        "transaction_date": "2025-05-20"
+      },
+      {
+        "counterparty_wallet_id": "addrf7jxjn6fokzixzareiyaz39pecn0dl5e11e9",
+        "coin_type": "AVAX",
+        "amount": 726.546,
+        "transaction_date": "2025-06-16"
+      },
+      {
+        "counterparty_wallet_id": "bc1otqtxhi15cqzcuctsuflsehuds3qsqcq30o30",
+        "coin_type": "BTC",
+        "amount": 0.526666,
+        "transaction_date": "2025-08-28"
+      }
+    ]
+  },
+  {
+    "user_id": 23,
+    "name": "Huỳnh Hoài Nam",
+    "age": 41,
+    "wallet_id": "addroxfq8myx444nlz15bcw790pdw5py6b2knf",
+    "coin_holdings": {
+      "LTC": 5635.816,
+      "XRP": 2147.142,
+      "ADA": 7659.425,
+      "BNB": 9262.208
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xzp6lfewvznvksp2ex5t5p5o3o0llj8yrddp0nec",
+        "coin_type": "ADA",
+        "amount": 772.665,
+        "transaction_date": "2025-05-07"
+      },
+      {
+        "counterparty_wallet_id": "addr6uxqm334l1vznqdxamw2tnd6r30ojhe4h3gm",
+        "coin_type": "LTC",
+        "amount": -597.784,
+        "transaction_date": "2025-06-20"
+      },
+      {
+        "counterparty_wallet_id": "bc15uqpgb7r3ocwbfuk9e1v2isqp49kwv08h",
+        "coin_type": "ADA",
+        "amount": 303.832,
+        "transaction_date": "2025-09-04"
+      },
+      {
+        "counterparty_wallet_id": "bc182kkzmpjrht7zewviytwbozd1at7o75rh8lx6",
+        "coin_type": "BNB",
+        "amount": -960.025,
+        "transaction_date": "2025-10-30"
+      }
+    ]
+  },
+  {
+    "user_id": 24,
+    "name": "Hoàng Phương Mai",
+    "age": 23,
+    "wallet_id": "addru2gc5wi6fqjja26yfpmvxpj4hnriuu9k9xjuy0",
+    "coin_holdings": {
+      "MATIC": 7931.113,
+      "BNB": 1737.296,
+      "ETH": 12.3873,
+      "ADA": 6899.055
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xarlw3mg25cfzfdsnczxvml90pxrlzu6wmx3",
+        "coin_type": "ETH",
+        "amount": 3.6566,
+        "transaction_date": "2025-06-05"
+      },
+      {
+        "counterparty_wallet_id": "0xvwoplod9r7anqjluujmiyqfy751yw7nh8r",
+        "coin_type": "MATIC",
+        "amount": 922.262,
+        "transaction_date": "2025-08-06"
+      },
+      {
+        "counterparty_wallet_id": "addrf7low4vssruraldol65wvjx8uibrsz1n3iuzgppo",
+        "coin_type": "ADA",
+        "amount": -930.595,
+        "transaction_date": "2025-09-30"
+      }
+    ]
+  },
+  {
+    "user_id": 25,
+    "name": "Huỳnh Hoài Lan",
+    "age": 32,
+    "wallet_id": "0x361i2hgj11yedwb2bne6loh25nsjf678k52qc1i",
+    "coin_holdings": {
+      "BTC": 2.42763,
+      "LTC": 7530.874,
+      "XRP": 5756.796
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrb4gf16ye0a4abn7g8b2zxii6l3ueybisbo551",
+        "coin_type": "LTC",
+        "amount": -89.654,
+        "transaction_date": "2025-06-24"
+      },
+      {
+        "counterparty_wallet_id": "addrlemx15z8vmuhxid4n1u3493wxa73jgzlma5uofwb",
+        "coin_type": "LTC",
+        "amount": -787.436,
+        "transaction_date": "2025-09-23"
+      },
+      {
+        "counterparty_wallet_id": "0xxr2dhylurtp0lzjjeget1ghr09skdgigatj9tze",
+        "coin_type": "LTC",
+        "amount": 478.475,
+        "transaction_date": "2025-10-18"
+      }
+    ]
+  },
+  {
+    "user_id": 26,
+    "name": "Hồ Thành Nam",
+    "age": 54,
+    "wallet_id": "addr82n2atqyyv37dia5u6hc36kof8krd5eqy08p0f",
+    "coin_holdings": {
+      "ETH": 6.3589,
+      "LTC": 3489.595,
+      "XRP": 3214.176
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addracy15pdtz91x70fqldb2uuijnwpaytxw1vzc7d2k",
+        "coin_type": "LTC",
+        "amount": 987.714,
+        "transaction_date": "2025-05-26"
+      },
+      {
+        "counterparty_wallet_id": "0x7i6yuj7yktxg4ahf337kuu4ytn02yc0mdicvwv8l",
+        "coin_type": "XRP",
+        "amount": 443.261,
+        "transaction_date": "2025-09-01"
+      },
+      {
+        "counterparty_wallet_id": "bc14w7kyhqin9n6xcj883dhx8bm92h3tv3i1",
+        "coin_type": "XRP",
+        "amount": -160.211,
+        "transaction_date": "2025-10-09"
+      }
+    ]
+  },
+  {
+    "user_id": 27,
+    "name": "Hoàng Quang Tùng",
+    "age": 19,
+    "wallet_id": "bc14w7kyhqin9n6xcj883dhx8bm92h3tv3i1",
+    "coin_holdings": {
+      "BNB": 5468.778,
+      "DOGE": 7506.048,
+      "AVAX": 5492.513,
+      "MATIC": 6234.19
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xpejzhyapdswzp6swk2rv239moft6yriaddur82",
+        "coin_type": "BNB",
+        "amount": -585.09,
+        "transaction_date": "2025-05-14"
+      },
+      {
+        "counterparty_wallet_id": "0xtaxp0wfoy4dd1vn8lfjdtvv2y4xkss0kb",
+        "coin_type": "BNB",
+        "amount": -174.468,
+        "transaction_date": "2025-08-19"
+      },
+      {
+        "counterparty_wallet_id": "addr82n2atqyyv37dia5u6hc36kof8krd5eqy08p0f",
+        "coin_type": "AVAX",
+        "amount": 467.636,
+        "transaction_date": "2025-10-28"
+      }
+    ]
+  },
+  {
+    "user_id": 28,
+    "name": "Phạm Thành Tú",
+    "age": 24,
+    "wallet_id": "addrj99t2d5em2vajepecqnvqhw06xkxb94p",
+    "coin_holdings": {
+      "DOT": 1872.31,
+      "MATIC": 5011.502,
+      "DOGE": 4585.283,
+      "ETH": 13.896
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xswq40zsu9rn8qtty5y2jr8kk791zyrru7zkut6",
+        "coin_type": "DOGE",
+        "amount": 996.014,
+        "transaction_date": "2025-06-24"
+      },
+      {
+        "counterparty_wallet_id": "0xom5igqpki7p5tb94874frhocn9j2qp89",
+        "coin_type": "MATIC",
+        "amount": -336.902,
+        "transaction_date": "2025-07-22"
+      },
+      {
+        "counterparty_wallet_id": "addrh1fkj4yk1b3d5050ui22kx7n89ltajw2",
+        "coin_type": "MATIC",
+        "amount": 350.046,
+        "transaction_date": "2025-08-01"
+      }
+    ]
+  },
+  {
+    "user_id": 29,
+    "name": "Bùi Hữu Cường",
+    "age": 42,
+    "wallet_id": "0xzp6lfewvznvksp2ex5t5p5o3o0llj8yrddp0nec",
+    "coin_holdings": {
+      "XRP": 1535.964,
+      "BNB": 9705.666,
+      "MATIC": 9098.257
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1vg5vmf60yknfu84xyjoa21a6xvaj2k8xpnmjqy3",
+        "coin_type": "MATIC",
+        "amount": 320.909,
+        "transaction_date": "2025-06-10"
+      },
+      {
+        "counterparty_wallet_id": "bc1npm6jqfwwxr5rdnpx2i9tanzr2muljav",
+        "coin_type": "MATIC",
+        "amount": 863.275,
+        "transaction_date": "2025-08-12"
+      },
+      {
+        "counterparty_wallet_id": "0xpejzhyapdswzp6swk2rv239moft6yriaddur82",
+        "coin_type": "MATIC",
+        "amount": 432.914,
+        "transaction_date": "2025-09-23"
+      },
+      {
+        "counterparty_wallet_id": "addr2qitngvn1kicjn2fomd7q1ddpusddtv25ao2",
+        "coin_type": "MATIC",
+        "amount": 210.723,
+        "transaction_date": "2025-09-25"
+      }
+    ]
+  },
+  {
+    "user_id": 30,
+    "name": "Dương Hải Long",
+    "age": 27,
+    "wallet_id": "addrlemx15z8vmuhxid4n1u3493wxa73jgzlma5uofwb",
+    "coin_holdings": {
+      "ETH": 0.4027,
+      "USDT": 49299.18,
+      "LTC": 6173.296
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrncxll4zklookep7y6wktakpuxqphr62gdsw",
+        "coin_type": "LTC",
+        "amount": -138.416,
+        "transaction_date": "2025-05-29"
+      },
+      {
+        "counterparty_wallet_id": "0x1xmxb9yo18pajssuuqo1vsmado8e7flqh",
+        "coin_type": "LTC",
+        "amount": -188.057,
+        "transaction_date": "2025-07-23"
+      },
+      {
+        "counterparty_wallet_id": "0xarlw3mg25cfzfdsnczxvml90pxrlzu6wmx3",
+        "coin_type": "ETH",
+        "amount": 3.44,
+        "transaction_date": "2025-07-31"
+      }
+    ]
+  },
+  {
+    "user_id": 31,
+    "name": "Lê Kim Thảo",
+    "age": 49,
+    "wallet_id": "addrhpmnz1udbfwyjxrpj1epkyrybovakhejla0gnzs4",
+    "coin_holdings": {
+      "DOT": 7764.385,
+      "BNB": 6083.22,
+      "XRP": 8245.042,
+      "MATIC": 7204.807
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrifhv1xg1r11q7uww5wfcpkjcslqc3c54ws",
+        "coin_type": "MATIC",
+        "amount": 559.912,
+        "transaction_date": "2025-06-20"
+      },
+      {
+        "counterparty_wallet_id": "0xcsotdhhlmh1t939ayq6ww8yl68ntk63n2qb6gs8g",
+        "coin_type": "DOT",
+        "amount": 294.723,
+        "transaction_date": "2025-07-21"
+      },
+      {
+        "counterparty_wallet_id": "bc1cxlvpymb5m9j98cwn2y8fv2bc2nnuvy8n",
+        "coin_type": "XRP",
+        "amount": -170.654,
+        "transaction_date": "2025-08-16"
+      },
+      {
+        "counterparty_wallet_id": "bc15mn32u1iq2bajdm5fc79m96zpxvpbl9ot7txkdo",
+        "coin_type": "DOT",
+        "amount": 454.352,
+        "transaction_date": "2025-10-20"
+      }
+    ]
+  },
+  {
+    "user_id": 32,
+    "name": "Huỳnh Quang An",
+    "age": 29,
+    "wallet_id": "bc1o0pqclpoxko8g8qynpdpoc50h2cwtg1m8",
+    "coin_holdings": {
+      "MATIC": 2508.322,
+      "BNB": 6920.257,
+      "DOT": 9072.553,
+      "ETH": 11.9493
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xom5igqpki7p5tb94874frhocn9j2qp89",
+        "coin_type": "BNB",
+        "amount": -567.664,
+        "transaction_date": "2025-05-15"
+      },
+      {
+        "counterparty_wallet_id": "0xtaxp0wfoy4dd1vn8lfjdtvv2y4xkss0kb",
+        "coin_type": "ETH",
+        "amount": 1.8996,
+        "transaction_date": "2025-07-25"
+      },
+      {
+        "counterparty_wallet_id": "bc131yihair4cowgzrixa11dpg8sbi4q2y9v",
+        "coin_type": "MATIC",
+        "amount": -635.902,
+        "transaction_date": "2025-10-09"
+      }
+    ]
+  },
+  {
+    "user_id": 33,
+    "name": "Dương Hữu Khoa",
+    "age": 18,
+    "wallet_id": "addrifhv1xg1r11q7uww5wfcpkjcslqc3c54ws",
+    "coin_holdings": {
+      "BTC": 1.359209,
+      "DOT": 67.448,
+      "LTC": 8828.202,
+      "MATIC": 2386.405
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrf7low4vssruraldol65wvjx8uibrsz1n3iuzgppo",
+        "coin_type": "BTC",
+        "amount": 0.853975,
+        "transaction_date": "2025-05-13"
+      },
+      {
+        "counterparty_wallet_id": "bc14w7kyhqin9n6xcj883dhx8bm92h3tv3i1",
+        "coin_type": "BTC",
+        "amount": 0.149108,
+        "transaction_date": "2025-05-16"
+      },
+      {
+        "counterparty_wallet_id": "addr69ugnekrcpprcjiwvhdk8lw2lm349el8hl88kzru",
+        "coin_type": "MATIC",
+        "amount": -84.008,
+        "transaction_date": "2025-05-30"
+      },
+      {
+        "counterparty_wallet_id": "addraji0y6dpbhsahxthv3a3zmf8mdd4v30t9",
+        "coin_type": "DOT",
+        "amount": -621.667,
+        "transaction_date": "2025-06-10"
+      }
+    ]
+  },
+  {
+    "user_id": 34,
+    "name": "Vũ Hải Vinh",
+    "age": 41,
+    "wallet_id": "bc180b6ugvs8q349dxbz9svn7n1ybwmlunj48vfcx7l",
+    "coin_holdings": {
+      "ETH": 5.5349,
+      "SOL": 3795.604,
+      "ADA": 685.99
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xobk3g84utdd2ec2ihoy7dv7c9hx3d43e7b7p0",
+        "coin_type": "ADA",
+        "amount": 486.245,
+        "transaction_date": "2025-05-07"
+      },
+      {
+        "counterparty_wallet_id": "0xpejzhyapdswzp6swk2rv239moft6yriaddur82",
+        "coin_type": "SOL",
+        "amount": -529.417,
+        "transaction_date": "2025-06-18"
+      },
+      {
+        "counterparty_wallet_id": "addrb4gf16ye0a4abn7g8b2zxii6l3ueybisbo551",
+        "coin_type": "ETH",
+        "amount": -2.3594,
+        "transaction_date": "2025-09-29"
+      },
+      {
+        "counterparty_wallet_id": "bc14w7kyhqin9n6xcj883dhx8bm92h3tv3i1",
+        "coin_type": "ADA",
+        "amount": 613.993,
+        "transaction_date": "2025-10-03"
+      }
+    ]
+  },
+  {
+    "user_id": 35,
+    "name": "Vũ Phương Hùng",
+    "age": 32,
+    "wallet_id": "addrezduxlez896dysal8m1g9fk2st0sx5wvfgyw6z",
+    "coin_holdings": {
+      "BNB": 4654.207,
+      "BTC": 1.992035,
+      "ETH": 11.0647,
+      "LTC": 2081.235
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0x856wpr97y2lofn1r4kz36u8ueihx74d0gjyv5g10",
+        "coin_type": "BNB",
+        "amount": -352.902,
+        "transaction_date": "2025-05-20"
+      },
+      {
+        "counterparty_wallet_id": "addracy15pdtz91x70fqldb2uuijnwpaytxw1vzc7d2k",
+        "coin_type": "BNB",
+        "amount": 687.407,
+        "transaction_date": "2025-08-04"
+      },
+      {
+        "counterparty_wallet_id": "0xt4ufel6246hid25owf75935a0l7253j2d5",
+        "coin_type": "ETH",
+        "amount": -2.5384,
+        "transaction_date": "2025-08-09"
+      },
+      {
+        "counterparty_wallet_id": "addrj99t2d5em2vajepecqnvqhw06xkxb94p",
+        "coin_type": "BNB",
+        "amount": 691.567,
+        "transaction_date": "2025-08-26"
+      }
+    ]
+  },
+  {
+    "user_id": 36,
+    "name": "Bùi Quang Xuân",
+    "age": 52,
+    "wallet_id": "0xnz8v12ii826gyup12spfhv5brn7zsedfqs3d63",
+    "coin_holdings": {
+      "DOT": 3000.444,
+      "XRP": 7252.392,
+      "BTC": 0.789442,
+      "DOGE": 5363.496
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1oonncildzmfb7r31qw6ahf7vp1ieixwc",
+        "coin_type": "DOT",
+        "amount": -983.701,
+        "transaction_date": "2025-05-23"
+      },
+      {
+        "counterparty_wallet_id": "0xobk3g84utdd2ec2ihoy7dv7c9hx3d43e7b7p0",
+        "coin_type": "BTC",
+        "amount": -0.067147,
+        "transaction_date": "2025-09-22"
+      },
+      {
+        "counterparty_wallet_id": "0xniwc5amln4ptgq9cvah78okz1poxtfdc79flv1x",
+        "coin_type": "XRP",
+        "amount": -191.442,
+        "transaction_date": "2025-10-01"
+      }
+    ]
+  },
+  {
+    "user_id": 37,
+    "name": "Trần Thanh Thư",
+    "age": 20,
+    "wallet_id": "bc1oonncildzmfb7r31qw6ahf7vp1ieixwc",
+    "coin_holdings": {
+      "ETH": 0.3838,
+      "DOT": 4831.805,
+      "DOGE": 5005.543
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xr5xqt4p501nouhtcs1k9ye9o2m71hssbelrq",
+        "coin_type": "DOT",
+        "amount": -776.656,
+        "transaction_date": "2025-09-24"
+      },
+      {
+        "counterparty_wallet_id": "addr69ugnekrcpprcjiwvhdk8lw2lm349el8hl88kzru",
+        "coin_type": "DOT",
+        "amount": 9.089,
+        "transaction_date": "2025-10-19"
+      },
+      {
+        "counterparty_wallet_id": "addracy15pdtz91x70fqldb2uuijnwpaytxw1vzc7d2k",
+        "coin_type": "ETH",
+        "amount": 1.0339,
+        "transaction_date": "2025-10-21"
+      }
+    ]
+  },
+  {
+    "user_id": 38,
+    "name": "Võ Thanh Phong",
+    "age": 46,
+    "wallet_id": "bc1asifpwioxd9css9toqw9ja2m0w10lbt3g2qzw3c1",
+    "coin_holdings": {
+      "SOL": 2743.632,
+      "USDT": 861.31,
+      "LTC": 6233.22
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc14w7kyhqin9n6xcj883dhx8bm92h3tv3i1",
+        "coin_type": "LTC",
+        "amount": -551.619,
+        "transaction_date": "2025-08-22"
+      },
+      {
+        "counterparty_wallet_id": "0xxfgcaqvkizzqy72wx7ptx63cfl0ukeyz7src",
+        "coin_type": "LTC",
+        "amount": -576.213,
+        "transaction_date": "2025-09-17"
+      },
+      {
+        "counterparty_wallet_id": "bc1h7m35ixokc1msy4la5ju9bvm2p9e6gbps3y",
+        "coin_type": "USDT",
+        "amount": -5428.74,
+        "transaction_date": "2025-10-18"
+      }
+    ]
+  },
+  {
+    "user_id": 39,
+    "name": "Đỗ Hải Thảo",
+    "age": 40,
+    "wallet_id": "bc1kbhb7s9tj1gm25len606n9rr7s20cv3t",
+    "coin_holdings": {
+      "ADA": 9737.082,
+      "BNB": 7559.872,
+      "DOGE": 4662.297,
+      "ETH": 1.9856
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc180b6ugvs8q349dxbz9svn7n1ybwmlunj48vfcx7l",
+        "coin_type": "DOGE",
+        "amount": -187.436,
+        "transaction_date": "2025-05-13"
+      },
+      {
+        "counterparty_wallet_id": "0x1xmxb9yo18pajssuuqo1vsmado8e7flqh",
+        "coin_type": "BNB",
+        "amount": 148.003,
+        "transaction_date": "2025-05-26"
+      },
+      {
+        "counterparty_wallet_id": "bc1p6qf5q14j1ripzim6cfnfholqc3o18a5ur7ko64t",
+        "coin_type": "ETH",
+        "amount": -3.4255,
+        "transaction_date": "2025-07-03"
+      },
+      {
+        "counterparty_wallet_id": "bc1ccprhvlz049enulqjidknwi5flul1rsrla8s8hm",
+        "coin_type": "DOGE",
+        "amount": -490.069,
+        "transaction_date": "2025-10-14"
+      }
+    ]
+  },
+  {
+    "user_id": 40,
+    "name": "Trần Phương Mai",
+    "age": 52,
+    "wallet_id": "bc1cxlvpymb5m9j98cwn2y8fv2bc2nnuvy8n",
+    "coin_holdings": {
+      "XRP": 6212.54,
+      "MATIC": 5484.011,
+      "AVAX": 9739.178,
+      "BNB": 3844.326
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xoz0kz4z7whwkmy9x8sylemruyp04k43saf",
+        "coin_type": "BNB",
+        "amount": 594.202,
+        "transaction_date": "2025-07-04"
+      },
+      {
+        "counterparty_wallet_id": "addrm764jwtektsg7fxzv4u3bbxux1oxrwk8r2y",
+        "coin_type": "XRP",
+        "amount": -180.293,
+        "transaction_date": "2025-07-19"
+      },
+      {
+        "counterparty_wallet_id": "bc14w7kyhqin9n6xcj883dhx8bm92h3tv3i1",
+        "coin_type": "BNB",
+        "amount": -569.375,
+        "transaction_date": "2025-08-04"
+      },
+      {
+        "counterparty_wallet_id": "addrlp8ii7ewbxxgaearms3jn050e6mpsj9wr",
+        "coin_type": "MATIC",
+        "amount": 664.299,
+        "transaction_date": "2025-10-11"
+      }
+    ]
+  },
+  {
+    "user_id": 41,
+    "name": "Lê Kim Vinh",
+    "age": 18,
+    "wallet_id": "0xtoxie0rnujjq9k6re4q6qdy4lmct64z7w2",
+    "coin_holdings": {
+      "LTC": 5317.246,
+      "USDT": 19560.13,
+      "DOT": 5783.535
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc14w7kyhqin9n6xcj883dhx8bm92h3tv3i1",
+        "coin_type": "DOT",
+        "amount": -303.237,
+        "transaction_date": "2025-05-10"
+      },
+      {
+        "counterparty_wallet_id": "bc1kbhb7s9tj1gm25len606n9rr7s20cv3t",
+        "coin_type": "USDT",
+        "amount": -9903.38,
+        "transaction_date": "2025-06-03"
+      },
+      {
+        "counterparty_wallet_id": "bc1t3w5uzbikcidkwnnhj7xvg0fn9xuy41ib",
+        "coin_type": "DOT",
+        "amount": -848.399,
+        "transaction_date": "2025-08-16"
+      }
+    ]
+  },
+  {
+    "user_id": 42,
+    "name": "Phạm Thành Lan",
+    "age": 55,
+    "wallet_id": "addrehe2atn2twdl9zs13c9xqym52xg8p6beffl",
+    "coin_holdings": {
+      "LTC": 3821.835,
+      "ADA": 5455.737,
+      "XRP": 6628.251,
+      "MATIC": 4753.965
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1oonncildzmfb7r31qw6ahf7vp1ieixwc",
+        "coin_type": "ADA",
+        "amount": 16.545,
+        "transaction_date": "2025-05-18"
+      },
+      {
+        "counterparty_wallet_id": "bc1dqnk20in8910t2f7atwyam1n0lh9p89fkbi4o",
+        "coin_type": "MATIC",
+        "amount": -840.763,
+        "transaction_date": "2025-09-21"
+      },
+      {
+        "counterparty_wallet_id": "bc1jh75lxo6qjiujv6oh9sdbdw2pcn9t84azytjxe",
+        "coin_type": "ADA",
+        "amount": -659.637,
+        "transaction_date": "2025-09-26"
+      }
+    ]
+  },
+  {
+    "user_id": 43,
+    "name": "Phan Hoài Trung",
+    "age": 46,
+    "wallet_id": "addrm764jwtektsg7fxzv4u3bbxux1oxrwk8r2y",
+    "coin_holdings": {
+      "ADA": 6049.687,
+      "BNB": 5783.606,
+      "USDT": 42355.51,
+      "XRP": 2375.132
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1rpzlk3e4xyf9igfu8iogxpbwhvnzh13cd5glq",
+        "coin_type": "USDT",
+        "amount": 5823.67,
+        "transaction_date": "2025-05-07"
+      },
+      {
+        "counterparty_wallet_id": "addrf7jxjn6fokzixzareiyaz39pecn0dl5e11e9",
+        "coin_type": "ADA",
+        "amount": 475.089,
+        "transaction_date": "2025-05-14"
+      },
+      {
+        "counterparty_wallet_id": "0x856wpr97y2lofn1r4kz36u8ueihx74d0gjyv5g10",
+        "coin_type": "USDT",
+        "amount": 9783.42,
+        "transaction_date": "2025-06-07"
+      },
+      {
+        "counterparty_wallet_id": "addrncxll4zklookep7y6wktakpuxqphr62gdsw",
+        "coin_type": "BNB",
+        "amount": -467.612,
+        "transaction_date": "2025-10-10"
+      }
+    ]
+  },
+  {
+    "user_id": 44,
+    "name": "Dương Quang Vinh",
+    "age": 39,
+    "wallet_id": "bc1ccprhvlz049enulqjidknwi5flul1rsrla8s8hm",
+    "coin_holdings": {
+      "ADA": 362.909,
+      "SOL": 9229.417,
+      "LTC": 7496.759,
+      "USDT": 36375.89
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xj755nf4zw9xa3kx7eedtjvzhwjr64dpja1wj0tpa",
+        "coin_type": "USDT",
+        "amount": 5749.96,
+        "transaction_date": "2025-05-15"
+      },
+      {
+        "counterparty_wallet_id": "addr4vpw232utvg9ku8s63e1ocjxzefli4ofwwnc2",
+        "coin_type": "ADA",
+        "amount": -255.791,
+        "transaction_date": "2025-05-26"
+      },
+      {
+        "counterparty_wallet_id": "bc1asifpwioxd9css9toqw9ja2m0w10lbt3g2qzw3c1",
+        "coin_type": "ADA",
+        "amount": -487.336,
+        "transaction_date": "2025-09-28"
+      },
+      {
+        "counterparty_wallet_id": "0xnz8v12ii826gyup12spfhv5brn7zsedfqs3d63",
+        "coin_type": "LTC",
+        "amount": -19.132,
+        "transaction_date": "2025-10-02"
+      }
+    ]
+  },
+  {
+    "user_id": 45,
+    "name": "Lê Anh Yên",
+    "age": 27,
+    "wallet_id": "0xr5xqt4p501nouhtcs1k9ye9o2m71hssbelrq",
+    "coin_holdings": {
+      "XRP": 7262.731,
+      "AVAX": 1681.16,
+      "BNB": 5781.796,
+      "DOT": 8419.912
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrt3imj70e3p15ahdbvzb0oih5csk30lvylkfxhk",
+        "coin_type": "DOT",
+        "amount": -478.885,
+        "transaction_date": "2025-06-16"
+      },
+      {
+        "counterparty_wallet_id": "0xe9p3jpxgh30153sflse45bg34iq7zj3sweb",
+        "coin_type": "BNB",
+        "amount": 57.261,
+        "transaction_date": "2025-07-04"
+      },
+      {
+        "counterparty_wallet_id": "addrlemx15z8vmuhxid4n1u3493wxa73jgzlma5uofwb",
+        "coin_type": "DOT",
+        "amount": -477.217,
+        "transaction_date": "2025-09-23"
+      }
+    ]
+  },
+  {
+    "user_id": 46,
+    "name": "Dương Thu Vy",
+    "age": 35,
+    "wallet_id": "addrf7low4vssruraldol65wvjx8uibrsz1n3iuzgppo",
+    "coin_holdings": {
+      "SOL": 6546.889,
+      "AVAX": 3917.626,
+      "ETH": 11.5995,
+      "LTC": 7493.418
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xtaxp0wfoy4dd1vn8lfjdtvv2y4xkss0kb",
+        "coin_type": "SOL",
+        "amount": -354.759,
+        "transaction_date": "2025-08-19"
+      },
+      {
+        "counterparty_wallet_id": "bc1b4ehou6qlz2rwgwaj1g1r1dwwo8nbhnal3gywi",
+        "coin_type": "SOL",
+        "amount": 16.902,
+        "transaction_date": "2025-10-05"
+      },
+      {
+        "counterparty_wallet_id": "addrf7jxjn6fokzixzareiyaz39pecn0dl5e11e9",
+        "coin_type": "ETH",
+        "amount": 1.5732,
+        "transaction_date": "2025-10-28"
+      }
+    ]
+  },
+  {
+    "user_id": 47,
+    "name": "Ngô Anh Hà",
+    "age": 42,
+    "wallet_id": "0xswq40zsu9rn8qtty5y2jr8kk791zyrru7zkut6",
+    "coin_holdings": {
+      "ETH": 4.4256,
+      "USDT": 33057.84,
+      "SOL": 766.385
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc180b6ugvs8q349dxbz9svn7n1ybwmlunj48vfcx7l",
+        "coin_type": "USDT",
+        "amount": 4433.72,
+        "transaction_date": "2025-06-27"
+      },
+      {
+        "counterparty_wallet_id": "addr82n2atqyyv37dia5u6hc36kof8krd5eqy08p0f",
+        "coin_type": "SOL",
+        "amount": -182.55,
+        "transaction_date": "2025-06-27"
+      },
+      {
+        "counterparty_wallet_id": "0xnz8v12ii826gyup12spfhv5brn7zsedfqs3d63",
+        "coin_type": "USDT",
+        "amount": -2610.5,
+        "transaction_date": "2025-10-12"
+      },
+      {
+        "counterparty_wallet_id": "0xnz8v12ii826gyup12spfhv5brn7zsedfqs3d63",
+        "coin_type": "ETH",
+        "amount": -1.9491,
+        "transaction_date": "2025-10-15"
+      }
+    ]
+  },
+  {
+    "user_id": 48,
+    "name": "Đặng Hải Long",
+    "age": 46,
+    "wallet_id": "bc182kkzmpjrht7zewviytwbozd1at7o75rh8lx6",
+    "coin_holdings": {
+      "DOT": 9329.608,
+      "USDT": 33263.83,
+      "BTC": 0.666825
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrlp8ii7ewbxxgaearms3jn050e6mpsj9wr",
+        "coin_type": "DOT",
+        "amount": 387.502,
+        "transaction_date": "2025-05-07"
+      },
+      {
+        "counterparty_wallet_id": "addrbmc97c7bo119xp9n56nyxtxmgtt0iaaky",
+        "coin_type": "BTC",
+        "amount": 0.515868,
+        "transaction_date": "2025-06-27"
+      },
+      {
+        "counterparty_wallet_id": "bc1rpzlk3e4xyf9igfu8iogxpbwhvnzh13cd5glq",
+        "coin_type": "DOT",
+        "amount": -336.773,
+        "transaction_date": "2025-08-14"
+      },
+      {
+        "counterparty_wallet_id": "bc1rpzlk3e4xyf9igfu8iogxpbwhvnzh13cd5glq",
+        "coin_type": "USDT",
+        "amount": -8448.29,
+        "transaction_date": "2025-10-13"
+      }
+    ]
+  },
+  {
+    "user_id": 49,
+    "name": "Phan Thu Khoa",
+    "age": 37,
+    "wallet_id": "0xt076g5g79or7875aud9k9tr74qgefqjg02u",
+    "coin_holdings": {
+      "ETH": 1.2821,
+      "LTC": 6331.585,
+      "ADA": 7355.889,
+      "DOT": 1408.03
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1q85jsg65kxvf1t2tala753lc58drc11ert",
+        "coin_type": "LTC",
+        "amount": -391.824,
+        "transaction_date": "2025-06-14"
+      },
+      {
+        "counterparty_wallet_id": "0xe9p3jpxgh30153sflse45bg34iq7zj3sweb",
+        "coin_type": "ADA",
+        "amount": -536.27,
+        "transaction_date": "2025-07-07"
+      },
+      {
+        "counterparty_wallet_id": "bc1jh75lxo6qjiujv6oh9sdbdw2pcn9t84azytjxe",
+        "coin_type": "ETH",
+        "amount": -0.2897,
+        "transaction_date": "2025-10-20"
+      }
+    ]
+  },
+  {
+    "user_id": 50,
+    "name": "Bùi Văn Tùng",
+    "age": 20,
+    "wallet_id": "0xvwoplod9r7anqjluujmiyqfy751yw7nh8r",
+    "coin_holdings": {
+      "AVAX": 153.508,
+      "LTC": 6330.288,
+      "USDT": 45242.65
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xzp6lfewvznvksp2ex5t5p5o3o0llj8yrddp0nec",
+        "coin_type": "AVAX",
+        "amount": 429.08,
+        "transaction_date": "2025-05-10"
+      },
+      {
+        "counterparty_wallet_id": "addr26rjrny20479t6vxdp5gjlqm5k8p4q0b8ic8bbi4",
+        "coin_type": "AVAX",
+        "amount": -597.003,
+        "transaction_date": "2025-05-26"
+      },
+      {
+        "counterparty_wallet_id": "addr69ugnekrcpprcjiwvhdk8lw2lm349el8hl88kzru",
+        "coin_type": "USDT",
+        "amount": 8361.75,
+        "transaction_date": "2025-10-14"
+      }
+    ]
+  },
+  {
+    "user_id": 51,
+    "name": "Phan Hữu Lan",
+    "age": 41,
+    "wallet_id": "bc1otqtxhi15cqzcuctsuflsehuds3qsqcq30o30",
+    "coin_holdings": {
+      "DOT": 416.582,
+      "BNB": 1008.679,
+      "MATIC": 8475.193
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addroxfq8myx444nlz15bcw790pdw5py6b2knf",
+        "coin_type": "DOT",
+        "amount": -419.141,
+        "transaction_date": "2025-07-01"
+      },
+      {
+        "counterparty_wallet_id": "0xpejzhyapdswzp6swk2rv239moft6yriaddur82",
+        "coin_type": "DOT",
+        "amount": 147.372,
+        "transaction_date": "2025-08-22"
+      },
+      {
+        "counterparty_wallet_id": "addrf7jxjn6fokzixzareiyaz39pecn0dl5e11e9",
+        "coin_type": "BNB",
+        "amount": -243.057,
+        "transaction_date": "2025-09-16"
+      },
+      {
+        "counterparty_wallet_id": "addrogn1w1ht7pze9vifttd96qe3rzsj49itn7s55j2",
+        "coin_type": "DOT",
+        "amount": -85.319,
+        "transaction_date": "2025-10-29"
+      }
+    ]
+  },
+  {
+    "user_id": 52,
+    "name": "Đặng Thanh Vy",
+    "age": 52,
+    "wallet_id": "addrbmc97c7bo119xp9n56nyxtxmgtt0iaaky",
+    "coin_holdings": {
+      "DOT": 2771.502,
+      "LTC": 1945.253,
+      "BNB": 7968.164
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xniwc5amln4ptgq9cvah78okz1poxtfdc79flv1x",
+        "coin_type": "DOT",
+        "amount": 786.565,
+        "transaction_date": "2025-06-28"
+      },
+      {
+        "counterparty_wallet_id": "addrfk8ut0cvs4f8cgvyie6ivwpvs7hzioykl1cq99c",
+        "coin_type": "BNB",
+        "amount": -288.639,
+        "transaction_date": "2025-07-11"
+      },
+      {
+        "counterparty_wallet_id": "addrifhv1xg1r11q7uww5wfcpkjcslqc3c54ws",
+        "coin_type": "LTC",
+        "amount": -48.101,
+        "transaction_date": "2025-10-17"
+      },
+      {
+        "counterparty_wallet_id": "bc1yo4rcb1kjtgq01tee13n3bzt9d31k9qm3p91i3",
+        "coin_type": "DOT",
+        "amount": 671.792,
+        "transaction_date": "2025-10-19"
+      }
+    ]
+  },
+  {
+    "user_id": 53,
+    "name": "Ngô Đức Quân",
+    "age": 32,
+    "wallet_id": "addrt3imj70e3p15ahdbvzb0oih5csk30lvylkfxhk",
+    "coin_holdings": {
+      "DOT": 552.85,
+      "MATIC": 4364.292,
+      "AVAX": 2169.49
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xn3oeuvtyt8qzpky32orwixz2c9ros7yt2m6tw",
+        "coin_type": "MATIC",
+        "amount": -175.345,
+        "transaction_date": "2025-08-04"
+      },
+      {
+        "counterparty_wallet_id": "addroxfq8myx444nlz15bcw790pdw5py6b2knf",
+        "coin_type": "MATIC",
+        "amount": -140.723,
+        "transaction_date": "2025-09-11"
+      },
+      {
+        "counterparty_wallet_id": "bc1rc6zs62ywe1g983ep9p9w4j66cnoljq52ws",
+        "coin_type": "MATIC",
+        "amount": -206.2,
+        "transaction_date": "2025-09-28"
+      },
+      {
+        "counterparty_wallet_id": "bc15pht0hl9xpseimvihcwi64ciyhe7ur23gdppq0y9",
+        "coin_type": "AVAX",
+        "amount": 284.201,
+        "transaction_date": "2025-10-02"
+      }
+    ]
+  },
+  {
+    "user_id": 54,
+    "name": "Ngô Hoài Tùng",
+    "age": 31,
+    "wallet_id": "0x856wpr97y2lofn1r4kz36u8ueihx74d0gjyv5g10",
+    "coin_holdings": {
+      "DOT": 7364.427,
+      "SOL": 2474.075,
+      "BTC": 0.818913,
+      "XRP": 5798.876
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0x1xmxb9yo18pajssuuqo1vsmado8e7flqh",
+        "coin_type": "DOT",
+        "amount": -533.466,
+        "transaction_date": "2025-06-30"
+      },
+      {
+        "counterparty_wallet_id": "0x6xq9jb354mype46aexl68j0nmeoq4yrp5",
+        "coin_type": "DOT",
+        "amount": -497.809,
+        "transaction_date": "2025-10-09"
+      },
+      {
+        "counterparty_wallet_id": "0xobk3g84utdd2ec2ihoy7dv7c9hx3d43e7b7p0",
+        "coin_type": "DOT",
+        "amount": -980.283,
+        "transaction_date": "2025-10-20"
+      }
+    ]
+  },
+  {
+    "user_id": 55,
+    "name": "Đặng Văn Thảo",
+    "age": 47,
+    "wallet_id": "addrr5l8a78e9rivh6t1ntmjsrd9q46nouhfj7u",
+    "coin_holdings": {
+      "AVAX": 7900.689,
+      "XRP": 3710.5,
+      "USDT": 23268.36
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1rc6zs62ywe1g983ep9p9w4j66cnoljq52ws",
+        "coin_type": "AVAX",
+        "amount": -893.967,
+        "transaction_date": "2025-08-06"
+      },
+      {
+        "counterparty_wallet_id": "0xtaxp0wfoy4dd1vn8lfjdtvv2y4xkss0kb",
+        "coin_type": "AVAX",
+        "amount": -428.773,
+        "transaction_date": "2025-08-22"
+      },
+      {
+        "counterparty_wallet_id": "0x6xq9jb354mype46aexl68j0nmeoq4yrp5",
+        "coin_type": "USDT",
+        "amount": 7887.53,
+        "transaction_date": "2025-10-10"
+      }
+    ]
+  },
+  {
+    "user_id": 56,
+    "name": "Trần Hoài Lan",
+    "age": 31,
+    "wallet_id": "bc1fln4rxyj38xrg2gzr7txcb48y1o4izasnwyw",
+    "coin_holdings": {
+      "ADA": 1144.441,
+      "BNB": 4790.15,
+      "DOGE": 9392.088
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc182kkzmpjrht7zewviytwbozd1at7o75rh8lx6",
+        "coin_type": "BNB",
+        "amount": -488.796,
+        "transaction_date": "2025-06-18"
+      },
+      {
+        "counterparty_wallet_id": "bc16zx1tv18kgyggsnpuevjlzfflb7wxrum2lh",
+        "coin_type": "DOGE",
+        "amount": 323.861,
+        "transaction_date": "2025-08-23"
+      },
+      {
+        "counterparty_wallet_id": "addr4vpw232utvg9ku8s63e1ocjxzefli4ofwwnc2",
+        "coin_type": "DOGE",
+        "amount": -280.76,
+        "transaction_date": "2025-10-14"
+      }
+    ]
+  },
+  {
+    "user_id": 57,
+    "name": "Dương Thị Khoa",
+    "age": 47,
+    "wallet_id": "bc1atoaztkszp7g7siwjm2c8qizk3c9xbonrwzc4xl",
+    "coin_holdings": {
+      "ETH": 4.3327,
+      "XRP": 9566.703,
+      "USDT": 5557.31
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrf7jxjn6fokzixzareiyaz39pecn0dl5e11e9",
+        "coin_type": "USDT",
+        "amount": 2967.04,
+        "transaction_date": "2025-05-09"
+      },
+      {
+        "counterparty_wallet_id": "addrlp8ii7ewbxxgaearms3jn050e6mpsj9wr",
+        "coin_type": "ETH",
+        "amount": -1.74,
+        "transaction_date": "2025-07-09"
+      },
+      {
+        "counterparty_wallet_id": "addrire8qjnv8z2flu7u6n7hv3izky22ubtxcx",
+        "coin_type": "USDT",
+        "amount": 4988.47,
+        "transaction_date": "2025-09-08"
+      },
+      {
+        "counterparty_wallet_id": "0xoz0kz4z7whwkmy9x8sylemruyp04k43saf",
+        "coin_type": "USDT",
+        "amount": 2950.59,
+        "transaction_date": "2025-10-14"
+      }
+    ]
+  },
+  {
+    "user_id": 58,
+    "name": "Đặng Thu Lan",
+    "age": 51,
+    "wallet_id": "0x7i6yuj7yktxg4ahf337kuu4ytn02yc0mdicvwv8l",
+    "coin_holdings": {
+      "DOT": 8983.836,
+      "SOL": 3071.885,
+      "MATIC": 7894.784,
+      "USDT": 11416.42
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1oonncildzmfb7r31qw6ahf7vp1ieixwc",
+        "coin_type": "DOT",
+        "amount": 356.355,
+        "transaction_date": "2025-07-06"
+      },
+      {
+        "counterparty_wallet_id": "0xtoxie0rnujjq9k6re4q6qdy4lmct64z7w2",
+        "coin_type": "SOL",
+        "amount": -264.105,
+        "transaction_date": "2025-09-13"
+      },
+      {
+        "counterparty_wallet_id": "bc17s3kkv9rftmttqlgzui1b0z3nx39rbsv55psq",
+        "coin_type": "SOL",
+        "amount": -186.369,
+        "transaction_date": "2025-09-16"
+      },
+      {
+        "counterparty_wallet_id": "0xe094d6rupw2w5506rr5pcxa5s00i85syw",
+        "coin_type": "SOL",
+        "amount": 241.716,
+        "transaction_date": "2025-10-20"
+      }
+    ]
+  },
+  {
+    "user_id": 59,
+    "name": "Phan Kim Tùng",
+    "age": 27,
+    "wallet_id": "addr2qitngvn1kicjn2fomd7q1ddpusddtv25ao2",
+    "coin_holdings": {
+      "ADA": 9756.254,
+      "USDT": 16630.9,
+      "BTC": 1.763923,
+      "DOGE": 4744.368
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0x7i6yuj7yktxg4ahf337kuu4ytn02yc0mdicvwv8l",
+        "coin_type": "BTC",
+        "amount": 0.32704,
+        "transaction_date": "2025-05-28"
+      },
+      {
+        "counterparty_wallet_id": "bc174v1qx8ertb74rs7gu0env5sn961j88q",
+        "coin_type": "DOGE",
+        "amount": 143.726,
+        "transaction_date": "2025-06-11"
+      },
+      {
+        "counterparty_wallet_id": "addrire8qjnv8z2flu7u6n7hv3izky22ubtxcx",
+        "coin_type": "BTC",
+        "amount": 0.402228,
+        "transaction_date": "2025-09-04"
+      },
+      {
+        "counterparty_wallet_id": "bc16zx1tv18kgyggsnpuevjlzfflb7wxrum2lh",
+        "coin_type": "USDT",
+        "amount": -3419.91,
+        "transaction_date": "2025-10-02"
+      }
+    ]
+  },
+  {
+    "user_id": 60,
+    "name": "Võ Thành Khoa",
+    "age": 49,
+    "wallet_id": "addr69ugnekrcpprcjiwvhdk8lw2lm349el8hl88kzru",
+    "coin_holdings": {
+      "MATIC": 9085.385,
+      "AVAX": 3617.038,
+      "DOGE": 1487.98,
+      "BTC": 2.134656
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc174v1qx8ertb74rs7gu0env5sn961j88q",
+        "coin_type": "BTC",
+        "amount": 0.835676,
+        "transaction_date": "2025-05-30"
+      },
+      {
+        "counterparty_wallet_id": "bc1cxlvpymb5m9j98cwn2y8fv2bc2nnuvy8n",
+        "coin_type": "BTC",
+        "amount": 0.216479,
+        "transaction_date": "2025-07-09"
+      },
+      {
+        "counterparty_wallet_id": "0xoz0kz4z7whwkmy9x8sylemruyp04k43saf",
+        "coin_type": "BTC",
+        "amount": -0.289345,
+        "transaction_date": "2025-07-14"
+      },
+      {
+        "counterparty_wallet_id": "0xvwoplod9r7anqjluujmiyqfy751yw7nh8r",
+        "coin_type": "DOGE",
+        "amount": 288.227,
+        "transaction_date": "2025-08-02"
+      }
+    ]
+  },
+  {
+    "user_id": 61,
+    "name": "Nguyễn Thành Huy",
+    "age": 35,
+    "wallet_id": "0xn3oeuvtyt8qzpky32orwixz2c9ros7yt2m6tw",
+    "coin_holdings": {
+      "USDT": 10042.95,
+      "DOGE": 8324.514,
+      "DOT": 2901.737,
+      "AVAX": 4910.95
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0x856wpr97y2lofn1r4kz36u8ueihx74d0gjyv5g10",
+        "coin_type": "DOGE",
+        "amount": -907.259,
+        "transaction_date": "2025-05-18"
+      },
+      {
+        "counterparty_wallet_id": "bc1npm6jqfwwxr5rdnpx2i9tanzr2muljav",
+        "coin_type": "DOT",
+        "amount": -561.485,
+        "transaction_date": "2025-07-04"
+      },
+      {
+        "counterparty_wallet_id": "0xzp6lfewvznvksp2ex5t5p5o3o0llj8yrddp0nec",
+        "coin_type": "USDT",
+        "amount": 1582.54,
+        "transaction_date": "2025-08-15"
+      },
+      {
+        "counterparty_wallet_id": "bc1ofv177udktmonrvbjfvyb6li076a3kkrz",
+        "coin_type": "AVAX",
+        "amount": 655.544,
+        "transaction_date": "2025-08-18"
+      }
+    ]
+  },
+  {
+    "user_id": 62,
+    "name": "Bùi Quang Lan",
+    "age": 25,
+    "wallet_id": "0x1xmxb9yo18pajssuuqo1vsmado8e7flqh",
+    "coin_holdings": {
+      "DOGE": 1636.844,
+      "MATIC": 594.519,
+      "BTC": 0.799883,
+      "SOL": 8784.389
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1ofv177udktmonrvbjfvyb6li076a3kkrz",
+        "coin_type": "BTC",
+        "amount": 0.290566,
+        "transaction_date": "2025-06-17"
+      },
+      {
+        "counterparty_wallet_id": "addrf7low4vssruraldol65wvjx8uibrsz1n3iuzgppo",
+        "coin_type": "MATIC",
+        "amount": 276.307,
+        "transaction_date": "2025-07-15"
+      },
+      {
+        "counterparty_wallet_id": "bc1ofv177udktmonrvbjfvyb6li076a3kkrz",
+        "coin_type": "DOGE",
+        "amount": 767.61,
+        "transaction_date": "2025-09-14"
+      }
+    ]
+  },
+  {
+    "user_id": 63,
+    "name": "Huỳnh Thị Uyên",
+    "age": 55,
+    "wallet_id": "bc1rpzlk3e4xyf9igfu8iogxpbwhvnzh13cd5glq",
+    "coin_holdings": {
+      "USDT": 14142.75,
+      "BTC": 1.947241,
+      "AVAX": 4125.825,
+      "DOGE": 9209.865
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrire8qjnv8z2flu7u6n7hv3izky22ubtxcx",
+        "coin_type": "BTC",
+        "amount": 0.480039,
+        "transaction_date": "2025-08-12"
+      },
+      {
+        "counterparty_wallet_id": "addr26rjrny20479t6vxdp5gjlqm5k8p4q0b8ic8bbi4",
+        "coin_type": "BTC",
+        "amount": 0.50388,
+        "transaction_date": "2025-09-12"
+      },
+      {
+        "counterparty_wallet_id": "bc1dqnk20in8910t2f7atwyam1n0lh9p89fkbi4o",
+        "coin_type": "USDT",
+        "amount": -4631.89,
+        "transaction_date": "2025-10-11"
+      }
+    ]
+  },
+  {
+    "user_id": 64,
+    "name": "Đỗ Hữu Lan",
+    "age": 32,
+    "wallet_id": "bc1sxvwvm4w3zkwdeekgyspengwyx9trflqbmae38s",
+    "coin_holdings": {
+      "USDT": 21297.77,
+      "BNB": 7632.607,
+      "AVAX": 1126.105,
+      "ETH": 0.2919
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0x3d8w3zp08j3trp0j43d5iqvnb4gh2m5zja8dzr",
+        "coin_type": "BNB",
+        "amount": 188.858,
+        "transaction_date": "2025-08-02"
+      },
+      {
+        "counterparty_wallet_id": "bc1a984uvkyrmjljx8xgsic43olfark6o0u9",
+        "coin_type": "USDT",
+        "amount": -1233.28,
+        "transaction_date": "2025-08-27"
+      },
+      {
+        "counterparty_wallet_id": "0xom5igqpki7p5tb94874frhocn9j2qp89",
+        "coin_type": "USDT",
+        "amount": -6692.48,
+        "transaction_date": "2025-10-06"
+      },
+      {
+        "counterparty_wallet_id": "bc16zx1tv18kgyggsnpuevjlzfflb7wxrum2lh",
+        "coin_type": "ETH",
+        "amount": 0.9898,
+        "transaction_date": "2025-10-22"
+      }
+    ]
+  },
+  {
+    "user_id": 65,
+    "name": "Phạm Hoài Vinh",
+    "age": 22,
+    "wallet_id": "bc1yo4rcb1kjtgq01tee13n3bzt9d31k9qm3p91i3",
+    "coin_holdings": {
+      "MATIC": 2177.811,
+      "BTC": 0.479677,
+      "DOGE": 2825.749
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addru2gc5wi6fqjja26yfpmvxpj4hnriuu9k9xjuy0",
+        "coin_type": "BTC",
+        "amount": -0.424668,
+        "transaction_date": "2025-06-21"
+      },
+      {
+        "counterparty_wallet_id": "addr6uxqm334l1vznqdxamw2tnd6r30ojhe4h3gm",
+        "coin_type": "MATIC",
+        "amount": 920.875,
+        "transaction_date": "2025-07-01"
+      },
+      {
+        "counterparty_wallet_id": "0xswq40zsu9rn8qtty5y2jr8kk791zyrru7zkut6",
+        "coin_type": "DOGE",
+        "amount": 442.468,
+        "transaction_date": "2025-10-03"
+      }
+    ]
+  },
+  {
+    "user_id": 66,
+    "name": "Trần Thanh Tùng",
+    "age": 25,
+    "wallet_id": "addr4vpw232utvg9ku8s63e1ocjxzefli4ofwwnc2",
+    "coin_holdings": {
+      "SOL": 6873.595,
+      "DOT": 8412.491,
+      "MATIC": 2266.476,
+      "AVAX": 4078.749
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1atoaztkszp7g7siwjm2c8qizk3c9xbonrwzc4xl",
+        "coin_type": "SOL",
+        "amount": 147.651,
+        "transaction_date": "2025-07-20"
+      },
+      {
+        "counterparty_wallet_id": "addroxfq8myx444nlz15bcw790pdw5py6b2knf",
+        "coin_type": "SOL",
+        "amount": -673.735,
+        "transaction_date": "2025-07-21"
+      },
+      {
+        "counterparty_wallet_id": "0x361i2hgj11yedwb2bne6loh25nsjf678k52qc1i",
+        "coin_type": "SOL",
+        "amount": -939.387,
+        "transaction_date": "2025-07-28"
+      },
+      {
+        "counterparty_wallet_id": "0xpejzhyapdswzp6swk2rv239moft6yriaddur82",
+        "coin_type": "SOL",
+        "amount": 69.387,
+        "transaction_date": "2025-09-10"
+      }
+    ]
+  },
+  {
+    "user_id": 67,
+    "name": "Hồ Thu Quân",
+    "age": 40,
+    "wallet_id": "0xsk7n8la100qxmcthphj3muurmybd2qe4pa8hye",
+    "coin_holdings": {
+      "LTC": 5119.031,
+      "MATIC": 1482.267,
+      "XRP": 4551.801,
+      "DOT": 1230.679
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc10kgazu41ugl3wxdrlcmlw83y0mahym2zbppf",
+        "coin_type": "XRP",
+        "amount": 306.239,
+        "transaction_date": "2025-05-24"
+      },
+      {
+        "counterparty_wallet_id": "0xt4ufel6246hid25owf75935a0l7253j2d5",
+        "coin_type": "DOT",
+        "amount": 972.212,
+        "transaction_date": "2025-07-25"
+      },
+      {
+        "counterparty_wallet_id": "bc1p6qf5q14j1ripzim6cfnfholqc3o18a5ur7ko64t",
+        "coin_type": "LTC",
+        "amount": -793.768,
+        "transaction_date": "2025-09-09"
+      },
+      {
+        "counterparty_wallet_id": "bc1sxvwvm4w3zkwdeekgyspengwyx9trflqbmae38s",
+        "coin_type": "MATIC",
+        "amount": 34.575,
+        "transaction_date": "2025-10-17"
+      }
+    ]
+  },
+  {
+    "user_id": 68,
+    "name": "Phan Quang Nam",
+    "age": 42,
+    "wallet_id": "addrf7jxjn6fokzixzareiyaz39pecn0dl5e11e9",
+    "coin_holdings": {
+      "DOT": 5571.099,
+      "BTC": 2.151041,
+      "LTC": 3037.415,
+      "USDT": 35332.35
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xcsotdhhlmh1t939ayq6ww8yl68ntk63n2qb6gs8g",
+        "coin_type": "DOT",
+        "amount": -661.778,
+        "transaction_date": "2025-05-08"
+      },
+      {
+        "counterparty_wallet_id": "bc1yo4rcb1kjtgq01tee13n3bzt9d31k9qm3p91i3",
+        "coin_type": "DOT",
+        "amount": -267.074,
+        "transaction_date": "2025-06-01"
+      },
+      {
+        "counterparty_wallet_id": "bc1fln4rxyj38xrg2gzr7txcb48y1o4izasnwyw",
+        "coin_type": "BTC",
+        "amount": -0.716007,
+        "transaction_date": "2025-06-28"
+      },
+      {
+        "counterparty_wallet_id": "addrlp8ii7ewbxxgaearms3jn050e6mpsj9wr",
+        "coin_type": "USDT",
+        "amount": -5644.44,
+        "transaction_date": "2025-09-20"
+      }
+    ]
+  },
+  {
+    "user_id": 69,
+    "name": "Huỳnh Thành Dũng",
+    "age": 45,
+    "wallet_id": "0xtaxp0wfoy4dd1vn8lfjdtvv2y4xkss0kb",
+    "coin_holdings": {
+      "ADA": 6615.788,
+      "XRP": 2483.663,
+      "AVAX": 6484.347,
+      "BTC": 1.481737
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1cxlvpymb5m9j98cwn2y8fv2bc2nnuvy8n",
+        "coin_type": "ADA",
+        "amount": -173.93,
+        "transaction_date": "2025-06-15"
+      },
+      {
+        "counterparty_wallet_id": "bc19dde3cup8ijl2z0ljch2vffqot8hljefy3zb4ld",
+        "coin_type": "BTC",
+        "amount": -0.021382,
+        "transaction_date": "2025-07-02"
+      },
+      {
+        "counterparty_wallet_id": "addrehe2atn2twdl9zs13c9xqym52xg8p6beffl",
+        "coin_type": "ADA",
+        "amount": -659.479,
+        "transaction_date": "2025-07-14"
+      }
+    ]
+  },
+  {
+    "user_id": 70,
+    "name": "Hoàng Thanh Tâm",
+    "age": 30,
+    "wallet_id": "0xniwc5amln4ptgq9cvah78okz1poxtfdc79flv1x",
+    "coin_holdings": {
+      "LTC": 2880.682,
+      "ETH": 0.7225,
+      "DOGE": 9962.315,
+      "BNB": 4026.253
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1vg5vmf60yknfu84xyjoa21a6xvaj2k8xpnmjqy3",
+        "coin_type": "DOGE",
+        "amount": -435.746,
+        "transaction_date": "2025-06-14"
+      },
+      {
+        "counterparty_wallet_id": "addrfmpkxvhagkc4lorxdtg5nqjqijc1ydmt8vt43pt",
+        "coin_type": "LTC",
+        "amount": 593.905,
+        "transaction_date": "2025-08-22"
+      },
+      {
+        "counterparty_wallet_id": "0xt4ufel6246hid25owf75935a0l7253j2d5",
+        "coin_type": "BNB",
+        "amount": -213.69,
+        "transaction_date": "2025-10-11"
+      }
+    ]
+  },
+  {
+    "user_id": 71,
+    "name": "Phạm Thu Trung",
+    "age": 47,
+    "wallet_id": "addrlp8ii7ewbxxgaearms3jn050e6mpsj9wr",
+    "coin_holdings": {
+      "LTC": 9347.013,
+      "DOGE": 7268.885,
+      "MATIC": 608.218,
+      "XRP": 2014.474
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xxfgcaqvkizzqy72wx7ptx63cfl0ukeyz7src",
+        "coin_type": "DOGE",
+        "amount": 747.701,
+        "transaction_date": "2025-08-15"
+      },
+      {
+        "counterparty_wallet_id": "bc1ofv177udktmonrvbjfvyb6li076a3kkrz",
+        "coin_type": "DOGE",
+        "amount": -270.6,
+        "transaction_date": "2025-08-18"
+      },
+      {
+        "counterparty_wallet_id": "0xe9p3jpxgh30153sflse45bg34iq7zj3sweb",
+        "coin_type": "DOGE",
+        "amount": -688.421,
+        "transaction_date": "2025-08-31"
+      },
+      {
+        "counterparty_wallet_id": "bc1fln4rxyj38xrg2gzr7txcb48y1o4izasnwyw",
+        "coin_type": "XRP",
+        "amount": -860.885,
+        "transaction_date": "2025-10-14"
+      }
+    ]
+  },
+  {
+    "user_id": 72,
+    "name": "Nguyễn Minh Thư",
+    "age": 35,
+    "wallet_id": "addrb4gf16ye0a4abn7g8b2zxii6l3ueybisbo551",
+    "coin_holdings": {
+      "LTC": 7824.515,
+      "BTC": 0.139263,
+      "DOT": 8966.09
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrhpmnz1udbfwyjxrpj1epkyrybovakhejla0gnzs4",
+        "coin_type": "LTC",
+        "amount": 524.348,
+        "transaction_date": "2025-06-04"
+      },
+      {
+        "counterparty_wallet_id": "bc10kgazu41ugl3wxdrlcmlw83y0mahym2zbppf",
+        "coin_type": "BTC",
+        "amount": 0.900674,
+        "transaction_date": "2025-07-18"
+      },
+      {
+        "counterparty_wallet_id": "addrf7jxjn6fokzixzareiyaz39pecn0dl5e11e9",
+        "coin_type": "BTC",
+        "amount": -0.88468,
+        "transaction_date": "2025-08-31"
+      },
+      {
+        "counterparty_wallet_id": "0xswq40zsu9rn8qtty5y2jr8kk791zyrru7zkut6",
+        "coin_type": "DOT",
+        "amount": 399.911,
+        "transaction_date": "2025-09-25"
+      }
+    ]
+  },
+  {
+    "user_id": 73,
+    "name": "Hoàng Ngọc Vinh",
+    "age": 21,
+    "wallet_id": "bc1dqnk20in8910t2f7atwyam1n0lh9p89fkbi4o",
+    "coin_holdings": {
+      "DOGE": 5461.993,
+      "ADA": 4753.793,
+      "ETH": 3.7027,
+      "LTC": 2784.56
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrhpmnz1udbfwyjxrpj1epkyrybovakhejla0gnzs4",
+        "coin_type": "ETH",
+        "amount": -1.5532,
+        "transaction_date": "2025-05-04"
+      },
+      {
+        "counterparty_wallet_id": "0xe9p3jpxgh30153sflse45bg34iq7zj3sweb",
+        "coin_type": "DOGE",
+        "amount": 692.229,
+        "transaction_date": "2025-05-12"
+      },
+      {
+        "counterparty_wallet_id": "0xswq40zsu9rn8qtty5y2jr8kk791zyrru7zkut6",
+        "coin_type": "LTC",
+        "amount": -822.259,
+        "transaction_date": "2025-10-25"
+      }
+    ]
+  },
+  {
+    "user_id": 74,
+    "name": "Dương Ngọc Phong",
+    "age": 33,
+    "wallet_id": "bc19dde3cup8ijl2z0ljch2vffqot8hljefy3zb4ld",
+    "coin_holdings": {
+      "BNB": 8795.878,
+      "USDT": 38360.37,
+      "DOT": 4068.825,
+      "ADA": 348.478
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1rxxf36wa7sqrf1llkstn3cpudrl90aobt32",
+        "coin_type": "ADA",
+        "amount": 825.279,
+        "transaction_date": "2025-05-05"
+      },
+      {
+        "counterparty_wallet_id": "bc180b6ugvs8q349dxbz9svn7n1ybwmlunj48vfcx7l",
+        "coin_type": "BNB",
+        "amount": -423.766,
+        "transaction_date": "2025-06-12"
+      },
+      {
+        "counterparty_wallet_id": "bc1rpzlk3e4xyf9igfu8iogxpbwhvnzh13cd5glq",
+        "coin_type": "ADA",
+        "amount": -926.865,
+        "transaction_date": "2025-08-06"
+      }
+    ]
+  },
+  {
+    "user_id": 75,
+    "name": "Trần Thị Hùng",
+    "age": 33,
+    "wallet_id": "0xobk3g84utdd2ec2ihoy7dv7c9hx3d43e7b7p0",
+    "coin_holdings": {
+      "MATIC": 7928.497,
+      "LTC": 3200.797,
+      "XRP": 4788.871
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc19dde3cup8ijl2z0ljch2vffqot8hljefy3zb4ld",
+        "coin_type": "MATIC",
+        "amount": 948.369,
+        "transaction_date": "2025-06-10"
+      },
+      {
+        "counterparty_wallet_id": "addrncxll4zklookep7y6wktakpuxqphr62gdsw",
+        "coin_type": "LTC",
+        "amount": -185.98,
+        "transaction_date": "2025-07-26"
+      },
+      {
+        "counterparty_wallet_id": "bc180b6ugvs8q349dxbz9svn7n1ybwmlunj48vfcx7l",
+        "coin_type": "MATIC",
+        "amount": -800.531,
+        "transaction_date": "2025-09-10"
+      }
+    ]
+  },
+  {
+    "user_id": 76,
+    "name": "Trần Văn Lan",
+    "age": 51,
+    "wallet_id": "bc1npm6jqfwwxr5rdnpx2i9tanzr2muljav",
+    "coin_holdings": {
+      "DOT": 2252.595,
+      "LTC": 2039.422,
+      "AVAX": 9461.063,
+      "ETH": 12.2031
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1asifpwioxd9css9toqw9ja2m0w10lbt3g2qzw3c1",
+        "coin_type": "AVAX",
+        "amount": 619.592,
+        "transaction_date": "2025-08-28"
+      },
+      {
+        "counterparty_wallet_id": "bc1oonncildzmfb7r31qw6ahf7vp1ieixwc",
+        "coin_type": "ETH",
+        "amount": -0.6597,
+        "transaction_date": "2025-09-08"
+      },
+      {
+        "counterparty_wallet_id": "0xarlw3mg25cfzfdsnczxvml90pxrlzu6wmx3",
+        "coin_type": "LTC",
+        "amount": -728.075,
+        "transaction_date": "2025-09-12"
+      },
+      {
+        "counterparty_wallet_id": "0x856wpr97y2lofn1r4kz36u8ueihx74d0gjyv5g10",
+        "coin_type": "LTC",
+        "amount": -793.501,
+        "transaction_date": "2025-10-23"
+      }
+    ]
+  },
+  {
+    "user_id": 77,
+    "name": "Đặng Minh Cường",
+    "age": 24,
+    "wallet_id": "0xc9t199dxj37c9h42m44gv3z6bz8uug95rlrd",
+    "coin_holdings": {
+      "BTC": 1.17786,
+      "ADA": 3549.474,
+      "BNB": 6067.681
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0x0it26ys445gdej31gymdm0l2ljk4q5v7c6s5n",
+        "coin_type": "ADA",
+        "amount": 968.218,
+        "transaction_date": "2025-06-09"
+      },
+      {
+        "counterparty_wallet_id": "0xom5igqpki7p5tb94874frhocn9j2qp89",
+        "coin_type": "BNB",
+        "amount": 263.99,
+        "transaction_date": "2025-06-24"
+      },
+      {
+        "counterparty_wallet_id": "addraji0y6dpbhsahxthv3a3zmf8mdd4v30t9",
+        "coin_type": "ADA",
+        "amount": -305.995,
+        "transaction_date": "2025-07-21"
+      }
+    ]
+  },
+  {
+    "user_id": 78,
+    "name": "Đỗ Thanh Yên",
+    "age": 45,
+    "wallet_id": "0xarlw3mg25cfzfdsnczxvml90pxrlzu6wmx3",
+    "coin_holdings": {
+      "SOL": 3136.973,
+      "MATIC": 8927.791,
+      "AVAX": 3162.274,
+      "DOGE": 9945.705
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xe094d6rupw2w5506rr5pcxa5s00i85syw",
+        "coin_type": "DOGE",
+        "amount": -120.444,
+        "transaction_date": "2025-06-26"
+      },
+      {
+        "counterparty_wallet_id": "addrlemx15z8vmuhxid4n1u3493wxa73jgzlma5uofwb",
+        "coin_type": "MATIC",
+        "amount": 472.896,
+        "transaction_date": "2025-09-19"
+      },
+      {
+        "counterparty_wallet_id": "addrb4gf16ye0a4abn7g8b2zxii6l3ueybisbo551",
+        "coin_type": "DOGE",
+        "amount": 192.975,
+        "transaction_date": "2025-10-17"
+      }
+    ]
+  },
+  {
+    "user_id": 79,
+    "name": "Phạm Ngọc Mai",
+    "age": 29,
+    "wallet_id": "bc10kgazu41ugl3wxdrlcmlw83y0mahym2zbppf",
+    "coin_holdings": {
+      "AVAX": 5636.841,
+      "DOGE": 6634.745,
+      "SOL": 2131.838
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1oonncildzmfb7r31qw6ahf7vp1ieixwc",
+        "coin_type": "SOL",
+        "amount": 397.199,
+        "transaction_date": "2025-06-01"
+      },
+      {
+        "counterparty_wallet_id": "addrf7jxjn6fokzixzareiyaz39pecn0dl5e11e9",
+        "coin_type": "SOL",
+        "amount": 419.337,
+        "transaction_date": "2025-10-11"
+      },
+      {
+        "counterparty_wallet_id": "bc1o0pqclpoxko8g8qynpdpoc50h2cwtg1m8",
+        "coin_type": "DOGE",
+        "amount": 887.931,
+        "transaction_date": "2025-10-24"
+      }
+    ]
+  },
+  {
+    "user_id": 80,
+    "name": "Nguyễn Thanh Bình",
+    "age": 46,
+    "wallet_id": "bc15mn32u1iq2bajdm5fc79m96zpxvpbl9ot7txkdo",
+    "coin_holdings": {
+      "AVAX": 8634.156,
+      "MATIC": 8017.564,
+      "USDT": 14219.41,
+      "BNB": 7983.488
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrogn1w1ht7pze9vifttd96qe3rzsj49itn7s55j2",
+        "coin_type": "BNB",
+        "amount": -288.511,
+        "transaction_date": "2025-05-16"
+      },
+      {
+        "counterparty_wallet_id": "addrhpmnz1udbfwyjxrpj1epkyrybovakhejla0gnzs4",
+        "coin_type": "BNB",
+        "amount": 25.409,
+        "transaction_date": "2025-09-07"
+      },
+      {
+        "counterparty_wallet_id": "addrlp8ii7ewbxxgaearms3jn050e6mpsj9wr",
+        "coin_type": "BNB",
+        "amount": 401.864,
+        "transaction_date": "2025-09-15"
+      }
+    ]
+  },
+  {
+    "user_id": 81,
+    "name": "Võ Đức Tùng",
+    "age": 46,
+    "wallet_id": "addrfmpkxvhagkc4lorxdtg5nqjqijc1ydmt8vt43pt",
+    "coin_holdings": {
+      "DOT": 911.321,
+      "SOL": 4231.138,
+      "MATIC": 3688.678,
+      "XRP": 1871.695
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0x1xmxb9yo18pajssuuqo1vsmado8e7flqh",
+        "coin_type": "MATIC",
+        "amount": 984.265,
+        "transaction_date": "2025-05-08"
+      },
+      {
+        "counterparty_wallet_id": "bc131yihair4cowgzrixa11dpg8sbi4q2y9v",
+        "coin_type": "DOT",
+        "amount": -973.405,
+        "transaction_date": "2025-05-10"
+      },
+      {
+        "counterparty_wallet_id": "0xzp6lfewvznvksp2ex5t5p5o3o0llj8yrddp0nec",
+        "coin_type": "SOL",
+        "amount": -529.642,
+        "transaction_date": "2025-05-18"
+      },
+      {
+        "counterparty_wallet_id": "addrf7jxjn6fokzixzareiyaz39pecn0dl5e11e9",
+        "coin_type": "DOT",
+        "amount": -470.878,
+        "transaction_date": "2025-10-10"
+      }
+    ]
+  },
+  {
+    "user_id": 82,
+    "name": "Đặng Ngọc Long",
+    "age": 40,
+    "wallet_id": "bc1rc6zs62ywe1g983ep9p9w4j66cnoljq52ws",
+    "coin_holdings": {
+      "MATIC": 1148.216,
+      "ETH": 9.9271,
+      "DOGE": 1803.726,
+      "BTC": 0.456338
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1ccprhvlz049enulqjidknwi5flul1rsrla8s8hm",
+        "coin_type": "ETH",
+        "amount": 0.9336,
+        "transaction_date": "2025-05-29"
+      },
+      {
+        "counterparty_wallet_id": "0xom5igqpki7p5tb94874frhocn9j2qp89",
+        "coin_type": "MATIC",
+        "amount": -877.372,
+        "transaction_date": "2025-08-15"
+      },
+      {
+        "counterparty_wallet_id": "0xtoxie0rnujjq9k6re4q6qdy4lmct64z7w2",
+        "coin_type": "BTC",
+        "amount": -0.624187,
+        "transaction_date": "2025-08-24"
+      },
+      {
+        "counterparty_wallet_id": "bc180b6ugvs8q349dxbz9svn7n1ybwmlunj48vfcx7l",
+        "coin_type": "MATIC",
+        "amount": -536.704,
+        "transaction_date": "2025-10-29"
+      }
+    ]
+  },
+  {
+    "user_id": 83,
+    "name": "Bùi Hải Khánh",
+    "age": 43,
+    "wallet_id": "bc1ofv177udktmonrvbjfvyb6li076a3kkrz",
+    "coin_holdings": {
+      "ETH": 2.8701,
+      "USDT": 40816.81,
+      "LTC": 6963.364,
+      "BTC": 0.471365
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrfmpkxvhagkc4lorxdtg5nqjqijc1ydmt8vt43pt",
+        "coin_type": "USDT",
+        "amount": 3044.13,
+        "transaction_date": "2025-07-04"
+      },
+      {
+        "counterparty_wallet_id": "bc14w7kyhqin9n6xcj883dhx8bm92h3tv3i1",
+        "coin_type": "BTC",
+        "amount": 0.65009,
+        "transaction_date": "2025-07-11"
+      },
+      {
+        "counterparty_wallet_id": "0xxfgcaqvkizzqy72wx7ptx63cfl0ukeyz7src",
+        "coin_type": "BTC",
+        "amount": -0.022795,
+        "transaction_date": "2025-09-18"
+      }
+    ]
+  },
+  {
+    "user_id": 84,
+    "name": "Huỳnh Văn Dũng",
+    "age": 45,
+    "wallet_id": "0xe9p3jpxgh30153sflse45bg34iq7zj3sweb",
+    "coin_holdings": {
+      "DOT": 9990.273,
+      "MATIC": 379.802,
+      "LTC": 4002.807,
+      "DOGE": 5138.424
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xn3oeuvtyt8qzpky32orwixz2c9ros7yt2m6tw",
+        "coin_type": "DOT",
+        "amount": -624.583,
+        "transaction_date": "2025-05-18"
+      },
+      {
+        "counterparty_wallet_id": "addrlp8ii7ewbxxgaearms3jn050e6mpsj9wr",
+        "coin_type": "DOT",
+        "amount": -893.413,
+        "transaction_date": "2025-07-16"
+      },
+      {
+        "counterparty_wallet_id": "addrlemx15z8vmuhxid4n1u3493wxa73jgzlma5uofwb",
+        "coin_type": "DOT",
+        "amount": 424.895,
+        "transaction_date": "2025-08-11"
+      },
+      {
+        "counterparty_wallet_id": "0xr5xqt4p501nouhtcs1k9ye9o2m71hssbelrq",
+        "coin_type": "DOGE",
+        "amount": -25.703,
+        "transaction_date": "2025-08-18"
+      }
+    ]
+  },
+  {
+    "user_id": 85,
+    "name": "Dương Minh Nhung",
+    "age": 42,
+    "wallet_id": "bc1vg5vmf60yknfu84xyjoa21a6xvaj2k8xpnmjqy3",
+    "coin_holdings": {
+      "LTC": 7999.553,
+      "AVAX": 8446.868,
+      "ADA": 6222.205,
+      "DOT": 2831.748
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xarlw3mg25cfzfdsnczxvml90pxrlzu6wmx3",
+        "coin_type": "DOT",
+        "amount": 794.515,
+        "transaction_date": "2025-06-26"
+      },
+      {
+        "counterparty_wallet_id": "0x0it26ys445gdej31gymdm0l2ljk4q5v7c6s5n",
+        "coin_type": "DOT",
+        "amount": 177.425,
+        "transaction_date": "2025-09-20"
+      },
+      {
+        "counterparty_wallet_id": "bc1kbhb7s9tj1gm25len606n9rr7s20cv3t",
+        "coin_type": "AVAX",
+        "amount": 559.046,
+        "transaction_date": "2025-10-26"
+      }
+    ]
+  },
+  {
+    "user_id": 86,
+    "name": "Phạm Quang Long",
+    "age": 39,
+    "wallet_id": "bc1a984uvkyrmjljx8xgsic43olfark6o0u9",
+    "coin_holdings": {
+      "BTC": 2.133667,
+      "DOGE": 8738.22,
+      "SOL": 6046.852,
+      "USDT": 5296.69
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1atoaztkszp7g7siwjm2c8qizk3c9xbonrwzc4xl",
+        "coin_type": "USDT",
+        "amount": 9747.86,
+        "transaction_date": "2025-05-27"
+      },
+      {
+        "counterparty_wallet_id": "bc10kgazu41ugl3wxdrlcmlw83y0mahym2zbppf",
+        "coin_type": "BTC",
+        "amount": 0.507798,
+        "transaction_date": "2025-09-18"
+      },
+      {
+        "counterparty_wallet_id": "addrfmpkxvhagkc4lorxdtg5nqjqijc1ydmt8vt43pt",
+        "coin_type": "BTC",
+        "amount": 0.911075,
+        "transaction_date": "2025-09-20"
+      }
+    ]
+  },
+  {
+    "user_id": 87,
+    "name": "Hồ Phương An",
+    "age": 33,
+    "wallet_id": "0x0it26ys445gdej31gymdm0l2ljk4q5v7c6s5n",
+    "coin_holdings": {
+      "ADA": 861.486,
+      "SOL": 3730.639,
+      "DOGE": 7550.904,
+      "USDT": 18096.11
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrt3imj70e3p15ahdbvzb0oih5csk30lvylkfxhk",
+        "coin_type": "USDT",
+        "amount": -9520.81,
+        "transaction_date": "2025-06-20"
+      },
+      {
+        "counterparty_wallet_id": "0x0vaiy4va13u1gspk9p38qoldforxo1bdje153a",
+        "coin_type": "USDT",
+        "amount": 1423.04,
+        "transaction_date": "2025-07-13"
+      },
+      {
+        "counterparty_wallet_id": "addrldslcb8qsspye9r1f63ai9hasez2nx1wvbd4b",
+        "coin_type": "DOGE",
+        "amount": 445.366,
+        "transaction_date": "2025-10-28"
+      }
+    ]
+  },
+  {
+    "user_id": 88,
+    "name": "Đỗ Phương Khánh",
+    "age": 51,
+    "wallet_id": "bc1b4ehou6qlz2rwgwaj1g1r1dwwo8nbhnal3gywi",
+    "coin_holdings": {
+      "XRP": 7218.295,
+      "AVAX": 3143.815,
+      "DOGE": 3448.132,
+      "SOL": 8271.766
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc15mn32u1iq2bajdm5fc79m96zpxvpbl9ot7txkdo",
+        "coin_type": "SOL",
+        "amount": -888.237,
+        "transaction_date": "2025-05-17"
+      },
+      {
+        "counterparty_wallet_id": "0x6xq9jb354mype46aexl68j0nmeoq4yrp5",
+        "coin_type": "SOL",
+        "amount": -645.66,
+        "transaction_date": "2025-06-13"
+      },
+      {
+        "counterparty_wallet_id": "addrbmc97c7bo119xp9n56nyxtxmgtt0iaaky",
+        "coin_type": "AVAX",
+        "amount": -88.86,
+        "transaction_date": "2025-06-15"
+      }
+    ]
+  },
+  {
+    "user_id": 89,
+    "name": "Nguyễn Văn Xuân",
+    "age": 52,
+    "wallet_id": "addrldslcb8qsspye9r1f63ai9hasez2nx1wvbd4b",
+    "coin_holdings": {
+      "BNB": 1113.315,
+      "SOL": 608.858,
+      "XRP": 3736.059,
+      "DOGE": 6273.625
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrh1fkj4yk1b3d5050ui22kx7n89ltajw2",
+        "coin_type": "SOL",
+        "amount": -302.706,
+        "transaction_date": "2025-05-13"
+      },
+      {
+        "counterparty_wallet_id": "0x3d8w3zp08j3trp0j43d5iqvnb4gh2m5zja8dzr",
+        "coin_type": "BNB",
+        "amount": 451.493,
+        "transaction_date": "2025-06-06"
+      },
+      {
+        "counterparty_wallet_id": "bc1rxxf36wa7sqrf1llkstn3cpudrl90aobt32",
+        "coin_type": "SOL",
+        "amount": -522.068,
+        "transaction_date": "2025-08-28"
+      },
+      {
+        "counterparty_wallet_id": "0xoz0kz4z7whwkmy9x8sylemruyp04k43saf",
+        "coin_type": "BNB",
+        "amount": -342.285,
+        "transaction_date": "2025-08-31"
+      }
+    ]
+  },
+  {
+    "user_id": 90,
+    "name": "Nguyễn Thành Xuân",
+    "age": 26,
+    "wallet_id": "0xpejzhyapdswzp6swk2rv239moft6yriaddur82",
+    "coin_holdings": {
+      "BNB": 6771.456,
+      "DOT": 4033.51,
+      "ETH": 8.3889,
+      "ADA": 7790.459
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xobk3g84utdd2ec2ihoy7dv7c9hx3d43e7b7p0",
+        "coin_type": "ADA",
+        "amount": -996.529,
+        "transaction_date": "2025-05-07"
+      },
+      {
+        "counterparty_wallet_id": "bc1rpzlk3e4xyf9igfu8iogxpbwhvnzh13cd5glq",
+        "coin_type": "ADA",
+        "amount": 968.192,
+        "transaction_date": "2025-06-21"
+      },
+      {
+        "counterparty_wallet_id": "bc1rpzlk3e4xyf9igfu8iogxpbwhvnzh13cd5glq",
+        "coin_type": "ADA",
+        "amount": 148.624,
+        "transaction_date": "2025-09-28"
+      },
+      {
+        "counterparty_wallet_id": "addrf7jxjn6fokzixzareiyaz39pecn0dl5e11e9",
+        "coin_type": "BNB",
+        "amount": 458.155,
+        "transaction_date": "2025-10-22"
+      }
+    ]
+  },
+  {
+    "user_id": 91,
+    "name": "Huỳnh Minh Phúc",
+    "age": 37,
+    "wallet_id": "0x6xq9jb354mype46aexl68j0nmeoq4yrp5",
+    "coin_holdings": {
+      "DOT": 7840.087,
+      "BTC": 1.054971,
+      "USDT": 46847.35,
+      "MATIC": 3058.588
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xr5xqt4p501nouhtcs1k9ye9o2m71hssbelrq",
+        "coin_type": "DOT",
+        "amount": 420.487,
+        "transaction_date": "2025-06-06"
+      },
+      {
+        "counterparty_wallet_id": "addrj99t2d5em2vajepecqnvqhw06xkxb94p",
+        "coin_type": "BTC",
+        "amount": -0.003084,
+        "transaction_date": "2025-06-12"
+      },
+      {
+        "counterparty_wallet_id": "bc1cxlvpymb5m9j98cwn2y8fv2bc2nnuvy8n",
+        "coin_type": "MATIC",
+        "amount": -782.443,
+        "transaction_date": "2025-07-01"
+      },
+      {
+        "counterparty_wallet_id": "addr6uxqm334l1vznqdxamw2tnd6r30ojhe4h3gm",
+        "coin_type": "BTC",
+        "amount": 0.505259,
+        "transaction_date": "2025-07-05"
+      }
+    ]
+  },
+  {
+    "user_id": 92,
+    "name": "Vũ Hải Long",
+    "age": 23,
+    "wallet_id": "0xe094d6rupw2w5506rr5pcxa5s00i85syw",
+    "coin_holdings": {
+      "AVAX": 6304.791,
+      "BTC": 1.929216,
+      "MATIC": 3095.392
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1ofv177udktmonrvbjfvyb6li076a3kkrz",
+        "coin_type": "MATIC",
+        "amount": 196.465,
+        "transaction_date": "2025-05-25"
+      },
+      {
+        "counterparty_wallet_id": "0x361i2hgj11yedwb2bne6loh25nsjf678k52qc1i",
+        "coin_type": "BTC",
+        "amount": 0.121163,
+        "transaction_date": "2025-06-16"
+      },
+      {
+        "counterparty_wallet_id": "0xniwc5amln4ptgq9cvah78okz1poxtfdc79flv1x",
+        "coin_type": "MATIC",
+        "amount": 957.506,
+        "transaction_date": "2025-06-19"
+      }
+    ]
+  },
+  {
+    "user_id": 93,
+    "name": "Đặng Văn Tùng",
+    "age": 19,
+    "wallet_id": "bc1rxxf36wa7sqrf1llkstn3cpudrl90aobt32",
+    "coin_holdings": {
+      "XRP": 8597.888,
+      "USDT": 15937.38,
+      "AVAX": 2579.206,
+      "BTC": 0.287497
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addracy15pdtz91x70fqldb2uuijnwpaytxw1vzc7d2k",
+        "coin_type": "XRP",
+        "amount": 310.26,
+        "transaction_date": "2025-07-18"
+      },
+      {
+        "counterparty_wallet_id": "0x0it26ys445gdej31gymdm0l2ljk4q5v7c6s5n",
+        "coin_type": "USDT",
+        "amount": 6164.03,
+        "transaction_date": "2025-08-08"
+      },
+      {
+        "counterparty_wallet_id": "0xniwc5amln4ptgq9cvah78okz1poxtfdc79flv1x",
+        "coin_type": "USDT",
+        "amount": -1483.14,
+        "transaction_date": "2025-08-26"
+      }
+    ]
+  },
+  {
+    "user_id": 94,
+    "name": "Phạm Đức Phong",
+    "age": 55,
+    "wallet_id": "addr6uxqm334l1vznqdxamw2tnd6r30ojhe4h3gm",
+    "coin_holdings": {
+      "DOT": 3856.636,
+      "DOGE": 1159.663,
+      "LTC": 615.713
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0x0it26ys445gdej31gymdm0l2ljk4q5v7c6s5n",
+        "coin_type": "DOT",
+        "amount": 764.163,
+        "transaction_date": "2025-05-17"
+      },
+      {
+        "counterparty_wallet_id": "0xxr2dhylurtp0lzjjeget1ghr09skdgigatj9tze",
+        "coin_type": "DOGE",
+        "amount": -448.752,
+        "transaction_date": "2025-05-21"
+      },
+      {
+        "counterparty_wallet_id": "bc1rc6zs62ywe1g983ep9p9w4j66cnoljq52ws",
+        "coin_type": "DOT",
+        "amount": 272.814,
+        "transaction_date": "2025-06-02"
+      },
+      {
+        "counterparty_wallet_id": "addrlp8ii7ewbxxgaearms3jn050e6mpsj9wr",
+        "coin_type": "DOGE",
+        "amount": 486.751,
+        "transaction_date": "2025-07-18"
+      }
+    ]
+  },
+  {
+    "user_id": 95,
+    "name": "Hoàng Thu Hùng",
+    "age": 18,
+    "wallet_id": "bc174v1qx8ertb74rs7gu0env5sn961j88q",
+    "coin_holdings": {
+      "DOT": 2516.381,
+      "SOL": 6803.178,
+      "MATIC": 9992.426
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "bc1dqnk20in8910t2f7atwyam1n0lh9p89fkbi4o",
+        "coin_type": "DOT",
+        "amount": -94.267,
+        "transaction_date": "2025-05-05"
+      },
+      {
+        "counterparty_wallet_id": "0xobk3g84utdd2ec2ihoy7dv7c9hx3d43e7b7p0",
+        "coin_type": "MATIC",
+        "amount": -50.257,
+        "transaction_date": "2025-06-16"
+      },
+      {
+        "counterparty_wallet_id": "0x3d8w3zp08j3trp0j43d5iqvnb4gh2m5zja8dzr",
+        "coin_type": "DOT",
+        "amount": -878.888,
+        "transaction_date": "2025-09-07"
+      }
+    ]
+  },
+  {
+    "user_id": 96,
+    "name": "Huỳnh Văn Yên",
+    "age": 26,
+    "wallet_id": "0xoz0kz4z7whwkmy9x8sylemruyp04k43saf",
+    "coin_holdings": {
+      "MATIC": 9015.435,
+      "DOT": 6730.337,
+      "BTC": 1.033494
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xc9t199dxj37c9h42m44gv3z6bz8uug95rlrd",
+        "coin_type": "DOT",
+        "amount": -181.301,
+        "transaction_date": "2025-05-05"
+      },
+      {
+        "counterparty_wallet_id": "0xe9p3jpxgh30153sflse45bg34iq7zj3sweb",
+        "coin_type": "MATIC",
+        "amount": 893.109,
+        "transaction_date": "2025-05-12"
+      },
+      {
+        "counterparty_wallet_id": "0xcsotdhhlmh1t939ayq6ww8yl68ntk63n2qb6gs8g",
+        "coin_type": "DOT",
+        "amount": 788.369,
+        "transaction_date": "2025-05-17"
+      },
+      {
+        "counterparty_wallet_id": "bc1atoaztkszp7g7siwjm2c8qizk3c9xbonrwzc4xl",
+        "coin_type": "BTC",
+        "amount": 0.353642,
+        "transaction_date": "2025-07-26"
+      }
+    ]
+  },
+  {
+    "user_id": 97,
+    "name": "Phạm Thị Trung",
+    "age": 37,
+    "wallet_id": "addrh1fkj4yk1b3d5050ui22kx7n89ltajw2",
+    "coin_holdings": {
+      "BNB": 377.592,
+      "DOT": 4933.45,
+      "ADA": 7043.437
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addraji0y6dpbhsahxthv3a3zmf8mdd4v30t9",
+        "coin_type": "BNB",
+        "amount": -115.392,
+        "transaction_date": "2025-08-20"
+      },
+      {
+        "counterparty_wallet_id": "bc1dqnk20in8910t2f7atwyam1n0lh9p89fkbi4o",
+        "coin_type": "ADA",
+        "amount": -174.625,
+        "transaction_date": "2025-09-11"
+      },
+      {
+        "counterparty_wallet_id": "bc1vg5vmf60yknfu84xyjoa21a6xvaj2k8xpnmjqy3",
+        "coin_type": "ADA",
+        "amount": 70.034,
+        "transaction_date": "2025-09-28"
+      }
+    ]
+  },
+  {
+    "user_id": 98,
+    "name": "Đỗ Thu Uyên",
+    "age": 34,
+    "wallet_id": "bc16zx1tv18kgyggsnpuevjlzfflb7wxrum2lh",
+    "coin_holdings": {
+      "BTC": 1.081938,
+      "XRP": 9951.114,
+      "AVAX": 2747.616,
+      "ADA": 6804.933
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addraji0y6dpbhsahxthv3a3zmf8mdd4v30t9",
+        "coin_type": "ADA",
+        "amount": 338.032,
+        "transaction_date": "2025-06-06"
+      },
+      {
+        "counterparty_wallet_id": "addrfk8ut0cvs4f8cgvyie6ivwpvs7hzioykl1cq99c",
+        "coin_type": "AVAX",
+        "amount": -534.748,
+        "transaction_date": "2025-08-11"
+      },
+      {
+        "counterparty_wallet_id": "bc1q85jsg65kxvf1t2tala753lc58drc11ert",
+        "coin_type": "XRP",
+        "amount": -957.987,
+        "transaction_date": "2025-08-28"
+      },
+      {
+        "counterparty_wallet_id": "bc1sxvwvm4w3zkwdeekgyspengwyx9trflqbmae38s",
+        "coin_type": "AVAX",
+        "amount": 884.383,
+        "transaction_date": "2025-09-03"
+      }
+    ]
+  },
+  {
+    "user_id": 99,
+    "name": "Hoàng Đức Dũng",
+    "age": 48,
+    "wallet_id": "0xcsotdhhlmh1t939ayq6ww8yl68ntk63n2qb6gs8g",
+    "coin_holdings": {
+      "ADA": 5201.554,
+      "BTC": 0.592622,
+      "AVAX": 738.379
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "0xj755nf4zw9xa3kx7eedtjvzhwjr64dpja1wj0tpa",
+        "coin_type": "ADA",
+        "amount": -316.713,
+        "transaction_date": "2025-05-06"
+      },
+      {
+        "counterparty_wallet_id": "0xj755nf4zw9xa3kx7eedtjvzhwjr64dpja1wj0tpa",
+        "coin_type": "BTC",
+        "amount": -0.066724,
+        "transaction_date": "2025-05-10"
+      },
+      {
+        "counterparty_wallet_id": "0xt4ufel6246hid25owf75935a0l7253j2d5",
+        "coin_type": "ADA",
+        "amount": 919.52,
+        "transaction_date": "2025-07-09"
+      },
+      {
+        "counterparty_wallet_id": "bc16zx1tv18kgyggsnpuevjlzfflb7wxrum2lh",
+        "coin_type": "ADA",
+        "amount": -581.04,
+        "transaction_date": "2025-10-09"
+      }
+    ]
+  },
+  {
+    "user_id": 100,
+    "name": "Nguyễn Quang Quân",
+    "age": 47,
+    "wallet_id": "addracy15pdtz91x70fqldb2uuijnwpaytxw1vzc7d2k",
+    "coin_holdings": {
+      "MATIC": 6512.705,
+      "AVAX": 6761.003,
+      "ETH": 0.3993,
+      "ADA": 5176.957
+    },
+    "transactions": [
+      {
+        "counterparty_wallet_id": "addrf7low4vssruraldol65wvjx8uibrsz1n3iuzgppo",
+        "coin_type": "ADA",
+        "amount": -726.0,
+        "transaction_date": "2025-07-09"
+      },
+      {
+        "counterparty_wallet_id": "bc1npm6jqfwwxr5rdnpx2i9tanzr2muljav",
+        "coin_type": "AVAX",
+        "amount": 639.177,
+        "transaction_date": "2025-08-26"
+      },
+      {
+        "counterparty_wallet_id": "addr26rjrny20479t6vxdp5gjlqm5k8p4q0b8ic8bbi4",
+        "coin_type": "MATIC",
+        "amount": 597.199,
+        "transaction_date": "2025-10-13"
+      }
+    ]
+  }
+]
