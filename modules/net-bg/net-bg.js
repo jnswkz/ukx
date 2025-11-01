@@ -11,7 +11,6 @@ const width = canvas.width;
 const height = canvas.height;
 
 function spawn_point(ctx, x, y) {
-    console.log(`Spawned point at (${x}, ${y})`);
     const radius = 2;
     ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
     ctx.beginPath();
@@ -102,24 +101,26 @@ setInterval(() => {
     }
 
     spawn_point(ctx, mousex, mousey);
+    const mouseDistanceSquared = 200 * 200;
     for (let i=0; i<list_of_points.length; i++) {
         const point = list_of_points[i];
         const dx = point.x - mousex;
         const dy = point.y - mousey;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < 200) {
+        const distanceSquared = dx * dx + dy * dy;
+        if (distanceSquared < mouseDistanceSquared) {
             draw_line(point.x, point.y, mousex, mousey, 'highlight');
         }
     }
 
+    const lineDistanceSquared = 150 * 150;
     for (let i=0; i<list_of_points.length; i++) {
         const pointA = list_of_points[i];
         for (let j=i+1; j<list_of_points.length; j++) {
             const pointB = list_of_points[j];
             const dx = pointA.x - pointB.x;
             const dy = pointA.y - pointB.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance < 150) {
+            const distanceSquared = dx * dx + dy * dy;
+            if (distanceSquared < lineDistanceSquared) {
                 draw_line(pointA.x, pointA.y, pointB.x, pointB.y);
             }
         }

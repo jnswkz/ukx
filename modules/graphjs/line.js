@@ -2,7 +2,6 @@
 function drawLineGraph(canvasID, data, backgroundColor, lineColor, pointColor) {
 
     function spawn_point(ctx, x, y) {
-        console.log(`Spawned point at (${x}, ${y})`);
         const radius = 5;
         ctx.fillStyle = pointColor;
         ctx.beginPath();
