@@ -62,15 +62,19 @@ function drawChart(highlightIndex = -1) {
 drawChart();
 
 // ====== HOVER DETECTION ======
+let currentHighlightIndex = -1;
 canvas.addEventListener("mousemove", (e) => {
   const rect = canvas.getBoundingClientRect();
   const x = e.clientX - rect.left - centerX;
   const y = e.clientY - rect.top - centerY;
-  const distance = Math.sqrt(x*x + y*y);
+  const distanceSquared = x*x + y*y;
 
-  if (distance > radius) {
-    tooltip.style.display = "none";
-    drawChart();
+  if (distanceSquared > radius * radius) {
+    if (tooltip.style.display !== "none" || currentHighlightIndex !== -1) {
+      tooltip.style.display = "none";
+      currentHighlightIndex = -1;
+      drawChart();
+    }
     return;
   }
 
@@ -79,7 +83,8 @@ canvas.addEventListener("mousemove", (e) => {
 
   const index = data.findIndex(d => angle >= d.startAngle && angle < d.endAngle);
 
-  if (index !== -1) {
+  if (index !== -1 && index !== currentHighlightIndex) {
+    currentHighlightIndex = index;
     const d = data[index];
     drawChart(index);   
 
@@ -87,6 +92,10 @@ canvas.addEventListener("mousemove", (e) => {
     tooltip.style.left = e.pageX + 10 + "px";
     tooltip.style.top = e.pageY + 10 + "px";
     tooltip.innerHTML = `<b>${d.label}</b><br>Value: ${d.value}<br>${Math.round((d.value/total)*100)}%`;
+  } else if (index !== -1) {
+    // Update tooltip position without redrawing chart
+    tooltip.style.left = e.pageX + 10 + "px";
+    tooltip.style.top = e.pageY + 10 + "px";
   }
 });
 function resizeCanvas() {

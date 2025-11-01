@@ -105,6 +105,8 @@ function initializeNavbar() {
 
 // Auto-load components when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    loadNavbar();
-    loadFooter();
+    // Load components in parallel for faster initial page load
+    Promise.all([loadNavbar(), loadFooter()]).catch(error => {
+        console.error('Error loading components:', error);
+    });
 });

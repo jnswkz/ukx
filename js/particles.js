@@ -58,14 +58,16 @@ function init() {
 }
 
 function connect() {
+    const minDistanceSquared = particleOptions.minDistance ** 2;
+    
     for (let i = 0; i < particles.length; i++) {
-        for (let j = i; j < particles.length; j++) {
-            const distance = Math.sqrt(
-                (particles[i].x - particles[j].x) ** 2 +
-                (particles[i].y - particles[j].y) ** 2
-            );
+        for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distanceSquared = dx * dx + dy * dy;
 
-            if (distance < particleOptions.minDistance) {
+            if (distanceSquared < minDistanceSquared) {
+                const distance = Math.sqrt(distanceSquared);
                 ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / particleOptions.minDistance})`;
                 ctx.lineWidth = particleOptions.lineWidth;
                 ctx.beginPath();
@@ -78,8 +80,11 @@ function connect() {
     // connect to mouse
     if (mouse.x !== null && mouse.y !== null) {
         for (const particle of particles) {
-            const distance = Math.sqrt((particle.x - mouse.x) ** 2 + (particle.y - mouse.y) ** 2);
-            if (distance < particleOptions.minDistance) {
+            const dx = particle.x - mouse.x;
+            const dy = particle.y - mouse.y;
+            const distanceSquared = dx * dx + dy * dy;
+            if (distanceSquared < minDistanceSquared) {
+                const distance = Math.sqrt(distanceSquared);
                 ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / particleOptions.minDistance})`;
                 ctx.lineWidth = particleOptions.lineWidth;
                 ctx.beginPath();
