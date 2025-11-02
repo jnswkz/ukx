@@ -1,5 +1,7 @@
 // UKX Login Page Logic (Figma Design)
 
+import { jsonFileParser } from "../modules/json/jsonFileParser.js";
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('UKX Login Page initialized (Figma Design)');
 
@@ -19,8 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
 /**
  * Initialize login form submission
  */
-function initializeLoginForm() {
+async function initializeLoginForm() {
     const loginForm = document.getElementById('loginForm');
+    const account_db = await connectDb('/data/accounts_data.json');
+    const user_db = await connectDb('/data/users_data.json');
 
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
@@ -45,9 +49,19 @@ function initializeLoginForm() {
                 return;
             }
 
-            // For MVP, just redirect to dashboard (no real authentication)
-            console.log('Login successful (simulated)');
-            window.location.href = './dashboard.html';
+
+            if (authenticateUser(email, password, account_db)) {
+                alert('Login successful!');
+                console.log('Login successful');
+                const user_id = account_db.find(user => user.username === email).user_id;
+                const userData = getUserDataById(user_id, user_db);
+                console.log('User Data:', userData);
+                window.localStorage.setItem('isLoggedIn', 'true');
+                window.localStorage.setItem('userData', JSON.stringify(userData));
+                // window.location.href = './dashboard.html';
+            } else {
+                alert('Invalid email or password.');
+            }
         });
     }
 }
@@ -118,4 +132,31 @@ function initializeForgotPassword() {
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+}
+
+/**
+ * Connect to JSON database 
+ */
+
+async function connectDb(db_path){
+    const db = await jsonFileParser(db_path);
+    // console.log('im here');
+    console.log(typeof db); 
+    return db;
+}
+
+/**
+ * Authenticate Function
+ */
+
+function authenticateUser(email, password, db) {
+    // console.log(typeof db)
+    return db.some(user => user.username === email && user.password === password);
+}
+
+/**
+ * Get user data by userID
+ */
+function getUserDataById(userId, db) {
+    return db.find(user => user.user_id === userId) || null;
 }
