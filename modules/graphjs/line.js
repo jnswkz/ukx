@@ -101,7 +101,6 @@ function draw_tooltip(ctx, x, y, text, fontSize = 12) {
 
     ctx.restore();
 }
-
 function draw(canvas, data, backgroundColor, lineColor, pointColor) {
 
     const ctx = canvas.getContext('2d');
@@ -116,70 +115,108 @@ function draw(canvas, data, backgroundColor, lineColor, pointColor) {
 
     const margin = 40;
 
-    const xScale = (width - 2 * margin) / (data.x.length - 1);
-    const yMax = Math.max(...data.y);
-    const yMin = Math.min(...data.y);
-    const yScale = (height - margin) / (2 * (yMax - yMin));
+    // defensive: ensure arrays and numeric values
+    const xs = Array.isArray(data.x) ? data.x : [];
+    const ys = Array.isArray(data.y) ? data.y.map(Number) : [];
 
-    // write x data for each point (labels remain near bottom)
+    if (xs.length === 0 || ys.length === 0 || xs.length !== ys.length) {
+        
+        ctx.fillStyle = calculate_font_color(backgroundColor);
+        ctx.textAlign = 'center';
+        ctx.font = `${Math.max(12, Math.round(Math.min(width, height) * 0.035))}px Arial`;
+        ctx.fillText('No chart data', width / 2, height / 2);
+        return;
+    }
+
+    const xCount = xs.length;
+    const xScale = xCount > 1 ? (width - 2 * margin) / (xCount - 1) : 0;
+
+    const yMax = Math.max(...ys);
+    const yMin = Math.min(...ys);
+    // avoid division by zero when all values equal
+    const yRange = (yMax === yMin) ? (Math.abs(yMax) > 0 ? Math.abs(yMax) * 0.1 : 1) : (yMax - yMin);
+    const yScale = (height - 2 * margin) / yRange;
+
+    // write x labels
     const fontSize = calculate_font_size(ctx);
     ctx.font = `${fontSize}px Arial`;
     ctx.fillStyle = calculate_font_color(backgroundColor);
-    // ctx.fillStyle = '#000000';
     ctx.textAlign = 'center';
 
-    const minGap = 6; 
-    const labelWidths = data.x.map(v => ctx.measureText(String(v)).width);
+    const minGap = 6;
+    const labelWidths = xs.map(v => ctx.measureText(String(v)).width);
     const maxLabelWidth = labelWidths.length ? Math.max(...labelWidths) : 0;
-
-    // calculate step to avoid label overlap
     const effectiveXScale = xScale > 0 ? xScale : (width - 2 * margin);
     const step = Math.max(1, Math.ceil((maxLabelWidth + minGap) / effectiveXScale));
 
-    data.x.forEach((xValue, index) => {
+    xs.forEach((xValue, index) => {
         if (index !== 0 && (index % step !== 0)) return;
         const x = margin + index * xScale;
         ctx.fillText(String(xValue), x, height - 5);
     });
 
-    for (let i = 0; i < data.x.length; i++) {
+    for (let i = 0; i < xCount; i++) {
         const x = margin + i * xScale;
-        const y = height - margin - (data.y[i] - yMin) * yScale;
+        const y = height - margin - ((ys[i] - yMin) * yScale);
 
         spawn_point(ctx, x, y, pointColor);
 
-        if (i > 0) {
+        if (i > 0 && xScale !== 0) {
             const prevX = margin + (i - 1) * xScale;
-            const prevY = height - margin - (data.y[i - 1] - yMin) * yScale;
+            const prevY = height - margin - ((ys[i - 1] - yMin) * yScale);
             draw_line(ctx, prevX, prevY, x, y, lineColor);
         }
     }
 
 }
-
 export function drawLineGraph(canvasID, data, backgroundColor, lineColor, pointColor) {
+    console.log(data);
     const canvas = document.getElementById(canvasID);
+    if (!canvas) return;
+
+    // make the drawing buffer match the displayed (CSS) size
+    const rect = canvas.getBoundingClientRect();
+    const layoutW = Math.max(1, Math.round(rect.width));
+    const layoutH = Math.max(1, Math.round(rect.height));
+    if (canvas.width !== layoutW || canvas.height !== layoutH) {
+        canvas.width = layoutW;
+        canvas.height = layoutH;
+    }
+
     const ctx = canvas.getContext('2d');
     const fontSize = calculate_font_size(ctx);
     draw(canvas, data, backgroundColor, lineColor, pointColor);
+
     canvas.addEventListener('mousemove', function(event) {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         draw(canvas, data, backgroundColor, lineColor, pointColor);
         draw_dashed_line(ctx, x, lineColor);
-    
-        // find nearest point
-        for (let i = 0; i < data.x.length; i++) {
-            const pointX = 40 + i * ((canvas.width - 80) / (data.x.length - 1));
-            const pointY = canvas.height - 40 - (data.y[i] - Math.min(...data.y)) * ((canvas.height - 80) / (Math.max(...data.y) - Math.min(...data.y)));
+
+        const xs = Array.isArray(data.x) ? data.x : [];
+        const ys = Array.isArray(data.y) ? data.y.map(Number) : [];
+        if (xs.length === 0 || ys.length === 0) return;
+
+        const margin = 40;
+        const xCount = xs.length;
+        const xScale = xCount > 1 ? (canvas.width - 2 * margin) / (xCount - 1) : 0;
+        const minY = Math.min(...ys);
+        const maxY = Math.max(...ys);
+        const yRange = (maxY === minY) ? (Math.abs(maxY) > 0 ? Math.abs(maxY) * 0.1 : 1) : (maxY - minY);
+        const yScale = (canvas.height - 2 * margin) / yRange;
+
+        for (let i = 0; i < xs.length; i++) {
+            const pointX = margin + i * xScale;
+            const pointY = canvas.height - margin - (ys[i] - minY) * yScale;
             if (Math.abs(pointX - x) < 10) {
-                const tooltipText = `${data.x[i]}\n${data.y[i]}`;
+                const tooltipText = `${xs[i]}\n${ys[i]}`;
                 draw_tooltip(ctx, pointX + 10, pointY - 10, tooltipText, fontSize);
                 break;
             }
         }
-    });
-    canvas.addEventListener('mouseleave', function(event) {
+    }, { passive: true });
+
+    canvas.addEventListener('mouseleave', function() {
         draw(canvas, data, backgroundColor, lineColor, pointColor);
-    });
+    }, { passive: true });
 }
