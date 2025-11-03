@@ -200,3 +200,41 @@
     font-size: 12px;
     color: var(--color-grey-90);
 }
+
+/* ========== Chart Container ========== */
+.chart-container canvas{
+    --chart-width: 100%;
+    --chart-height: 300px;
+    width: 100%;
+    height: var(--chart-height);
+    margin-bottom: var(--spacing-3xl);
+    padding: var(--spacing-xl);
+    border: 1px solid var(--color-grey-border);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, var(--color-bg-card) 0%, rgba(36, 36, 36, 0) 100%);
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.chart-container.skeleton {
+    background: var(--color-grey-neutral-800);
+    --skeleton-inset: var(--spacing-xl);
+    --skeleton-radius: var(--radius-md);
+}
+
+.chart-container.skeleton.is-loaded {
+    background: linear-gradient(180deg, var(--color-bg-card) 0%, rgba(36, 36, 36, 0) 100%);
+}
+
+.chart-container.skeleton canvas {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.chart-container.skeleton.is-loaded canvas {
+    visibility: visible;
+    pointer-events: auto;
+}
+

@@ -22,17 +22,23 @@
                 <section class="portfolio-section">
                     <div class="portfolio-header">
                         <h1 class="portfolio-title">Portfolio</h1>
-                        <div class="portfolio-total">
+                        <div class="portfolio-total skeleton" data-skeleton="portfolio-total">
                             <span class="total-label">Total Balance</span>
                             <span class="total-amount" id="totalBalance">$12,345.67</span>
                         </div>
                     </div>
 
+                    <!-- User balance value chart -->
+                    <div class="chart-container skeleton" data-skeleton="chart">
+                        <canvas id="balanceChart"></canvas>
+                    </div>
                     <!-- Balances List -->
                     <div class="balances-section">
                         <h2 class="section-title">Balances</h2>
-                        <div class="balances-list" id="balancesList">
-                            <!-- Balances will be populated by JavaScript -->
+                        <div class="balances-list" id="balancesList" data-skeleton="balances">
+                            <div class="balance-item skeleton" aria-hidden="true"></div>
+                            <div class="balance-item skeleton" aria-hidden="true"></div>
+                            <div class="balance-item skeleton" aria-hidden="true"></div>
                         </div>
                     </div>
                 </section>
@@ -44,8 +50,10 @@
                         <button class="btn-secondary" id="sendBtn">Send</button>
                         <button class="btn-primary" id="receiveBtn">Receive</button>
                     </div>
-                    <div class="transactions-list" id="transactionsList">
-                        <!-- Transactions will be populated by JavaScript -->
+                    <div class="transactions-list" id="transactionsList" data-skeleton="transactions">
+                        <div class="transaction-item skeleton" aria-hidden="true"></div>
+                        <div class="transaction-item skeleton" aria-hidden="true"></div>
+                        <div class="transaction-item skeleton" aria-hidden="true"></div>
                     </div>
                 </section>
             </div>
@@ -54,6 +62,6 @@
 
     <script src="../js/components.js"></script>
     <script src="../js/main.js"></script>
-    <script src="../js/dashboard.js"></script>
+    <script type="module" src="../js/dashboard.js"></script>
 </body>
 </html>

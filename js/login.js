@@ -58,7 +58,7 @@ async function initializeLoginForm() {
                 console.log('User Data:', userData);
                 window.localStorage.setItem('isLoggedIn', 'true');
                 window.localStorage.setItem('userData', JSON.stringify(userData));
-                // window.location.href = './dashboard.html';
+                window.location.href = './dashboard.html';
             } else {
                 alert('Invalid email or password.');
             }
