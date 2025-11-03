@@ -39,6 +39,9 @@
 /* 10. Newspaper Template - Specific Styles */
 @import url('newspaper_template.css');
 
+/* 11. Skeleton Loading - Skeleton Screen Styles */
+@import url('skeleton.css');
+
 /* ========================================
    Module Organization Summary:
    

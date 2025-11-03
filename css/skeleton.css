@@ -1,0 +1,62 @@
+/* ========== Skeleton Utility ========== */
+.skeleton {
+    --skeleton-base: rgba(255, 255, 255, 0.06);
+    --skeleton-gradient: linear-gradient(90deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        rgba(255, 255, 255, 0.12) 50%,
+        rgba(143, 27, 27, 0.06) 100%);
+    --skeleton-inset: 0;
+    --skeleton-radius: inherit;
+    --skeleton-opacity: 0.5;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--skeleton-radius);
+    background: var(--skeleton-base);
+    color: transparent !important;
+    pointer-events: none;
+}
+
+.skeleton > * {
+    visibility: hidden;
+}
+
+.skeleton::after {
+    content: "";
+    position: absolute;
+    inset: var(--skeleton-inset);
+    border-radius: var(--skeleton-radius);
+    background: var(--skeleton-gradient);
+    background-size: 300% 100%;
+    animation: skeleton-shimmer 1.337s ease-in-out infinite;
+    opacity: var(--skeleton-opacity);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.skeleton.is-loaded {
+    pointer-events: auto;
+    color: inherit !important;
+}
+
+.skeleton.is-loaded > * {
+    visibility: visible;
+}
+
+.skeleton.is-loaded::after {
+    display: none;
+}
+
+.portfolio-total.skeleton {
+    --skeleton-radius: var(--radius-lg);
+}
+
+.balance-item.skeleton,
+.transaction-item.skeleton {
+    --skeleton-base: var(--color-grey-neutral-800);
+    --skeleton-radius: var(--radius-lg);
+}
+
+@keyframes skeleton-shimmer {
+    0%   { background-position: 150% 0; }
+    100% { background-position: -50% 0; }
+}
