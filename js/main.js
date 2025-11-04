@@ -49,6 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========== Button Actions ==========
     initializeButtons();
 
+    // ========== Live Hero Stats ==========
+    initializeHeroStatsCounter();
+
     // ========== Theme Toggle ==========
     // Theme toggle is now initialized in components.js after navbar loads
     // to ensure the button exists in the DOM before we try to access it
@@ -250,6 +253,57 @@ function initializeScrollAnimations() {
 
 // Call scroll animations after a short delay to ensure DOM is ready
 setTimeout(initializeScrollAnimations, 100);
+
+/**
+ * Live "currently winning big" hero stats incrementer
+ * Increases the number at random intervals and amounts, keeping the suffix text.
+ */
+function initializeHeroStatsCounter() {
+    if (window.__heroStatsInitialized) return;
+    window.__heroStatsInitialized = true;
+
+    const el = document.querySelector('.hero-stats');
+    if (!el) {
+        console.warn('Hero stats element not found');
+        return;
+    }
+
+    const original = el.textContent.trim();
+    const match = original.match(/^([\d,]+)/);
+    let value = match ? parseInt(match[1].replace(/,/g, ''), 10) : 3621336;
+    const suffix = match ? original.slice(match[1].length).trim() : 'currently winning big';
+    const formatter = new Intl.NumberFormat('en-US');
+    let running = true;
+    let scheduled = false;
+
+    function scheduleNext() {
+        if (scheduled) return;
+        scheduled = true;
+        const nextDelay = Math.floor(Math.random() * 5000) + 1500; // 1.5s - 6.5s
+        setTimeout(() => {
+            scheduled = false;
+            tick();
+        }, nextDelay);
+    }
+
+    function tick() {
+        if (!running) return;
+        const increment = 50 + Math.floor(Math.random() * 450); // 50-499
+        value += increment;
+        el.textContent = `${formatter.format(value)} ${suffix}`;
+        scheduleNext();
+    }
+
+    document.addEventListener('visibilitychange', () => {
+        running = !document.hidden;
+        if (running) {
+            scheduleNext();
+        }
+    });
+
+    // Start the schedule
+    scheduleNext();
+}
 
 /**
  * Placeholder for future wallet functionality
