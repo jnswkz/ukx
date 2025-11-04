@@ -112,36 +112,70 @@ async function drawBalanceChart(userData = {}, chartContainer) {
     }
 }
 
+let currentFilter = 'all'; // 'all', 'send', 'receive'
+
 /**
  * Initialize wallet dashboard functionality
  */
 function initializeWalletDashboard() {
-    // Logout button
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-            // Navigate back to landing page
-            window.location.href = 'index.html';
-        });
-    }
-
     // Send and Receive buttons
     const sendBtn = document.getElementById('sendBtn');
     const receiveBtn = document.getElementById('receiveBtn');
 
     if (sendBtn) {
         sendBtn.addEventListener('click', function() {
-            alert('Send functionality coming soon!');
+            // Toggle send filter
+            if (currentFilter === 'send') {
+                currentFilter = 'all';
+                sendBtn.classList.remove('active');
+            } else {
+                currentFilter = 'send';
+                sendBtn.classList.add('active');
+                receiveBtn.classList.remove('active');
+            }
+            filterTransactions(currentFilter);
         });
     }
 
     if (receiveBtn) {
         receiveBtn.addEventListener('click', function() {
-            alert('Receive functionality coming soon!');
+            // Toggle receive filter
+            if (currentFilter === 'receive') {
+                currentFilter = 'all';
+                receiveBtn.classList.remove('active');
+            } else {
+                currentFilter = 'receive';
+                receiveBtn.classList.add('active');
+                sendBtn.classList.remove('active');
+            }
+            filterTransactions(currentFilter);
         });
     }
 
     console.log('Wallet dashboard initialized');
+}
+
+/**
+ * Filter transactions by type
+ */
+function filterTransactions(filter) {
+    const transactionItems = document.querySelectorAll('.transaction-item');
+    
+    transactionItems.forEach(item => {
+        const transactionIcon = item.querySelector('.transaction-icon');
+        const isSend = transactionIcon && transactionIcon.classList.contains('send');
+        const isReceive = transactionIcon && transactionIcon.classList.contains('receive');
+        
+        if (filter === 'all') {
+            item.style.display = 'flex';
+        } else if (filter === 'send' && isSend) {
+            item.style.display = 'flex';
+        } else if (filter === 'receive' && isReceive) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    });
 }
 
 /**
@@ -223,21 +257,30 @@ async function populateWalletData(userData = {}, uiRefs = {}) {
     // Populate transactions
     if (transactionsList) {
         if (transactions.length) {
-            transactionsList.innerHTML = transactions.map(tx => `
+            transactionsList.innerHTML = transactions.map(tx => {
+                const sendIcon = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 15V5M10 5L6 9M10 5L14 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+                const receiveIcon = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 5V15M10 15L14 11M10 15L6 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+                
+                return `
                 <div class="transaction-item">
                     <div class="transaction-info">
-                        <div class="transaction-icon">${tx.type === 'send' ? '↑' : '↓'}</div>
+                        <div class="transaction-icon ${tx.type}">${tx.type === 'send' ? sendIcon : receiveIcon}</div>
                         <div class="transaction-details">
                             <h4>${tx.type === 'send' ? 'Sent' : 'Received'} ${tx.asset}</h4>
                             <p>${tx.address} • ${formatTimeAgo(tx.timestamp)}</p>
                         </div>
                     </div>
                     <div class="transaction-amount">
-                        <span class="amount" style="color: ${tx.amount > 0 ? 'var(--color-green-50)' : 'var(--color-grey-90)'}">${tx.amount > 0 ? '+' : ''}${tx.amount} ${tx.asset}</span>
-                        <span class="status">${tx.status}</span>
+                        <span class="amount ${tx.amount > 0 ? 'positive' : 'negative'}">${tx.amount > 0 ? '+' : ''}${tx.amount} ${tx.asset}</span>
+                        <span class="status" data-status="${tx.status}">${tx.status}</span>
                     </div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
         } else {
             transactionsList.innerHTML = '';
         }

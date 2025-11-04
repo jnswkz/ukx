@@ -58,6 +58,9 @@ async function loadChatPopup() {
 
 // Initialize navbar event listeners and functionality
 function initializeNavbar() {
+  // Check if user is logged in and update navbar UI
+  updateNavbarAuthState();
+
   // Hamburger menu logic
   const hamburger = document.getElementById("navHamburger");
   const mobileMenu = document.getElementById("navMobileMenu");
@@ -84,6 +87,11 @@ function initializeNavbar() {
     signupBtnMobile.addEventListener("click", () => {
       window.location.href = "/pages/signup.html";
     });
+  }
+  // Mobile logout
+  const logoutBtnMobile = document.getElementById("logoutBtnMobile");
+  if (logoutBtnMobile) {
+    logoutBtnMobile.addEventListener("click", handleLogout);
   }
   // Theme toggle functionality is now handled in main.js
   console.log(
@@ -113,6 +121,12 @@ function initializeNavbar() {
     signupBtn.addEventListener("click", () => {
       window.location.href = "/pages/signup.html";
     });
+  }
+
+  // Logout button
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", handleLogout);
   }
 
   // Load saved theme preference is now handled in main.js
@@ -188,6 +202,55 @@ function initializeChat() {
     return "Placeholder";
   }
   console.log("Chat popup initialized");
+}
+
+/**
+ * Update navbar UI based on authentication state
+ */
+function updateNavbarAuthState() {
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  
+  // Desktop buttons
+  const loginBtn = document.getElementById('loginBtn');
+  const signupBtn = document.getElementById('signupBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  
+  // Mobile buttons
+  const loginBtnMobile = document.getElementById('loginBtnMobile');
+  const signupBtnMobile = document.getElementById('signupBtnMobile');
+  const logoutBtnMobile = document.getElementById('logoutBtnMobile');
+  
+  if (isLoggedIn) {
+    // User is logged in - show logout, hide login/signup
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (signupBtn) signupBtn.style.display = 'none';
+    if (logoutBtn) logoutBtn.style.display = 'inline-block';
+    
+    if (loginBtnMobile) loginBtnMobile.style.display = 'none';
+    if (signupBtnMobile) signupBtnMobile.style.display = 'none';
+    if (logoutBtnMobile) logoutBtnMobile.style.display = 'block';
+  } else {
+    // User is not logged in - show login/signup, hide logout
+    if (loginBtn) loginBtn.style.display = 'inline-block';
+    if (signupBtn) signupBtn.style.display = 'inline-block';
+    if (logoutBtn) logoutBtn.style.display = 'none';
+    
+    if (loginBtnMobile) loginBtnMobile.style.display = 'block';
+    if (signupBtnMobile) signupBtnMobile.style.display = 'block';
+    if (logoutBtnMobile) logoutBtnMobile.style.display = 'none';
+  }
+}
+
+/**
+ * Handle user logout
+ */
+function handleLogout() {
+  // Clear authentication data
+  localStorage.removeItem('isLoggedIn');
+  localStorage.removeItem('userData');
+  
+  // Redirect to landing page
+  window.location.href = '/index.html';
 }
 
 // Auto-load components when DOM is ready

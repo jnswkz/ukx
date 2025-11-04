@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>UKX - Trade Crypto</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;500;600&family=Inter:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Trade Page -->
+    <div class="trade-page">
+        <!-- Navigation Bar Component -->
+        <div id="navbar-placeholder"></div>
+
+        <!-- Trade Content -->
+        <main class="trade-main">
+            <div class="trade-container">
+                <!-- Left Content -->
+                <div class="trade-hero">
+                    <h1 class="trade-title">Buy crypto in a few steps</h1>
+                    <p class="trade-subtitle">Bitcoin, Ethereum, Tether, Solana, and more popular crypto</p>
+                </div>
+
+                <!-- Trade Card -->
+                <div class="trade-card">
+                    <!-- Tab Switch -->
+                    <div class="trade-tabs">
+                        <button class="trade-tab active" data-tab="buy">Buy</button>
+                        <button class="trade-tab" data-tab="sell">Sell</button>
+                    </div>
+
+                    <!-- Buy Form -->
+                    <div class="trade-form" id="buyForm">
+                        <!-- Input 1: You'll pay (Buy) / You'll sell (Sell) -->
+                        <div class="trade-input-group">
+                            <label class="trade-label" id="input1Label">You'll pay</label>
+                            <div class="trade-input-wrapper">
+                                <input type="number" class="trade-input" id="payAmount" placeholder="0.00" step="0.01" min="0">
+                                <div class="currency-selector">
+                                    <div class="currency-icon"></div>
+                                    <span class="currency-code" id="payCurrency">VND</span>
+                                    <svg class="currency-arrow" width="10" height="5" viewBox="0 0 10 5" fill="none">
+                                        <path d="M0 0L5 5L10 0H0Z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Input 2: You'll receive -->
+                        <div class="trade-input-group">
+                            <label class="trade-label">You'll receive</label>
+                            <div class="trade-input-wrapper">
+                                <input type="number" class="trade-input" id="receiveAmount" placeholder="0.00" step="0.000001" min="0">
+                                <div class="currency-selector">
+                                    <div class="currency-icon"></div>
+                                    <span class="currency-code" id="receiveCurrency">BTC</span>
+                                    <svg class="currency-arrow" width="10" height="5" viewBox="0 0 10 5" fill="none">
+                                        <path d="M0 0L5 5L10 0H0Z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Exchange Rate -->
+                        <p class="exchange-rate">36 TH = 18 ND</p>
+
+                        <!-- Submit Button -->
+                        <button class="trade-submit-btn" id="tradeSubmitBtn">Log in to buy</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // Tab switching logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.trade-tab');
+            const input1Label = document.getElementById('input1Label');
+            const submitBtn = document.getElementById('tradeSubmitBtn');
+            const payCurrency = document.getElementById('payCurrency');
+            const receiveCurrency = document.getElementById('receiveCurrency');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Get active tab type
+                    const tabType = this.getAttribute('data-tab');
+                    
+                    // Update labels and button text based on tab
+                    if (tabType === 'buy') {
+                        input1Label.textContent = "You'll pay";
+                        submitBtn.textContent = "Log in to buy";
+                        payCurrency.textContent = "VND";
+                        receiveCurrency.textContent = "BTC";
+                    } else {
+                        input1Label.textContent = "You'll sell";
+                        submitBtn.textContent = "Log in to sell";
+                        payCurrency.textContent = "BTC";
+                        receiveCurrency.textContent = "VND";
+                    }
+                    
+                    // Clear input values when switching tabs
+                    document.getElementById('payAmount').value = '';
+                    document.getElementById('receiveAmount').value = '';
+                });
+            });
+            
+            // Form submission
+            submitBtn.addEventListener('click', function() {
+                const activeTab = document.querySelector('.trade-tab.active').getAttribute('data-tab');
+                const payAmount = document.getElementById('payAmount').value;
+                const receiveAmount = document.getElementById('receiveAmount').value;
+                
+                if (!payAmount || parseFloat(payAmount) <= 0) {
+                    alert('Please enter a valid amount to pay/sell.');
+                    return;
+                }
+                if (!receiveAmount || parseFloat(receiveAmount) <= 0) {
+                    alert('Please enter a valid amount to receive.');
+                    return;
+                }
+                
+                // Redirect to login page (or handle authentication)
+                window.location.href = '/pages/login.html';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -196,6 +196,26 @@
     border-color: var(--nord1);
 }
 
+.nav-logout-btn {
+    background: var(--nord11);
+    border: 1px solid var(--nord11);
+    border-radius: var(--radius-sm);
+    color: var(--nord6);
+    font-family: var(--font-primary);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.nav-logout-btn:hover,
+.nav-logout-btn:focus-visible {
+    background: var(--nord12);
+    border-color: var(--nord12);
+}
+
 [data-theme="light"] .nav-login-btn {
     color: var(--nord2);
 }
@@ -215,6 +235,18 @@
 [data-theme="light"] .nav-signup-btn:focus-visible {
     background: var(--nord1);
     border-color: var(--nord1);
+}
+
+[data-theme="light"] .nav-logout-btn {
+    background: var(--nord11);
+    border-color: var(--nord11);
+    color: var(--nord6);
+}
+
+[data-theme="light"] .nav-logout-btn:hover,
+[data-theme="light"] .nav-logout-btn:focus-visible {
+    background: var(--nord12);
+    border-color: var(--nord12);
 }
 
 [data-theme="light"] .nav-icon-btn {
@@ -286,14 +318,16 @@
 
 .nav-mobile-menu .nav-link,
 .nav-mobile-menu .nav-login-btn,
-.nav-mobile-menu .nav-signup-btn {
+.nav-mobile-menu .nav-signup-btn,
+.nav-mobile-menu .nav-logout-btn {
     font-size: 18px;
     width: 100%;
     text-align: left;
     margin: 0;
 }
 
-.nav-mobile-menu .nav-signup-btn {
+.nav-mobile-menu .nav-signup-btn,
+.nav-mobile-menu .nav-logout-btn {
     margin-top: 8px;
 }
 
@@ -311,7 +345,8 @@
         display: none !important;
     }
     .nav-actions .nav-login-btn,
-    .nav-actions .nav-signup-btn {
+    .nav-actions .nav-signup-btn,
+    .nav-actions .nav-logout-btn {
         display: none !important;
     }
 }

@@ -6,16 +6,20 @@
 /* ========== Wallet Dashboard ========== */
 .wallet-dashboard {
     min-height: 100vh;
-    background: linear-gradient(135deg, #2E3440 0%, #1A1A1A 100%);
-    color: var(--color-grey-90);
+    background: var(--color-background-primary);
+    color: var(--color-text-secondary);
+}
+
+[data-theme="light"] .wallet-dashboard {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
 }
 
 .dashboard-main {
-    padding: 120px var(--spacing-lg) var(--spacing-3xl);
+    padding: 100px var(--spacing-xl) var(--spacing-3xl);
 }
 
 .dashboard-container {
-    max-width: 1080px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -27,19 +31,29 @@
 .portfolio-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-2xl);
-    padding-bottom: var(--spacing-lg);
-    border-bottom: 1px solid var(--color-grey-neutral-800);
+    align-items: flex-start;
+    margin-bottom: var(--spacing-3xl);
+    padding: var(--spacing-2xl);
+    background: linear-gradient(135deg, rgba(136, 192, 208, 0.1) 0%, rgba(143, 188, 187, 0.05) 100%);
+    border: 1px solid rgba(136, 192, 208, 0.2);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .portfolio-header {
+    background: linear-gradient(135deg, rgba(136, 192, 208, 0.15) 0%, rgba(143, 188, 187, 0.08) 100%);
+    border-color: rgba(136, 192, 208, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .portfolio-title {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 36px;
-    line-height: 48px;
-    color: var(--color-white);
+    font-size: 42px;
+    line-height: 1.2;
+    color: var(--color-text-primary);
     margin: 0;
+    letter-spacing: -0.5px;
 }
 
 .portfolio-total {
@@ -48,17 +62,25 @@
 
 .total-label {
     font-family: var(--font-secondary);
-    font-size: 14px;
-    color: var(--color-grey-90);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
     display: block;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .total-amount {
     font-family: var(--font-primary);
     font-weight: 700;
-    font-size: 28px;
-    color: var(--color-green-50);
+    font-size: 36px;
+    color: var(--nord14);
+    letter-spacing: -1px;
+}
+
+[data-theme="light"] .total-amount {
+    color: var(--nord10);
 }
 
 /* ========== Balances Section ========== */
@@ -67,61 +89,103 @@
     margin-bottom: var(--spacing-3xl);
 }
 
+.section-title {
+    font-family: var(--font-secondary);
+    font-weight: 600;
+    font-size: 24px;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--spacing-xl) 0;
+    letter-spacing: -0.3px;
+}
+
 .balances-list,
 .transactions-list {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
+    gap: var(--spacing-lg);
 }
 
 .balance-item,
 .transaction-item {
-    background: linear-gradient(180deg, var(--color-bg-card) 0%, rgba(36, 36, 36, 0) 100%);
-    border: 1px solid var(--color-grey-border);
+    background: var(--color-background-elevated);
+    border: 1px solid var(--color-border-subtle);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xl);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.balance-item:hover,
+.transaction-item:hover {
+    border-color: var(--nord8);
+    box-shadow: 0 4px 16px rgba(136, 192, 208, 0.15);
+    transform: translateY(-2px);
+}
+
+[data-theme="light"] .balance-item,
+[data-theme="light"] .transaction-item {
+    background: var(--nord6);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .balance-item:hover,
+[data-theme="light"] .transaction-item:hover {
+    box-shadow: 0 4px 12px rgba(136, 192, 208, 0.2);
 }
 
 .balance-item {
-    padding: var(--spacing-lg) var(--spacing-xl);
+    padding: var(--spacing-xl) var(--spacing-2xl);
 }
 
 .balance-info {
     display: flex;
     align-items: center;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-xl);
 }
 
 .balance-icon {
-    width: 40px;
-    height: 40px;
-    background: var(--color-grey-neutral-800);
-    border-radius: var(--radius-md);
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-primary);
     font-weight: 700;
     font-size: 16px;
-    color: var(--color-white);
+    color: var(--nord0);
+    flex-shrink: 0;
+}
+
+.balance-icon img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+[data-theme="light"] .balance-icon {
+    color: var(--nord6);
 }
 
 .balance-details h3 {
     font-family: var(--font-secondary);
     font-weight: 600;
     font-size: 18px;
-    color: var(--color-white);
+    color: var(--color-text-primary);
     margin: 0 0 var(--spacing-xs) 0;
 }
 
 .balance-details p {
     font-family: var(--font-secondary);
-    font-size: 14px;
-    color: var(--color-grey-90);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
     margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .balance-amounts {
@@ -131,16 +195,23 @@
 .balance-amount {
     font-family: var(--font-primary);
     font-weight: 700;
-    font-size: 18px;
-    color: var(--color-green-50);
+    font-size: 20px;
+    color: var(--nord14);
     display: block;
     margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.5px;
+}
+
+[data-theme="light"] .balance-amount {
+    color: var(--nord10);
 }
 
 .balance-locked {
     font-family: var(--font-secondary);
     font-size: 12px;
-    color: var(--color-grey-90);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    opacity: 0.8;
 }
 
 /* ========== Transactions Section ========== */
@@ -149,6 +220,111 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+}
+
+.transactions-header .section-title {
+    margin: 0;
+    flex: 1;
+    min-width: 200px;
+}
+
+.transactions-header button {
+    margin-left: var(--spacing-sm);
+}
+
+.btn-primary,
+.btn-secondary {
+    font-family: var(--font-secondary);
+    font-weight: 600;
+    font-size: 13px;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background: var(--nord8);
+    border: 2px solid var(--nord8);
+    color: var(--nord0);
+    box-shadow: 0 2px 6px rgba(136, 192, 208, 0.3);
+}
+
+.btn-primary:hover {
+    background: var(--nord9);
+    border-color: var(--nord9);
+    box-shadow: 0 3px 10px rgba(136, 192, 208, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-primary.active {
+    background: var(--nord10);
+    border-color: var(--nord10);
+    color: var(--nord6);
+    box-shadow: 0 2px 8px rgba(94, 129, 172, 0.5);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid var(--color-border-subtle);
+    color: var(--color-text-secondary);
+}
+
+.btn-secondary:hover {
+    background: rgba(136, 192, 208, 0.1);
+    border-color: var(--nord8);
+    color: var(--nord8);
+    transform: translateY(-1px);
+}
+
+.btn-secondary.active {
+    background: var(--nord8);
+    border-color: var(--nord8);
+    color: var(--nord0);
+    box-shadow: 0 2px 6px rgba(136, 192, 208, 0.3);
+}
+
+[data-theme="light"] .btn-primary {
+    background: var(--nord9);
+    border-color: var(--nord9);
+    color: var(--nord6);
+    box-shadow: 0 2px 6px rgba(129, 161, 193, 0.3);
+}
+
+[data-theme="light"] .btn-primary:hover {
+    background: var(--nord10);
+    border-color: var(--nord10);
+    box-shadow: 0 3px 10px rgba(94, 129, 172, 0.4);
+}
+
+[data-theme="light"] .btn-primary.active {
+    background: var(--nord10);
+    border-color: var(--nord10);
+    color: var(--nord0);
+    box-shadow: 0 2px 8px rgba(94, 129, 172, 0.5);
+}
+
+[data-theme="light"] .btn-secondary {
+    border-color: var(--color-border-subtle);
+    color: var(--color-text-secondary);
+}
+
+[data-theme="light"] .btn-secondary:hover {
+    background: rgba(129, 161, 193, 0.1);
+    border-color: var(--nord9);
+    color: var(--nord9);
+}
+
+[data-theme="light"] .btn-secondary.active {
+    background: var(--nord9);
+    border-color: var(--nord9);
+    color: var(--nord6);
+    box-shadow: 0 2px 6px rgba(129, 161, 193, 0.3);
 }
 
 .transaction-info {
@@ -158,29 +334,65 @@
 }
 
 .transaction-icon {
-    width: 32px;
-    height: 32px;
-    background: var(--color-grey-neutral-800);
-    border-radius: var(--radius-sm);
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--nord8) 0%, var(--nord9) 100%);
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--nord0);
+    flex-shrink: 0;
+}
+
+.transaction-icon.send {
+    background: linear-gradient(135deg, var(--nord11) 0%, var(--nord12) 100%);
+}
+
+.transaction-icon.receive {
+    background: linear-gradient(135deg, var(--nord14) 0%, var(--nord13) 100%);
+}
+
+[data-theme="light"] .transaction-icon {
+    background: linear-gradient(135deg, var(--nord9) 0%, var(--nord10) 100%);
+    color: var(--nord6);
+}
+
+[data-theme="light"] .transaction-icon.send {
+    background: linear-gradient(135deg, var(--nord11) 0%, var(--nord12) 100%);
+    color: var(--nord6);
+}
+
+[data-theme="light"] .transaction-icon.receive {
+    background: linear-gradient(135deg, var(--nord14) 0%, var(--nord13) 100%);
+    color: var(--nord0);
 }
 
 .transaction-details h4 {
     font-family: var(--font-secondary);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 16px;
-    color: var(--color-white);
+    color: var(--color-text-primary);
     margin: 0 0 var(--spacing-xs) 0;
+}
+
+[data-theme="light"] .transaction-details h4 {
+    color: var(--nord0);
 }
 
 .transaction-details p {
     font-family: var(--font-secondary);
     font-size: 12px;
-    color: var(--color-grey-90);
+    color: var(--color-text-secondary);
     margin: 0;
+    opacity: 0.8;
+}
+
+[data-theme="light"] .transaction-details p {
+    color: var(--nord2);
+    opacity: 0.9;
 }
 
 .transaction-amount {
@@ -190,42 +402,129 @@
 .transaction-amount .amount {
     font-family: var(--font-primary);
     font-weight: 700;
-    font-size: 16px;
-    color: var(--color-green-50);
+    font-size: 18px;
     display: block;
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.5px;
+    color: var(--color-text-primary) !important;
+}
+
+[data-theme="light"] .transaction-amount .amount {
+    color: var(--nord0) !important;
+}
+
+/* Positive amounts (received) */
+.transaction-amount .amount.positive {
+    color: var(--nord14) !important;
+}
+
+[data-theme="light"] .transaction-amount .amount.positive {
+    color: var(--nord14) !important;
+}
+
+/* Negative amounts (sent) */
+.transaction-amount .amount.negative {
+    color: var(--nord11) !important;
+}
+
+[data-theme="light"] .transaction-amount .amount.negative {
+    color: var(--nord11) !important;
 }
 
 .transaction-amount .status {
     font-family: var(--font-secondary);
-    font-size: 12px;
-    color: var(--color-grey-90);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+}
+
+.transaction-amount .status[data-status="completed"] {
+    background: rgba(163, 190, 140, 0.2);
+    color: var(--nord14);
+}
+
+.transaction-amount .status[data-status="pending"] {
+    background: rgba(235, 203, 139, 0.2);
+    color: var(--nord13);
+}
+
+.transaction-amount .status[data-status="failed"] {
+    background: rgba(191, 97, 106, 0.2);
+    color: var(--nord11);
+}
+
+[data-theme="light"] .transaction-amount .status[data-status="completed"] {
+    background: rgba(163, 190, 140, 0.3);
+    color: var(--nord14);
+}
+
+[data-theme="light"] .transaction-amount .status[data-status="pending"] {
+    background: rgba(235, 203, 139, 0.3);
+    color: var(--nord13);
+}
+
+[data-theme="light"] .transaction-amount .status[data-status="failed"] {
+    background: rgba(191, 97, 106, 0.3);
+    color: var(--nord11);
 }
 
 /* ========== Chart Container ========== */
-.chart-container canvas{
+.chart-container {
+    margin-bottom: var(--spacing-3xl);
+    padding: var(--spacing-2xl);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--color-background-elevated);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .chart-container {
+    background: var(--nord6);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.chart-container canvas {
     --chart-width: 100%;
-    --chart-height: 300px;
+    --chart-height: 320px;
     width: 100%;
     height: var(--chart-height);
-    margin-bottom: var(--spacing-3xl);
-    padding: var(--spacing-xl);
-    border: 1px solid var(--color-grey-border);
-    border-radius: var(--radius-lg);
-    background: linear-gradient(180deg, var(--color-bg-card) 0%, rgba(36, 36, 36, 0) 100%);
-    position: relative;
     display: block;
     box-sizing: border-box;
-    overflow: hidden;
 }
 
 .chart-container.skeleton {
-    background: var(--color-grey-neutral-800);
-    --skeleton-inset: var(--spacing-xl);
-    --skeleton-radius: var(--radius-md);
+    background: linear-gradient(90deg, var(--nord2) 0%, var(--nord3) 50%, var(--nord2) 100%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme="light"] .chart-container.skeleton {
+    background: linear-gradient(90deg, var(--nord5) 0%, var(--nord4) 50%, var(--nord5) 100%);
+    background-size: 200% 100%;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
 }
 
 .chart-container.skeleton.is-loaded {
-    background: linear-gradient(180deg, var(--color-bg-card) 0%, rgba(36, 36, 36, 0) 100%);
+    background: var(--color-background-elevated);
+    animation: none;
+}
+
+[data-theme="light"] .chart-container.skeleton.is-loaded {
+    background: var(--nord6);
 }
 
 .chart-container.skeleton canvas {
@@ -236,5 +535,121 @@
 .chart-container.skeleton.is-loaded canvas {
     visibility: visible;
     pointer-events: auto;
+}
+
+/* ========== Responsive Design ========== */
+@media (max-width: 1024px) {
+    .dashboard-main {
+        padding: 90px var(--spacing-lg) var(--spacing-2xl);
+    }
+    
+    .portfolio-title {
+        font-size: 36px;
+    }
+    
+    .total-amount {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-main {
+        padding: 80px var(--spacing-md) var(--spacing-xl);
+    }
+    
+    .portfolio-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xl);
+    }
+    
+    .portfolio-title {
+        font-size: 32px;
+    }
+    
+    .portfolio-total {
+        text-align: left;
+        width: 100%;
+    }
+    
+    .total-amount {
+        font-size: 28px;
+    }
+    
+    .section-title {
+        font-size: 20px;
+    }
+    
+    .balance-item,
+    .transaction-item {
+        padding: var(--spacing-lg);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-lg);
+    }
+    
+    .balance-amounts,
+    .transaction-amount {
+        text-align: left;
+        width: 100%;
+    }
+    
+    .transactions-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .transactions-header button {
+        margin: 0;
+        width: 100%;
+    }
+    
+    .chart-container {
+        padding: var(--spacing-lg);
+    }
+    
+    .chart-container canvas {
+        --chart-height: 260px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-main {
+        padding: 70px var(--spacing-sm) var(--spacing-lg);
+    }
+    
+    .portfolio-header {
+        padding: var(--spacing-lg);
+    }
+    
+    .portfolio-title {
+        font-size: 28px;
+    }
+    
+    .total-amount {
+        font-size: 24px;
+    }
+    
+    .balance-icon {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .balance-icon img {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .balance-details h3 {
+        font-size: 16px;
+    }
+    
+    .balance-amount {
+        font-size: 18px;
+    }
+    
+    .chart-container canvas {
+        --chart-height: 220px;
+    }
 }
 
