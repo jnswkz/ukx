@@ -72,8 +72,16 @@ function initializeSignupForm() {
 
             // For MVP, just redirect to dashboard (no real registration)
             console.log('Signup successful (simulated)');
-            console.log('User data:', { firstName, lastName, email });
-            
+            // console.log('User data:', { firstName, lastName, email });
+            window.localStorage.setItem('isLoggedIn', 'true');
+            // add to signupData in localStorage
+            const userData = {
+                firstName: firstName,
+                lastName: lastName,
+                email: email
+            };
+            window.localStorage.setItem('userData', JSON.stringify(userData));
+
             alert('Registration successful! Welcome to UKX.');
             window.location.href = './dashboard.html';
         });

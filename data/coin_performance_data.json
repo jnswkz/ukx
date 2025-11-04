@@ -1,0 +1,482 @@
+[
+  {
+    "coin": "BTC",
+    "performance": "31% better than gold",
+    "past_year": {
+      "percentage": 31.13,
+      "value": "€110.11K"
+    },
+    "3_months": {
+      "percentage": -17.25,
+      "value": "€110.11K"
+    },
+    "30_days": {
+      "percentage": -7.16,
+      "value": "€110.11K"
+    },
+    "7_days": {
+      "percentage": -0.3,
+      "value": "€110.11K"
+    }
+  },
+  {
+    "coin": "ETH",
+    "performance": "137% better than gold",
+    "past_year": {
+      "percentage": 137.18,
+      "value": "€3.85K"
+    },
+    "3_months": {
+      "percentage": -32.39,
+      "value": "€3.85K"
+    },
+    "30_days": {
+      "percentage": -27.65,
+      "value": "€3.85K"
+    },
+    "7_days": {
+      "percentage": -1.29,
+      "value": "€3.85K"
+    }
+  },
+  {
+    "coin": "USDT",
+    "performance": "33% beating market average",
+    "past_year": {
+      "percentage": 32.85,
+      "value": "€0.00K"
+    },
+    "3_months": {
+      "percentage": -13.15,
+      "value": "€0.00K"
+    },
+    "30_days": {
+      "percentage": -11.5,
+      "value": "€0.00K"
+    },
+    "7_days": {
+      "percentage": 0.0,
+      "value": "€0.00K"
+    }
+  },
+  {
+    "coin": "BNB",
+    "performance": "50% beating market average",
+    "past_year": {
+      "percentage": 49.68,
+      "value": "€1.10K"
+    },
+    "3_months": {
+      "percentage": 53.33,
+      "value": "€1.10K"
+    },
+    "30_days": {
+      "percentage": 34.42,
+      "value": "€1.10K"
+    },
+    "7_days": {
+      "percentage": -1.56,
+      "value": "€1.10K"
+    }
+  },
+  {
+    "coin": "SOL",
+    "performance": "146% better than the stock market",
+    "past_year": {
+      "percentage": 146.26,
+      "value": "€0.19K"
+    },
+    "3_months": {
+      "percentage": 85.32,
+      "value": "€0.19K"
+    },
+    "30_days": {
+      "percentage": 94.92,
+      "value": "€0.19K"
+    },
+    "7_days": {
+      "percentage": -4.05,
+      "value": "€0.19K"
+    }
+  },
+  {
+    "coin": "ADA",
+    "performance": "86% better than the stock market",
+    "past_year": {
+      "percentage": 86.07,
+      "value": "€0.00K"
+    },
+    "3_months": {
+      "percentage": 7.29,
+      "value": "€0.00K"
+    },
+    "30_days": {
+      "percentage": 5.93,
+      "value": "€0.00K"
+    },
+    "7_days": {
+      "percentage": -0.9,
+      "value": "€0.00K"
+    }
+  },
+  {
+    "coin": "XRP",
+    "performance": "149% beating market average",
+    "past_year": {
+      "percentage": 148.8,
+      "value": "€0.00K"
+    },
+    "3_months": {
+      "percentage": -8.47,
+      "value": "€0.00K"
+    },
+    "30_days": {
+      "percentage": -12.63,
+      "value": "€0.00K"
+    },
+    "7_days": {
+      "percentage": -2.35,
+      "value": "€0.00K"
+    }
+  },
+  {
+    "coin": "DOT",
+    "performance": "85% better than the stock market",
+    "past_year": {
+      "percentage": 84.97,
+      "value": "€0.00K"
+    },
+    "3_months": {
+      "percentage": 14.65,
+      "value": "€0.00K"
+    },
+    "30_days": {
+      "percentage": 26.09,
+      "value": "€0.00K"
+    },
+    "7_days": {
+      "percentage": 1.05,
+      "value": "€0.00K"
+    }
+  },
+  {
+    "coin": "DOGE",
+    "performance": "60% better than the stock market",
+    "past_year": {
+      "percentage": 59.61,
+      "value": "€0.00K"
+    },
+    "3_months": {
+      "percentage": -27.78,
+      "value": "€0.00K"
+    },
+    "30_days": {
+      "percentage": -31.31,
+      "value": "€0.00K"
+    },
+    "7_days": {
+      "percentage": -2.38,
+      "value": "€0.00K"
+    }
+  },
+  {
+    "coin": "FTM",
+    "performance": "145% better than gold",
+    "past_year": {
+      "percentage": 144.53,
+      "value": "€0.00K"
+    },
+    "3_months": {
+      "percentage": -1.08,
+      "value": "€0.00K"
+    },
+    "30_days": {
+      "percentage": 6.93,
+      "value": "€0.00K"
+    },
+    "7_days": {
+      "percentage": -17.0,
+      "value": "€0.00K"
+    }
+  },
+  {
+    "coin": "LTC",
+    "performance": "113% beating market average",
+    "past_year": {
+      "percentage": 112.9,
+      "value": "€0.09K"
+    },
+    "3_months": {
+      "percentage": -1.57,
+      "value": "€0.09K"
+    },
+    "30_days": {
+      "percentage": -7.78,
+      "value": "€0.09K"
+    },
+    "7_days": {
+      "percentage": -0.89,
+      "value": "€0.09K"
+    }
+  },
+  {
+    "coin": "AVAX",
+    "performance": "24% better than gold",
+    "past_year": {
+      "percentage": 24.48,
+      "value": "€0.02K"
+    },
+    "3_months": {
+      "percentage": 62.89,
+      "value": "€0.02K"
+    },
+    "30_days": {
+      "percentage": 65.22,
+      "value": "€0.02K"
+    },
+    "7_days": {
+      "percentage": 3.86,
+      "value": "€0.02K"
+    }
+  },
+  {
+    "coin": "USDC",
+    "performance": "77% better than the stock market",
+    "past_year": {
+      "percentage": 77.48,
+      "value": "€0.00K"
+    },
+    "3_months": {
+      "percentage": 35.53,
+      "value": "€0.00K"
+    },
+    "30_days": {
+      "percentage": 23.43,
+      "value": "€0.00K"
+    },
+    "7_days": {
+      "percentage": -0.02,
+      "value": "€0.00K"
+    }
+  },
+  {
+    "coin": "TRX",
+    "performance": "104% beating market average",
+    "past_year": {
+      "percentage": 103.8,
+      "value": "€0.00K"
+    },
+    "3_months": {
+      "percentage": 24.23,
+      "value": "€0.00K"
+    },
+    "30_days": {
+      "percentage": 40.49,
+      "value": "€0.00K"
+    },
+    "7_days": {
+      "percentage": 1.74,
+      "value": "€0.00K"
+    }
+  },
+  {
+    "coin": "LINK",
+    "performance": "148% beating market average",
+    "past_year": {
+      "percentage": 148.49,
+      "value": "€0.02K"
+    },
+    "3_months": {
+      "percentage": -28.11,
+      "value": "€0.02K"
+    },
+    "30_days": {
+      "percentage": -28.61,
+      "value": "€0.02K"
+    },
+    "7_days": {
+      "percentage": -3.8,
+      "value": "€0.02K"
+    }
+  },
+  {
+    "coin": "BCH",
+    "performance": "92% outperforming traditional assets",
+    "past_year": {
+      "percentage": 92.02,
+      "value": "€0.55K"
+    },
+    "3_months": {
+      "percentage": 12.63,
+      "value": "€0.55K"
+    },
+    "30_days": {
+      "percentage": -2.88,
+      "value": "€0.55K"
+    },
+    "7_days": {
+      "percentage": -1.09,
+      "value": "€0.55K"
+    }
+  },
+  {
+    "coin": "XLM",
+    "performance": "71% beating market average",
+    "past_year": {
+      "percentage": 71.15,
+      "value": "€0.00K"
+    },
+    "3_months": {
+      "percentage": 10.47,
+      "value": "€0.00K"
+    },
+    "30_days": {
+      "percentage": 0.49,
+      "value": "€0.00K"
+    },
+    "7_days": {
+      "percentage": 0.49,
+      "value": "€0.00K"
+    }
+  },
+  {
+    "coin": "SHIB",
+    "performance": "91% outperforming traditional assets",
+    "past_year": {
+      "percentage": 90.97,
+      "value": "€0.00K"
+    },
+    "3_months": {
+      "percentage": 1.69,
+      "value": "€0.00K"
+    },
+    "30_days": {
+      "percentage": -1.79,
+      "value": "€0.00K"
+    },
+    "7_days": {
+      "percentage": -1.79,
+      "value": "€0.00K"
+    }
+  },
+  {
+    "coin": "VET",
+    "performance": "112% better than gold",
+    "past_year": {
+      "percentage": 111.92,
+      "value": "€0.00K"
+    },
+    "3_months": {
+      "percentage": 77.11,
+      "value": "€0.00K"
+    },
+    "30_days": {
+      "percentage": 58.25,
+      "value": "€0.00K"
+    },
+    "7_days": {
+      "percentage": -20.88,
+      "value": "€0.00K"
+    }
+  },
+  {
+    "coin": "UNI",
+    "performance": "85% better than the stock market",
+    "past_year": {
+      "percentage": 84.74,
+      "value": "€0.01K"
+    },
+    "3_months": {
+      "percentage": 11.62,
+      "value": "€0.01K"
+    },
+    "30_days": {
+      "percentage": 9.55,
+      "value": "€0.01K"
+    },
+    "7_days": {
+      "percentage": 0.86,
+      "value": "€0.01K"
+    }
+  },
+  {
+    "coin": "XMR",
+    "performance": "131% outperforming traditional assets",
+    "past_year": {
+      "percentage": 130.59,
+      "value": "€0.32K"
+    },
+    "3_months": {
+      "percentage": 135.87,
+      "value": "€0.32K"
+    },
+    "30_days": {
+      "percentage": 103.12,
+      "value": "€0.32K"
+    },
+    "7_days": {
+      "percentage": 1.37,
+      "value": "€0.32K"
+    }
+  },
+  {
+    "coin": "ZEC",
+    "performance": "116% better than the stock market",
+    "past_year": {
+      "percentage": 115.54,
+      "value": "€0.38K"
+    },
+    "3_months": {
+      "percentage": 21.61,
+      "value": "€0.38K"
+    },
+    "30_days": {
+      "percentage": 17.41,
+      "value": "€0.38K"
+    },
+    "7_days": {
+      "percentage": 22.27,
+      "value": "€0.38K"
+    }
+  },
+  {
+    "coin": "APT",
+    "performance": "117% outperforming traditional assets",
+    "past_year": {
+      "percentage": 116.81,
+      "value": "€0.00K"
+    },
+    "3_months": {
+      "percentage": 79.3,
+      "value": "€0.00K"
+    },
+    "30_days": {
+      "percentage": 72.19,
+      "value": "€0.00K"
+    },
+    "7_days": {
+      "percentage": -4.45,
+      "value": "€0.00K"
+    }
+  },
+  {
+    "coin": "FIL",
+    "performance": "49% outperforming traditional assets",
+    "past_year": {
+      "percentage": 49.12,
+      "value": "€0.00K"
+    },
+    "3_months": {
+      "percentage": -0.79,
+      "value": "€0.00K"
+    },
+    "30_days": {
+      "percentage": -3.23,
+      "value": "€0.00K"
+    },
+    "7_days": {
+      "percentage": 4.9,
+      "value": "€0.00K"
+    }
+  }
+]

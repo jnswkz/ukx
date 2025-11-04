@@ -39,6 +39,13 @@
 /* 10. Newspaper Template - Specific Styles */
 @import url('newspaper_template.css');
 
+/* 11. Skeleton Loading - Skeleton Screen Styles */
+@import url('skeleton.css');
+
+/* 12. Chat Popup - AI Assistant Chat Interface */
+@import url('chat-popup.css');
+
+
 /* ========================================
    Module Organization Summary:
    
@@ -51,4 +58,5 @@
    auth.css          - Login and signup pages, forms
    news.css          - News page, article page, related content
    responsive.css    - All media queries for mobile responsiveness
+   chat-popup.css    - AI assistant popup styles and animations
    ======================================== */
