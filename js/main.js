@@ -88,6 +88,22 @@ function initializeFAQ() {
 }
 
 /**
+ * Initialize Chat popup component
+ */
+
+// function initializeChatPopup() {
+//     const chatPlaceholder = document.getElementById('chat-placeholder');
+//     if (chatPlaceholder) {
+//         const chatPopup = document.createElement('chat-popup');
+//         chatPlaceholder.appendChild(chatPopup);
+//         console.log('Chat popup component initialized');
+//     } else {
+//         console.warn('Chat placeholder not found in DOM');
+//     }
+// }
+
+
+/**
  * Initialize navigation menu interactions
  */
 function initializeNavigation() {

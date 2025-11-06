@@ -1,16 +1,16 @@
-fetch('./components/navbar.html')
-    .then(r => r.ok ? r.text() : Promise.reject(r.status))
-    .then(html => {
-        const placeholder = document.getElementById('navbar-placeholder') || document.getElementById('nav-placeholder');
-        if (placeholder) {
-            placeholder.innerHTML = html;
-            // initializeButtons depends on elements inside the navbar; call safely
-            try { initializeButtons(); } catch (e) { console.warn('initializeButtons failed', e); }
-        } else {
-            console.warn('No navbar placeholder found to inject navbar');
-        }
-    })
-    .catch(err => console.warn('Could not load navbar', err));
+// fetch('./components/navbar.html')
+//     .then(r => r.ok ? r.text() : Promise.reject(r.status))
+//     .then(html => {
+//         const placeholder = document.getElementById('navbar-placeholder') || document.getElementById('nav-placeholder');
+//         if (placeholder) {
+//             placeholder.innerHTML = html;
+//             // initializeButtons depends on elements inside the navbar; call safely
+//             try { initializeButtons(); } catch (e) { console.warn('initializeButtons failed', e); }
+//         } else {
+//             console.warn('No navbar placeholder found to inject navbar');
+//         }
+//     })
+//     .catch(err => console.warn('Could not load navbar', err));
 
 // --- Tag rendering helpers for the newspaper page ---
 function renderTagsFromDataAttr() {
