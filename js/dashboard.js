@@ -1,6 +1,7 @@
 // UKX Crypto Wallet - Dashboard Page Logic
 import { jsonFileParser } from '/modules/json/jsonFileParser.js';
 import { drawLineGraph } from '/modules/graphjs/line.js';
+import { callApi } from '../modules/api-call/api.js';
 
 async function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -16,6 +17,67 @@ function markSkeletonLoaded(element) {
         child.classList.add('is-loaded');
         child.classList.remove('skeleton');
     });
+}
+
+function escapeHtml(str = '') {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function renderMarkdown(md = '') {
+    if (!md) return '';
+    // If DOMPurify + marked are available, prefer them
+    if (window.marked && window.DOMPurify) {
+        const raw = window.marked.parse(md);
+        return window.DOMPurify.sanitize(raw);
+    }
+
+    // Fallback: escape then apply a few markdown transforms (safe)
+    let text = escapeHtml(md);
+
+    // Code blocks ```...```
+    text = text.replace(/```([\s\S]*?)```/g, (_m, code) => {
+        return `<pre><code>${escapeHtml(code)}</code></pre>`;
+    });
+
+    // Inline code `...`
+    text = text.replace(/`([^`]+?)`/g, (_m, code) => `<code>${escapeHtml(code)}</code>`);
+
+    // Headings: ###, ##, #
+    text = text.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+    text = text.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+    text = text.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+
+    // Bold **text**
+    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+    // Italic *text*
+    text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+    // Links [text](url)
+    text = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+    // Lists: convert lines starting with - or * into <ul>
+    // collect consecutive list items and wrap them
+    text = text.replace(/(^((?:[-*] .+\n?)+))/gm, (m) => {
+        const items = m.trim().split(/\n/).map(l => l.replace(/^[-*] /, '').trim());
+        return `<ul>${items.map(i => `<li>${i}</li>`).join('')}</ul>`;
+    });
+
+    // Line breaks -> <br>
+    text = text.replace(/\n/g, '<br>');
+
+    return text;
+}
+
+
+async function getAnswerFromApi(question) {
+    const answer = await callApi(question);
+    return renderMarkdown(answer);
 }
 
 function formatCurrency(amount) {
@@ -52,6 +114,59 @@ async function to_coin_image(id){
 document.addEventListener('DOMContentLoaded', async function() {
     console.log('UKX Dashboard initialized');
     
+
+    const chatBtn = document.getElementById('chat-button');
+    const popup = document.getElementById('chat-popup');
+    const closeBtn = document.getElementById('close-chat');
+    const sendBtn = document.getElementById('send-btn');
+    const userInput = document.getElementById('user-input');
+    const chatBody = document.getElementById('chat-body');
+    
+    function openPopup() {
+        if (!popup) return;
+        popup.classList.remove('hidden');
+        userInput && userInput.focus();
+        chatBody && (chatBody.scrollTop = chatBody.scrollHeight);
+    }
+    function closePopup() {
+        if (!popup) return;
+        popup.classList.add('hidden');
+    }
+
+    function sendMessage() {
+        if (!userInput || !chatBody) return;
+        const text = userInput.value.trim();
+        if (!text) return;
+        const userMsg = document.createElement('div');
+        userMsg.className = 'user-message';
+        userMsg.textContent = text;
+        chatBody.appendChild(userMsg);
+        userInput.value = '';
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+    // optional demo bot reply
+    setTimeout(async () => {
+    const botMsg = document.createElement('div');
+    botMsg.className = 'bot-message';
+    // getAnswerFromApi returns sanitized HTML (via renderMarkdown). Insert as HTML so tags render.
+    const answerHtml = await getAnswerFromApi(text) || renderMarkdown("I'm sorry, I couldn't process your request at this time.");
+    botMsg.innerHTML = answerHtml;
+    chatBody.appendChild(botMsg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+    }, 600);
+    }
+
+    if (chatBtn) chatBtn.addEventListener('click', () => {
+        if (popup && popup.classList.contains('hidden')) openPopup();
+        else if (popup) closePopup();
+    });
+    if (closeBtn) closeBtn.addEventListener('click', closePopup);
+    if (sendBtn) sendBtn.addEventListener('click', sendMessage);
+    if (userInput) userInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+
+
     let userData = {};
     const chartContainer = document.querySelector('[data-skeleton="chart"]');
     const portfolioTotal = document.querySelector('[data-skeleton="portfolio-total"]');

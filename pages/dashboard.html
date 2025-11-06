@@ -8,6 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;500;600&family=Inter:wght@700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
 </head>
 <body>
     <!-- Wallet Dashboard -->
@@ -65,6 +70,31 @@
             </div>
         </main>
     </div>
+    <div>
+    <!-- Bong bóng chat -->
+    <div id="chat-button">
+        <img style="width: 55px; height: 55px; border-radius: 50%;" src="/assets/ukx-assistant.png" alt="AI assistant Icon" />
+    </div>
+    
+    <!-- Chat Popup -->
+    <div id="chat-popup" class="hidden">
+        <div class="chat-header">
+        <span>AI Assistant</span>
+        <button id="close-chat">&times;</button>
+        </div>
+    
+        <div class="chat-body" id="chat-body">
+        <div class="bot-message">Hello! How can I help you today?</div>
+        </div>
+    
+        <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Type your message..." />
+        <button id="send-btn">➤</button>
+        </div>
+    </div>
+    </div>
+
+
     <script src="/modules/login-check/login-check.js"></script>
     <script src="../js/components.js"></script>
     <script src="../js/main.js"></script>

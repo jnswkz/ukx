@@ -39,6 +39,9 @@ backups/
 .venv/
 venv/
 
+# Environment files
+env.js
+
 # markdown
 
 md/*
