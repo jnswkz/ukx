@@ -133,12 +133,37 @@
                     <div class="trading-right-panel">
                         <!-- Order Form -->
                         <section class="order-form-section">
-                            <div class="order-tabs">
-                                <button class="order-tab active" data-side="buy">Buy</button>
-                                <button class="order-tab" data-side="sell">Sell</button>
+                            <!-- Login Prompt (shown when not logged in) -->
+                            <div class="login-prompt" id="loginPrompt" style="display: none;">
+                                <div class="login-prompt-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                                        <polyline points="10 17 15 12 10 7"></polyline>
+                                        <line x1="15" y1="12" x2="3" y2="12"></line>
+                                    </svg>
+                                </div>
+                                <h3 class="login-prompt-title">Login Required</h3>
+                                <p class="login-prompt-message">
+                                    Please log in to start trading with virtual funds and track your portfolio
+                                </p>
+                                <button class="btn-login-prompt" onclick="window.location.href='/pages/login.html'">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                                        <polyline points="10 17 15 12 10 7"></polyline>
+                                        <line x1="15" y1="12" x2="3" y2="12"></line>
+                                    </svg>
+                                    Login to Trade
+                                </button>
                             </div>
 
-                            <form class="order-form" id="orderForm">
+                            <!-- Order Form (shown when logged in) -->
+                            <div id="orderFormContainer">
+                                <div class="order-tabs">
+                                    <button class="order-tab active" data-side="buy">Buy</button>
+                                    <button class="order-tab" data-side="sell">Sell</button>
+                                </div>
+
+                                <form class="order-form" id="orderForm">
                                 <div class="form-group">
                                     <label for="orderAmount" class="form-label">
                                         Amount (<span id="orderCoinSymbol">BTC</span>)
@@ -196,6 +221,7 @@
                                     Place Buy Order
                                 </button>
                             </form>
+                            </div>
                         </section>
 
                         <!-- Holdings -->

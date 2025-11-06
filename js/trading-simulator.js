@@ -33,12 +33,50 @@ const state = {
 // ========================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    checkLoginStatus();
     loadState();
     loadCoinData();
     initializeEventListeners();
     updateUI();
     startPriceSimulation();
 });
+
+// ========================================
+// Login Status Check
+// ========================================
+
+function checkLoginStatus() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const loginPrompt = document.getElementById('loginPrompt');
+    const orderFormContainer = document.getElementById('orderFormContainer');
+    const holdingsSection = document.querySelector('.holdings-section');
+    
+    if (!isLoggedIn) {
+        // Show login prompt, hide order form
+        if (loginPrompt) loginPrompt.style.display = 'flex';
+        if (orderFormContainer) orderFormContainer.style.display = 'none';
+        
+        // Show empty state for holdings
+        if (holdingsSection) {
+            const holdingsList = holdingsSection.querySelector('#holdingsList');
+            if (holdingsList) {
+                holdingsList.innerHTML = `
+                    <div class="empty-state">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        <p>Login Required</p>
+                        <span>Login to view your holdings</span>
+                    </div>
+                `;
+            }
+        }
+    } else {
+        // Show order form, hide login prompt
+        if (loginPrompt) loginPrompt.style.display = 'none';
+        if (orderFormContainer) orderFormContainer.style.display = 'block';
+    }
+}
 
 // ========================================
 // Data Loading

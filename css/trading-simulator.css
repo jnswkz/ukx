@@ -477,6 +477,68 @@
     overflow: hidden;
 }
 
+/* Login Prompt for Non-Logged In Users */
+.login-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    text-align: center;
+    gap: 1rem;
+}
+
+.login-prompt-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(0, 123, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent-primary);
+    margin-bottom: 0.5rem;
+}
+
+.login-prompt-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.login-prompt-message {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-family: 'Barlow', sans-serif;
+    max-width: 280px;
+}
+
+.btn-login-prompt {
+    background: var(--color-accent-primary);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Barlow', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-login-prompt:hover {
+    background: var(--color-accent-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
 .order-tabs {
     display: grid;
     grid-template-columns: 1fr 1fr;
