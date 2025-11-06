@@ -3,8 +3,6 @@
  * Paper trading interface with real-time price simulation
  */
 
-import { drawLineGraph } from '../modules/graphjs/line.js';
-import { drawBoxPlot } from '../modules/graphjs/box.js';
 import { drawCandlestickChart, addCandlestickInteractivity } from '../modules/graphjs/candlestick.js';
 import { fetchCurrentPrices, fetchHistoricalPrices, fetchIntradayPrices, fetchMinuteData, fetch5MinuteData, rateLimitedFetch } from '../modules/coingecko/api.js';
 
@@ -465,7 +463,7 @@ function startPriceSimulation() {
                         history.push({
                             date: dateStr,
                             price: newPrice,
-                            open: lastEntry.close || newPrice,
+                            open: (lastEntry && lastEntry.close) || newPrice,
                             high: newPrice * 1.01,
                             low: newPrice * 0.99,
                             close: newPrice,

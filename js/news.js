@@ -214,9 +214,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     // Render function with pagination
-    // Track last page to detect explicit pagination navigation
-    let lastPage = 1;
-
     function render({ fromPagination = false } = {}) {
         const results = filterArticles();
 
@@ -271,7 +268,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 document.querySelector('.news-featured')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
-        lastPage = currentPage;
     }
 
     // Render pagination controls

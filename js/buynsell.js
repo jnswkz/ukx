@@ -32,14 +32,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     const receiveCurrency = document.getElementById('receiveCurrency');
     const payAmountInput = document.getElementById('payAmount');
     const receiveAmountInput = document.getElementById('receiveAmount');
-    const exchangeRateElement = document.querySelector('.exchange-rate');
     
     // Currency selectors
     const payCurrencySelector = payCurrency.parentElement;
     const receiveCurrencySelector = receiveCurrency.parentElement;
 
     // Check if user is logged in
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     
     // Update button text based on login status
     updateSubmitButton();

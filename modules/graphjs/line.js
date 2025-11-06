@@ -416,7 +416,6 @@ export function drawLineGraph(canvasID, data, themeOrBgColor, lineColor, pointCo
         
         const rect = canvas.getBoundingClientRect();
         const mouseX = event.clientX - rect.left;
-        const mouseY = event.clientY - rect.top;
         
         // Zoom in or out
         const zoomDelta = event.deltaY > 0 ? 0.9 : 1.1;

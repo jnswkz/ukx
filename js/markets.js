@@ -169,13 +169,13 @@ function updateMarketCards() {
     // Update hot crypto card
     const hotCryptoList = document.querySelector('.markets-card:first-child .markets-card-list');
     if (hotCryptoList && hotCrypto.length > 0) {
-        hotCryptoList.innerHTML = hotCrypto.map((coin, index) => `
+        hotCryptoList.innerHTML = hotCrypto.map(coin => `
             <div class="markets-card-item">
                 <div class="markets-card-item-name">
                     <img src="${coin.imgUrl}" alt="${coin.symbol}" style="width: 24px; height: 24px; border-radius: 50%;" onerror="this.style.display='none';">
-                    <span>#${index + 1} ${coin.name}</span>
+                    <span>${coin.name}</span>
                 </div>
-                <div class="markets-card-item-value">${formatLargeNumber(coin.marketCap)}</div>
+                <div class="markets-card-item-value positive">+${coin.change24h.toFixed(2)}%</div>
             </div>
         `).join('');
     }

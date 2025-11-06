@@ -160,7 +160,7 @@ export async function fetchHistoricalPrices(symbol, days = 7) {
         } else if (days <= 30) {
             intervalMs = 24 * 60 * 60 * 1000; // 1 day for 30d view
         } else {
-            intervalMs = 24 * 60 * 60 * 1000; // 1 day for longer periods
+            intervalMs = 7 * 24 * 60 * 60 * 1000; // 1 week for longer periods
         }
         
         // Group data by interval
