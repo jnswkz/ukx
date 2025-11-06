@@ -1,5 +1,12 @@
 import { jsonFileParser } from '../modules/json/jsonFileParser.js';
 
+function sortByDateDesc(a, b) {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return dateB - dateA;
+}
+
+
 // News page: render articles, search and tag filters
 document.addEventListener('DOMContentLoaded', async function() {
     // Sample data (provided by user)
@@ -28,6 +35,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     // console.log('Loaded article data:', data);
     articles = [];
     data.forEach(item => articles.push(item));
+    // Sort articles by date descending
+    articles.sort(sortByDateDesc);
 
     // DOM containers
     const featuredContainer = document.getElementById('news-featured');
