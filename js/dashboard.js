@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const portfolioTotal = document.querySelector('[data-skeleton="portfolio-total"]');
     const balancesList = document.getElementById('balancesList');
     const transactionsList = document.getElementById('transactionsList');
+    const portfolioTitle = document.getElementById('portfolioTitle');
 
     try {
         await sleep(1000);
@@ -67,6 +68,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         console.error('Error parsing user data from localStorage:', e);
         userData = {};
     }
+    portfolioTitle.textContent = `Welcome back, ${userData?.name || 'User'}`;
+
     const currentTheme = document.documentElement.getAttribute('data-theme');
     drawBalanceChart(userData, chartContainer, currentTheme);
     const themeObserver = new MutationObserver(mutations => {
