@@ -70,13 +70,32 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
     portfolioTitle.textContent = `Welcome back, ${userData?.name || 'User'}`;
 
+    // Initialize chart with default time period
+    let currentTimePeriod = '5d';
     const currentTheme = document.documentElement.getAttribute('data-theme');
-    drawBalanceChart(userData, chartContainer, currentTheme);
+    drawBalanceChart(userData, chartContainer, currentTheme, currentTimePeriod);
+    
+    // Time period button handlers
+    const timePeriodButtons = document.querySelectorAll('.time-period-btn');
+    timePeriodButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            timePeriodButtons.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            // Update time period and redraw chart
+            currentTimePeriod = this.dataset.period;
+            const theme = document.documentElement.getAttribute('data-theme') || 'light';
+            drawBalanceChart(userData, chartContainer, theme, currentTimePeriod);
+        });
+    });
+    
+    // Theme observer
     const themeObserver = new MutationObserver(mutations => {
         for (const m of mutations) {
             if (m.attributeName === 'data-theme') {
                 const newTheme = document.documentElement.getAttribute('data-theme') || 'light';
-                drawBalanceChart(userData, chartContainer, newTheme);
+                drawBalanceChart(userData, chartContainer, newTheme, currentTimePeriod);
             }
         }
     });
@@ -92,9 +111,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 
 /**
- * Draw balance chart
+ * Draw balance chart with time period filter
  */
-async function drawBalanceChart(userData = {}, chartContainer, colorScheme = 'light') {
+async function drawBalanceChart(userData = {}, chartContainer, colorScheme = 'light', timePeriod = '5d') {
 
     const daily_assets_value = Array.isArray(userData?.daily_asset_values) ? userData.daily_asset_values : [];
     //drawLineGraph(canvasID, data, backgroundColor, lineColor, pointColor)
@@ -104,9 +123,19 @@ async function drawBalanceChart(userData = {}, chartContainer, colorScheme = 'li
     //     "total_asset_value": 284635.2942377
     //   },
     //   {
+    
+    // Filter data based on time period
+    let filteredData = daily_assets_value;
+    if (timePeriod !== 'all') {
+        const days = parseInt(timePeriod);
+        if (!isNaN(days) && days > 0) {
+            filteredData = daily_assets_value.slice(-days);
+        }
+    }
+    
     const labels = [];
     const values = [];
-    for (const entry of daily_assets_value) {
+    for (const entry of filteredData) {
         labels.push(entry['date']);
         const value = Number(entry['total_asset_value']);
         values.push(Number.isFinite(value) ? parseFloat(value.toFixed(2)) : 0);
@@ -116,12 +145,40 @@ async function drawBalanceChart(userData = {}, chartContainer, colorScheme = 'li
         const data  = {
             x: labels,
             y: values
-        }; 
-        if (colorScheme === 'light'){
-            drawLineGraph('balanceChart', data, 'rgba(236, 239, 244, 1)', 'rgba(94, 129, 172, 1)', 'rgba(180, 142, 173, 1)');
-        } else {
-            drawLineGraph('balanceChart', data, 'rgba(59, 66, 82, 1)', 'rgba(163, 190, 140, 1)', 'rgba(180, 142, 173, 1)');
-        }
+        };
+        
+        // Theme-aware color palettes
+        const colors = {
+            light: {
+                background: 'rgba(236, 239, 244, 1)',     // --nord6: light background
+                line: 'rgba(94, 129, 172, 1)',            // --nord10: deep blue line
+                point: 'rgba(129, 161, 193, 1)',          // --nord9: lighter blue point
+                grid: 'rgba(76, 86, 106, 0.1)',           // --nord3: subtle grid
+                text: 'rgba(46, 52, 64, 0.8)',            // --nord0: dark text
+                tooltip: {
+                    bg: 'rgba(255, 255, 255, 0.95)',
+                    border: 'rgba(216, 222, 233, 0.8)',
+                    text: 'rgba(46, 52, 64, 1)',
+                    label: 'rgba(76, 86, 106, 0.9)'
+                }
+            },
+            dark: {
+                background: 'rgba(59, 66, 82, 1)',        // --nord1: dark background
+                line: 'rgba(163, 190, 140, 1)',           // --nord14: green line
+                point: 'rgba(180, 142, 173, 1)',          // --nord15: purple point
+                grid: 'rgba(255, 255, 255, 0.05)',        // subtle white grid
+                text: 'rgba(216, 222, 233, 0.8)',         // --nord4: light text
+                tooltip: {
+                    bg: 'rgba(40, 42, 46, 0.95)',
+                    border: 'rgba(60, 62, 66, 0.8)',
+                    text: 'rgba(255, 255, 255, 1)',
+                    label: 'rgba(160, 160, 160, 0.9)'
+                }
+            }
+        };
+        
+        const theme = colorScheme === 'light' ? colors.light : colors.dark;
+        drawLineGraph('balanceChart', data, theme);
     }
 
     if (chartContainer) {

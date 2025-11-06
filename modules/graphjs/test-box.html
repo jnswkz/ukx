@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Plot Test - UKX</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        body {
+            background: var(--background-primary);
+            padding: 2rem;
+            font-family: 'Barlow', sans-serif;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-section {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-wrapper {
+            width: 100%;
+            height: 400px;
+            margin-bottom: 1rem;
+        }
+        
+        canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+        
+        .description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Box Plot Visualization Tests</h1>
+        
+        <!-- Single Series Box Plot -->
+        <div class="chart-section">
+            <h2>Single Series: Bitcoin Price Distribution</h2>
+            <p class="description">Shows the statistical distribution of Bitcoin prices over the past 30 days, including quartiles, median, mean, and outliers.</p>
+            <div class="chart-wrapper">
+                <canvas id="boxPlotSingle"></canvas>
+            </div>
+        </div>
+        
+        <!-- Multiple Series Box Plot -->
+        <div class="chart-section">
+            <h2>Multiple Series: Crypto Price Comparison</h2>
+            <p class="description">Compare price distributions across different cryptocurrencies. The box shows Q1-Q3 range, the white line is the median, the yellow diamond is the mean, and circles are outliers.</p>
+            <div class="chart-wrapper">
+                <canvas id="boxPlotMultiple"></canvas>
+            </div>
+        </div>
+        
+        <!-- Trading Performance Box Plot -->
+        <div class="chart-section">
+            <h2>Trading Performance: Daily Returns Distribution</h2>
+            <p class="description">Visualize daily returns distribution for different trading strategies.</p>
+            <div class="controls">
+                <button class="btn" onclick="updatePerformanceData()">Generate New Data</button>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="boxPlotPerformance"></canvas>
+            </div>
+        </div>
+        
+        <!-- Volatility Analysis Box Plot -->
+        <div class="chart-section">
+            <h2>Volatility Analysis: Price Changes by Period</h2>
+            <p class="description">Compare price volatility across different time periods (24h, 7d, 30d).</p>
+            <div class="chart-wrapper">
+                <canvas id="boxPlotVolatility"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module">
+        import { drawBoxPlot } from './box.js';
+        
+        // Generate random data with specific distribution
+        function generateNormalData(mean, stdDev, count) {
+            const data = [];
+            for (let i = 0; i < count; i++) {
+                // Box-Muller transform for normal distribution
+                const u1 = Math.random();
+                const u2 = Math.random();
+                const z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+                data.push(mean + z0 * stdDev);
+            }
+            return data;
+        }
+        
+        // Add some outliers
+        function addOutliers(data, count, factor) {
+            const mean = data.reduce((a, b) => a + b) / data.length;
+            const stdDev = Math.sqrt(data.reduce((sq, n) => sq + Math.pow(n - mean, 2), 0) / data.length);
+            
+            for (let i = 0; i < count; i++) {
+                if (Math.random() > 0.5) {
+                    data.push(mean + stdDev * factor);
+                } else {
+                    data.push(mean - stdDev * factor);
+                }
+            }
+            return data;
+        }
+        
+        // 1. Single Series Box Plot
+        function drawSingleBoxPlot() {
+            const btcPrices = generateNormalData(45000, 2000, 100);
+            addOutliers(btcPrices, 5, 3);
+            
+            drawBoxPlot('boxPlotSingle', {
+                values: btcPrices,
+                label: 'BTC Price (USD)'
+            }, {
+                color: '#22c55e',
+                title: 'Bitcoin Price Distribution (30 Days)'
+            });
+        }
+        
+        // 2. Multiple Series Box Plot
+        function drawMultipleBoxPlot() {
+            const data = {
+                series: [
+                    {
+                        values: addOutliers(generateNormalData(45000, 2000, 80), 3, 3),
+                        label: 'BTC',
+                        color: '#f7931a'
+                    },
+                    {
+                        values: addOutliers(generateNormalData(2500, 150, 80), 4, 3),
+                        label: 'ETH',
+                        color: '#627eea'
+                    },
+                    {
+                        values: addOutliers(generateNormalData(1, 0.02, 80), 2, 5),
+                        label: 'USDT',
+                        color: '#26a17b'
+                    },
+                    {
+                        values: addOutliers(generateNormalData(300, 30, 80), 5, 3),
+                        label: 'BNB',
+                        color: '#f3ba2f'
+                    },
+                    {
+                        values: addOutliers(generateNormalData(120, 15, 80), 4, 3),
+                        label: 'SOL',
+                        color: '#00d4aa'
+                    }
+                ]
+            };
+            
+            drawBoxPlot('boxPlotMultiple', data, {
+                title: 'Cryptocurrency Price Distributions'
+            });
+        }
+        
+        // 3. Trading Performance Box Plot
+        window.updatePerformanceData = function() {
+            const data = {
+                series: [
+                    {
+                        values: addOutliers(generateNormalData(2.5, 1.5, 60), 4, 4),
+                        label: 'Strategy A',
+                        color: '#22c55e'
+                    },
+                    {
+                        values: addOutliers(generateNormalData(1.8, 2.0, 60), 6, 3),
+                        label: 'Strategy B',
+                        color: '#3b82f6'
+                    },
+                    {
+                        values: addOutliers(generateNormalData(3.2, 2.5, 60), 8, 3),
+                        label: 'Strategy C',
+                        color: '#a855f7'
+                    },
+                    {
+                        values: addOutliers(generateNormalData(1.2, 1.0, 60), 3, 4),
+                        label: 'Buy & Hold',
+                        color: '#ef4444'
+                    }
+                ]
+            };
+            
+            drawBoxPlot('boxPlotPerformance', data, {
+                title: 'Daily Returns Distribution by Strategy (%)'
+            });
+        };
+        
+        // 4. Volatility Analysis Box Plot
+        function drawVolatilityBoxPlot() {
+            const data = {
+                series: [
+                    {
+                        values: addOutliers(generateNormalData(0.5, 0.3, 70), 5, 3),
+                        label: '24h Changes',
+                        color: '#22c55e'
+                    },
+                    {
+                        values: addOutliers(generateNormalData(1.2, 0.8, 70), 7, 3),
+                        label: '7d Changes',
+                        color: '#f59e0b'
+                    },
+                    {
+                        values: addOutliers(generateNormalData(3.5, 2.0, 70), 10, 2.5),
+                        label: '30d Changes',
+                        color: '#ef4444'
+                    }
+                ]
+            };
+            
+            drawBoxPlot('boxPlotVolatility', data, {
+                title: 'Price Volatility by Time Period (%)'
+            });
+        }
+        
+        // Initialize all charts
+        drawSingleBoxPlot();
+        drawMultipleBoxPlot();
+        updatePerformanceData();
+        drawVolatilityBoxPlot();
+        
+        // Redraw on window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                drawSingleBoxPlot();
+                drawMultipleBoxPlot();
+                updatePerformanceData();
+                drawVolatilityBoxPlot();
+            }, 250);
+        });
+    </script>
+</body>
+</html>

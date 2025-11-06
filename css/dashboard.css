@@ -480,11 +480,70 @@
     border-radius: var(--radius-lg);
     background: var(--color-background-elevated);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: relative;
 }
 
 [data-theme="light"] .chart-container {
     background: var(--nord6);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+/* Chart Controls - Time Period Buttons */
+.chart-controls {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.time-period-btn {
+    font-family: var(--font-secondary);
+    font-weight: 600;
+    font-size: 12px;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1.5px solid rgba(136, 192, 208, 0.3);
+    color: var(--nord8);
+}
+
+.time-period-btn:hover {
+    background: rgba(136, 192, 208, 0.15);
+    border-color: var(--nord8);
+    color: var(--nord8);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(136, 192, 208, 0.2);
+}
+
+.time-period-btn.active {
+    background: var(--nord8);
+    border-color: var(--nord8);
+    color: var(--nord0);
+    box-shadow: 0 2px 8px rgba(136, 192, 208, 0.4);
+}
+
+[data-theme="light"] .time-period-btn {
+    border-color: rgba(94, 129, 172, 0.3);
+    color: var(--nord10);
+}
+
+[data-theme="light"] .time-period-btn:hover {
+    background: rgba(94, 129, 172, 0.1);
+    border-color: var(--nord10);
+    color: var(--nord10);
+    box-shadow: 0 2px 8px rgba(94, 129, 172, 0.15);
+}
+
+[data-theme="light"] .time-period-btn.active {
+    background: var(--nord10);
+    border-color: var(--nord10);
+    color: var(--nord6);
+    box-shadow: 0 2px 8px rgba(94, 129, 172, 0.3);
 }
 
 .chart-container canvas {

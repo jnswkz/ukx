@@ -1,3 +1,9 @@
+// Immediately apply theme from localStorage to prevent flash
+(function() {
+    const theme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+})();
+
 // UKX Crypto Wallet - Main Application Logic
 // Landing Page Interactions and Event Handlers
 

@@ -56,6 +56,8 @@
     --color-error: var(--nord11);
     --color-info: var(--nord9);
     --color-purple: var(--nord15);
+    --color-success-hover: #8FAE7A;
+    --color-error-hover: #BF616A;
     
     /* Button colors */
     --color-button-primary-bg: var(--nord10);

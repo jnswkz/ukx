@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candlestick Chart Test - UKX</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        body {
+            background: #0a0b0d;
+            padding: 2rem;
+            font-family: 'Barlow', sans-serif;
+            color: #ffffff;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-section {
+            background: #1a1b1e;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            color: #ffffff;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-wrapper {
+            width: 100%;
+            height: 500px;
+            margin-bottom: 1rem;
+        }
+        
+        canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+        
+        .description {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background: #22c55e;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📈 Candlestick Chart - Professional Trading View</h1>
+        
+        <!-- Bitcoin Candlestick Chart -->
+        <div class="chart-section">
+            <h2>Bitcoin (BTC/USD) - 24 Hour Chart</h2>
+            <p class="description">
+                Interactive candlestick chart with volume bars. Hover over candles to see OHLCV data.
+                Green candles indicate price increase (close > open), red candles indicate price decrease.
+            </p>
+            <div class="controls">
+                <button class="btn" onclick="updateData('btc')">Refresh BTC Data</button>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="btcChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Ethereum Candlestick Chart -->
+        <div class="chart-section">
+            <h2>Ethereum (ETH/USD) - 7 Day Chart</h2>
+            <p class="description">
+                Daily candlestick chart showing 7 days of price action. Each candle represents one trading day.
+            </p>
+            <div class="controls">
+                <button class="btn" onclick="updateData('eth')">Refresh ETH Data</button>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="ethChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module">
+        import { drawCandlestickChart, addCandlestickInteractivity } from './candlestick.js';
+        
+        // Generate realistic candle data
+        function generateCandles(basePrice, count, timeInterval = 'hour') {
+            const candles = [];
+            let price = basePrice;
+            const now = new Date();
+            
+            for (let i = count - 1; i >= 0; i--) {
+                const time = new Date(now);
+                
+                if (timeInterval === 'hour') {
+                    time.setHours(time.getHours() - i);
+                } else {
+                    time.setDate(time.getDate() - i);
+                }
+                
+                // Generate OHLC with realistic movement
+                const open = price;
+                const volatility = 0.02; // 2% volatility
+                
+                const changePercent = (Math.random() - 0.5) * volatility;
+                const high = price * (1 + Math.abs(changePercent) * 1.5);
+                const low = price * (1 - Math.abs(changePercent) * 1.5);
+                
+                // Close tends to be near the direction of the move
+                const closePosition = changePercent > 0 ? 0.6 + Math.random() * 0.3 : 0.1 + Math.random() * 0.3;
+                const close = low + (high - low) * closePosition;
+                
+                // Volume increases with volatility
+                const volume = (Math.abs(changePercent) * 10 + Math.random()) * 1000;
+                
+                candles.push({
+                    time: timeInterval === 'hour' 
+                        ? time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
+                        : time.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                    open: open,
+                    high: high,
+                    low: low,
+                    close: close,
+                    volume: volume
+                });
+                
+                price = close;
+            }
+            
+            return candles;
+        }
+        
+        // Initialize charts
+        let btcCandles = generateCandles(104000, 24, 'hour');
+        let ethCandles = generateCandles(3850, 7, 'day');
+        
+        function drawBTCChart() {
+            drawCandlestickChart('btcChart', btcCandles);
+            addCandlestickInteractivity('btcChart');
+        }
+        
+        function drawETHChart() {
+            drawCandlestickChart('ethChart', ethCandles);
+            addCandlestickInteractivity('ethChart');
+        }
+        
+        // Update functions for button clicks
+        window.updateData = function(coin) {
+            if (coin === 'btc') {
+                btcCandles = generateCandles(104000 * (0.95 + Math.random() * 0.1), 24, 'hour');
+                drawBTCChart();
+            } else if (coin === 'eth') {
+                ethCandles = generateCandles(3850 * (0.95 + Math.random() * 0.1), 7, 'day');
+                drawETHChart();
+            }
+        };
+        
+        // Initial draw
+        drawBTCChart();
+        drawETHChart();
+        
+        // Redraw on window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                drawBTCChart();
+                drawETHChart();
+            }, 250);
+        });
+        
+        // Simulate real-time updates (every 3 seconds)
+        setInterval(() => {
+            // Update the last candle with new data
+            const lastBtc = btcCandles[btcCandles.length - 1];
+            const lastEth = ethCandles[ethCandles.length - 1];
+            
+            // Simulate price movement
+            const btcChange = (Math.random() - 0.5) * 0.001;
+            const ethChange = (Math.random() - 0.5) * 0.001;
+            
+            lastBtc.close = lastBtc.close * (1 + btcChange);
+            lastBtc.high = Math.max(lastBtc.high, lastBtc.close);
+            lastBtc.low = Math.min(lastBtc.low, lastBtc.close);
+            lastBtc.volume += Math.random() * 100;
+            
+            lastEth.close = lastEth.close * (1 + ethChange);
+            lastEth.high = Math.max(lastEth.high, lastEth.close);
+            lastEth.low = Math.min(lastEth.low, lastEth.close);
+            lastEth.volume += Math.random() * 50;
+            
+            // Redraw charts
+            drawBTCChart();
+            drawETHChart();
+        }, 3000);
+    </script>
+</body>
+</html>
