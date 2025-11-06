@@ -116,7 +116,7 @@ async function drawBalanceChart(userData = {}, chartContainer, colorScheme = 'li
         }; 
         if (colorScheme === 'light'){
             drawLineGraph('balanceChart', data, 'rgba(236, 239, 244, 1)', 'rgba(94, 129, 172, 1)', 'rgba(180, 142, 173, 1)');
-        } else {    
+        } else {
             drawLineGraph('balanceChart', data, 'rgba(59, 66, 82, 1)', 'rgba(163, 190, 140, 1)', 'rgba(180, 142, 173, 1)');
         }
     }
