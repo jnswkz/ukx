@@ -42,15 +42,6 @@ venv/
 # Environment files
 env.js
 
-# Environment files
-env.js
-
-<<<<<<< HEAD
-=======
-# Environment files
-env.js
-
->>>>>>> 5436634 (feat: update API key handling to import from env.js)
 # markdown
 
 md/*
