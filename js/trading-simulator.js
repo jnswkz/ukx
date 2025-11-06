@@ -35,6 +35,7 @@ const state = {
 document.addEventListener('DOMContentLoaded', () => {
     checkLoginStatus();
     loadState();
+    showLoadingStates();
     loadCoinData();
     initializeEventListeners();
     updateUI();
@@ -75,6 +76,91 @@ function checkLoginStatus() {
         // Show order form, hide login prompt
         if (loginPrompt) loginPrompt.style.display = 'none';
         if (orderFormContainer) orderFormContainer.style.display = 'block';
+    }
+}
+
+// ========================================
+// Loading States
+// ========================================
+
+function showLoadingStates() {
+    // Add skeleton class to balance amounts
+    document.querySelectorAll('.balance-amount').forEach(el => {
+        el.classList.add('skeleton');
+    });
+    
+    // Add skeleton class to price displays
+    const priceValue = document.getElementById('currentPrice');
+    if (priceValue) priceValue.classList.add('skeleton');
+    
+    const priceChange = document.getElementById('priceChange');
+    if (priceChange) priceChange.classList.add('skeleton');
+    
+    // Add skeleton class to market stats
+    document.querySelectorAll('.stat-value').forEach(el => {
+        el.classList.add('skeleton');
+    });
+    
+    // Add skeleton class to chart section
+    const chartSection = document.querySelector('.chart-section');
+    if (chartSection) chartSection.classList.add('skeleton');
+    
+    // Add skeleton class to coin icon
+    const coinIcon = document.getElementById('selectedCoinIcon');
+    if (coinIcon) coinIcon.classList.add('skeleton');
+}
+
+function hideLoadingStates() {
+    // Remove skeleton class from all elements
+    document.querySelectorAll('.skeleton').forEach(el => {
+        el.classList.remove('skeleton');
+        el.classList.add('is-loaded');
+    });
+}
+
+function showCoinSwitchLoadingStates() {
+    // Add skeleton class to price displays
+    const priceValue = document.getElementById('currentPrice');
+    if (priceValue) priceValue.classList.add('skeleton');
+    
+    const priceChange = document.getElementById('priceChange');
+    if (priceChange) priceChange.classList.add('skeleton');
+    
+    // Add skeleton class to market stats
+    document.querySelectorAll('.stat-value').forEach(el => {
+        el.classList.add('skeleton');
+    });
+    
+    // Add skeleton class to chart section
+    const chartSection = document.querySelector('.chart-section');
+    if (chartSection) chartSection.classList.add('skeleton');
+}
+
+function hideCoinSwitchLoadingStates() {
+    // Remove skeleton class from price displays
+    const priceValue = document.getElementById('currentPrice');
+    if (priceValue) {
+        priceValue.classList.remove('skeleton');
+        priceValue.classList.add('is-loaded');
+    }
+    
+    const priceChange = document.getElementById('priceChange');
+    if (priceChange) {
+        priceChange.classList.remove('skeleton');
+        priceChange.classList.add('is-loaded');
+    }
+    
+    // Remove skeleton class from market stats
+    document.querySelectorAll('.stat-value').forEach(el => {
+        el.classList.remove('skeleton');
+        el.classList.add('is-loaded');
+    });
+    
+    // Remove skeleton class from chart section
+    const chartSection = document.querySelector('.chart-section');
+    if (chartSection) {
+        chartSection.classList.remove('skeleton');
+        chartSection.classList.add('is-loaded');
     }
 }
 
@@ -122,6 +208,9 @@ async function loadCoinData() {
         // Load historical data for selected coin
         await loadHistoricalData(state.selectedCoin);
         
+        // Hide loading states once data is loaded
+        hideLoadingStates();
+        
     } catch (error) {
         console.error('Failed to load coin data:', error);
         // Fallback to JSON data
@@ -140,8 +229,10 @@ async function loadCoinData() {
             
             populateCoinDropdown();
             selectCoin(state.selectedCoin);
+            hideLoadingStates();
         } catch (fallbackError) {
             showError('Failed to load market data. Please refresh the page.');
+            hideLoadingStates();
         }
     }
 }
@@ -217,6 +308,24 @@ async function loadMinuteData(symbol) {
 function populateCoinDropdown() {
     const dropdownList = document.getElementById('coinDropdownList');
     dropdownList.innerHTML = '';
+    
+    // Show skeleton loading items if no data yet
+    if (Object.keys(state.coinData).length === 0) {
+        for (let i = 0; i < 5; i++) {
+            const item = document.createElement('div');
+            item.className = 'coin-dropdown-item skeleton';
+            item.innerHTML = `
+                <div class="coin-icon skeleton"></div>
+                <div class="coin-info">
+                    <div class="coin-symbol">LOAD</div>
+                    <div class="coin-name">Loading...</div>
+                </div>
+                <div class="coin-price">$0.00</div>
+            `;
+            dropdownList.appendChild(item);
+        }
+        return;
+    }
     
     Object.entries(state.coinData).forEach(([symbol, coin]) => {
         const item = document.createElement('div');
@@ -305,41 +414,79 @@ function startPriceSimulation() {
             // Update current price
             state.coinData[symbol].current_price = newPrice;
             
-            // Add to price history
+            // Add to price history - handle both object and array formats
+            if (!state.priceHistory[symbol]) return;
+            
             const now = new Date();
             const dateStr = now.toISOString().split('T')[0];
-            const lastEntry = state.priceHistory[symbol][state.priceHistory[symbol].length - 1];
             
-            if (lastEntry.date === dateStr) {
-                // Update today's candle
-                lastEntry.price = newPrice;
-                lastEntry.close = newPrice;
-                lastEntry.high = Math.max(lastEntry.high, newPrice);
-                lastEntry.low = Math.min(lastEntry.low, newPrice);
-                lastEntry.volume += Math.random() * 10;
-            } else {
-                // Add new day candle
-                state.priceHistory[symbol].push({
-                    date: dateStr,
-                    price: newPrice,
-                    open: lastEntry.close,
-                    high: newPrice * 1.01,
-                    low: newPrice * 0.99,
-                    close: newPrice,
-                    volume: Math.random() * 500 + 100
-                });
-                
-                // Keep only last 30 days
-                if (state.priceHistory[symbol].length > 30) {
-                    state.priceHistory[symbol].shift();
+            // Check if priceHistory is object (new format) or array (old format)
+            const isObjectFormat = typeof state.priceHistory[symbol] === 'object' && !Array.isArray(state.priceHistory[symbol]);
+            
+            if (isObjectFormat) {
+                // New format: object with time periods
+                // Update the 24h data which is used most frequently
+                const history24h = state.priceHistory[symbol]['24h'];
+                if (history24h && Array.isArray(history24h) && history24h.length > 0) {
+                    const lastEntry = history24h[history24h.length - 1];
+                    
+                    // Update the last entry with new price
+                    if (lastEntry) {
+                        lastEntry.close = newPrice;
+                        lastEntry.high = Math.max(lastEntry.high || newPrice, newPrice);
+                        lastEntry.low = Math.min(lastEntry.low || newPrice, newPrice);
+                        lastEntry.price = newPrice;
+                    }
+                    
+                    // Update 24h change
+                    if (history24h.length > 1) {
+                        const firstEntry = history24h[0];
+                        if (firstEntry && firstEntry.price) {
+                            const changePercent = ((newPrice - firstEntry.price) / firstEntry.price) * 100;
+                            state.coinData[symbol].price_change_24h = changePercent;
+                        }
+                    }
                 }
-            }
-            
-            // Update 24h change
-            const yesterday = state.priceHistory[symbol][state.priceHistory[symbol].length - 2];
-            if (yesterday) {
-                const changePercent = ((newPrice - yesterday.price) / yesterday.price) * 100;
-                state.coinData[symbol].price_change_24h = changePercent;
+            } else if (Array.isArray(state.priceHistory[symbol])) {
+                // Old format: direct array
+                const history = state.priceHistory[symbol];
+                if (history.length > 0) {
+                    const lastEntry = history[history.length - 1];
+                    
+                    if (lastEntry && lastEntry.date === dateStr) {
+                        // Update today's candle
+                        lastEntry.price = newPrice;
+                        lastEntry.close = newPrice;
+                        lastEntry.high = Math.max(lastEntry.high || newPrice, newPrice);
+                        lastEntry.low = Math.min(lastEntry.low || newPrice, newPrice);
+                        lastEntry.volume = (lastEntry.volume || 0) + Math.random() * 10;
+                    } else {
+                        // Add new day candle
+                        history.push({
+                            date: dateStr,
+                            price: newPrice,
+                            open: lastEntry.close || newPrice,
+                            high: newPrice * 1.01,
+                            low: newPrice * 0.99,
+                            close: newPrice,
+                            volume: Math.random() * 500 + 100
+                        });
+                        
+                        // Keep only last 30 days
+                        if (history.length > 30) {
+                            history.shift();
+                        }
+                    }
+                    
+                    // Update 24h change
+                    if (history.length > 1) {
+                        const yesterday = history[history.length - 2];
+                        if (yesterday && yesterday.price) {
+                            const changePercent = ((newPrice - yesterday.price) / yesterday.price) * 100;
+                            state.coinData[symbol].price_change_24h = changePercent;
+                        }
+                    }
+                }
             }
         });
         
@@ -408,8 +555,14 @@ function updatePriceDisplay() {
 
 function updateChart() {
     const historyData = state.priceHistory[state.selectedCoin];
+    const chartSection = document.querySelector('.chart-section');
+    const isSkeletonLoading = chartSection && chartSection.classList.contains('skeleton');
+    
     if (!historyData) {
-        showChartLoading();
+        // Only show old loading if skeleton loading is not active
+        if (!isSkeletonLoading) {
+            showChartLoading();
+        }
         return;
     }
     
@@ -434,7 +587,10 @@ function updateChart() {
     
     if (!history || history.length === 0) {
         console.warn(`No data available for ${state.selectedCoin} (${period})`);
-        showChartLoading(`Loading ${period.toUpperCase()} data...`);
+        // Only show old loading if skeleton loading is not active
+        if (!isSkeletonLoading) {
+            showChartLoading(`Loading ${period.toUpperCase()} data...`);
+        }
         return;
     }
     
@@ -617,6 +773,26 @@ function updateOrderForm() {
     const coinSymbols = document.querySelectorAll('#orderCoinSymbol');
     coinSymbols.forEach(el => el.textContent = state.selectedCoin);
     
+    // Update input step based on coin price
+    const coin = state.coinData[state.selectedCoin];
+    const orderAmountInput = document.getElementById('orderAmount');
+    if (coin && orderAmountInput) {
+        // Dynamic step based on coin price
+        // For expensive coins like BTC, smaller steps; for cheaper coins, larger steps
+        const price = coin.current_price;
+        let step;
+        if (price >= 1000) {
+            step = '0.00000001'; // Very small for BTC
+        } else if (price >= 100) {
+            step = '0.000001';   // Small for ETH
+        } else if (price >= 10) {
+            step = '0.00001';    // Medium for mid-tier coins
+        } else {
+            step = '0.0001';     // Larger for cheaper coins
+        }
+        orderAmountInput.step = step;
+    }
+    
     // Update submit button text
     const submitBtn = document.getElementById('orderSubmitBtn');
     const icon = state.orderSide === 'buy'
@@ -649,6 +825,30 @@ function updateOrderSummary() {
 
 function updateHoldings() {
     const holdingsList = document.getElementById('holdingsList');
+    
+    // Show skeleton loading if coin data is not loaded yet
+    if (Object.keys(state.coinData).length === 0) {
+        holdingsList.innerHTML = '';
+        for (let i = 0; i < 2; i++) {
+            const item = document.createElement('div');
+            item.className = 'holding-item skeleton';
+            item.innerHTML = `
+                <div class="holding-header">
+                    <div class="coin-icon skeleton"></div>
+                    <div class="holding-info">
+                        <div class="holding-symbol">LOAD</div>
+                        <div class="holding-amount">0.00000000 LOAD</div>
+                    </div>
+                    <div class="holding-value">
+                        <div class="holding-usd">$0.00</div>
+                        <div class="holding-pl">+$0.00 (0.00%)</div>
+                    </div>
+                </div>
+            `;
+            holdingsList.appendChild(item);
+        }
+        return;
+    }
     
     if (Object.keys(state.holdings).length === 0) {
         holdingsList.innerHTML = `
@@ -893,6 +1093,9 @@ async function selectCoin(symbol) {
     
     if (!coin) return;
     
+    // Show skeleton states while switching
+    showCoinSwitchLoadingStates();
+    
     // Update selector button
     document.getElementById('selectedCoinIcon').src = coin.img_url;
     document.getElementById('selectedCoinIcon').alt = symbol;
@@ -910,7 +1113,9 @@ async function selectCoin(symbol) {
         await loadMinuteData(symbol);
     }
     
+    // Update UI and hide loading states
     updateUI();
+    hideCoinSwitchLoadingStates();
 }
 
 // ========================================
