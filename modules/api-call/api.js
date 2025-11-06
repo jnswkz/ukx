@@ -1,5 +1,7 @@
+import { API } from "/env.js";
+
 const apiUrl = 'https://api.perplexity.ai/chat/completions';
-const API_KEY = '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';
+const API_KEY = API;
 if (!API_KEY) {
   console.error('API key missing. Set window.API_KEY in your HTML for local testing.');
 }
