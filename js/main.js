@@ -170,6 +170,9 @@ function initializeButtons() {
         document.getElementById('signupBtn'),
         document.getElementById('ctaSignupBtn')
     ];
+
+    // Logout button
+    // Removed duplicate logout handler; handled in components.js
     
     signupBtns.forEach(btn => {
         if (btn) {
