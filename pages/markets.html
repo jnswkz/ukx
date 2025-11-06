@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Markets - UKX</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Barlow:wght@400;500;600&family=Inter:wght@700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+    <div class="markets-page">
+        <!-- Navigation Bar Component -->
+        <div id="navbar-placeholder"></div>
+
+        <!-- Markets Container -->
+        <main class="markets-container">
+            <!-- Page Title -->
+            <div class="markets-header">
+                <h1 class="markets-title">Market</h1>
+            </div>
+
+            <!-- Hot Crypto & New Listings Cards -->
+            <div class="markets-cards-row">
+                <!-- Hot Crypto Card -->
+                <div class="markets-card">
+                    <h2 class="markets-card-title">Hot Crypto</h2>
+                    <div class="markets-card-list">
+                        <div class="markets-card-item">
+                            <div class="markets-card-item-name">
+                                <span>Loading...</span>
+                            </div>
+                            <div class="markets-card-item-value">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Listings Card -->
+                <div class="markets-card">
+                    <h2 class="markets-card-title">New listings</h2>
+                    <div class="markets-card-list">
+                        <div class="markets-card-item">
+                            <div class="markets-card-item-name">
+                                <span>Loading...</span>
+                            </div>
+                            <div class="markets-card-item-value">--</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Tags -->
+            <div class="markets-filters">
+                <button class="markets-filter-tag active" data-filter="all">All</button>
+                <button class="markets-filter-tag" data-filter="defi">DeFi</button>
+                <button class="markets-filter-tag" data-filter="gaming">Gaming</button>
+                <button class="markets-filter-tag" data-filter="meme">Meme</button>
+                <button class="markets-filter-tag" data-filter="layer1">Layer 1</button>
+            </div>
+
+            <!-- Markets Table -->
+            <div class="markets-table-container">
+                <table class="markets-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>24h change</th>
+                            <th>Last 24h</th>
+                            <th>24h range</th>
+                            <th>Market cap</th>
+                        </tr>
+                    </thead>
+                    <tbody id="marketsTableBody">
+                        <!-- Rows will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="markets-pagination">
+                <button class="pagination-btn" data-page="1">1</button>
+                <button class="pagination-btn" data-page="2">2</button>
+                <button class="pagination-btn" data-page="3">3</button>
+                <button class="pagination-btn" data-page="4">4</button>
+            </div>
+        </main>
+
+        <!-- Footer Component -->
+        <div id="footer-placeholder"></div>
+    </div>
+    
+    <script src="/modules/login-check/login-check.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/markets.js"></script>
+</body>
+</html>

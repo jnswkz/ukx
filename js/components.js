@@ -138,6 +138,15 @@ function initializeNavbar() {
       window.location.href = "/index.html";
     });
   }
+
+  // Currency selector click: go to calculator page
+  const currencySelectors = document.querySelectorAll(".nav-actions .currency-selector");
+  currencySelectors.forEach(selector => {
+    selector.style.cursor = "pointer";
+    selector.addEventListener("click", () => {
+      window.location.href = "/pages/crypto-calculator.html";
+    });
+  });
 }
 
 function initializeChat() {

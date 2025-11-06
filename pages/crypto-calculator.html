@@ -2,28 +2,101 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Calculator</title>
-    <link rel="stylesheet" href="../styles/crypto-calculator.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>UKX - Crypto Calculator</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;500;600&family=Inter:wght@700&display=swap" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
     <link rel="manifest" href="/favicon/site.webmanifest">
     <link rel="shortcut icon" href="/favicon/favicon.ico">
-</html>
+</head>
 <body>
-    <div class="calculator-container">
-        <h1>Crypto Calculator</h1>
-        <div class="input-group">
-            <label for="crypto-amount">Amount in Crypto:</label>
-            <input type="number" id="crypto-amount" placeholder="Enter amount">
-        </div>
-        <div class="input-group">
-            <label for="crypto-price">Price per Crypto (USD):</label>
-            <input type="number" id="crypto-price" placeholder="Enter price">
-        </div>
-        <button id="calculate-btn">Calculate</button>
-        <div class="result" id="result"></div>
+    <!-- Calculator Page -->
+    <div class="trade-page">
+        <!-- Navigation Bar Component -->
+        <div id="navbar-placeholder"></div>
+
+        <!-- Calculator Content -->
+        <main class="trade-main">
+            <div class="trade-container">
+                <!-- Left Content -->
+                <div class="trade-hero">
+                    <h1 class="trade-title">Crypto Currency Calculator</h1>
+                    <p class="trade-subtitle">Calculate real-time exchange rates for Bitcoin, Ethereum, and more popular cryptocurrencies</p>
+                </div>
+
+                <!-- Calculator Card -->
+                <div class="trade-card calculator-card">
+                    <!-- Calculator Header -->
+                    <div class="calculator-header">
+                        <h2 class="calculator-title">
+                            Convert 
+                            <span class="calculator-badge">0 Fees</span>
+                        </h2>
+                        <button class="calculator-history-btn" aria-label="History">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 8V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Calculator Form -->
+                    <div class="trade-form calculator-form" id="calculatorForm">
+                        <!-- Input 1: From Currency -->
+                        <div class="calculator-input-group">
+                            <label class="calculator-label">From</label>
+                            <div class="calculator-currency-row">
+                                <div class="currency-selector-compact" id="fromCurrencySelector">
+                                    <div class="currency-icon-compact"></div>
+                                    <span class="currency-code-compact" id="fromCurrency">BTC</span>
+                                    <svg class="currency-arrow-compact" width="8" height="5" viewBox="0 0 10 5" fill="none">
+                                        <path d="M0 0L5 5L10 0H0Z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <input type="number" class="calculator-input" id="fromAmount" placeholder="0.00000" step="0.000001" min="0">
+                            </div>
+                        </div>
+
+                        <!-- Swap Button -->
+                        <div class="swap-button-container">
+                            <button class="swap-currencies-btn-compact" id="swapBtn" aria-label="Swap currencies">
+                                <img src="../assets/exchange.png" alt="Swap Icon">
+                            </button>
+                        </div>
+
+                        <!-- Input 2: To Currency -->
+                        <div class="calculator-input-group">
+                            <label class="calculator-label">To</label>
+                            <div class="calculator-currency-row">
+                                <div class="currency-selector-compact" id="toCurrencySelector">
+                                    <div class="currency-icon-compact"></div>
+                                    <span class="currency-code-compact" id="toCurrency">USDT</span>
+                                    <svg class="currency-arrow-compact" width="8" height="5" viewBox="0 0 10 5" fill="none">
+                                        <path d="M0 0L5 5L10 0H0Z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <input type="number" class="calculator-input" id="toAmount" placeholder="0.00" step="0.01" min="0">
+                            </div>
+                        </div>
+
+                        <!-- Exchange Rate -->
+                        <p class="exchange-rate-compact" id="exchangeRate">Exchange rate: 1 BTC ≈ 101,400.9318 USDT</p>
+
+                        <!-- Login Button -->
+                        <button class="calculator-login-btn" id="calculatorLoginBtn">Log in</button>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <script src="../scripts/crypto-calculator.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="/js/crypto-calculator.js"></script>
+</body>
+</html>

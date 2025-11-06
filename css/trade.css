@@ -20,10 +20,10 @@
 }
 
 .trade-container {
-    max-width: 1080px;
+    max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 445px;
+    grid-template-columns: 1fr 600px;
     gap: 50px;
     align-items: start;
 }
@@ -71,6 +71,7 @@
 }
 
 [data-theme="light"] .trade-card {
+    background: #FFFFFF;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
@@ -80,15 +81,15 @@
     border-radius: 43px 43px 0 0;
     overflow: visible;
     position: relative;
-    height: 95px;
+    height: 180px;
 }
 
 .trade-tab {
     flex: 1;
-    padding: 30px 0;
+    padding: 35px 0;
     font-family: var(--font-primary);
     font-weight: 700;
-    font-size: 24px;
+    font-size: 32px;
     line-height: 1;
     color: #817D7D;
     background: transparent;
@@ -276,6 +277,477 @@
     outline-offset: 2px;
 }
 
+/* ========== Swap Button (for Calculator) ========== */
+.swap-currencies-btn {
+    background: rgba(217, 217, 217, 0.47);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #000000;
+}
+
+.swap-currencies-btn:hover {
+    background: rgba(217, 217, 217, 0.65);
+    transform: scale(1.05);
+}
+
+.swap-currencies-btn:active {
+    transform: scale(0.95);
+}
+
+.swap-currencies-btn:focus {
+    outline: 2px solid var(--nord8);
+    outline-offset: 2px;
+}
+
+.swap-currencies-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+[data-theme="light"] .swap-currencies-btn {
+    background: rgba(217, 217, 217, 0.6);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .swap-currencies-btn:hover {
+    background: rgba(217, 217, 217, 0.8);
+}
+
+/* ========== Calculator Compact Styles (OKX-like) ========== */
+.calculator-card {
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 480px;
+    overflow: visible;
+}
+
+.calculator-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+}
+
+.calculator-title {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.2;
+    color: #000000;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.calculator-badge {
+    background: #C6F432;
+    color: #000000;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.calculator-history-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: #000000;
+    transition: opacity 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calculator-history-btn:hover {
+    opacity: 0.7;
+}
+
+.calculator-history-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+[data-theme="light"] .calculator-title {
+    color: #000000;
+}
+
+[data-theme="light"] .calculator-history-btn {
+    color: #000000;
+}
+
+.calculator-form {
+    padding: 0;
+    overflow: visible;
+}
+
+.calculator-input-group {
+    margin-bottom: 0;
+    position: relative;
+    overflow: visible;
+}
+
+.calculator-label {
+    font-family: var(--font-primary);
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #6D6161;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.calculator-currency-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: transparent;
+    border: none;
+    padding: 12px 0;
+    position: relative;
+    overflow: visible;
+}
+
+.currency-selector-compact {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.currency-selector-compact:hover {
+    transform: scale(1.02);
+}
+
+/* When dropdown is open, increase z-index of active selector */
+.currency-selector-compact:has(.currency-dropdown) {
+    z-index: 10000;
+}
+
+.currency-icon-compact {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #D9D9D9;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.currency-code-compact {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.2;
+    color: #000000;
+    min-width: 60px;
+}
+
+.currency-arrow-compact {
+    width: 8px;
+    height: 5px;
+    color: #817D7D;
+    flex-shrink: 0;
+    margin-left: 4px;
+}
+
+.calculator-input {
+    font-family: var(--font-primary);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #B0B0B0;
+    background: transparent;
+    border: none;
+    outline: none;
+    flex: 1;
+    width: 100%;
+    padding: 0;
+    text-align: right;
+}
+
+.calculator-input:focus {
+    color: #000000;
+}
+
+.calculator-input::placeholder {
+    color: #B0B0B0;
+}
+
+/* Remove number input arrows */
+.calculator-input::-webkit-outer-spin-button,
+.calculator-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.calculator-input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.swap-button-container {
+    text-align: center;
+    padding: 8px 0;
+    position: relative;
+}
+
+.swap-currencies-btn-compact {
+    background: #F5F5F5;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #000000;
+    padding: 0;
+    overflow: hidden;
+}
+
+.swap-currencies-btn-compact:hover {
+    background: #E8E8E8;
+    transform: scale(1.05);
+}
+
+.swap-currencies-btn-compact:active {
+    transform: scale(0.95);
+}
+
+.swap-currencies-btn-compact:focus {
+    outline: 2px solid var(--nord8);
+    outline-offset: 2px;
+}
+
+.swap-currencies-btn-compact svg {
+    width: 18px;
+    height: 18px;
+}
+
+.swap-currencies-btn-compact img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+.exchange-rate-compact {
+    font-family: var(--font-primary);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #999999;
+    margin: 16px 0 0 0;
+    padding: 0;
+    text-align: center;
+}
+
+.calculator-login-btn {
+    width: 100%;
+    background: #000000;
+    color: #FFFFFF;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.calculator-login-btn:hover {
+    background: #1a1a1a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.calculator-login-btn:active {
+    transform: translateY(0);
+}
+
+.calculator-login-btn:focus {
+    outline: 2px solid var(--nord8);
+    outline-offset: 2px;
+}
+
+/* When showing "Convert Now" (logged in state) */
+.calculator-login-btn[style*="background: rgb(198, 244, 50)"],
+.calculator-login-btn[style*="background: #C6F432"] {
+    background: #C6F432 !important;
+    color: #000000 !important;
+}
+
+.calculator-login-btn[style*="background: rgb(198, 244, 50)"]:hover,
+.calculator-login-btn[style*="background: #C6F432"]:hover {
+    background: #B8E52E !important;
+    box-shadow: 0 4px 12px rgba(198, 244, 50, 0.4);
+}
+
+[data-theme="light"] .calculator-login-btn {
+    background: #000000;
+    color: #FFFFFF;
+}
+
+[data-theme="light"] .calculator-login-btn:hover {
+    background: #1a1a1a;
+}
+
+[data-theme="light"] .calculator-label {
+    color: #6D6161;
+}
+
+[data-theme="light"] .currency-code-compact {
+    color: #000000;
+}
+
+[data-theme="light"] .calculator-input {
+    color: #B0B0B0;
+}
+
+[data-theme="light"] .calculator-input:focus {
+    color: #000000;
+}
+
+[data-theme="light"] .swap-currencies-btn-compact {
+    background: #F5F5F5;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .swap-currencies-btn-compact:hover {
+    background: #E8E8E8;
+}
+
+[data-theme="light"] .exchange-rate-compact {
+    color: #999999;
+}
+
+/* ========== Calculator Responsive ========== */
+@media (max-width: 768px) {
+    .calculator-card {
+        max-width: 100%;
+        padding: 20px;
+        border-radius: 20px;
+    }
+    
+    .calculator-title {
+        font-size: 22px;
+    }
+    
+    .calculator-badge {
+        font-size: 11px;
+        padding: 3px 7px;
+    }
+    
+    .calculator-history-btn svg {
+        width: 22px;
+        height: 22px;
+    }
+    
+    .currency-code-compact {
+        font-size: 16px;
+        min-width: 50px;
+    }
+    
+    .currency-icon-compact {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .calculator-input {
+        font-size: 15px;
+    }
+    
+    .swap-currencies-btn-compact {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .swap-currencies-btn-compact svg {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .calculator-login-btn {
+        font-size: 15px;
+        padding: 12px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calculator-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+    
+    .calculator-header {
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+    }
+    
+    .calculator-title {
+        font-size: 20px;
+        gap: 6px;
+    }
+    
+    .calculator-badge {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+    
+    .calculator-history-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .calculator-label {
+        font-size: 12px;
+    }
+    
+    .currency-code-compact {
+        font-size: 15px;
+    }
+    
+    .calculator-input {
+        font-size: 14px;
+    }
+    
+    .exchange-rate-compact {
+        font-size: 11px;
+    }
+    
+    .calculator-login-btn {
+        font-size: 14px;
+        padding: 11px 18px;
+        margin-top: 16px;
+    }
+}
+
 /* ========== Responsive Design ========== */
 @media (max-width: 1024px) {
     .trade-container {
@@ -294,7 +766,7 @@
     
     .trade-card {
         width: 100%;
-        max-width: 500px;
+        max-width: 560px;
         margin: 0 auto;
     }
 }
@@ -317,8 +789,8 @@
     }
     
     .trade-tab {
-        font-size: 20px;
-        padding: 24px 0;
+        font-size: 26px;
+        padding: 28px 0;
     }
     
     .trade-card {
@@ -326,7 +798,7 @@
     }
     
     .trade-tabs {
-        height: 80px;
+        height: 95px;
     }
     
     .trade-tabs .trade-tab:first-child {
@@ -364,12 +836,12 @@
     }
     
     .trade-tabs {
-        height: 70px;
+        height: 85px;
     }
     
     .trade-tab {
-        font-size: 18px;
-        padding: 20px 0;
+        font-size: 24px;
+        padding: 24px 0;
     }
     
     .trade-tab:first-child.active {
@@ -410,5 +882,228 @@
     
     .exchange-rate {
         font-size: 14px;
+    }
+}
+
+/* ========== Currency Dropdown Styles ========== */
+.currency-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    min-width: 280px;
+    max-width: 350px;
+    max-height: 400px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+[data-theme="light"] .currency-dropdown {
+    background: #FFFFFF;
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.dropdown-search-wrapper {
+    padding: 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-search {
+    width: 100%;
+    padding: 8px 12px;
+    font-family: var(--font-primary);
+    font-size: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    background: #FAFAFA;
+    color: #000000;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.dropdown-search:focus {
+    outline: none;
+    border-color: var(--nord10);
+    background: #FFFFFF;
+}
+
+.dropdown-search::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .dropdown-search {
+    background: #F5F5F5;
+}
+
+[data-theme="light"] .dropdown-search:focus {
+    background: #FFFFFF;
+}
+
+.dropdown-list {
+    overflow-y: auto;
+    max-height: 350px;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    background: transparent;
+}
+
+.dropdown-item:hover {
+    background: rgba(217, 217, 217, 0.3);
+}
+
+.dropdown-item.selected {
+    background: rgba(136, 192, 208, 0.2);
+}
+
+[data-theme="light"] .dropdown-item:hover {
+    background: rgba(217, 217, 217, 0.4);
+}
+
+[data-theme="light"] .dropdown-item.selected {
+    background: rgba(136, 192, 208, 0.25);
+}
+
+.dropdown-item-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #D9D9D9;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #000000;
+    overflow: hidden;
+}
+
+.dropdown-item-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dropdown-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.dropdown-item-symbol {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 15px;
+    color: #000000;
+    margin-bottom: 2px;
+}
+
+[data-theme="light"] .dropdown-item-symbol {
+    color: var(--nord0);
+}
+
+.dropdown-item-name {
+    font-family: var(--font-primary);
+    font-size: 12px;
+    color: #817D7D;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown-item-price {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: #000000;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+[data-theme="light"] .dropdown-item-price {
+    color: var(--nord2);
+}
+
+/* Dropdown switch type button */
+.dropdown-switch-type {
+    padding: 12px;
+    text-align: center;
+    font-family: var(--font-primary);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--nord10);
+    background: rgba(136, 192, 208, 0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dropdown-switch-type:hover {
+    background: rgba(136, 192, 208, 0.2);
+    color: var(--nord9);
+}
+
+[data-theme="light"] .dropdown-switch-type {
+    background: rgba(136, 192, 208, 0.15);
+}
+
+[data-theme="light"] .dropdown-switch-type:hover {
+    background: rgba(136, 192, 208, 0.25);
+}
+
+/* Dropdown Responsive */
+@media (max-width: 768px) {
+    .currency-dropdown {
+        min-width: 260px;
+        max-width: 320px;
+        max-height: 350px;
+    }
+    
+    .dropdown-list {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .currency-dropdown {
+        min-width: 240px;
+        max-width: 280px;
+        max-height: 300px;
+        right: -10px;
+    }
+    
+    .dropdown-list {
+        max-height: 250px;
+    }
+    
+    .dropdown-item {
+        padding: 8px 10px;
+    }
+    
+    .dropdown-item-icon {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .dropdown-item-symbol {
+        font-size: 14px;
+    }
+    
+    .dropdown-item-name {
+        font-size: 11px;
+    }
+    
+    .dropdown-item-price {
+        font-size: 12px;
     }
 }

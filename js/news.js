@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let selectedTags = new Set();
     let searchQuery = '';
     let currentPage = 1;
-    let itemsPerPage = 12; // 1 featured + 11 in grid (default)
+    let itemsPerPage = 13; // 1 featured + 12 in grid (default)
     let showAllTags = false;
     const maxVisibleTags = 15; // Limit initial visible tags
 

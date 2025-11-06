@@ -51,6 +51,9 @@
 /* 14. Trading Simulator - Trading Practice Interface */
 @import url('trading-simulator.css');
 
+/* 15. Markets Page - Market Overview, Hot Crypto, Market Table */
+@import url('markets.css');
+
 
 /* ========================================
    Module Organization Summary:

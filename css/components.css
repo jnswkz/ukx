@@ -43,11 +43,15 @@
     font-family: var(--font-secondary);
     font-weight: 500;
     font-size: 18px;
-    padding: 18px 28px;
+    height: 60px;
+    padding: 0 28px;
     border-radius: var(--radius-md);
     border: 1px solid;
     cursor: pointer;
     transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-hero-primary {

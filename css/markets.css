@@ -1,0 +1,432 @@
+/* ========================================
+   UKX Crypto Wallet - Markets Page Styles
+   Market overview, hot crypto, new listings, market table
+   ======================================== */
+
+/* ========== Markets Page Container ========== */
+.markets-page {
+    min-height: 100vh;
+    background: var(--color-background);
+}
+
+/* ========== Markets Container ========== */
+.markets-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 3rem;
+    padding-top: calc(72px + 3rem);
+    font-size: 16px;
+}
+
+/* ========== Markets Header ========== */
+.markets-header {
+    margin-bottom: 2rem;
+}
+
+.markets-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: 32px;
+    margin-bottom: 2.5rem;
+    color: var(--color-text-primary);
+}
+
+/* ========== Markets Cards Row ========== */
+.markets-cards-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 92px;
+    margin-bottom: 3rem;
+}
+
+.markets-card {
+    background: var(--color-background-card);
+    border-radius: 15px;
+    padding: 1.5rem 1.8rem;
+    min-height: 280px;
+    border: 1px solid var(--color-border);
+}
+
+.markets-card-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--color-text-primary);
+    margin-bottom: 1.5rem;
+}
+
+.markets-card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.markets-card-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-background-elevated);
+    padding: 1.2rem 1.2rem;
+    border-radius: 8px;
+    min-height: 64px;
+    transition: background 0.2s ease;
+}
+
+.markets-card-item:hover {
+    background: var(--color-surface);
+}
+
+.markets-card-item-name {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--color-text-primary);
+}
+
+.crypto-icon {
+    font-size: 22px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.markets-card-item-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--color-text-primary);
+    text-align: right;
+}
+
+.markets-card-item-value.positive {
+    color: var(--color-success);
+}
+
+.markets-card-item-value.negative {
+    color: var(--color-error);
+}
+
+/* ========== Filter Tags ========== */
+.markets-filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.markets-filter-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: none;
+    padding: 0.65rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+}
+
+.markets-filter-tag:hover {
+    color: var(--color-text-primary);
+    background: var(--color-background-elevated);
+}
+
+.markets-filter-tag.active {
+    color: var(--color-text-primary);
+    background: var(--color-surface);
+    font-weight: 500;
+}
+
+/* ========== Markets Table ========== */
+.markets-table-container {
+    margin-bottom: 2rem;
+    overflow-x: auto;
+}
+
+.markets-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.markets-table thead {
+    background: var(--color-background-elevated);
+}
+
+.markets-table th {
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--color-text-primary);
+    text-align: left;
+    padding: 1.2rem 1.2rem;
+    letter-spacing: 0.5px;
+}
+
+.markets-table th:first-child {
+    text-align: left;
+}
+
+.markets-table tbody tr {
+    background: var(--color-background-card);
+    border-bottom: 2px solid var(--color-background);
+}
+
+.markets-table tbody tr:hover {
+    background: var(--color-background-elevated);
+    cursor: pointer;
+}
+
+.markets-table td {
+    font-size: 14px;
+    color: var(--color-text-primary);
+    padding: 1.2rem 1.2rem;
+    letter-spacing: 0.5px;
+}
+
+.markets-table td:first-child {
+    font-weight: 400;
+}
+
+.crypto-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.crypto-name-cell img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.crypto-name-cell .crypto-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.crypto-name {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.crypto-symbol {
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    margin-left: 0.25rem;
+}
+
+.price-cell {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.change-cell {
+    font-weight: 400;
+    font-size: 14px;
+    position: relative;
+    padding-right: 2.5rem !important;
+}
+
+.change-cell.positive {
+    color: var(--color-success);
+}
+
+.change-cell.negative {
+    color: var(--color-error);
+}
+
+.change-cell::before {
+    content: '';
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+}
+
+.change-cell.positive::before {
+    border-bottom: 6px solid var(--color-success);
+    transform: translateY(-40%);
+}
+
+.change-cell.negative::before {
+    border-top: 6px solid var(--color-error);
+    transform: translateY(-60%);
+}
+
+.chart-cell {
+    width: 120px;
+}
+
+.mini-chart {
+    width: 100%;
+    height: 36px;
+}
+
+.range-cell {
+    font-size: 13px;
+}
+
+.range-values {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-secondary);
+}
+
+.range-low,
+.range-high {
+    font-size: 12px;
+}
+
+.range-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--color-surface);
+    border-radius: 2px;
+    position: relative;
+}
+
+.range-indicator {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid var(--color-text-primary);
+    z-index: 3;
+    transition: left 0.3s ease, border-top-color 0.3s ease;
+}
+
+.marketcap-cell {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+/* ========== Pagination ========== */
+.markets-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.pagination-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: none;
+    padding: 0.65rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    min-width: 44px;
+    min-height: 44px;
+}
+
+.pagination-btn:hover {
+    color: var(--color-text-primary);
+    background: var(--color-background-elevated);
+}
+
+.pagination-btn.active {
+    color: var(--color-text-primary);
+    background: var(--color-surface);
+    font-weight: 500;
+}
+
+.pagination-btn:disabled {
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+}
+
+.pagination-btn:disabled:hover {
+    background: transparent;
+}
+
+/* ========== Responsive Design ========== */
+@media screen and (max-width: 1024px) {
+    .markets-container {
+        padding: 2rem 2rem;
+    }
+
+    .markets-cards-row {
+        gap: 2rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .markets-container {
+        padding: 1.5rem 1rem;
+    }
+
+    .markets-cards-row {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .markets-card {
+        min-height: auto;
+    }
+
+    .markets-table-container {
+        overflow-x: scroll;
+    }
+
+    .markets-table {
+        min-width: 800px;
+    }
+
+    .markets-filters {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 0.5rem;
+    }
+
+    .markets-filter-tag {
+        white-space: nowrap;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .markets-container {
+        padding: 1rem 0.75rem;
+    }
+
+    .markets-card {
+        padding: 1rem;
+    }
+
+    .markets-card-title {
+        font-size: 11px;
+    }
+
+    .markets-card-item {
+        padding: 0.75rem;
+    }
+
+    .markets-card-item-name,
+    .markets-card-item-value {
+        font-size: 11px;
+    }
+
+    .markets-title {
+        font-size: 13px;
+    }
+}
