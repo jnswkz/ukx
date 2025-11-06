@@ -40,7 +40,7 @@ backups/
 venv/
 
 # Environment files
-env.js
+# env.js
 
 # markdown
 
