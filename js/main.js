@@ -217,7 +217,17 @@ function initializeButtons() {
             const featureTitle = featureCard.querySelector('.feature-title').textContent;
             console.log('Learn more about:', featureTitle);
             // TODO: Implement feature detail modal or redirect
-            alert(`Learn more about ${featureTitle} - Coming soon!`);
+            if (featureTitle === 'Dashboard'){
+                window.location.href = '/pages/dashboard.html';
+            }
+            else {
+                if (featureTitle === 'Newspaper'){
+                    window.location.href = '/pages/news.html';
+                }
+                else{
+                    alert(`Learn more about ${featureTitle} - Coming soon!`);
+                }
+            }
         });
     });
     
