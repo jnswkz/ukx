@@ -172,12 +172,7 @@ function initializeButtons() {
     ];
 
     // Logout button
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn){
-        logoutBtn.addEventListener('click', function() {
-            console.log('Logout clicked');
-        });
-    }
+    // Removed duplicate logout handler; handled in components.js
     
     signupBtns.forEach(btn => {
         if (btn) {
