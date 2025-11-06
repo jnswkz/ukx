@@ -36,13 +36,31 @@ document.addEventListener('DOMContentLoaded', async function() {
     const searchInput = document.getElementById('news-search');
     const clearButton = document.getElementById('clear-filters');
     const noResults = document.getElementById('no-results');
+    const itemsPerPageSelect = document.getElementById('items-per-page');
 
     // State
     let selectedTags = new Set();
     let searchQuery = '';
+    let currentPage = 1;
+    let itemsPerPage = 12; // 1 featured + 11 in grid (default)
+    let showAllTags = false;
+    const maxVisibleTags = 15; // Limit initial visible tags
 
-    // Build unique tag list
-    const allTags = Array.from(new Set(articles.flatMap(a => a.tags))).sort();
+    // Build unique tag list with frequency count
+    const tagFrequency = {};
+    articles.forEach(a => {
+        a.tags.forEach(tag => {
+            tagFrequency[tag] = (tagFrequency[tag] || 0) + 1;
+        });
+    });
+    
+    // Sort tags by frequency (most common first), then alphabetically
+    const allTags = Object.keys(tagFrequency).sort((a, b) => {
+        if (tagFrequency[b] !== tagFrequency[a]) {
+            return tagFrequency[b] - tagFrequency[a]; // Higher frequency first
+        }
+        return a.localeCompare(b); // Alphabetical for same frequency
+    });
 
     function createTagButton(tag) {
         const btn = document.createElement('button');
@@ -59,18 +77,35 @@ document.addEventListener('DOMContentLoaded', async function() {
                 selectedTags.add(tag);
                 btn.setAttribute('aria-pressed', 'true');
             }
+            currentPage = 1; // Reset to first page when filter changes
             render();
         });
 
         return btn;
     }
 
-    // Render tag buttons
+    // Render tag buttons with show more/less functionality
     function renderTags() {
         tagFiltersContainer.innerHTML = '';
-        allTags.forEach(tag => {
+        
+        const tagsToShow = showAllTags ? allTags : allTags.slice(0, maxVisibleTags);
+        
+        tagsToShow.forEach(tag => {
             tagFiltersContainer.appendChild(createTagButton(tag));
         });
+        
+        // Add "Show More/Less" button if there are more tags
+        if (allTags.length > maxVisibleTags) {
+            const toggleBtn = document.createElement('button');
+            toggleBtn.type = 'button';
+            toggleBtn.className = 'tag-button tag-toggle-button';
+            toggleBtn.textContent = showAllTags ? '− Show Less' : `+ Show More (${allTags.length - maxVisibleTags})`;
+            toggleBtn.addEventListener('click', () => {
+                showAllTags = !showAllTags;
+                renderTags();
+            });
+            tagFiltersContainer.appendChild(toggleBtn);
+        }
     }
 
     // Navigation helper (articles are in same folder as news.html)
@@ -169,8 +204,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
     }
 
-    // Render function
-    function render() {
+    // Render function with pagination
+    // Track last page to detect explicit pagination navigation
+    let lastPage = 1;
+
+    function render({ fromPagination = false } = {}) {
         const results = filterArticles();
 
         // featured: pick the first result as featured (if any)
@@ -179,21 +217,170 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         if (results.length === 0) {
             noResults.style.display = 'block';
+            document.getElementById('pagination-container')?.remove();
             return;
         } else {
             noResults.style.display = 'none';
         }
 
-        const [first, ...rest] = results;
-        if (first) {
-            featuredContainer.appendChild(createFeatured(first));
-        }
+        // Check if showing all items
+        const showAll = itemsPerPageSelect && itemsPerPageSelect.value === 'all';
 
-        // Render remaining articles in grid
-        const toShow = rest.length ? rest : results.slice(1); // if only one result, grid will be empty
-        toShow.forEach(a => {
-            listContainer.appendChild(createCard(a));
+        if (showAll) {
+            // Show all results without pagination
+            const [first, ...rest] = results;
+            if (first) {
+                featuredContainer.appendChild(createFeatured(first));
+            }
+            rest.forEach(a => {
+                listContainer.appendChild(createCard(a));
+            });
+            // Remove pagination if exists
+            document.getElementById('pagination-container')?.remove();
+        } else {
+            // Calculate pagination
+            const totalPages = Math.ceil(results.length / itemsPerPage);
+            const startIdx = (currentPage - 1) * itemsPerPage;
+            const endIdx = startIdx + itemsPerPage;
+            const pageResults = results.slice(startIdx, endIdx);
+
+            const [first, ...rest] = pageResults;
+            if (first) {
+                featuredContainer.appendChild(createFeatured(first));
+            }
+
+            // Render remaining articles in grid
+            rest.forEach(a => {
+                listContainer.appendChild(createCard(a));
+            });
+
+            // Render pagination controls
+            renderPagination(totalPages, results.length);
+
+            // Only scroll when navigating via pagination controls
+            if (fromPagination && currentPage > 1) {
+                document.querySelector('.news-featured')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        lastPage = currentPage;
+    }
+
+    // Render pagination controls
+    function renderPagination(totalPages, totalResults) {
+        // Remove existing pagination
+        document.getElementById('pagination-container')?.remove();
+        
+        if (totalPages <= 1) return; // Don't show pagination if only one page
+        
+        const paginationContainer = document.createElement('div');
+        paginationContainer.id = 'pagination-container';
+        paginationContainer.className = 'pagination-container';
+        
+        // Results info
+        const startItem = (currentPage - 1) * itemsPerPage + 1;
+        const endItem = Math.min(currentPage * itemsPerPage, totalResults);
+        
+        const resultsInfo = document.createElement('div');
+        resultsInfo.className = 'pagination-info';
+        resultsInfo.textContent = `Showing ${startItem}-${endItem} of ${totalResults} articles`;
+        paginationContainer.appendChild(resultsInfo);
+        
+        const paginationControls = document.createElement('div');
+        paginationControls.className = 'pagination-controls';
+        
+        // Previous button
+        const prevBtn = document.createElement('button');
+        prevBtn.type = 'button';
+        prevBtn.className = 'pagination-btn';
+        prevBtn.textContent = '← Previous';
+        prevBtn.disabled = currentPage === 1;
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                render({ fromPagination: true });
+            }
         });
+        paginationControls.appendChild(prevBtn);
+        
+        // Page numbers
+        const pageNumbers = document.createElement('div');
+        pageNumbers.className = 'pagination-numbers';
+        
+        // Show first page, current page range, and last page with ellipsis
+        const pagesToShow = [];
+        if (totalPages <= 7) {
+            // Show all pages if 7 or fewer
+            for (let i = 1; i <= totalPages; i++) {
+                pagesToShow.push(i);
+            }
+        } else {
+            // Always show first page
+            pagesToShow.push(1);
+            
+            // Show pages around current page
+            if (currentPage > 3) {
+                pagesToShow.push('...');
+            }
+            
+            for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                if (!pagesToShow.includes(i)) {
+                    pagesToShow.push(i);
+                }
+            }
+            
+            if (currentPage < totalPages - 2) {
+                pagesToShow.push('...');
+            }
+            
+            // Always show last page
+            if (!pagesToShow.includes(totalPages)) {
+                pagesToShow.push(totalPages);
+            }
+        }
+        
+        pagesToShow.forEach(page => {
+            if (page === '...') {
+                const ellipsis = document.createElement('span');
+                ellipsis.className = 'pagination-ellipsis';
+                ellipsis.textContent = '...';
+                pageNumbers.appendChild(ellipsis);
+            } else {
+                const pageBtn = document.createElement('button');
+                pageBtn.type = 'button';
+                pageBtn.className = 'pagination-number';
+                if (page === currentPage) {
+                    pageBtn.classList.add('active');
+                }
+                pageBtn.textContent = page;
+                pageBtn.addEventListener('click', () => {
+                    currentPage = page;
+                    render({ fromPagination: true });
+                });
+                pageNumbers.appendChild(pageBtn);
+            }
+        });
+        
+        paginationControls.appendChild(pageNumbers);
+        
+        // Next button
+        const nextBtn = document.createElement('button');
+        nextBtn.type = 'button';
+        nextBtn.className = 'pagination-btn';
+        nextBtn.textContent = 'Next →';
+        nextBtn.disabled = currentPage === totalPages;
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                render({ fromPagination: true });
+            }
+        });
+        paginationControls.appendChild(nextBtn);
+        
+        paginationContainer.appendChild(paginationControls);
+        
+        // Insert after news grid
+        const newsGridSection = document.querySelector('.news-grid-section');
+        newsGridSection.appendChild(paginationContainer);
     }
 
     // Debounce for search input
@@ -208,6 +395,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (searchInput) {
         searchInput.addEventListener('input', debounce((e) => {
             searchQuery = e.target.value || '';
+            currentPage = 1; // Reset to first page on search
             render();
         }, 180));
     }
@@ -216,11 +404,26 @@ document.addEventListener('DOMContentLoaded', async function() {
         clearButton.addEventListener('click', () => {
             selectedTags.clear();
             searchQuery = '';
+            currentPage = 1; // Reset to first page when clearing filters
             if (searchInput) searchInput.value = '';
             // reset aria state for tag buttons
             Array.from(tagFiltersContainer.querySelectorAll('button')).forEach(b => {
                 b.setAttribute('aria-pressed', 'false');
             });
+            render();
+        });
+    }
+
+    // Items per page selector
+    if (itemsPerPageSelect) {
+        itemsPerPageSelect.addEventListener('change', (e) => {
+            const value = e.target.value;
+            if (value === 'all') {
+                itemsPerPage = Infinity; // Will show all items
+            } else {
+                itemsPerPage = parseInt(value, 10);
+            }
+            currentPage = 1; // Reset to first page when changing items per page
             render();
         });
     }

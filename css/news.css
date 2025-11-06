@@ -108,6 +108,42 @@
     display:flex;
     gap:8px;
     align-items:center;
+    flex-wrap:wrap;
+}
+
+.items-per-page-control {
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.items-per-page-label {
+    font-size:13px;
+    color:var(--color-text-secondary);
+    white-space:nowrap;
+}
+
+.items-per-page-select {
+    padding:10px 12px;
+    border-radius:8px;
+    border:1px solid var(--color-border);
+    background:var(--color-background-card);
+    color:var(--color-text-primary);
+    cursor:pointer;
+    font-family:var(--font-secondary);
+    font-size:14px;
+    outline:none;
+    transition:all 0.2s ease;
+}
+
+.items-per-page-select:hover {
+    border-color:var(--color-accent-primary);
+    background:var(--color-background-elevated);
+}
+
+.items-per-page-select:focus {
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--color-accent-primary) 12%, transparent);
+    border-color:var(--color-accent-primary);
 }
 
 .btn-clear-filters {
@@ -157,6 +193,103 @@
 /* Make sure focus ring is visible in both themes */
 .tag-button:focus {
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent-primary) 16%, transparent);
+}
+
+/* Show more/less tags button */
+.tag-toggle-button {
+    background: var(--color-background-elevated);
+    font-weight: 600;
+    color: var(--color-accent-primary);
+}
+
+.tag-toggle-button:hover {
+    background: var(--color-accent-primary);
+    color: var(--color-on-accent, #fff);
+    border-color: var(--color-accent-primary);
+}
+
+/* ========== Pagination ========== */
+.pagination-container {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.pagination-info {
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    color: var(--color-text-secondary);
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pagination-btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: var(--color-background-card);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: var(--color-accent-primary);
+    color: var(--color-on-accent, #fff);
+    border-color: var(--color-accent-primary);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pagination-numbers {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pagination-number {
+    min-width: 40px;
+    height: 40px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: var(--color-background-card);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.pagination-number:hover {
+    background: var(--color-background-elevated);
+    border-color: var(--color-accent-primary);
+}
+
+.pagination-number.active {
+    background: var(--color-accent-primary);
+    color: var(--color-on-accent, #fff);
+    border-color: var(--color-accent-primary);
+}
+
+.pagination-ellipsis {
+    padding: 8px;
+    color: var(--color-text-muted);
+    font-family: var(--font-secondary);
+    font-size: 14px;
 }
 
 .news-featured-card {
