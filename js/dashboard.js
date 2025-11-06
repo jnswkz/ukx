@@ -67,8 +67,18 @@ document.addEventListener('DOMContentLoaded', async function() {
         console.error('Error parsing user data from localStorage:', e);
         userData = {};
     }
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    drawBalanceChart(userData, chartContainer, currentTheme);
+    const themeObserver = new MutationObserver(mutations => {
+        for (const m of mutations) {
+            if (m.attributeName === 'data-theme') {
+                const newTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                drawBalanceChart(userData, chartContainer, newTheme);
+            }
+        }
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-    drawBalanceChart(userData, chartContainer);
     // Initialize wallet dashboard
     initializeWalletDashboard();
     await populateWalletData(userData, {
@@ -81,7 +91,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 /**
  * Draw balance chart
  */
-async function drawBalanceChart(userData = {}, chartContainer) {
+async function drawBalanceChart(userData = {}, chartContainer, colorScheme = 'light') {
 
     const daily_assets_value = Array.isArray(userData?.daily_asset_values) ? userData.daily_asset_values : [];
     //drawLineGraph(canvasID, data, backgroundColor, lineColor, pointColor)
@@ -104,7 +114,11 @@ async function drawBalanceChart(userData = {}, chartContainer) {
             x: labels,
             y: values
         }; 
-        drawLineGraph('balanceChart', data, 'rgba(59, 66, 82, 1)', 'rgba(163, 190, 140, 1)', 'rgba(180, 142, 173, 1)');
+        if (colorScheme === 'light'){
+            drawLineGraph('balanceChart', data, 'rgba(236, 239, 244, 1)', 'rgba(94, 129, 172, 1)', 'rgba(180, 142, 173, 1)');
+        } else {    
+            drawLineGraph('balanceChart', data, 'rgba(59, 66, 82, 1)', 'rgba(163, 190, 140, 1)', 'rgba(180, 142, 173, 1)');
+        }
     }
 
     if (chartContainer) {

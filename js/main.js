@@ -170,6 +170,14 @@ function initializeButtons() {
         document.getElementById('signupBtn'),
         document.getElementById('ctaSignupBtn')
     ];
+
+    // Logout button
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn){
+        logoutBtn.addEventListener('click', function() {
+            console.log('Logout clicked');
+        });
+    }
     
     signupBtns.forEach(btn => {
         if (btn) {
