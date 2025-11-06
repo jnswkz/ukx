@@ -85,8 +85,8 @@
     
     /* Typography */
     --font-primary: 'JetBrains Mono', monospace;
-    --font-secondary: 'Barlow', sans-serif;
-    --font-display: 'Inter', sans-serif;
+    --font-secondary: 'JetBrains Mono', sans-serif;
+    --font-display: 'JetBrains Mono', sans-serif;
     
     /* Spacing */
     --spacing-xs: 8px;

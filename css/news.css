@@ -59,6 +59,106 @@
     margin: 0 auto;
 }
 
+/* ========== Controls (search + tags) ========== */
+.news-controls {
+    padding: 24px 20px;
+    max-width: 1200px;
+    margin: 0 auto 8px auto;
+}
+
+.news-controls-row {
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.news-controls-search {
+    flex:1;
+    min-width:220px;
+}
+
+.news-search-label {
+    display:block;
+    font-size:13px;
+    color:var(--color-text-secondary);
+    margin-bottom:6px;
+}
+
+.news-search-input {
+    width:100%;
+    padding:10px 12px;
+    border-radius:8px;
+    border:1px solid var(--color-border);
+    background:var(--color-background-card);
+    color:var(--color-text-primary);
+    outline:none;
+}
+
+.news-search-input::placeholder {
+    color:var(--color-text-muted);
+}
+
+.news-search-input:focus {
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--color-accent-primary) 12%, transparent);
+    border-color:var(--color-accent-primary);
+}
+
+.news-controls-actions {
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+
+.btn-clear-filters {
+    padding:10px 14px;
+    border-radius:8px;
+    border:1px solid var(--color-border);
+    background:transparent;
+    color:var(--color-text-primary);
+    cursor:pointer;
+}
+
+.btn-clear-filters:hover {
+    background:var(--color-background-elevated);
+}
+
+/* ========== Tag filters ========== */
+.tag-filters {
+    margin-top:14px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.tag-button {
+    padding:8px 12px;
+    border-radius:999px;
+    border:1px solid var(--color-border);
+    background:transparent;
+    color:var(--color-text-primary);
+    cursor:pointer;
+    font-size:13px;
+}
+
+.tag-button:hover,
+.tag-button:focus {
+    outline:none;
+    box-shadow:0 6px 12px rgba(0,0,0,0.06);
+}
+
+/* pressed/active state controlled with aria-pressed so CSS can apply theme-aware vars */
+.tag-button[aria-pressed="true"] {
+    background:var(--color-accent-primary);
+    color:var(--color-on-accent, #fff);
+    border-color:var(--color-accent-primary);
+}
+
+/* Make sure focus ring is visible in both themes */
+.tag-button:focus {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent-primary) 16%, transparent);
+}
+
 .news-featured-card {
     display: grid;
     grid-template-columns: 1fr 1fr;
