@@ -175,7 +175,7 @@ function updateMarketCards() {
                     <img src="${coin.imgUrl}" alt="${coin.symbol}" style="width: 24px; height: 24px; border-radius: 50%;" onerror="this.style.display='none';">
                     <span>${coin.name}</span>
                 </div>
-                <div class="markets-card-item-value positive">+${coin.change24h.toFixed(2)}%</div>
+                <div class="markets-card-item-value">${formatLargeNumber(coin.marketCap)}</div>
             </div>
         `).join('');
     }
