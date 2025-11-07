@@ -3,6 +3,8 @@
 // Market data fetching, filtering, and display
 // ========================================
 
+import { jsonFileParser } from "/modules/json/jsonFileParser.js";
+
 // Tag mapping for categories
 const TAG_MAPPING = {
     'defi': ['Decentralized Finance (DeFi)', 'DeFi', 'Yield Farming', 'Automated Market Maker (AMM)'],
@@ -35,6 +37,10 @@ function determineTags(categories) {
 // Transform coin data from JSON format to app format
 function transformCoinData(coinData) {
     const coins = [];
+    // console.log(coinData);
+    if (Array.isArray(coinData) && coinData.length === 1 && typeof coinData[0] === 'object' && !Array.isArray(coinData[0])) {
+        coinData = coinData[0];
+    }
     
     for (const [symbol, data] of Object.entries(coinData)) {
         const tags = determineTags(data.categories || []);
@@ -49,7 +55,8 @@ function transformCoinData(coinData) {
             low24h: data.low_24h,
             high24h: data.high_24h,
             imgUrl: data.img_url,
-            tags: tags
+            tags: tags,
+            coin_id: data.coin_page_id 
         });
     }
     
@@ -499,9 +506,12 @@ function initializeRowHandlers() {
         const row = e.target.closest('tr[data-symbol]');
         if (row) {
             const symbol = row.dataset.symbol;
-            console.log(`Clicked on ${symbol} - Navigate to detail page`);
+            console.log(row.dataset);
+            console.log(marketData);
+            const coin_id = marketData.find(coin => coin.symbol === symbol)?.coin_id ;
+            console.log(`Clicked on ${symbol} - Coin ID: ${coin_id}`);
             // TODO: Navigate to coin detail page
-            // window.location.href = `/pages/coin-detail.html?symbol=${symbol}`;
+            window.location.href = `/pages/coin-details.html?coin_id=${coin_id}`;
         }
     });
 }
@@ -509,20 +519,11 @@ function initializeRowHandlers() {
 // Fetch real market data (placeholder for API integration)
 async function fetchMarketData() {
     try {
-        // Load data from local JSON file
-        const response = await fetch('/data/full_coin_data.json');
-        if (!response.ok) {
-            throw new Error('Failed to fetch market data');
-        }
-        const data = await response.json();
-        
-        // Transform the data to our format
+        const data = await jsonFileParser('/data/full_coin_data.json');
         marketData = transformCoinData(data);
-        
         return marketData;
     } catch (error) {
         console.error('Error fetching market data:', error);
-        // Return empty array if fetch fails
         marketData = [];
         return marketData;
     }
