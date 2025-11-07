@@ -68,7 +68,7 @@ function draw_line(ctx, points, lineColor) {
             const p3 = points[Math.min(points.length - 1, i + 2)];
             
             // Calculate control points for bezier curve
-            const tension = 0.3; // Adjust curve smoothness (0 = straight, 1 = very smooth)
+            const tension = 0.15; // Adjust curve smoothness (0 = straight, 1 = very smooth)
             
             const cp1x = p1.x + (p2.x - p0.x) * tension;
             const cp1y = p1.y + (p2.y - p0.y) * tension;
