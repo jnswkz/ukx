@@ -52,9 +52,10 @@ function extractTextFromResponse(data) {
 //   .catch(err => console.error(err));
 
 export async function callApi(message){
-    const prompt = "You are a Crypto wallet assistant. Answer the user's questions about their UKX crypto wallet in a concise and clear manner."
+    const prompt = "You are a Crypto wallet assistant. Answer the user's questions about their UKX crypto wallet in a concise and clear manner. Remember not to send data under table type, send only insights and summaries. If the user asks for specific data points, provide them in a list format. Use the data provided in the files to inform your answers."
     message = prompt + "\nUser: " + message;
     const payload = {
+        max_results: 1,
         model: 'sonar-pro',
         messages: [{
             role: 'user',
