@@ -11,8 +11,8 @@ const width = canvas.width;
 const height = canvas.height;
 
 function spawn_point(ctx, x, y) {
-    const radius = 2;
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+    const radius = 0.5;
+    ctx.fillStyle = 'rgba(255, 0, 0, 0.8)';
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, 2 * Math.PI);
     ctx.fill();
@@ -20,7 +20,7 @@ function spawn_point(ctx, x, y) {
 
 let list_of_points = [];
 
-for (let i = 0; i < 150; i++) {
+for (let i = 0; i < 15; i++) {
     const x = getRandomInt(0, width);
     const y = getRandomInt(0, height);
 
@@ -81,9 +81,9 @@ canvas.addEventListener('click', function(event) {
 
 function draw_line(x1, y1, x2, y2, type='normal') {
     if (type === 'highlight') {
-        ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+        ctx.strokeStyle = 'rgba(244, 0, 252, 0.5)';
     } else {
-        ctx.strokeStyle = 'rgba(108, 93, 93, 0.2)';
+        ctx.strokeStyle = 'rgba(255, 0, 0, 1)';
     }
     ctx.beginPath();
     ctx.moveTo(x1, y1);
@@ -101,7 +101,7 @@ setInterval(() => {
     }
 
     spawn_point(ctx, mousex, mousey);
-    const mouseDistanceSquared = 200 * 200;
+    const mouseDistanceSquared = 50 * 50;
     for (let i=0; i<list_of_points.length; i++) {
         const point = list_of_points[i];
         const dx = point.x - mousex;
@@ -112,7 +112,7 @@ setInterval(() => {
         }
     }
 
-    const lineDistanceSquared = 150 * 150;
+    const lineDistanceSquared = 90 * 90;
     for (let i=0; i<list_of_points.length; i++) {
         const pointA = list_of_points[i];
         for (let j=i+1; j<list_of_points.length; j++) {

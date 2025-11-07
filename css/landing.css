@@ -225,8 +225,19 @@
     padding: var(--spacing-3xl) var(--spacing-lg);
     position: relative;
     margin-top: 100px;
+    overflow: hidden; 
 }
-
+.features-section #net-bg-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.18; /* adjust */
+    will-change: transform;
+}
+.features-section > * { position: relative; z-index: 2; }
 .features-grid {
     max-width: 1080px;
     margin: 0 auto;
