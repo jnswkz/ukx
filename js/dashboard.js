@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         popup.classList.add('hidden');
     }
 
-    function sendMessage() {
+    async function sendMessage() {
         if (!userInput || !chatBody) return;
         const text = userInput.value.trim();
         if (!text) return;
@@ -145,15 +145,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         chatBody.scrollTop = chatBody.scrollHeight;
 
     // optional demo bot reply
-    setTimeout(async () => {
-    const botMsg = document.createElement('div');
-    botMsg.className = 'bot-message';
-    // getAnswerFromApi returns sanitized HTML (via renderMarkdown). Insert as HTML so tags render.
-    const answerHtml = await getAnswerFromApi(text) || renderMarkdown("I'm sorry, I couldn't process your request at this time.");
-    botMsg.innerHTML = answerHtml;
-    chatBody.appendChild(botMsg);
-    chatBody.scrollTop = chatBody.scrollHeight;
-    }, 600);
+
+        const botMsg = document.createElement('div');
+        botMsg.className = 'bot-message';
+        // getAnswerFromApi returns sanitized HTML (via renderMarkdown). Insert as HTML so tags render.
+        const answerHtml = await getAnswerFromApi(text) || renderMarkdown("I'm sorry, I couldn't process your request at this time.");
+        botMsg.innerHTML = answerHtml;
+        chatBody.appendChild(botMsg);
+        chatBody.scrollTop = chatBody.scrollHeight;
     }
 
     if (chatBtn) chatBtn.addEventListener('click', () => {
