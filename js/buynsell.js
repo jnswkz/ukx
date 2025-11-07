@@ -658,16 +658,18 @@ function processTransaction(payAmount, receiveAmount) {
     
     if (confirm(message)) {
         // Simulate transaction processing
-        showNotification('success', 'Transaction submitted! Processing...');
+        // showNotification('success', 'Transaction submitted! Processing...');
         
         // Clear inputs
         document.getElementById('payAmount').value = '';
         document.getElementById('receiveAmount').value = '';
         
-        // Redirect to dashboard after short delay
-        setTimeout(() => {
-            window.location.href = '/pages/dashboard.html';
-        }, 2000);
+        // Redirect to payment page
+        window.location.href = '/pages/payment.html?pay_amount=' + encodeURIComponent(payAmount.toFixed(8)) +
+                               '&receive_amount=' + encodeURIComponent(receiveAmount.toFixed(8)) +
+                               '&pay_currency=' + encodeURIComponent(payCurrency) +
+                               '&receive_currency=' + encodeURIComponent(receiveCurrency) +
+                               '&mode=' + encodeURIComponent(currentMode);
     }
 }
 

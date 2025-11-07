@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>UKX - Payment Check</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/payment.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;500;600&family=Inter:wght@700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
+</head>
+<body>
+    <div class="payment-page">
+        <!-- <div id="navbar-placeholder"></div> -->
+
+        <main class="payment-main">
+            <section class="payment-card" aria-live="polite">
+                <div class="payment-card-header">
+                    <p class="payment-step">Step 2 of 2</p>
+                    <h1 id="paymentTitle">Review &amp; pay</h1>
+                    <p class="payment-subtitle">
+                        Double-check the trade details before you continue to our payment partner.
+                    </p>
+                </div>
+
+                <div class="payment-alert hidden" id="missingTradeNotice">
+                    <div>
+                        <strong>No trade found</strong>
+                        <p>We couldn't find the trade details for this session. Start again to create a new quote.</p>
+                    </div>
+                    <button class="payment-btn primary" id="startOverBtn">Back to trade</button>
+                </div>
+
+                <div class="payment-summary" id="paymentSummary">
+                    <div class="summary-column">
+                        <span class="summary-label">You'll pay</span>
+                        <p class="summary-value" id="paySummaryValue">--</p>
+                        <span class="summary-help" id="paymentModeLabel">Mode —</span>
+                    </div>
+                    <div class="summary-column">
+                        <span class="summary-label">You'll receive</span>
+                        <p class="summary-value" id="receiveSummaryValue">--</p>
+                        <span class="summary-help" id="exchangeRateLabel">Rate —</span>
+                    </div>
+                </div>
+
+                <div class="payment-breakdown" id="paymentBreakdown">
+                    <div class="breakdown-row">
+                        <span>Exchange rate</span>
+                        <span id="paymentRate">--</span>
+                    </div>
+                    <div class="breakdown-row">
+                        <span>Processing fee (0.6%)</span>
+                        <span id="paymentFee">--</span>
+                    </div>
+                    <div class="breakdown-row total">
+                        <span>Total due now</span>
+                        <span id="paymentTotal">--</span>
+                    </div>
+                </div>
+
+                <div class="payment-meta">
+                    <div class="meta-card">
+                        <span class="meta-label">Payment reference</span>
+                        <strong class="meta-value" id="paymentReference">--</strong>
+                        <span class="meta-hint">Share this reference with support if you need help.</span>
+                    </div>
+                    <div class="meta-card">
+                        <span class="meta-label">Quote valid for</span>
+                        <strong class="meta-value" id="paymentCountdown">10:00</strong>
+                        <span class="meta-hint">Amounts refresh automatically when the timer expires.</span>
+                    </div>
+                </div>
+
+                <div class="payment-actions">
+                    <button class="payment-btn ghost" id="editTradeBtn">Edit amounts</button>
+                    <button class="payment-btn primary" id="confirmPaymentBtn">Continue to payment</button>
+                </div>
+
+                <p class="payment-note" id="paymentStatusText">
+                    After you click continue we’ll create a secure checkout session with our payment partner.
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/payment.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=5.0">
+    <title>UKX - Payment Successful</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/thankyou.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;500;600&family=Inter:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="thankyou-container">
+        <div class="thankyou-card" role="status" aria-live="polite">
+            <div class="thankyou-icon" aria-hidden="true">
+                <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="38" stroke="var(--color-success)" stroke-width="4"/>
+                    <path d="M26 40L36 50L54 30" stroke="var(--color-success)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <p class="thankyou-message">Payment successful! Thank you for choosing UKX!</p>
+        </div>
+    </main>
+
+    <script >
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                window.location.href = '/pages/dashboard.html';
+            }, 3000);
+        });
+
+
+    </script>
+</body>
+</html>
