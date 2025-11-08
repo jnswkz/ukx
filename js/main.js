@@ -46,6 +46,9 @@ console.log('main.js: initializeThemeToggle exposed on window');
 document.addEventListener('DOMContentLoaded', function() {
     console.log('UKX Landing Page initialized');
 
+    // ========== Intro Reveal ==========
+    initializeLandingIntro();
+
     // ========== FAQ Accordion Functionality ==========
     initializeFAQ();
 
@@ -57,6 +60,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ========== Live Hero Stats ==========
     initializeHeroStatsCounter();
+
+    // ========== Platform Showcase Animations ==========
+    initializePlatformShowcase();
+
+    // ========== CTA Media ==========
+    initializeCTAVideo();
 
     // ========== Theme Toggle ==========
     // Theme toggle is now initialized in components.js after navbar loads
@@ -348,37 +357,338 @@ function initializeHeroStatsCounter() {
     scheduleNext();
 }
 
-/**
- * Placeholder for future wallet functionality
- */
-window.UKX = {
-    wallet: {
-        balance: null,
-        transactions: [],
-        
-        init: function() {
-            console.log('Wallet module initialized (placeholder)');
-            // TODO: Implement wallet dashboard when needed
-        },
-        
-        send: function(address, amount, token) {
-            console.log('Send:', { address, amount, token });
-            // TODO: Implement send flow
-        },
-        
-        receive: function() {
-            console.log('Receive clicked');
-            // TODO: Show receive modal with QR code
+const Ease = {
+    outCubic: (t) => 1 - Math.pow(1 - t, 3),
+    outExpo: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))
+};
+
+function tween({ duration = 600, delay = 0, ease = 'outCubic', onUpdate, onComplete }) {
+    const easingFn = typeof ease === 'function' ? ease : Ease[ease] || Ease.outCubic;
+    let startTime = null;
+
+    function step(now) {
+        if (startTime === null) {
+            startTime = now + delay;
         }
-    },
-    
-    chart: {
-        init: function(canvas, data) {
-            console.log('Chart module initialized (placeholder)');
-            // TODO: Integrate with modules/graphjs/graph.js
+
+        if (now < startTime) {
+            requestAnimationFrame(step);
+            return;
+        }
+
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = easingFn(progress);
+
+        if (onUpdate) {
+            onUpdate(eased, progress);
+        }
+
+        if (progress < 1) {
+            requestAnimationFrame(step);
+        } else if (onComplete) {
+            onComplete();
         }
     }
-};
+
+    requestAnimationFrame(step);
+}
+
+function setInitialElementState(element, { x = 0, y = 0, scale = 1, opacity = 0 } = {}) {
+    if (!element) return;
+    element.style.willChange = 'transform, opacity';
+    element.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+    element.style.opacity = opacity;
+}
+
+function animateTransform(element, { from = {}, to = {}, duration = 800, delay = 0, ease = 'outCubic' } = {}) {
+    if (!element) return;
+    const start = {
+        x: from.x ?? 0,
+        y: from.y ?? 0,
+        scale: from.scale ?? 1,
+        opacity: from.opacity ?? (parseFloat(getComputedStyle(element).opacity) || 0)
+    };
+
+    const end = {
+        x: to.x ?? start.x,
+        y: to.y ?? start.y,
+        scale: to.scale ?? start.scale,
+        opacity: to.opacity ?? start.opacity
+    };
+
+    element.style.transform = `translate(${start.x}px, ${start.y}px) scale(${start.scale})`;
+    element.style.opacity = start.opacity;
+
+    tween({
+        duration,
+        delay,
+        ease,
+        onUpdate: (eased) => {
+            const current = {
+                x: start.x + (end.x - start.x) * eased,
+                y: start.y + (end.y - start.y) * eased,
+                scale: start.scale + (end.scale - start.scale) * eased,
+                opacity: start.opacity + (end.opacity - start.opacity) * eased
+            };
+
+            element.style.transform = `translate(${current.x}px, ${current.y}px) scale(${current.scale})`;
+            element.style.opacity = current.opacity;
+        }
+    });
+}
+
+/**
+ * Showcase animation controller for the Hyperliquid-style section
+ */
+function initializePlatformShowcase() {
+    const showcase = document.querySelector('.platform-showcase');
+    if (!showcase) {
+        return;
+    }
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const featureBlocks = Array.from(showcase.querySelectorAll('.platform-feature'));
+    const videoShell = showcase.querySelector('.platform-showcase__video-shell');
+    const heading = showcase.querySelector('.platform-showcase__eyebrow');
+
+    featureBlocks.forEach((block, index) => {
+        const delay = 120 * index;
+        block.dataset.animDelay = String(delay);
+        block.style.setProperty('--feature-seq-delay', `${delay}ms`);
+        setInitialElementState(block, {
+            x: block.closest('.platform-showcase__features--left') ? -40 : 40,
+            y: 60,
+            scale: 0.9,
+            opacity: 0
+        });
+    });
+
+    setInitialElementState(videoShell, { y: 80, scale: 0.92, opacity: 0 });
+    setInitialElementState(heading, { y: 30, opacity: 0 });
+
+    const playFeatureAnimation = (el, delay = 0) => {
+        if (!el || el.dataset.animState === 'done') return;
+        el.dataset.animState = 'done';
+
+        if (reduceMotion) {
+            el.classList.add('is-revealed');
+            el.style.opacity = '';
+            el.style.transform = '';
+            return;
+        }
+
+        const fromX = el.closest('.platform-showcase__features--left') ? -40 : 40;
+        animateTransform(el, {
+            duration: 900,
+            delay,
+            ease: 'outExpo',
+            from: { x: fromX, y: 60, scale: 0.9, opacity: 0 },
+            to: { x: 0, y: 0, scale: 1, opacity: 1 }
+        });
+    };
+
+    const playShellAnimation = () => {
+        if (!videoShell || videoShell.dataset.animState === 'done') return;
+        videoShell.dataset.animState = 'done';
+
+        if (reduceMotion) {
+            videoShell.style.opacity = '';
+            videoShell.style.transform = '';
+            return;
+        }
+
+        animateTransform(videoShell, {
+            duration: 1100,
+            ease: 'outExpo',
+            from: { y: 80, scale: 0.92, opacity: 0 },
+            to: { y: 0, scale: 1, opacity: 1 }
+        });
+    };
+
+    const playHeadingAnimation = () => {
+        if (!heading || heading.dataset.animState === 'done') return;
+        heading.dataset.animState = 'done';
+
+        if (reduceMotion) {
+            heading.style.opacity = '';
+            heading.style.transform = '';
+            return;
+        }
+
+        animateTransform(heading, {
+            duration: 800,
+            ease: 'outCubic',
+            from: { y: 30, opacity: 0 },
+            to: { y: 0, opacity: 1 }
+        });
+    };
+
+    const reveal = () => {
+        showcase.classList.add('is-visible');
+        playShellAnimation();
+        playHeadingAnimation();
+    };
+
+    const startFeatureSequence = () => {
+        if (startFeatureSequence.started || !featureBlocks.length) {
+            return;
+        }
+        startFeatureSequence.started = true;
+
+        featureBlocks.forEach(block => {
+            const delay = parseInt(block.dataset.animDelay || '0', 10);
+            playFeatureAnimation(block, delay);
+        });
+    };
+
+    if (!('IntersectionObserver' in window)) {
+        reveal();
+        startFeatureSequence();
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                reveal();
+                startFeatureSequence();
+                observer.disconnect();
+            }
+        });
+    }, { threshold: 0.25 });
+
+    observer.observe(showcase);
+}
+
+function initializeCTAVideo() {
+    const video = document.querySelector('.cta-video[data-video-src]');
+    if (!video) {
+        return;
+    }
+
+    const overlay = video.closest('.cta-media')?.querySelector('.cta-video-overlay');
+    const setOverlayVisibility = (isPlaying) => {
+        if (!overlay) {
+            return;
+        }
+        overlay.classList.toggle('is-hidden', isPlaying);
+    };
+
+    const loadVideo = () => {
+        if (video.dataset.videoLoaded === 'true') {
+            return;
+        }
+        const src = video.dataset.videoSrc;
+        if (!src) {
+            return;
+        }
+
+        const source = document.createElement('source');
+        source.src = src;
+        source.type = 'video/mp4';
+        video.appendChild(source);
+        video.load();
+        video.dataset.videoLoaded = 'true';
+        // Removed autoplay - video will only play when user clicks play button
+        // video.play()
+        //     .then(() => setOverlayVisibility(true))
+        //     .catch(() => setOverlayVisibility(false));
+    };
+
+    video.addEventListener('playing', () => setOverlayVisibility(true));
+    video.addEventListener('pause', () => setOverlayVisibility(false));
+    video.addEventListener('ended', () => setOverlayVisibility(false));
+
+    if (!('IntersectionObserver' in window)) {
+        loadVideo();
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                loadVideo();
+                observer.disconnect();
+            }
+        });
+    }, { threshold: 0.4 });
+
+    observer.observe(video);
+}
+
+function initializeLandingIntro() {
+    const landingPage = document.querySelector('.landing-page');
+    if (!landingPage) {
+        document.body.classList.remove('landing-intro-lock');
+        return;
+    }
+
+    const releaseIntro = () => {
+        if (releaseIntro.released) {
+            return;
+        }
+        releaseIntro.released = true;
+        landingPage.classList.remove('landing-page--intro');
+        document.body.classList.remove('landing-intro-lock');
+    };
+
+    const startRevealTimer = () => {
+        if (startRevealTimer.started) {
+            return;
+        }
+        startRevealTimer.started = true;
+        setTimeout(releaseIntro, 1000);
+    };
+
+    const heroVideo = document.querySelector('.hero-video-background');
+    if (!heroVideo) {
+        startRevealTimer();
+        return;
+    }
+
+    if (!heroVideo.paused && heroVideo.readyState >= 2) {
+        startRevealTimer();
+    } else {
+        heroVideo.addEventListener('playing', startRevealTimer, { once: true });
+        heroVideo.addEventListener('error', startRevealTimer, { once: true });
+        heroVideo.addEventListener('stalled', startRevealTimer, { once: true });
+        heroVideo.play().catch(() => startRevealTimer());
+    }
+
+    setTimeout(startRevealTimer, 1000);
+}
+
+// /**
+//  * Placeholder for future wallet functionality
+//  */
+// window.UKX = {
+//     wallet: {
+//         balance: null,
+//         transactions: [],
+        
+//         init: function() {
+//             console.log('Wallet module initialized (placeholder)');
+//             // TODO: Implement wallet dashboard when needed
+//         },
+        
+//         send: function(address, amount, token) {
+//             console.log('Send:', { address, amount, token });
+//             // TODO: Implement send flow
+//         },
+        
+//         receive: function() {
+//             console.log('Receive clicked');
+//             // TODO: Show receive modal with QR code
+//         }
+//     },
+    
+//     chart: {
+//         init: function(canvas, data) {
+//             console.log('Chart module initialized (placeholder)');
+//             // TODO: Integrate with modules/graphjs/graph.js
+//         }
+//     }
+// };
 
 // Export for potential module usage
 if (typeof module !== 'undefined' && module.exports) {

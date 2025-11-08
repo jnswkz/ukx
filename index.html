@@ -15,13 +15,13 @@
     <link rel="shortcut icon" href="/favicon/favicon.ico">
     <meta name="theme-color" content="#ffffff">
 </head>
-<body>
-    <div class="landing-page">
+<body class="landing-intro-lock">
+    <div class="landing-page landing-page--intro">
         <!-- Navigation Bar Component -->
         <div id="navbar-placeholder"></div>
 
         <!-- Hero Section -->
-        <section class="hero-section">
+        <section class="hero-section section-screen">
             <video class="hero-video-background" autoplay muted loop playsinline>
                 <source src="/assets/landing_page_video.mp4" type="video/mp4">
                 Your browser does not support the video tag.
@@ -42,8 +42,8 @@
         </section>
 
         <!-- Features Section -->
-        <section class="features-section">
-            <canvas id="net-bg-canvas" aria-hidden="true"></canvas>
+        <section class="features-section section-screen">
+            <canvas class="net-bg-canvas" data-net-bg="features" aria-hidden="true"></canvas>
             <div class="section-header">
                 <h2 class="section-title">Features</h2>
                 <p class="section-description">Trade easily, safely, and quickly with the most powerful features.</p>
@@ -56,7 +56,7 @@
                     </div>
                     <div class="feature-content">
                         <h3 class="feature-title">Dashboard</h3>
-                        <p class="feature-description">At Squareup, our design team is passionate about creating stunning, user-centric designs that captivate your audience and elevate your brand. We believe that great design is not just about aesthetics; it's about creating seamless and intuitive user experiences.</p>
+                        <p class="feature-description">Monitor your crypto portfolio at a glance with real-time balances, transaction history, and interactive price charts. Track your available and locked assets across multiple tokens, view your trading performance, and stay informed with live market data.</p>
                     </div>
                     <button class="btn-feature">Learn More</button>
                 </div>
@@ -67,7 +67,7 @@
                     </div>
                     <div class="feature-content">
                         <h3 class="feature-title">Newspaper</h3>
-                        <p class="feature-description">At Squareup, our design team is passionate about creating stunning, user-centric designs that captivate your audience and elevate your brand. We believe that great design is not just about aesthetics; it's about creating seamless and intuitive user experiences.</p>
+                        <p class="feature-description">Stay ahead of the crypto market with our comprehensive news feed covering blockchain developments, market analysis, and industry insights. Get real-time updates on price movements, regulatory changes, and emerging trends to make informed investment decisions.</p>
                     </div>
                     <button class="btn-feature">Learn More</button>
                 </div>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="feature-content">
                         <h3 class="feature-title">Trading</h3>
-                        <p class="feature-description">At Squareup, our design team is passionate about creating stunning, user-centric designs that captivate your audience and elevate your brand. We believe that great design is not just about aesthetics; it's about creating seamless and intuitive user experiences.</p>
+                        <p class="feature-description">Execute trades with confidence using our advanced trading simulator and real-time market data. Practice strategies, analyze charts, and build your trading skills before going live. Seamlessly send and receive cryptocurrencies with secure wallet integration.</p>
                     </div>
                     <button class="btn-feature">Learn More</button>
                 </div>
@@ -86,7 +86,7 @@
         </section>
 
         <!-- FAQ Section -->
-        <section class="faq-section">
+        <section class="faq-section section-screen">
             <div class="section-header">
                 <h2 class="section-title">Frequently Asked Question</h2>
                 <p class="section-description">We want you to feel confident when trading – starting with understanding everything clearly.</p>
@@ -157,30 +157,83 @@
             </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <div class="cta-container">
-                <h2 class="cta-title">Increase your income with us</h2>
-                <p class="cta-description">Invest, because money won't grow by itself</p>
-                <button class="btn-cta" id="ctaSignupBtn">Sign up now</button>
+
+
+        <!-- Platform Showcase Section -->
+        <section class="platform-showcase section-screen" id="platform-demo">
+            <div class="platform-showcase__glow" aria-hidden="true"></div>
+            <div class="platform-showcase__inner">
+                <p class="platform-showcase__eyebrow">
+                    The flagship application: the premier
+                    <span class="platform-showcase__highlight">DECENTRALISED</span>
+                    exchange
+                </p>
+
+                <div class="platform-showcase__layout">
+                    <div class="platform-showcase__features platform-showcase__features--left">
+                        <article class="platform-feature" data-feature>
+                            <div class="platform-feature__icon glyph glyph--ring"></div>
+                            <div class="platform-feature__text">
+                                <h3>Low fees</h3>
+                                <p>Zero gas and low fees on every order.</p>
+                            </div>
+                        </article>
+                        <article class="platform-feature" data-feature>
+                            <div class="platform-feature__icon glyph glyph--cross"></div>
+                            <div class="platform-feature__text">
+                                <h3>Up to 40x leverage</h3>
+                                <p>Trade with conviction to maximize capital efficiency.</p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="platform-showcase__video-shell">
+                        <video class="platform-showcase__video" autoplay muted loop playsinline>
+                            <source src="/assets/demo_trade.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+
+                    <div class="platform-showcase__features platform-showcase__features--right">
+                        <article class="platform-feature" data-feature>
+                            <div class="platform-feature__icon glyph glyph--eye"></div>
+                            <div class="platform-feature__text">
+                                <h3>Transparent</h3>
+                                <p>Fully onchain order book so every trade is verifiable.</p>
+                            </div>
+                        </article>
+                        <article class="platform-feature" data-feature>
+                            <div class="platform-feature__icon glyph glyph--play"></div>
+                            <div class="platform-feature__text">
+                                <h3>Seamless</h3>
+                                <p>One-click trading with no wallet approvals interrupting flow.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
             </div>
         </section>
-
-        <!-- Demo and Ad section -->
-        <section class="demo-ad-section">
-            <video class="ad-video" controls autoplay playsinline>
-            <source src="/assets/demo_ln.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-            </video>
-            <p>
-                Londo Norrizz, 10 times GP winner.
-            </p>
-            
-            <video class="demo-video" autoplay muted loop playsinline>
-                <source src="/assets/demo_trade.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            
+        <!-- CTA Section -->
+        <section class="cta-section section-screen">
+            <div class="cta-background" aria-hidden="true">
+                <canvas class="net-bg-canvas" data-net-bg="cta"></canvas>
+            </div>
+            <div class="cta-inner">
+                <div class="cta-container">
+                    <h2 class="cta-title">Increase your income with us</h2>
+                    <p class="cta-description">Invest, because money won't grow by itself</p>
+                    <button class="btn-cta" id="ctaSignupBtn">Sign up now</button>
+                </div>
+                <div class="cta-media">
+                    <div class="cta-video-overlay">
+                        <p class="cta-video-eyebrow">Londo Norrizz</p>
+                        <p class="cta-video-heading">10 times GP winner"</p>
+                    </div>
+                    <video class="cta-video" muted playsinline controls preload="none" data-video-src="/assets/demo_ln.mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
         </section>
 
         <!-- Footer Component -->

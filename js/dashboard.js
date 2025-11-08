@@ -144,15 +144,38 @@ document.addEventListener('DOMContentLoaded', async function() {
         userInput.value = '';
         chatBody.scrollTop = chatBody.scrollHeight;
 
-    // optional demo bot reply
-
+        // Waiting indicator while we fetch the assistant response
         const botMsg = document.createElement('div');
-        botMsg.className = 'bot-message';
-        // getAnswerFromApi returns sanitized HTML (via renderMarkdown). Insert as HTML so tags render.
-        const answerHtml = await getAnswerFromApi(text) || renderMarkdown("I'm sorry, I couldn't process your request at this time.");
-        botMsg.innerHTML = answerHtml;
+        botMsg.className = 'bot-message is-waiting';
+        botMsg.textContent = '.';
         chatBody.appendChild(botMsg);
         chatBody.scrollTop = chatBody.scrollHeight;
+
+        let dots = 1;
+        const typingInterval = setInterval(() => {
+            dots = dots === 3 ? 1 : dots + 1;
+            botMsg.textContent = '.'.repeat(dots);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }, 350);
+
+        const slowResponseTimer = setTimeout(() => {
+            botMsg.dataset.status = 'delayed';
+            botMsg.title = 'Still waiting for assistant response (possible network/API delay)';
+            console.warn('Assistant response is taking unusually long. Check network connectivity or API rate limits.');
+        }, 7000);
+
+        try {
+            const answerHtml = await getAnswerFromApi(text) || renderMarkdown("I'm sorry, I couldn't process your request at this time.");
+            botMsg.innerHTML = answerHtml;
+        } catch (error) {
+            console.error('Error fetching assistant reply:', error);
+            botMsg.textContent = error?.message || "Sorry, I'm having trouble responding right now.";
+        } finally {
+            clearInterval(typingInterval);
+            clearTimeout(slowResponseTimer);
+            botMsg.classList.remove('is-waiting');
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
     }
 
     if (chatBtn) chatBtn.addEventListener('click', () => {

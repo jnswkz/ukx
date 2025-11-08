@@ -1,4 +1,12 @@
-// UKX Signup Page Logic (Figma Design)
+import {
+    startMockOAuthFlow,
+    findOAuthUserByEmail,
+    upsertOAuthUser,
+    OAUTH_ERROR_CODES
+} from "../modules/auth/mockOAuth.js";
+
+const DASHBOARD_URL = './dashboard.html';
+const OAUTH_SESSION_KEY = 'oauthSession';
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('UKX Signup Page initialized (Figma Design)');
@@ -73,17 +81,15 @@ function initializeSignupForm() {
             // For MVP, just redirect to dashboard (no real registration)
             console.log('Signup successful (simulated)');
             // console.log('User data:', { firstName, lastName, email });
-            window.localStorage.setItem('isLoggedIn', 'true');
-            // add to signupData in localStorage
             const userData = {
                 firstName: firstName,
                 lastName: lastName,
                 email: email
             };
-            window.localStorage.setItem('userData', JSON.stringify(userData));
+            persistUserSession(userData);
 
             alert('Registration successful! Welcome to UKX.');
-            window.location.href = './dashboard.html';
+            window.location.href = DASHBOARD_URL;
         });
     }
 }
@@ -121,18 +127,62 @@ function initializeSocialSignup() {
     if (facebookSignupBtn) {
         facebookSignupBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('Facebook signup clicked');
-            alert('Facebook signup feature coming soon!');
-            // TODO: Integrate with Facebook OAuth API
+            handleOAuthSignup('facebook');
         });
     }
 
     if (googleSignupBtn) {
         googleSignupBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('Google signup clicked');
-            alert('Google signup feature coming soon!');
-            // TODO: Integrate with Google OAuth API
+            handleOAuthSignup('google');
         });
     }
+}
+
+async function handleOAuthSignup(providerKey) {
+    try {
+        const { provider, profile, session } = await startMockOAuthFlow(providerKey, { action: 'signup' });
+        const existing = findOAuthUserByEmail(profile.email, provider.key);
+        const savedProfile = upsertOAuthUser({
+            ...(existing || {}),
+            ...profile,
+            lastLoginAt: new Date().toISOString()
+        });
+
+        persistUserSession(savedProfile, session);
+
+        const message = existing
+            ? `${provider.label} account already exists. Signing you in.`
+            : `${provider.label} signup successful!`;
+
+        alert(`${message} Redirecting to your dashboard...`);
+        window.location.href = DASHBOARD_URL;
+    } catch (error) {
+        handleOAuthError(error);
+    }
+}
+
+function persistUserSession(userData, session) {
+    window.localStorage.setItem('isLoggedIn', 'true');
+    window.localStorage.setItem('userData', JSON.stringify(userData));
+
+    if (session) {
+        window.localStorage.setItem(OAUTH_SESSION_KEY, JSON.stringify(session));
+    } else {
+        window.localStorage.removeItem(OAUTH_SESSION_KEY);
+    }
+}
+
+function handleOAuthError(error) {
+    if (!error) {
+        return;
+    }
+
+    if (error.code === OAUTH_ERROR_CODES.CANCELLED) {
+        console.info(error.message);
+        return;
+    }
+
+    alert(error.message || 'Unable to complete OAuth signup right now. Please try again.');
+    console.error('[signup] OAuth error:', error);
 }

@@ -1,6 +1,12 @@
 // UKX Login Page Logic (Figma Design)
 
 import { jsonFileParser } from "../modules/json/jsonFileParser.js";
+import {
+    startMockOAuthFlow,
+    findOAuthUserByEmail,
+    upsertOAuthUser,
+    OAUTH_ERROR_CODES
+} from "../modules/auth/mockOAuth.js";
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('UKX Login Page initialized (Figma Design)');
@@ -56,8 +62,7 @@ async function initializeLoginForm() {
                 const user_id = account_db.find(user => user.username === email).user_id;
                 const userData = getUserDataById(user_id, user_db);
                 console.log('User Data:', userData);
-                window.localStorage.setItem('isLoggedIn', 'true');
-                window.localStorage.setItem('userData', JSON.stringify(userData));
+                persistUserSession(userData);
                 window.location.href = './dashboard.html';
             } else {
                 alert('Invalid email or password.');
@@ -76,22 +81,71 @@ function initializeSocialLogins() {
     if (facebookBtn) {
         facebookBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('Facebook login clicked');
-            // For MVP, redirect to dashboard
-            alert('Facebook login - Coming soon!\nRedirecting to dashboard...');
-            window.location.href = './dashboard.html';
+            handleOAuthLogin('facebook');
         });
     }
 
     if (googleBtn) {
         googleBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('Google login clicked');
-            // For MVP, redirect to dashboard
-            alert('Google login - Coming soon!\nRedirecting to dashboard...');
-            window.location.href = './dashboard.html';
+            handleOAuthLogin('google');
         });
     }
+}
+
+async function handleOAuthLogin(providerKey) {
+    try {
+        const { provider, profile, session } = await startMockOAuthFlow(providerKey, { action: 'login' });
+        let storedProfile = findOAuthUserByEmail(profile.email, provider.key);
+
+        if (!storedProfile) {
+            const shouldCreate = window.confirm(
+                `We couldn't find a ${provider.label} account for ${profile.email}.\n\n` +
+                'Would you like to create a new UKX profile with this identity?'
+            );
+
+            if (!shouldCreate) {
+                return;
+            }
+        }
+
+        storedProfile = upsertOAuthUser({
+            ...(storedProfile || {}),
+            ...profile,
+            lastLoginAt: new Date().toISOString()
+        });
+
+        persistUserSession(storedProfile, session);
+        alert(`${provider.label} login successful! Redirecting to dashboard...`);
+        window.location.href = './dashboard.html';
+    } catch (error) {
+        handleOAuthError(error);
+    }
+}
+
+function persistUserSession(userData, session) {
+    window.localStorage.setItem('isLoggedIn', 'true');
+    window.localStorage.setItem('userData', JSON.stringify(userData));
+
+    if (session) {
+        window.localStorage.setItem('oauthSession', JSON.stringify(session));
+    } else {
+        window.localStorage.removeItem('oauthSession');
+    }
+}
+
+function handleOAuthError(error) {
+    if (!error) {
+        return;
+    }
+
+    if (error.code === OAUTH_ERROR_CODES.CANCELLED) {
+        console.info(error.message);
+        return;
+    }
+
+    alert(error.message || 'Unable to complete OAuth login right now. Please try again.');
+    console.error('[login] OAuth error:', error);
 }
 
 /**

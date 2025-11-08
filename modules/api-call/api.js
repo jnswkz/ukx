@@ -1,6 +1,8 @@
 import { API } from "/env.js";
 
 const apiUrl = 'https://api.perplexity.ai/chat/completions';
+const REQUEST_TIMEOUT_MS = 15000;
+const SLOW_RESPONSE_WARNING_MS = 6000;
 const API_KEY = API;
 if (!API_KEY) {
   console.error('API key missing. Set window.API_KEY in your HTML for local testing.');
@@ -67,12 +69,28 @@ export async function callApi(message){
             ]
         }]
     };
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+    const startTime = (typeof performance !== 'undefined' ? performance.now() : Date.now());
+
     try {
         const response = await fetch(apiUrl, {
             method: 'POST',
             headers,
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
+            signal: controller.signal
         });
+        clearTimeout(timeoutId);
+
+        const elapsed = (typeof performance !== 'undefined' ? performance.now() : Date.now()) - startTime;
+        if (elapsed > SLOW_RESPONSE_WARNING_MS) {
+            console.warn(`Assistant API responded slowly (${Math.round(elapsed)}ms). Possible network congestion or API throttling.`);
+        }
+
+        if (!response.ok) {
+            const errorBody = await response.text().catch(() => '');
+            throw new Error(`Assistant API error ${response.status}: ${errorBody.slice(0, 200)}`);
+        }
         const data = await response.json();
         const text = extractTextFromResponse(data);
          if (text) {
@@ -86,7 +104,11 @@ export async function callApi(message){
             return null;
         }
     } catch (err) {
-        console.error(err);
-        return null;
+        if (err.name === 'AbortError') {
+            throw new Error('Assistant request timed out before completion. This can happen with slow networks or overloaded APIs.');
+        }
+        throw err;
+    } finally {
+        clearTimeout(timeoutId);
     }
 }
