@@ -1,0 +1,374 @@
+.admin-panel-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--nord0); /* Nền chính đậm */
+  font-family: var(--font-primary);
+}
+
+/* SIDEBAR */
+.admin-panel-sidebar {
+  width: 240px;
+  background: var(--nord6); /* Sidebar sáng */
+  color: var(--nord0);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  transition: width 0.3s ease;
+}
+
+.admin-panel-info {
+  margin-left: 12px;
+  font-size: 16px;
+}
+
+.admin-panel-menu-title {
+  font-size: 14px;
+  color: #2422207e;
+  margin-bottom: 8px;
+}
+
+.admin-panel-sidebar.collapsed .admin-panel-menu-title {
+  width: 100%;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.admin-panel-sidebar.collapsed {
+  width: 80px;
+}
+
+.admin-panel-sidebar.collapsed .text,
+.admin-panel-sidebar.collapsed .admin-panel-info,
+.admin-panel-sidebar.collapsed .admin-panel-submenu,
+.admin-panel-sidebar.collapsed .admin-panel-message span,
+.admin-panel-sidebar.collapsed .admin-panel-logout span {
+  display: none;
+}
+
+.admin-panel-sidebar.collapsed h4 {
+  align-self: center;
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.admin-panel-sidebar.collapsed .admin-panel-menu-item {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* keep avatar / collapse button visible and clickable */
+.admin-panel-sidebar .admin-panel-collapse-btn {
+  z-index: 1001;
+  pointer-events: auto;
+}
+
+/* Ảnh đại diện và nút thu gọn */
+.admin-panel-profile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.269);
+  box-sizing: border-box;
+  padding-bottom: 16px;
+}
+
+.admin-panel-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.admin-panel-collapse-btn {
+  border: none;
+  background: var(--nord12);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 8px 14px;
+  margin-left: 8px;
+  z-index: 1001;
+}
+
+/* Menu chính */
+.admin-panel-menu {
+  margin-top: -16px;
+}
+
+.admin-panel-sidebar.collapsed .admin-panel-menu {
+  margin-top: -40px;
+}
+
+.admin-panel-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+
+/* arrow button on menu items (hidden when collapsed) */
+.admin-panel-item-arrow {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-panel-sidebar.collapsed .admin-panel-item-arrow {
+  display: none;
+}
+
+/* submenu item style */
+.admin-panel-submenu {
+  margin-left: var(--spacing-md);
+  font-size: 14px;
+  color: var(--nord3);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-panel-submenu-item {
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: inherit;
+}
+
+.admin-panel-submenu-item:hover {
+  background: var(--nord12);
+  color: white;
+}
+
+.admin-panel-sidebar.collapsed .admin-panel-menu .icon,
+.admin-panel-menu .icon, 
+.admin-panel-sidebar.collapsed .admin-panel-logout .icon,
+.admin-panel-logout .icon{
+  width: 24px;
+  height: 24px;
+}
+
+
+.admin-panel-menu-item.active,
+.admin-panel-menu-item:hover {
+  background: var(--nord12);
+  color: white;
+}
+
+.admin-panel-submenu {
+  margin-left: var(--spacing-md);
+  font-size: 14px;
+  color: var(--nord3);
+}
+
+/* Tin nhắn */
+.admin-panel-messages {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-panel-sidebar.collapsed .admin-panel-message {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+}
+
+.admin-panel-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.admin-panel-message img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+/* Nút đăng xuất */
+.admin-panel-logout {
+  border: none;
+  padding: 10px;
+  background: var(--nord12);
+  color: white;
+  cursor: pointer;
+  margin-top: 12px;
+  width: calc(100% + 36px);
+  margin-left: -20px;
+  margin-right: -20px;
+}
+
+/* ========== PHẦN NỘI DUNG ========== */
+.admin-panel-main {
+  flex: 1;
+  padding: var(--spacing-xl);
+}
+
+.admin-panel-top {
+  display: flex;
+  gap: var(--spacing-lg);
+}
+
+.admin-panel-card-left {
+  flex: 1;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  color: var(--nord0);
+  height: 150px;
+}
+
+.admin-panel-card-left h2, .admin-panel-card-right h2 {
+  color: var(--nord12);
+  font-family: 'Inter', sans-serif;
+}
+
+.admin-panel-card-right {
+  flex: 1;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  color: var(--nord0);
+  margin-bottom: 22px;
+}
+/* Avatar lớn */
+.admin-panel-large-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  float: right;
+}
+
+/* Bộ điều khiển phía trên bảng */
+.admin-panel-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin: var(--spacing-lg) 0;
+}
+
+.admin-panel-controls-btn-container {
+  display: flex;
+  gap: 8px;
+  background-color: white;
+  padding: 10px;
+  border-radius: var(--radius-md);
+}
+
+.admin-panel-btn {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: var(--font-primary);
+}
+
+.admin-panel-btn#filter-btn {
+  border: none;
+}
+
+.admin-panel-btn#filter-btn::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  background: url('../assets/filter-icon.svg') no-repeat center center;
+  background-size: contain;
+  vertical-align: middle;
+}
+
+.admin-panel-btn#export-btn::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  background: url('../assets/export-icon.svg') no-repeat center center;
+  background-size: contain;
+  vertical-align: middle;
+}
+
+.admin-panel-controls-time {
+  padding: 20px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--nord3);
+  background-color: white;
+  color: black;
+  min-width: 200px;
+}
+
+/* Bảng giao dịch */
+.admin-panel-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.admin-panel-table th,
+.admin-panel-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  color: black
+}
+
+.admin-panel-table th {
+  background: var(--nord5);
+  color: var(--nord0);
+}
+
+/* Trạng thái */
+.admin-panel-status {
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-panel-status.completed {
+  background: var(--nord14);
+  color: var(--nord0);
+}
+
+/* Nút đổi trạng thái */
+.admin-panel-status-btn {
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: var(--font-primary);
+}
+
+.admin-panel-status-btn.public {
+  background: var(--nord8);
+  color: white;
+}
+
+.admin-panel-status-btn.hide {
+  background: var(--nord12);
+  color: white;
+}

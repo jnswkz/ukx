@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bảng điều khiển Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;500;600&family=Inter:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <div class="admin-panel-container">
+      <!-- Sidebar trái -->
+      <aside class="admin-panel-sidebar">
+        <div class="admin-panel-profile">
+          <img
+            src="../assets/avatar.png"
+            alt="User"
+            class="admin-panel-avatar"
+          />
+          <div class="admin-panel-info">
+            <h3 class="admin-panel-username">Quý Bửu</h3>
+            <p class="admin-panel-role">Administrator</p>
+          </div>
+          <button id="adminSidebarToggle" class="admin-panel-collapse-btn">
+            ❮
+          </button>
+        </div>
+
+        <nav class="admin-panel-menu">
+          <div class="admin-panel-menu-title">Main</div>
+          <div class="admin-panel-menu-item active">
+            <img
+              class="icon"
+              src="../assets/dashboard-icon.svg"
+              alt="Dashboard"
+            />
+            <span class="text">Dashboard</span>
+            <button
+              class="admin-panel-item-arrow"
+              aria-expanded="false"
+              aria-controls="dashboard-submenu"
+            >
+              ▾
+            </button>
+          </div>
+          <div
+            class="admin-panel-submenu"
+            id="dashboard-submenu"
+            aria-hidden="true"
+          ></div>
+
+          <div class="admin-panel-menu-item">
+            <img
+              class="icon"
+              src="../assets/invoices-icon.svg"
+              alt="Invoices"
+            />
+            <span class="text">Invoices</span>
+          </div>
+          <div class="admin-panel-menu-item">
+            <img class="icon" src="../assets/wallet-icon.svg" alt="Wallet" />
+            <span class="text">Wallet</span>
+          </div>
+          <div class="admin-panel-menu-item">
+            <img
+              class="icon"
+              src="../assets/notification-icon.svg"
+              alt="Notification"
+            />
+            <span class="text">Notification</span>
+          </div>
+        </nav>
+
+        <div class="admin-panel-messages">
+          <h4>TIN NHẮN</h4>
+          <div class="admin-panel-message">
+            <img src="../assets/avatar.png" /> <span>Mẫn Dần</span>
+          </div>
+          <div class="admin-panel-message">
+            <img src="../assets/avatar.png" /> <span>Kudo Skibidi</span>
+          </div>
+          <div class="admin-panel-message">
+            <img src="../assets/avatar.png" /> <span>Basupeso</span>
+          </div>
+        </div>
+
+        <button class="admin-panel-logout">
+          <img class="icon" src="../assets/logout-icon.svg" alt="Logout" />
+        </button>
+      </aside>
+
+      <!-- Khu vực panel chính -->
+      <main class="admin-panel-main">
+        <div class="admin-panel-top">
+          <div class="admin-panel-left">
+            <div class="admin-panel-card-left">
+              <p>Quy đổi tiền tệ ở đây</p>
+            </div>
+            <div class="admin-panel-controls">
+              <div class="admin-panel-controls-btn-container">
+                <button class="admin-panel-btn" id="filter-btn">Filters</button>
+                <button class="admin-panel-btn" id="export-btn">Export</button>
+              </div>
+              <div class="admin-panel-controls-time">Time:</div>
+            </div>
+          </div>
+          <div class="admin-panel-card-right">
+            <h2>Trạng thái giao dịch</h2>
+            <p>Đã có x giao dịch kể từ lần truy cập trước.</p>
+          </div>
+        </div>
+
+        <table class="admin-panel-table">
+          <thead>
+            <tr>
+              <th>Trade ID</th>
+              <th>Trade Date</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Coin type</th>
+              <th>Price</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>12</td>
+              <td>11/11/2020</td>
+              <td>Mẫn Dần</td>
+              <td>Quý Bửu</td>
+              <td>BTC</td>
+              <td>0.01</td>
+              <td>
+                <span class="admin-panel-status completed">Completed</span>
+              </td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>11/11/2020</td>
+              <td>Ngọc Duy</td>
+              <td>Basupeso</td>
+              <td>ETH</td>
+              <td>2.5</td>
+              <td>
+                <button class="admin-panel-status-btn public">Public</button>
+              </td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td>12/11/2020</td>
+              <td>Phúc Lâm</td>
+              <td>Hồng Hà</td>
+              <td>USDT</td>
+              <td>1500</td>
+              <td><button class="admin-panel-status-btn hide">Hide</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </main>
+    </div>
+
+    <script src="../js/admin-panel.js"></script>
+  </body>
+</html>

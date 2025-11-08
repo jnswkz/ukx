@@ -54,6 +54,9 @@
 /* 15. Markets Page - Market Overview, Hot Crypto, Market Table */
 @import url('markets.css');
 
+/* 16. Admin Panel - Admin Dashboard, User Management */
+@import url('admin-panel.css');
+
 
 /* ========================================
    Module Organization Summary:
@@ -71,4 +74,5 @@
    newspaper_template.css - Styles for newspaper-themed templates
    skeleton.css     - Skeleton screen styles for loading states
    chat-popup.css    - AI assistant popup styles and animations
+   admin-panel.css   - Admin dashboard, user management styles
    ======================================== */
