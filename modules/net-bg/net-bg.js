@@ -43,8 +43,8 @@
 
         const POINT_COUNT = parseInt(canvas.dataset.points || '40', 10);
         const MAX_POINTS = parseInt(canvas.dataset.maxPoints || '80', 10);
-        const HOVER_RADIUS = parseInt(canvas.dataset.hoverRadius || '180', 10);
-        const CONNECT_RADIUS = parseInt(canvas.dataset.connectRadius || '120', 10);
+        const HOVER_RADIUS = parseInt(canvas.dataset.hoverRadius || '280', 10);
+        const CONNECT_RADIUS = parseInt(canvas.dataset.connectRadius || '250', 10);
         const POINT_RADIUS = parseFloat(canvas.dataset.pointRadius || '2.2');
         const POINT_BASE_SPEED = parseFloat(canvas.dataset.pointBaseSpeed || '0.4');
         const POINT_SPEED_VARIATION = parseFloat(canvas.dataset.pointSpeedVariation || '0.9');
