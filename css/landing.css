@@ -370,3 +370,40 @@
     letter-spacing: -0.108px;
     margin: 0;
 }
+
+/* Demo and Ad section */
+.demo-ad-section {
+    padding: var(--spacing-3xl) var(--spacing-lg);
+    margin-top: 100px;
+}
+.demo-ad-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3xl);
+}
+
+.demo-ad-section .ad-video {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.demo-ad-section .ad-video video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.demo-ad-section .demo-video {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    object-fit: cover;
+}
+.demo-ad-section .demo-video video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
