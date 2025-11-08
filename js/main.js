@@ -256,7 +256,7 @@ function initializeButtons() {
                     window.location.href = '/pages/news.html';
                 }
                 else{
-                    alert(`Learn more about ${featureTitle} - Coming soon!`);
+                    window.location.href = '/pages/trading-simulator.html'
                 }
             }
         });
