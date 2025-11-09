@@ -98,8 +98,56 @@
       <main class="admin-panel-main">
         <div class="admin-panel-top">
           <div class="admin-panel-left">
-            <div class="admin-panel-card-left">
-              <p>Quy đổi tiền tệ ở đây</p>
+            <div
+              class="calculator-container"
+              style="padding: 20px; background: transparent; box-shadow: none"
+            >
+              <div class="calculator-content">
+                <h3 style="margin-bottom: 20px; font-size: 18px">
+                  Quy đổi tiền tệ
+                </h3>
+
+                <div class="calculator-input-group">
+                  <div class="input-wrapper">
+                    <input
+                      type="number"
+                      id="fromAmount"
+                      placeholder="0.00"
+                      step="any"
+                    />
+                    <div class="currency-selector" id="fromCurrencySelector">
+                      <div class="currency-icon-compact"></div>
+                      <span id="fromCurrency">BTC</span>
+                      <span class="dropdown-arrow">▾</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="swap-container">
+                  <button id="swapBtn" class="swap-btn">⇅</button>
+                </div>
+
+                <div class="calculator-input-group">
+                  <div class="input-wrapper">
+                    <input
+                      type="number"
+                      id="toAmount"
+                      placeholder="0.00"
+                      step="any"
+                      readonly
+                    />
+                    <div class="currency-selector" id="toCurrencySelector">
+                      <div class="currency-icon-compact"></div>
+                      <span id="toCurrency">USDT</span>
+                      <span class="dropdown-arrow">▾</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="exchange-rate" id="exchangeRate">
+                  Exchange rate: 1 BTC ≈ 0 USDT
+                </div>
+              </div>
             </div>
             <div class="admin-panel-controls">
               <div class="admin-panel-controls-btn-container">
@@ -165,5 +213,6 @@
     </div>
 
     <script src="../js/admin-panel.js"></script>
+    <script src="../js/crypto-calculator.js"></script>
   </body>
 </html>
