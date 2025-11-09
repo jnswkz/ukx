@@ -83,18 +83,44 @@ function initializeFAQ() {
     
     faqItems.forEach(item => {
         const toggle = item.querySelector('.faq-toggle');
+        const answer = item.querySelector('.faq-answer');
+        if (answer && !answer.hasAttribute('hidden')) {
+            answer.setAttribute('hidden', '');
+        }
+        if (toggle && !toggle.hasAttribute('aria-expanded')) {
+            toggle.setAttribute('aria-expanded', 'false');
+        }
         
-        if (toggle) {
+        if (toggle && answer) {
             toggle.addEventListener('click', function() {
+                const isOpen = item.classList.contains('open');
+
                 // Close all other FAQ items
                 faqItems.forEach(otherItem => {
-                    if (otherItem !== item && otherItem.classList.contains('open')) {
-                        otherItem.classList.remove('open');
+                    if (otherItem === item) {
+                        return;
+                    }
+                    otherItem.classList.remove('open');
+                    const otherToggle = otherItem.querySelector('.faq-toggle');
+                    const otherAnswer = otherItem.querySelector('.faq-answer');
+                    if (otherToggle) {
+                        otherToggle.setAttribute('aria-expanded', 'false');
+                    }
+                    if (otherAnswer && !otherAnswer.hasAttribute('hidden')) {
+                        otherAnswer.setAttribute('hidden', '');
                     }
                 });
                 
                 // Toggle current item
-                item.classList.toggle('open');
+                if (isOpen) {
+                    item.classList.remove('open');
+                    toggle.setAttribute('aria-expanded', 'false');
+                    answer.setAttribute('hidden', '');
+                } else {
+                    item.classList.add('open');
+                    toggle.setAttribute('aria-expanded', 'true');
+                    answer.removeAttribute('hidden');
+                }
             });
         }
     });
@@ -256,7 +282,7 @@ function initializeButtons() {
                     window.location.href = '/pages/news.html';
                 }
                 else{
-                    alert(`Learn more about ${featureTitle} - Coming soon!`);
+                    window.location.href = '/pages/trading-simulator.html';
                 }
             }
         });

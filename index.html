@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="color-scheme" content="dark light">
     <title>UKX - Smart Investment, Strong Future</title>
+    <meta name="description" content="UKX is the smart, secure way to trade crypto with a powerful dashboard, live news, and pro-grade tools." />
+    <meta name="author" content="UKX Wallet" />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://ukxwallet.com/" />
+    <link rel="preload" href="./css/style.css" as="style">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="preload" href="/assets/landing_page_video.mp4" as="video" type="video/mp4">
+    <link rel="preload" href="/assets/landing_page_image.png" as="image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;500;600&family=Inter:wght@700&display=swap" rel="stylesheet">
@@ -14,81 +22,96 @@
     <link rel="manifest" href="/favicon/site.webmanifest">
     <link rel="shortcut icon" href="/favicon/favicon.ico">
     <meta name="theme-color" content="#ffffff">
+    <meta property="og:site_name" content="UKX Wallet">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ukxwallet.com/">
+    <meta property="og:title" content="UKX - Smart Investment, Strong Future">
+    <meta property="og:description" content="Trade crypto confidently with UKX dashboards, live market intel, and institutional-grade execution." />
+    <meta property="og:image" content="https://ukxwallet.com/assets/landing_page_image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="UKX - Smart Investment, Strong Future">
+    <meta name="twitter:description" content="Trade crypto confidently with UKX dashboards, live market intel, and institutional-grade execution.">
+    <meta name="twitter:image" content="https://ukxwallet.com/assets/landing_page_image.png">
 </head>
 <body class="landing-intro-lock">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div class="landing-page landing-page--intro">
         <!-- Navigation Bar Component -->
-        <div id="navbar-placeholder"></div>
+        <header class="site-header" role="banner">
+            <div id="navbar-placeholder"></div>
+        </header>
 
-        <!-- Hero Section -->
-        <section class="hero-section section-screen">
-            <video class="hero-video-background" autoplay muted loop playsinline>
-                <source src="/assets/landing_page_video.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div class="hero-overlay"></div>
-            <div class="hero-container">
-                <div class="hero-content">
-                    <h1 class="hero-title">Smart Investment Strong Future</h1>
-                    <p class="hero-subtitle">99% give up. 1% win – which one are you?</p>
-                    <p class="hero-stats">3,621,336 currently winning big</p>
-                    <div class="hero-buttons">
-                        <input type="email" placeholder="Enter your email" class="email-input"/>
-                        <button class="btn-hero-primary" id="startBtn">Start</button>
-                        <button class="btn-hero-secondary" id="contactBtn">Contact us</button>
+        <main id="main-content" class="landing-main" tabindex="-1">
+            <!-- Hero Section -->
+            <section class="hero-section section-screen" aria-labelledby="hero-title">
+                <video class="hero-video-background" autoplay muted loop playsinline aria-hidden="true" tabindex="-1" preload="auto">
+                    <source src="/assets/landing_page_video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="hero-overlay" aria-hidden="true"></div>
+                <div class="hero-container">
+                    <div class="hero-content">
+                        <h1 class="hero-title" id="hero-title">Smart Investment Strong Future</h1>
+                        <p class="hero-subtitle">99% give up. 1% win – which one are you?</p>
+                        <p class="hero-stats" aria-live="polite">3,621,336 currently winning big</p>
+                        <div class="hero-buttons" role="group" aria-label="Hero call to action">
+                            <label class="sr-only" for="heroEmail">Enter your email</label>
+                            <input type="email" id="heroEmail" name="heroEmail" placeholder="Enter your email" class="email-input" autocomplete="email" inputmode="email" required />
+                            <button class="btn-hero-primary" id="startBtn" type="button">Start</button>
+                            <button class="btn-hero-secondary" id="contactBtn" type="button">Contact us</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Features Section -->
-        <section class="features-section section-screen">
+            <!-- Features Section -->
+            <section class="features-section section-screen" id="features" aria-labelledby="features-title">
             <canvas class="net-bg-canvas" data-net-bg="features" aria-hidden="true"></canvas>
             <div class="section-header">
-                <h2 class="section-title">Features</h2>
+                <h2 class="section-title" id="features-title">Features</h2>
                 <p class="section-description">Trade easily, safely, and quickly with the most powerful features.</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <img src="/assets/dashboard_dark.svg" alt="Dashboard Icon light" class="icon--light"/>
-                        <img src="/assets/dashboard_light.svg" alt="Dashboard Icon dark" class="icon--dark"/>
+                        <img src="/assets/dashboard_dark.svg" alt="Dashboard experience icon" class="icon--light" loading="lazy" decoding="async"/>
+                        <img src="/assets/dashboard_light.svg" alt="Dashboard experience icon" class="icon--dark" loading="lazy" decoding="async"/>
                     </div>
                     <div class="feature-content">
                         <h3 class="feature-title">Dashboard</h3>
                         <p class="feature-description">Monitor your crypto portfolio at a glance with real-time balances, transaction history, and interactive price charts. Track your available and locked assets across multiple tokens, view your trading performance, and stay informed with live market data.</p>
                     </div>
-                    <button class="btn-feature">Learn More</button>
+                    <button class="btn-feature" type="button">Learn More</button>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <img src="/assets/newspaper_dark.svg" alt="Newspaper Icon light" class="icon--light"/>
-                        <img src="/assets/newspaper_light.svg" alt="Newspaper Icon dark" class="icon--dark"/>
+                        <img src="/assets/newspaper_dark.svg" alt="Market news icon" class="icon--light" loading="lazy" decoding="async"/>
+                        <img src="/assets/newspaper_light.svg" alt="Market news icon" class="icon--dark" loading="lazy" decoding="async"/>
                     </div>
                     <div class="feature-content">
                         <h3 class="feature-title">Newspaper</h3>
                         <p class="feature-description">Stay ahead of the crypto market with our comprehensive news feed covering blockchain developments, market analysis, and industry insights. Get real-time updates on price movements, regulatory changes, and emerging trends to make informed investment decisions.</p>
                     </div>
-                    <button class="btn-feature">Learn More</button>
+                    <button class="btn-feature" type="button">Learn More</button>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <img src="/assets/trading_dark.svg" alt="Trading Icon light" class="icon--light"/>
-                        <img src="/assets/trading_light.svg" alt="Trading Icon dark" class="icon--dark"/>
+                        <img src="/assets/trading_dark.svg" alt="Trading terminal icon" class="icon--light" loading="lazy" decoding="async"/>
+                        <img src="/assets/trading_light.svg" alt="Trading terminal icon" class="icon--dark" loading="lazy" decoding="async"/>
                     </div>
                     <div class="feature-content">
                         <h3 class="feature-title">Trading</h3>
                         <p class="feature-description">Execute trades with confidence using our advanced trading simulator and real-time market data. Practice strategies, analyze charts, and build your trading skills before going live. Seamlessly send and receive cryptocurrencies with secure wallet integration.</p>
                     </div>
-                    <button class="btn-feature">Learn More</button>
+                    <button class="btn-feature" type="button">Learn More</button>
                 </div>
             </div>
-        </section>
+            </section>
 
-        <!-- FAQ Section -->
-        <section class="faq-section section-screen">
+            <!-- FAQ Section -->
+            <section class="faq-section section-screen" id="faq" aria-labelledby="faq-title">
             <div class="section-header">
-                <h2 class="section-title">Frequently Asked Question</h2>
+                <h2 class="section-title" id="faq-title">Frequently Asked Question</h2>
                 <p class="section-description">We want you to feel confident when trading – starting with understanding everything clearly.</p>
             </div>
             <div class="faq-container">
@@ -98,12 +121,12 @@
                             <div class="faq-number">01</div>
                             <div class="faq-question-wrapper">
                                 <h4 class="faq-question">How do I create a wallet?</h4>
-                                <p class="faq-answer">Click the "Sign Up" button and follow the instructions to set up your wallet. You'll need a valid email and a secure password. Your wallet will be created instantly and you can start managing your crypto assets.</p>
+                                <p class="faq-answer" id="faq-answer-1">Click the "Sign Up" button and follow the instructions to set up your wallet. You'll need a valid email and a secure password. Your wallet will be created instantly and you can start managing your crypto assets.</p>
                             </div>
-                            <button class="faq-toggle" aria-label="Toggle answer">
-                                <img src="/assets/closeAnswer.svg" alt="Collapse" class="icon-collapse" />
-                                <img src="/assets/toggleAnswer_dark.svg" alt="Expand" class="icon-expand icon--light" />
-                                <img src="/assets/toggleAnswer_light.svg" alt="Expand" class="icon-expand icon--dark" />
+                            <button class="faq-toggle" aria-label="Toggle answer" type="button" aria-expanded="false" aria-controls="faq-answer-1">
+                                <img src="/assets/closeAnswer.svg" alt="Collapse" class="icon-collapse" loading="lazy" decoding="async" />
+                                <img src="/assets/toggleAnswer_dark.svg" alt="Expand" class="icon-expand icon--light" loading="lazy" decoding="async" />
+                                <img src="/assets/toggleAnswer_light.svg" alt="Expand" class="icon-expand icon--dark" loading="lazy" decoding="async" />
                             </button>
                         </div>
                     </div>
@@ -113,12 +136,12 @@
                             <div class="faq-number">02</div>
                             <div class="faq-question-wrapper">
                                 <h4 class="faq-question">Is my crypto safe on UKX?</h4>
-                                <p class="faq-answer">Your assets are protected by industry-standard security practices. For maximum safety, always use strong passwords and never share your credentials. We do not store private keys in-browser for MVP security.</p>
+                                <p class="faq-answer" id="faq-answer-2">Your assets are protected by industry-standard security practices. For maximum safety, always use strong passwords and never share your credentials. We do not store private keys in-browser for MVP security.</p>
                             </div>
-                            <button class="faq-toggle" aria-label="Toggle answer">
-                                <img src="/assets/closeAnswer.svg" alt="Collapse" class="icon-collapse" />
-                                <img src="/assets/toggleAnswer_dark.svg" alt="Expand" class="icon-expand icon--light" />
-                                <img src="/assets/toggleAnswer_light.svg" alt="Expand" class="icon-expand icon--dark" />
+                            <button class="faq-toggle" aria-label="Toggle answer" type="button" aria-expanded="false" aria-controls="faq-answer-2">
+                                <img src="/assets/closeAnswer.svg" alt="Collapse" class="icon-collapse" loading="lazy" decoding="async" />
+                                <img src="/assets/toggleAnswer_dark.svg" alt="Expand" class="icon-expand icon--light" loading="lazy" decoding="async" />
+                                <img src="/assets/toggleAnswer_light.svg" alt="Expand" class="icon-expand icon--dark" loading="lazy" decoding="async" />
                             </button>
                         </div>
                     </div>
@@ -128,12 +151,12 @@
                             <div class="faq-number">03</div>
                             <div class="faq-question-wrapper">
                                 <h4 class="faq-question">How do I send and receive crypto?</h4>
-                                <p class="faq-answer">Go to your wallet dashboard. To send, enter the recipient's address and amount, then confirm. To receive, click "Receive" to view your wallet address and QR code.</p>
+                                <p class="faq-answer" id="faq-answer-3">Go to your wallet dashboard. To send, enter the recipient's address and amount, then confirm. To receive, click "Receive" to view your wallet address and QR code.</p>
                             </div>
-                            <button class="faq-toggle" aria-label="Toggle answer">
-                                <img src="/assets/closeAnswer.svg" alt="Collapse" class="icon-collapse" />
-                                <img src="/assets/toggleAnswer_dark.svg" alt="Expand" class="icon-expand icon--light" />
-                                <img src="/assets/toggleAnswer_light.svg" alt="Expand" class="icon-expand icon--dark" />
+                            <button class="faq-toggle" aria-label="Toggle answer" type="button" aria-expanded="false" aria-controls="faq-answer-3">
+                                <img src="/assets/closeAnswer.svg" alt="Collapse" class="icon-collapse" loading="lazy" decoding="async" />
+                                <img src="/assets/toggleAnswer_dark.svg" alt="Expand" class="icon-expand icon--light" loading="lazy" decoding="async" />
+                                <img src="/assets/toggleAnswer_light.svg" alt="Expand" class="icon-expand icon--dark" loading="lazy" decoding="async" />
                             </button>
                         </div>
                     </div>
@@ -143,26 +166,27 @@
                             <div class="faq-number">04</div>
                             <div class="faq-question-wrapper">
                                 <h4 class="faq-question">What tokens can I manage?</h4>
-                                <p class="faq-answer">You can manage major cryptocurrencies like Bitcoin, Ethereum, and USDT. More tokens will be added as the platform grows.</p>
+                                <p class="faq-answer" id="faq-answer-4">You can manage major cryptocurrencies like Bitcoin, Ethereum, and USDT. More tokens will be added as the platform grows.</p>
                             </div>
-                            <button class="faq-toggle" aria-label="Toggle answer">
-                                <img src="/assets/closeAnswer.svg" alt="Collapse" class="icon-collapse" />
-                                <img src="/assets/toggleAnswer_dark.svg" alt="Expand" class="icon-expand icon--light" />
-                                <img src="/assets/toggleAnswer_light.svg" alt="Expand" class="icon-expand icon--dark" />
+                            <button class="faq-toggle" aria-label="Toggle answer" type="button" aria-expanded="false" aria-controls="faq-answer-4">
+                                <img src="/assets/closeAnswer.svg" alt="Collapse" class="icon-collapse" loading="lazy" decoding="async" />
+                                <img src="/assets/toggleAnswer_dark.svg" alt="Expand" class="icon-expand icon--light" loading="lazy" decoding="async" />
+                                <img src="/assets/toggleAnswer_light.svg" alt="Expand" class="icon-expand icon--dark" loading="lazy" decoding="async" />
                             </button>
                         </div>
                     </div>
                     <div class="faq-divider"></div>
                 </div>
             </div>
-        </section>
+            </section>
 
 
 
-        <!-- Platform Showcase Section -->
-        <section class="platform-showcase section-screen" id="platform-demo">
-            <div class="platform-showcase__glow" aria-hidden="true"></div>
-            <div class="platform-showcase__inner">
+            <!-- Platform Showcase Section -->
+            <section class="platform-showcase section-screen" id="platform-demo" aria-labelledby="platform-showcase-title">
+                <h2 class="sr-only" id="platform-showcase-title">Platform showcase</h2>
+                <div class="platform-showcase__glow" aria-hidden="true"></div>
+                <div class="platform-showcase__inner">
                 <p class="platform-showcase__eyebrow">
                     The flagship application: the premier
                     <span class="platform-showcase__highlight">DECENTRALISED</span>
@@ -188,7 +212,7 @@
                     </div>
 
                     <div class="platform-showcase__video-shell">
-                        <video class="platform-showcase__video" autoplay muted loop playsinline>
+                        <video class="platform-showcase__video" autoplay muted loop playsinline aria-label="Trading terminal preview video" preload="metadata">
                             <source src="/assets/demo_trade.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -212,37 +236,41 @@
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- CTA Section -->
-        <section class="cta-section section-screen">
-            <div class="cta-background" aria-hidden="true">
-                <canvas class="net-bg-canvas" data-net-bg="cta"></canvas>
-            </div>
-            <div class="cta-inner">
-                <div class="cta-container">
-                    <h2 class="cta-title">Increase your income with us</h2>
-                    <p class="cta-description">Invest, because money won't grow by itself</p>
-                    <button class="btn-cta" id="ctaSignupBtn">Sign up now</button>
+            </section>
+            <!-- CTA Section -->
+            <section class="cta-section section-screen" id="cta" aria-labelledby="cta-title">
+                <div class="cta-background" aria-hidden="true">
+                    <canvas class="net-bg-canvas" data-net-bg="cta"></canvas>
                 </div>
-                <div class="cta-media">
-                    <div class="cta-video-overlay">
-                        <p class="cta-video-eyebrow">Londo Norrizz</p>
-                        <p class="cta-video-heading">10 times GP winner"</p>
+                <div class="cta-inner">
+                    <div class="cta-container">
+                        <h2 class="cta-title" id="cta-title">Increase your income with us</h2>
+                        <p class="cta-description">Invest, because money won't grow by itself</p>
+                        <button class="btn-cta" id="ctaSignupBtn" type="button">Sign up now</button>
                     </div>
-                    <video class="cta-video" muted playsinline controls preload="none" data-video-src="/assets/demo_ln.mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                    <div class="cta-media">
+                        <div class="cta-video-overlay" id="ctaVideoCaption">
+                            <p class="cta-video-eyebrow">Londo Norrizz - MecLoren F1 </p>
+                            <p class="cta-video-heading">10 times GP winner</p>
+                        </div>
+                        <video class="cta-video" muted playsinline controls preload="none" data-video-src="/assets/demo_ln.mp4" aria-describedby="ctaVideoCaption" aria-label="UKX ambassador interview clip">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+        </main>
 
         <!-- Footer Component -->
-        <div id="footer-placeholder"></div>
+        <footer class="site-footer" role="contentinfo">
+            <div id="footer-placeholder"></div>
+        </footer>
     </div>
     
-    <script src="/modules/login-check/login-check.js"></script>
-    <script src="/js/components.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="/modules/net-bg/net-bg.js"></script>
+    <script src="/modules/login-check/login-check.js" defer></script>
+    <script src="/js/components.js" defer></script>
+    <script src="/js/main.js" defer></script>
+    <script src="/modules/net-bg/net-bg.js" defer></script>
 </body>
 </html>
