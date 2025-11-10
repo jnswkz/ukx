@@ -158,11 +158,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             chatBody.scrollTop = chatBody.scrollHeight;
         }, 350);
 
-        const slowResponseTimer = setTimeout(() => {
-            botMsg.dataset.status = 'delayed';
-            botMsg.title = 'Still waiting for assistant response (possible network/API delay)';
-            console.warn('Assistant response is taking unusually long. Check network connectivity or API rate limits.');
-        }, 7000);
+        // const slowResponseTimer = setTimeout(() => {
+        //     botMsg.dataset.status = 'delayed';
+        //     botMsg.title = 'Still waiting for assistant response (possible network/API delay)';
+        //     console.warn('Assistant response is taking unusually long. Check network connectivity or API rate limits.');
+        // }, 15000); // 15 seconds
 
         try {
             const answerHtml = await getAnswerFromApi(text) || renderMarkdown("I'm sorry, I couldn't process your request at this time.");
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             botMsg.textContent = error?.message || "Sorry, I'm having trouble responding right now.";
         } finally {
             clearInterval(typingInterval);
-            clearTimeout(slowResponseTimer);
+            // clearTimeout(slowResponseTimer);
             botMsg.classList.remove('is-waiting');
             chatBody.scrollTop = chatBody.scrollHeight;
         }
