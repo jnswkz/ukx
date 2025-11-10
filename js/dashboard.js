@@ -81,14 +81,32 @@ async function getAnswerFromApi(question) {
 }
 
 function formatCurrency(amount) {
-    if (!Number.isFinite(amount)) return '$0.00';
-    return amount.toLocaleString('en-US', {
+    const numeric = Number(amount);
+    if (!Number.isFinite(numeric)) return '$0.00';
+    const manager = window.UKXCurrency;
+    if (manager?.formatCurrency) {
+        return manager.formatCurrency(numeric, { fromCurrency: 'USD' });
+    }
+    return numeric.toLocaleString('en-US', {
         style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
     });
 }
+
+const dashboardCurrencyState = {
+    balances: [],
+    balancesList: null,
+    totalBalance: 0,
+    totalBalanceElement: null,
+    totalWrapper: null
+};
+
+window.addEventListener('preferredCurrencyChange', () => {
+    renderBalancesList();
+    renderTotalBalance();
+});
 
 async function to_usd(id){
     const parsed = await jsonFileParser('/data/full_coin_data.json');
@@ -441,29 +459,9 @@ async function populateWalletData(userData = {}, uiRefs = {}) {
     }
 
 
-    // Populate balances
-    if (balancesList) {
-        if (balances.length) {
-            balancesList.innerHTML = balances.map(balance => `
-                <div class="balance-item">
-                    <div class="balance-info">
-                        <div class="balance-icon">${balance.imgUrl ? `<img src="${balance.imgUrl}" alt="${balance.name} logo">` : balance.symbol.slice(0, 3).toUpperCase()}</div>
-                        <div class="balance-details">
-                            <h3>${balance.name}</h3>
-                            <p>${balance.symbol}</p>
-                        </div>
-                    </div>
-                    <div class="balance-amounts">
-                        <span class="balance-amount">${formatCurrency(balance.usdValue)}</span>
-                        <span class="balance-locked">${balance.available.toFixed(4)} available${balance.locked > 0 ? `, ${balance.locked.toFixed(4)} locked` : ''}</span>
-                    </div>
-                </div>
-            `).join('');
-        } else {
-            balancesList.innerHTML = '';
-        }
-        markSkeletonLoaded(balancesList);
-    }
+    dashboardCurrencyState.balances = balances;
+    dashboardCurrencyState.balancesList = balancesList;
+    renderBalancesList();
 
     // Populate transactions
     if (transactionsList) {
@@ -501,11 +499,10 @@ async function populateWalletData(userData = {}, uiRefs = {}) {
     // Calculate and update total balance
     const totalBalance = balances.reduce((sum, balance) => sum + balance.usdValue, 0);
     const totalBalanceElement = document.getElementById('totalBalance');
-    if (totalBalanceElement) {
-        totalBalanceElement.textContent = formatCurrency(totalBalance);
-        const wrapper = portfolioTotal || totalBalanceElement.closest('.portfolio-total');
-        markSkeletonLoaded(wrapper);
-    }
+    dashboardCurrencyState.totalBalance = totalBalance;
+    dashboardCurrencyState.totalBalanceElement = totalBalanceElement;
+    dashboardCurrencyState.totalWrapper = portfolioTotal || totalBalanceElement?.closest?.('.portfolio-total') || null;
+    renderTotalBalance();
 }
 
 /**
@@ -524,4 +521,39 @@ function formatTimeAgo(timestamp) {
     } else {
         return 'Just now';
     }
+}
+
+function renderBalancesList() {
+    const listEl = dashboardCurrencyState.balancesList;
+    if (!listEl) return;
+    const balances = dashboardCurrencyState.balances || [];
+    if (!balances.length) {
+        listEl.innerHTML = '';
+        markSkeletonLoaded(listEl);
+        return;
+    }
+    listEl.innerHTML = balances.map(balance => `
+        <div class="balance-item">
+            <div class="balance-info">
+                <div class="balance-icon">${balance.imgUrl ? `<img src="${balance.imgUrl}" alt="${balance.name} logo">` : balance.symbol.slice(0, 3).toUpperCase()}</div>
+                <div class="balance-details">
+                    <h3>${balance.name}</h3>
+                    <p>${balance.symbol}</p>
+                </div>
+            </div>
+            <div class="balance-amounts">
+                <span class="balance-amount">${formatCurrency(balance.usdValue)}</span>
+                <span class="balance-locked">${balance.available.toFixed(4)} available${balance.locked > 0 ? `, ${balance.locked.toFixed(4)} locked` : ''}</span>
+            </div>
+        </div>
+    `).join('');
+    markSkeletonLoaded(listEl);
+}
+
+function renderTotalBalance() {
+    const totalEl = dashboardCurrencyState.totalBalanceElement;
+    if (!totalEl) return;
+    totalEl.textContent = formatCurrency(dashboardCurrencyState.totalBalance);
+    const wrapper = dashboardCurrencyState.totalWrapper || totalEl.closest?.('.portfolio-total') || totalEl;
+    markSkeletonLoaded(wrapper);
 }

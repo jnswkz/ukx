@@ -12,6 +12,46 @@ function calculate_font_size(ctx)
     return Math.max(10, Math.round(base * 0.03)) > 12 ? Math.max(10, Math.round(base * 0.03)) : 12;
 }
 
+function format_axis_label(value, unit = 'currency', currencyCode = 'USD') {
+    if (!Number.isFinite(value)) return '--';
+    if (unit === 'number') {
+        return value.toLocaleString('en-US', { maximumFractionDigits: 0 });
+    }
+    const manager = window.UKXCurrency;
+    if (manager?.formatCurrency) {
+        const absValue = Math.abs(value);
+        const notation = absValue >= 1000 ? 'compact' : 'standard';
+        return manager.formatCurrency(value, {
+            fromCurrency: currencyCode,
+            toCurrency: currencyCode,
+            notation,
+            minimumFractionDigits: absValue >= 1 ? 0 : 2,
+            maximumFractionDigits: absValue >= 1 ? 2 : 4
+        });
+    }
+    if (Math.abs(value) >= 1000) {
+        return `$${(value / 1000).toFixed(2)}k`.replace(/\.?0+k$/, 'k');
+    }
+    return `$${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
+}
+
+function format_tooltip_value(value, unit = 'currency', currencyCode = 'USD') {
+    if (!Number.isFinite(value)) return '--';
+    if (unit === 'number') {
+        return value.toLocaleString('en-US', { maximumFractionDigits: 2 });
+    }
+    const manager = window.UKXCurrency;
+    if (manager?.formatCurrency) {
+        return manager.formatCurrency(value, {
+            fromCurrency: currencyCode,
+            toCurrency: currencyCode,
+            minimumFractionDigits: 1,
+            maximumFractionDigits: Math.abs(value) < 1 ? 4 : 1
+        });
+    }
+    return `$${value.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`;
+}
+
 /**
  * Draw a data point (only visible when highlighted)
  */
@@ -99,7 +139,7 @@ function draw_dashed_line(ctx, x, margin, color = 'rgba(255, 255, 255, 0.3)') {
 /**
  * Draw modern tooltip with formatted data
  */
-function draw_tooltip(ctx, x, y, label, value, fontSize = 12, theme = null) {
+function draw_tooltip(ctx, x, y, label, value, fontSize = 12, theme = null, unit = 'currency', currencyCode = 'USD') {
     ctx.save();
 
     const font = `600 ${fontSize}px 'JetBrains Mono', 'Arial', monospace`;
@@ -113,7 +153,7 @@ function draw_tooltip(ctx, x, y, label, value, fontSize = 12, theme = null) {
     
     // Format value as currency
     const formattedValue = typeof value === 'number'
-        ? `$${value.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`
+        ? format_tooltip_value(value, unit, currencyCode)
         : value;
     
     const labelWidth = ctx.measureText(label).width;
@@ -205,6 +245,9 @@ function draw(canvas, data, theme, highlightIndex = -1) {
         textColor = theme.text || 'rgba(216, 222, 233, 0.8)';
     }
 
+    const valueUnit = data.unit || 'currency';
+    const currencyCode = data.currency || (window.UKXCurrency?.getPreferredCurrency?.() || 'USD');
+
     ctx.clearRect(0, 0, width, height);
     
     // Draw background
@@ -256,15 +299,11 @@ function draw(canvas, data, theme, highlightIndex = -1) {
     ctx.textBaseline = 'middle';
     
     // Max value at top
-    const maxLabel = yMax >= 1000 
-        ? `$${(yMax / 1000).toFixed(3)}`.replace(/\.?0+$/, '') + 'k'
-        : `$${yMax.toFixed(0)}`;
+    const maxLabel = format_axis_label(yMax, valueUnit, currencyCode);
     ctx.fillText(maxLabel, margin.left, margin.top);
     
     // Min value at bottom
-    const minLabel = yMin >= 1000 
-        ? `$${(yMin / 1000).toFixed(3)}`.replace(/\.?0+$/, '') + 'k'
-        : `$${yMin.toFixed(0)}`;
+    const minLabel = format_axis_label(yMin, valueUnit, currencyCode);
     ctx.fillText(minLabel, margin.left, height - margin.bottom);
 
     // Draw X-axis labels (date format)
@@ -349,19 +388,37 @@ export function drawLineGraph(canvasID, data, themeOrBgColor, lineColor, pointCo
     // Initialize zoom and pan state
     const xs = Array.isArray(data.x) ? data.x : [];
     const totalPoints = xs.length;
+
+    // Determine an initial zoom level that shows a portion of the dataset so
+    // price action appears larger on first load. Smaller datasets stay at 1x.
+    let initialZoom = 1;
+    let initialPanX = 0;
+    if (totalPoints > 6) {
+        const targetVisibleRatio = totalPoints > 40 ? 0.18 : 0.25;
+        const desiredVisiblePoints = Math.min(
+            totalPoints - 1,
+            Math.max(4, Math.round(totalPoints * targetVisibleRatio))
+        );
+        initialZoom = Math.max(1, +(totalPoints / desiredVisiblePoints).toFixed(2));
+
+        const visiblePoints = Math.max(1, Math.ceil(totalPoints / initialZoom));
+        const centerIndex = totalPoints - visiblePoints / 2;
+        const panFactor = (totalPoints / 2 - centerIndex) / Math.max(1, totalPoints);
+        initialPanX = panFactor * layoutW;
+    }
     
-    // Always reset state when drawing new data to show all points
-    // The time period filtering is handled by the caller (dashboard.js)
+    // Reset zoom/pan state while applying the calculated defaults
     canvas._chartState = {
-        zoom: 1,
-        panX: 0,
+        zoom: initialZoom,
+        panX: initialPanX,
         panY: 0,
         isDragging: false,
         lastMouseX: 0,
         lastMouseY: 0,
         minZoom: 0.5,
         maxZoom: 10,
-        initialZoom: 1
+        initialZoom,
+        initialPanX
     };
     
     const state = canvas._chartState;
@@ -398,7 +455,9 @@ export function drawLineGraph(canvasID, data, themeOrBgColor, lineColor, pointCo
         return {
             x: xs.slice(startIndex, endIndex),
             y: ys.slice(startIndex, endIndex),
-            startIndex: startIndex
+            startIndex: startIndex,
+            unit: data.unit || 'currency',
+            currency: data.currency
         };
     }
     
@@ -506,7 +565,17 @@ export function drawLineGraph(canvasID, data, themeOrBgColor, lineColor, pointCo
                 label = `${dayName} ${dateStr}`;
             }
             
-            draw_tooltip(ctx, pointX, pointY, label, ys[closestIndex], fontSize, theme);
+            draw_tooltip(
+                ctx,
+                pointX,
+                pointY,
+                label,
+                ys[closestIndex],
+                fontSize,
+                theme,
+                visibleData.unit,
+                visibleData.currency || (window.UKXCurrency?.getPreferredCurrency?.() || 'USD')
+            );
             canvas.style.cursor = 'crosshair';
         } else {
             redraw();
@@ -531,11 +600,11 @@ export function drawLineGraph(canvasID, data, themeOrBgColor, lineColor, pointCo
     canvas.addEventListener('dblclick', function(event) {
         event.preventDefault();
         
-        state.zoom = 1;
-        state.panX = 0;
+        state.zoom = state.initialZoom || 1;
+        state.panX = state.initialPanX || 0;
         state.panY = 0;
         
         redraw();
-        canvas.style.cursor = 'default';
+        canvas.style.cursor = state.zoom > 1 ? 'grab' : 'default';
     });
 }

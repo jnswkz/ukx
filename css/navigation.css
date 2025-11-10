@@ -16,6 +16,10 @@
     will-change: transform;
 }
 
+.nav-bar--hidden {
+    transform: translateY(calc(-100% - 12px));
+}
+
 .nav-container {
     display: flex;
     align-items: center;
@@ -120,6 +124,24 @@
 .nav-icon-btn img {
     width: 16px;
     height: 16px;
+}
+
+.nav-actions .currency-selector {
+    gap: 0.35rem;
+}
+
+.nav-actions .currency-selector::after {
+    content: attr(data-currency);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--nord6);
+    margin-left: 0.35rem;
+}
+
+[data-theme="light"] .nav-actions .currency-selector::after {
+    color: var(--nord0);
 }
 
 /* Icon wrapper for visibility on light backgrounds */

@@ -68,6 +68,7 @@
     --color-button-secondary-text: var(--nord0);
     
     /* Navigation */
+    --nav-height: 72px;
     --color-nav-bg: var(--nord1);
     --color-nav-border: var(--nord3);
     

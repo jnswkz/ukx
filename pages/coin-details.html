@@ -34,14 +34,6 @@
                             <h1 id="coinName">Bitcoin</h1>
                         </div>
                     </div>
-
-                </div>
-                <div class="coin-hero__bottom">
-                    <div class="coin-breadcrumb">
-                        <a href="/pages/markets.html">Markets</a>
-                        <span aria-hidden="true">/</span>
-                        <span id="coinBreadcrumb">Bitcoin</span>
-                    </div>
                     <nav class="coin-tabs" aria-label="Coin sections">
                         <button class="coin-tab active" data-scroll="#about">About</button>
                         <button class="coin-tab" data-scroll="#performance">Performance</button>
@@ -59,7 +51,7 @@
                             <div class="coin-price-change" id="coinChange">0.00%</div>
                         </div>
                         <div class="chart-currency-selector">
-                            <button class="currency-btn">USD</button>
+                            <button class="currency-btn" id="chartCurrencyBtn" type="button">USD</button>
                         </div>
                     </div>
                     <div class="coin-chart-wrapper">
@@ -113,11 +105,11 @@
                             <img src="../assets/exchange.png" alt="" aria-hidden="true">
                         </button>
                         <div class="converter-row">
-                            <label for="converterFiatInput">Amount (USD)</label>
+                            <label for="converterFiatInput">Amount (<span id="converterFiatLabelValue">USD</span>)</label>
                             <div class="converter-input">
                                 <span class="converter-label">
                                     <span class="converter-label-icon" id="converterFiatIcon" role="img" aria-label="United States flag">🇺🇸</span>
-                                    <span>USD</span>
+                                    <span id="converterFiatCode">USD</span>
                                 </span>
                                 <input id="converterFiatInput" type="number" inputmode="decimal" min="0" step="0.01" value="0">
                             </div>

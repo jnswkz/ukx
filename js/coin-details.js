@@ -9,13 +9,31 @@ let chartState = {
     period: "24h",
     datasets: {}
 };
+const coinState = {
+    symbol: null,
+    details: null,
+    liveData: null,
+    performance: null,
+    basePriceUSD: 0
+};
+
+window.addEventListener("preferredCurrencyChange", handleCurrencyPreferenceChange);
 
 document.addEventListener("DOMContentLoaded", () => {
     view = cacheDom();
     bindTabScroll();
+    observeThemeChanges();
     const coinId = getCoinIdFromQuery() ?? DEFAULT_COIN_ID;
     loadCoinDetails(coinId);
 });
+
+function handleCurrencyPreferenceChange() {
+    if (!coinState.symbol) return;
+    renderOverview(coinState.symbol, coinState.details, coinState.liveData);
+    renderStats(coinState.details, coinState.performance, coinState.liveData);
+    setupConverter(coinState.basePriceUSD, coinState.symbol);
+    drawChart();
+}
 
 function cacheDom() {
     return {
@@ -30,6 +48,7 @@ function cacheDom() {
         coinHigh: document.getElementById("coinHigh"),
         coinLow: document.getElementById("coinLow"),
         chartTitle: document.getElementById("chartTitle"),
+        chartCurrencyBtn: document.getElementById("chartCurrencyBtn"),
         chartButtons: document.querySelectorAll(".chart-period-btn"),
         coinLastUpdated: document.getElementById("coinLastUpdated"),
         statsMarketCap: document.getElementById("coinMarketCap"),
@@ -48,6 +67,8 @@ function cacheDom() {
         converterCoinLabel: document.getElementById("converterCoinLabel"),
         converterCoinIcon: document.getElementById("converterCoinIcon"),
         converterFiatIcon: document.getElementById("converterFiatIcon"),
+        converterFiatLabel: document.getElementById("converterFiatLabelValue"),
+        converterFiatCode: document.getElementById("converterFiatCode"),
         tabs: document.querySelectorAll(".coin-tab")
     };
 }
@@ -99,16 +120,20 @@ async function loadCoinDetails(coinId) {
             (record) => record.coin === symbol || record.symbol === symbol
         ) || null;
 
+        coinState.symbol = symbol;
+        coinState.details = details;
+        coinState.liveData = liveData;
+        coinState.performance = performance;
+        coinState.basePriceUSD =
+            liveData?.current_price ?? details?.current_price ?? 0;
+
         renderOverview(symbol, details, liveData);
         renderStats(details, performance, liveData);
         renderDescription(liveData?.description || details.description);
         renderTags(details.categories);
         renderPerformance(performance);
         renderNews(articles, details.categories);
-        setupConverter(
-            liveData?.current_price ?? details.current_price,
-            symbol
-        );
+        setupConverter(coinState.basePriceUSD, symbol);
         prepareChartDatasets(symbol, {
             "24h": twentyFour[symbol],
             "7d": sevenDay[symbol],
@@ -135,9 +160,15 @@ function renderOverview(symbol, details, liveData) {
     const high24h = liveData?.high_24h ?? details?.high_24h ?? currentPrice;
     const low24h = liveData?.low_24h ?? details?.low_24h ?? currentPrice;
 
-    view.coinName.textContent = coinName;
-    view.coinSymbol.textContent = symbol;
-    view.coinBreadcrumb.textContent = coinName;
+    if (view.coinName) {
+        view.coinName.textContent = coinName;
+    }
+    if (view.coinSymbol) {
+        view.coinSymbol.textContent = symbol;
+    }
+    if (view.coinBreadcrumb) {
+        view.coinBreadcrumb.textContent = coinName;
+    }
 
     if (view.coinIcon) {
         view.coinIcon.src = iconUrl;
@@ -148,6 +179,7 @@ function renderOverview(symbol, details, liveData) {
         view.converterCoinIcon.alt = `${coinName} icon`;
     }
 
+    coinState.basePriceUSD = currentPrice;
     view.coinPrice.textContent = formatCurrency(currentPrice);
     updateChangeBadge(view.coinChange, priceChange);
     
@@ -164,7 +196,15 @@ function renderOverview(symbol, details, liveData) {
     }
     
     if (view.chartTitle) {
-        view.chartTitle.textContent = `${coinName} price in USD`;
+        const currencyMeta = getCurrencyMeta();
+        view.chartTitle.textContent = `${coinName} price in ${currencyMeta.code}`;
+        if (view.chartCurrencyBtn) {
+            view.chartCurrencyBtn.textContent = currencyMeta.code;
+            view.chartCurrencyBtn.setAttribute(
+                "aria-label",
+                `${currencyMeta.label} selected`
+            );
+        }
     }
 }
 
@@ -315,18 +355,34 @@ function renderNews(articles, categories = []) {
     view.newsList.appendChild(fragment);
 }
 
-function setupConverter(price, symbol) {
+function setupConverter(priceUSD, symbol) {
     if (!view.converterCoinInput || !view.converterFiatInput) return;
 
-    const basePrice = Number.isFinite(Number(price)) ? Number(price) : 0;
+    const basePrice = Number.isFinite(Number(priceUSD)) ? Number(priceUSD) : 0;
+    const currencyMeta = getCurrencyMeta();
+    const localizedBasePrice =
+        window.UKXCurrency?.convertCurrency?.(
+            basePrice,
+            "USD",
+            currencyMeta.code
+        ) ?? basePrice;
 
-    view.converterCoinLabel.textContent = symbol;
-    if (view.converterFiatIcon) {
-        view.converterFiatIcon.textContent = "🇺🇸";
-        view.converterFiatIcon.setAttribute("aria-label", "United States flag");
+    if (view.converterCoinLabel) {
+        view.converterCoinLabel.textContent = symbol;
     }
+    if (view.converterFiatLabel) {
+        view.converterFiatLabel.textContent = currencyMeta.code;
+    }
+    if (view.converterFiatCode) {
+        view.converterFiatCode.textContent = currencyMeta.code;
+    }
+    if (view.converterFiatIcon) {
+        view.converterFiatIcon.textContent = currencyMeta.flag || "";
+        view.converterFiatIcon.setAttribute("aria-label", currencyMeta.label);
+    }
+
     view.converterCoinInput.value = "1";
-    view.converterFiatInput.value = formatInput(basePrice);
+    view.converterFiatInput.value = formatInput(localizedBasePrice);
 
     let syncing = false;
 
@@ -334,7 +390,9 @@ function setupConverter(price, symbol) {
         if (syncing) return;
         syncing = true;
         const coinValue = parseFloat(view.converterCoinInput.value) || 0;
-        view.converterFiatInput.value = formatInput(coinValue * basePrice);
+        view.converterFiatInput.value = formatInput(
+            coinValue * localizedBasePrice
+        );
         syncing = false;
     };
 
@@ -342,7 +400,10 @@ function setupConverter(price, symbol) {
         if (syncing) return;
         syncing = true;
         const fiatValue = parseFloat(view.converterFiatInput.value) || 0;
-        view.converterCoinInput.value = formatInput(fiatValue / (basePrice || 1), 6);
+        view.converterCoinInput.value = formatInput(
+            fiatValue / (localizedBasePrice || 1),
+            6
+        );
         syncing = false;
     };
 
@@ -351,9 +412,16 @@ function setupConverter(price, symbol) {
     view.converterSwap.onclick = () => {
         const coinValue = parseFloat(view.converterCoinInput.value) || 0;
         const fiatValue = parseFloat(view.converterFiatInput.value) || 0;
-        view.converterCoinInput.value = formatInput(fiatValue / (basePrice || 1), 6);
-        view.converterFiatInput.value = formatInput(coinValue * basePrice);
+        view.converterCoinInput.value = formatInput(
+            fiatValue / (localizedBasePrice || 1),
+            6
+        );
+        view.converterFiatInput.value = formatInput(
+            coinValue * localizedBasePrice
+        );
     };
+
+    updateFiat();
 }
 
 function prepareChartDatasets(symbol, sources) {
@@ -363,7 +431,8 @@ function prepareChartDatasets(symbol, sources) {
             unit: "currency"
         },
         "7d": {
-            ...buildSeriesFromSevenDay(sources["7d"])
+            ...buildSeriesFromSevenDay(sources["7d"]),
+            unit: "currency"
         },
         "30d": {
             ...buildSeriesFromObject(sources["30d"], formatSequentialLabel),
@@ -375,25 +444,39 @@ function prepareChartDatasets(symbol, sources) {
     }
 }
 
+function localizeDataset(dataset) {
+    if (!dataset) return dataset;
+    if (dataset.unit !== "currency") {
+        return { ...dataset };
+    }
+    const currencyMeta = getCurrencyMeta();
+    const converter = window.UKXCurrency?.convertCurrency;
+    const convertedValues = Array.isArray(dataset.y)
+        ? dataset.y.map((value) => {
+              const numeric = Number(value);
+              if (!Number.isFinite(numeric)) return 0;
+              if (typeof converter === "function") {
+                  return converter(numeric, "USD", currencyMeta.code);
+              }
+              return numeric;
+          })
+        : [];
+    return {
+        ...dataset,
+        y: convertedValues,
+        currency: currencyMeta.code
+    };
+}
+
 function drawChart() {
     const dataset = chartState.datasets[chartState.period];
     if (!dataset) return;
 
-    const theme = {
-        background: "rgba(59, 66, 82, 1)",
-        line: "rgba(136, 192, 208, 1)",
-        point: "rgba(180, 142, 173, 1)",
-        grid: "rgba(255, 255, 255, 0.05)",
-        text: "rgba(236, 239, 244, 0.7)",
-        tooltip: {
-            bg: "rgba(59, 66, 82, 0.95)",
-            border: "rgba(255, 255, 255, 0.08)",
-            text: "rgba(236, 239, 244, 1)",
-            label: "rgba(216, 222, 233, 0.65)"
-        }
-    };
+    const localizedDataset = localizeDataset(dataset);
+    const trendIsPositive = isPositiveTrend(localizedDataset);
+    const theme = getChartTheme(trendIsPositive);
 
-    drawLineGraph("coinPriceChart", dataset, theme);
+    drawLineGraph("coinPriceChart", localizedDataset, theme);
 }
 
 function bindChartControls() {
@@ -415,12 +498,13 @@ function bindTabScroll() {
     tabs.forEach((button) => {
         const target = button?.dataset?.scroll;
         if (!target) return;
-        button.addEventListener("click", () => {
+        button.addEventListener("click", (event) => {
+            event.preventDefault();
             tabs.forEach((tab) => tab.classList.remove("active"));
             button.classList.add("active");
             const destination = document.querySelector(target);
             if (destination) {
-                destination.scrollIntoView({ behavior: "smooth", block: "start" });
+                scrollToSection(destination);
             }
         });
     });
@@ -517,6 +601,14 @@ function sanitizeDescription(raw = "") {
 function formatCompactCurrency(value) {
     const numeric = Number(value);
     if (!Number.isFinite(numeric)) return "—";
+    const formatter = window.UKXCurrency?.formatCurrency;
+    if (typeof formatter === "function") {
+        return formatter(numeric, {
+            fromCurrency: "USD",
+            notation: "compact",
+            maximumFractionDigits: 2
+        });
+    }
     const absolute = Math.abs(numeric);
     const units = [
         { threshold: 1e12, suffix: "T" },
@@ -559,9 +651,26 @@ function formatSupplyValue(current, max) {
     return currentLabel;
 }
 
+function getCurrencyMeta(code) {
+    const fallback = {
+        code: "USD",
+        label: "US Dollar",
+        symbol: "$",
+        flag: "🇺🇸"
+    };
+    const manager = window.UKXCurrency;
+    if (!manager) return fallback;
+    return manager.getCurrencyMetadata?.(code) || fallback;
+}
+
 function formatCurrency(amount = 0) {
-    if (!Number.isFinite(amount)) return "$0.00";
-    return amount.toLocaleString("en-US", {
+    const numeric = Number(amount);
+    if (!Number.isFinite(numeric)) return "$0.00";
+    const formatter = window.UKXCurrency?.formatCurrency;
+    if (typeof formatter === "function") {
+        return formatter(numeric, { fromCurrency: "USD" });
+    }
+    return numeric.toLocaleString("en-US", {
         style: "currency",
         currency: "USD",
         maximumFractionDigits: 2
@@ -609,4 +718,116 @@ function getCoinIdFromQuery() {
     if (coinIdParam === null) return null;
     const parsed = Number.parseInt(coinIdParam, 10);
     return Number.isNaN(parsed) ? null : parsed;
+}
+
+function isPositiveTrend(dataset) {
+    const values = Array.isArray(dataset?.y)
+        ? dataset.y.map(Number).filter((value) => Number.isFinite(value))
+        : [];
+    if (values.length < 2) {
+        return true;
+    }
+    return values[values.length - 1] >= values[0];
+}
+
+function getChartTheme(isTrendPositive = true) {
+    const isLightTheme =
+        document.documentElement.getAttribute("data-theme") === "light";
+
+    const trendColors = isTrendPositive
+        ? {
+              line: "rgba(163, 190, 140, 1)",
+              point: "rgba(129, 199, 132, 1)",
+              tooltipLabel: "rgba(129, 199, 132, 0.9)"
+          }
+        : {
+              line: "rgba(191, 97, 106, 1)",
+              point: "rgba(208, 135, 112, 1)",
+              tooltipLabel: "rgba(191, 97, 106, 0.85)"
+          };
+
+    if (isLightTheme) {
+        return {
+            background: "rgba(245, 247, 250, 1)",
+            line: trendColors.line,
+            point: trendColors.point,
+            grid: "rgba(0, 0, 0, 0.08)",
+            text: "rgba(46, 52, 64, 0.75)",
+            tooltip: {
+                bg: "rgba(255, 255, 255, 0.96)",
+                border: "rgba(46, 52, 64, 0.1)",
+                text: "rgba(46, 52, 64, 1)",
+                label: trendColors.tooltipLabel
+            }
+        };
+    }
+
+    return {
+        background: "rgba(59, 66, 82, 1)",
+        line: trendColors.line,
+        point: trendColors.point,
+        grid: "rgba(255, 255, 255, 0.05)",
+        text: "rgba(236, 239, 244, 0.7)",
+        tooltip: {
+            bg: "rgba(59, 66, 82, 0.95)",
+            border: "rgba(255, 255, 255, 0.08)",
+            text: "rgba(236, 239, 244, 1)",
+            label: trendColors.tooltipLabel
+        }
+    };
+}
+
+let themeObserverRegistered = false;
+
+function observeThemeChanges() {
+    if (themeObserverRegistered || typeof MutationObserver === "undefined") {
+        return;
+    }
+
+    const observer = new MutationObserver((mutations) => {
+        const shouldRedraw = mutations.some(
+            (mutation) =>
+                mutation.type === "attributes" && mutation.attributeName === "data-theme"
+        );
+        if (shouldRedraw && chartState.datasets[chartState.period]) {
+            drawChart();
+        }
+    });
+
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-theme"]
+    });
+
+    themeObserverRegistered = true;
+}
+
+function scrollToSection(element) {
+    const offset = getStickyHeaderOffset();
+    const documentOffset = element.getBoundingClientRect().top + window.pageYOffset;
+    const targetPosition = Math.max(documentOffset - offset, 0);
+    window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth"
+    });
+}
+
+function getStickyHeaderOffset() {
+    const navHeight = getCssVariableNumber("--nav-height") ?? 0;
+    const navHidden = document.body.classList.contains("nav-hidden");
+    const navOffset = navHidden ? 0 : navHeight;
+
+    const hero = document.querySelector(".coin-hero");
+    const heroHeight = hero?.offsetHeight ?? 0;
+    const heroMargin = hero ? Number.parseFloat(getComputedStyle(hero).marginBottom) || 0 : 0;
+
+    const reserveGap = 16;
+    return navOffset + heroHeight + heroMargin + reserveGap;
+}
+
+function getCssVariableNumber(name) {
+    const styles = getComputedStyle(document.documentElement);
+    const value = styles.getPropertyValue(name);
+    const numeric = Number.parseFloat(value);
+    return Number.isNaN(numeric) ? null : numeric;
 }

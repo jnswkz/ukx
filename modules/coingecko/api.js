@@ -17,6 +17,7 @@ const SYMBOL_TO_ID_MAP = {
     'USDC': 'usd-coin',
     'ADA': 'cardano',
     'DOGE': 'dogecoin',
+    'FTM': 'fantom',
     'TRX': 'tron',
     'TON': 'the-open-network',
     'AVAX': 'avalanche-2',
@@ -32,7 +33,11 @@ const SYMBOL_TO_ID_MAP = {
     'XLM': 'stellar',
     'BCH': 'bitcoin-cash',
     'NEAR': 'near',
-    'APT': 'aptos'
+    'APT': 'aptos',
+    'VET': 'vechain',
+    'XMR': 'monero',
+    'ZEC': 'zcash',
+    'FIL': 'filecoin'
 };
 
 /**
@@ -113,9 +118,15 @@ export async function fetchCoinDetails(symbol) {
             high_24h: data.market_data.high_24h.usd,
             low_24h: data.market_data.low_24h.usd,
             market_cap: data.market_data.market_cap.usd,
+            market_cap_rank: data.market_cap_rank,
             volume_24h: data.market_data.total_volume.usd,
+            total_volume: data.market_data.total_volume.usd,
+            circulating_supply: data.market_data.circulating_supply,
+            max_supply: data.market_data.max_supply,
+            ath: data.market_data.ath.usd,
             image: data.image.large,
-            description: data.description.en
+            description: data.description.en,
+            last_updated: data.market_data.last_updated || data.last_updated
         };
     } catch (error) {
         console.error(`Error fetching details for ${symbol}:`, error);

@@ -17,9 +17,55 @@ const TAG_MAPPING = {
 // Market data storage
 let marketData = [];
 let newListingsData = [];
+let hotCryptoData = [];
 let currentFilter = 'all';
 let currentPage = 1;
 const itemsPerPage = 5;
+let chartData24h = {};
+
+function getCurrencyManager() {
+    return window.UKXCurrency || null;
+}
+
+function getPreferredCurrencyCode() {
+    const manager = getCurrencyManager();
+    return manager?.getPreferredCurrency?.() || 'USD';
+}
+
+function convertFromUSD(value) {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return 0;
+    const manager = getCurrencyManager();
+    if (manager?.convertCurrency) {
+        return manager.convertCurrency(numeric, 'USD', getPreferredCurrencyCode());
+    }
+    return numeric;
+}
+
+function formatFiat(value, options = {}) {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return '—';
+    const manager = getCurrencyManager();
+    const baseOptions = {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+        ...options
+    };
+    if (manager?.formatCurrency) {
+        return manager.formatCurrency(numeric, { fromCurrency: 'USD', ...baseOptions });
+    }
+    const fallbackOptions = {
+        style: 'currency',
+        currency: 'USD',
+        ...baseOptions
+    };
+    return numeric.toLocaleString('en-US', fallbackOptions);
+}
+
+window.addEventListener('preferredCurrencyChange', () => {
+    if (marketData.length === 0) return;
+    renderMarketsTable();
+});
 
 // Determine tags for a coin based on categories
 function determineTags(categories) {
@@ -64,21 +110,66 @@ function transformCoinData(coinData) {
     return coins.sort((a, b) => b.marketCap - a.marketCap);
 }
 
+function resolveCoinIdBySymbol(symbol) {
+    if (!symbol || !Array.isArray(marketData)) return null;
+    const normalized = symbol.toUpperCase();
+    const match = marketData.find(coin => coin.symbol?.toUpperCase() === normalized);
+    return match?.coin_id ?? null;
+}
+
+// Normalize the 24h data JSON into ordered numeric arrays per symbol
+function normalize24hSeries(series) {
+    if (!series) return null;
+
+    if (Array.isArray(series)) {
+        const normalized = series
+            .map(value => Number(value))
+            .filter(value => Number.isFinite(value));
+        return normalized.length ? normalized : null;
+    }
+
+    if (typeof series === 'object') {
+        const normalized = Object.entries(series)
+            .sort((a, b) => Number(a[0]) - Number(b[0]))
+            .map(([, value]) => Number(value))
+            .filter(value => Number.isFinite(value));
+        return normalized.length ? normalized : null;
+    }
+
+    return null;
+}
+
+function getChartSeriesForSymbol(symbol) {
+    if (!symbol) return null;
+    return chartData24h[symbol.toUpperCase()] || null;
+}
+
 // Format large numbers (market cap, volume)
 function formatLargeNumber(num) {
-    if (num >= 1e12) return `$${(num / 1e12).toFixed(2)}T`;
-    if (num >= 1e9) return `$${(num / 1e9).toFixed(2)}B`;
-    if (num >= 1e6) return `$${(num / 1e6).toFixed(2)}M`;
-    if (num >= 1e3) return `$${(num / 1e3).toFixed(2)}K`;
-    return `$${num.toFixed(2)}`;
+    if (!Number.isFinite(Number(num))) return '—';
+    return formatFiat(num, { notation: 'compact', maximumFractionDigits: 2 });
 }
 
 // Format price with appropriate decimal places
 function formatPrice(price) {
-    if (price >= 1000) return `$${price.toFixed(2)}`;
-    if (price >= 1) return `$${price.toFixed(4)}`;
-    if (price >= 0.01) return `$${price.toFixed(6)}`;
-    return `$${price.toFixed(8)}`;
+    if (!Number.isFinite(Number(price))) return '—';
+    const converted = Math.abs(convertFromUSD(price));
+    let digits = { minimumFractionDigits: 6, maximumFractionDigits: 8 };
+    if (converted >= 1000) {
+        digits = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
+    } else if (converted >= 1) {
+        digits = { minimumFractionDigits: 2, maximumFractionDigits: 4 };
+    } else if (converted >= 0.01) {
+        digits = { minimumFractionDigits: 4, maximumFractionDigits: 6 };
+    }
+    return formatFiat(price, digits);
+}
+
+function formatChangePercentage(value) {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return '—';
+    const sign = numeric >= 0 ? '+' : '';
+    return `${sign}${numeric.toFixed(2)}%`;
 }
 
 // Calculate position in 24h range (0-100%)
@@ -100,6 +191,12 @@ function paginateData(data, page, perPage) {
     return data.slice(start, end);
 }
 
+function navigateToCoinDetails(coinId) {
+    if (coinId === undefined || coinId === null || coinId === '') return false;
+    window.location.href = `/pages/coin-details.html?coin_id=${coinId}`;
+    return true;
+}
+
 // Render a single market row
 function renderMarketRow(coin) {
     const changeClass = coin.change24h >= 0 ? 'positive' : 'negative';
@@ -107,7 +204,7 @@ function renderMarketRow(coin) {
     const rangePosition = calculateRangePosition(coin.price, coin.low24h, coin.high24h);
 
     return `
-        <tr data-symbol="${coin.symbol}">
+        <tr data-symbol="${coin.symbol}" data-price-usd="${coin.price}">
             <td>
                 <div class="crypto-name-cell">
                     <img src="${coin.imgUrl}" alt="${coin.symbol}" onerror="this.style.display='none';">
@@ -164,42 +261,61 @@ function renderMarketsTable() {
 
 // Update hot crypto and new listings cards with real data
 function updateMarketCards() {
-    // Get top 3 coins by market cap rank for hot crypto
-    const hotCrypto = [...marketData]
-        .sort((a, b) => b.marketCap - a.marketCap)
-        .slice(0, 3);
-    
-    // Use fetched new listings data or fallback to market data
-    const newListings = newListingsData.length > 0 ? newListingsData.slice(0, 3) : 
-        [...marketData].sort((a, b) => b.marketCap - a.marketCap).slice(10, 13);
-    
-    // Update hot crypto card
+    const createCardMarkup = (coin, valueContent) => {
+        const symbol = coin.symbol || coin.id || '';
+        const coinId = coin.coin_id ?? resolveCoinIdBySymbol(symbol) ?? '';
+        const image = coin.imgUrl || coin.image || '';
+        return `
+            <div class="markets-card-item" data-symbol="${symbol}" data-coin-id="${coinId}">
+                <div class="markets-card-item-name">
+                    <img src="${image}" alt="${symbol}" style="width: 24px; height: 24px; border-radius: 50%;" onerror="this.style.display='none';">
+                    <span>${coin.name}</span>
+                </div>
+                <div class="markets-card-item-value">${valueContent}</div>
+            </div>
+        `;
+    };
+
+    const hotSource = hotCryptoData.length > 0
+        ? hotCryptoData.slice(0, 3)
+        : [...marketData]
+            .sort((a, b) => (Number(b.change24h) || 0) - (Number(a.change24h) || 0))
+            .slice(0, 3);
+
+    const newListingsSource = newListingsData.length > 0
+        ? newListingsData.slice(0, 3)
+        : [...marketData].sort((a, b) => b.marketCap - a.marketCap).slice(10, 13);
+
     const hotCryptoList = document.querySelector('.markets-card:first-child .markets-card-list');
-    if (hotCryptoList && hotCrypto.length > 0) {
-        hotCryptoList.innerHTML = hotCrypto.map(coin => `
-            <div class="markets-card-item">
-                <div class="markets-card-item-name">
-                    <img src="${coin.imgUrl}" alt="${coin.symbol}" style="width: 24px; height: 24px; border-radius: 50%;" onerror="this.style.display='none';">
-                    <span>${coin.name}</span>
-                </div>
-                <div class="markets-card-item-value">${formatLargeNumber(coin.marketCap)}</div>
-            </div>
-        `).join('');
+    if (hotCryptoList && hotSource.length > 0) {
+        hotCryptoList.innerHTML = hotSource.map(coin => {
+            const changeValue = formatChangePercentage(coin.change24h ?? coin.price_change_percentage_24h ?? 0);
+            return createCardMarkup(coin, changeValue);
+        }).join('');
     }
-    
-    // Update new listings card
+
     const newListingsCard = document.querySelector('.markets-card:last-child .markets-card-list');
-    if (newListingsCard && newListings.length > 0) {
-        newListingsCard.innerHTML = newListings.map(coin => `
-            <div class="markets-card-item">
-                <div class="markets-card-item-name">
-                    <img src="${coin.imgUrl}" alt="${coin.symbol || coin.id}" style="width: 24px; height: 24px; border-radius: 50%;" onerror="this.style.display='none';">
-                    <span>${coin.name}</span>
-                </div>
-                <div class="markets-card-item-value">${formatPrice(coin.price)}</div>
-            </div>
-        `).join('');
+    if (newListingsCard && newListingsSource.length > 0) {
+        newListingsCard.innerHTML = newListingsSource.map(coin => {
+            const priceValue = formatPrice(coin.price ?? coin.current_price);
+            return createCardMarkup(coin, priceValue);
+        }).join('');
     }
+}
+
+function generateMockSparkline(change24h = 0) {
+    const points = [];
+    const numPoints = 24;
+    let value = 100;
+
+    for (let i = 0; i < numPoints; i++) {
+        value += (Math.random() - 0.48) * 5;
+        points.push(value);
+    }
+
+    const adjustment = (change24h / 100) * value;
+    points[points.length - 1] = value + adjustment;
+    return points;
 }
 
 // Draw a simple mini chart (sparkline)
@@ -213,33 +329,37 @@ function drawMiniChart(symbol, change24h) {
     canvas.width = width;
     canvas.height = height;
 
-    // Generate random data points for demo
-    const points = [];
-    const numPoints = 24;
-    let value = 100;
-    
-    for (let i = 0; i < numPoints; i++) {
-        value += (Math.random() - 0.48) * 5;
-        points.push(value);
-    }
+    const numericChange = Number.isFinite(Number(change24h)) ? Number(change24h) : 0;
+    const realSeries = getChartSeriesForSymbol(symbol);
+    const hasRealSeries = Array.isArray(realSeries) && realSeries.length > 1;
+    const points = hasRealSeries ? [...realSeries] : generateMockSparkline(numericChange);
+    const numPoints = points.length;
 
-    // Adjust to match 24h change
-    const adjustment = (change24h / 100) * value;
-    points[points.length - 1] = value + adjustment;
-
-    // Find min and max for scaling
     const min = Math.min(...points);
     const max = Math.max(...points);
-    const range = max - min;
+    const rawRange = max - min;
+    const range = rawRange === 0 ? 1 : rawRange;
+    const isFlatLine = rawRange === 0;
 
     // Get colors from CSS variables for theme support
     const computedStyle = getComputedStyle(document.documentElement);
     const successColor = computedStyle.getPropertyValue('--color-success').trim();
     const errorColor = computedStyle.getPropertyValue('--color-error').trim();
-    
-    // Use success color for positive trend, error color for negative trend
-    const lineColor = change24h >= 0 ? successColor : errorColor;
-    
+
+    // Determine trend based on real data if available
+    let effectiveChange = numericChange;
+    if (hasRealSeries && points.length >= 2) {
+        const first = points[0];
+        const last = points[points.length - 1];
+        if (Number.isFinite(first) && first !== 0) {
+            effectiveChange = ((last - first) / Math.abs(first)) * 100;
+        } else {
+            effectiveChange = last - first;
+        }
+    }
+
+    const lineColor = effectiveChange >= 0 ? successColor : errorColor;
+
     // Draw line
     ctx.strokeStyle = lineColor;
     ctx.lineWidth = 1.5;
@@ -247,7 +367,8 @@ function drawMiniChart(symbol, change24h) {
 
     points.forEach((point, index) => {
         const x = (index / (numPoints - 1)) * width;
-        const y = height - ((point - min) / range) * height;
+        const normalized = isFlatLine ? 0.5 : (point - min) / range;
+        const y = height - normalized * height;
         
         if (index === 0) {
             ctx.moveTo(x, y);
@@ -266,7 +387,9 @@ function drawMiniChart(symbol, change24h) {
         range,
         numPoints,
         lineColor,
-        symbol
+        symbol,
+        usesActualData: hasRealSeries,
+        isFlatLine
     };
 
     // Add hover functionality
@@ -316,7 +439,7 @@ function setupChartHover(canvas) {
             return;
         }
 
-        const { points, min, range, numPoints, lineColor, symbol } = canvas.chartData;
+        const { points, min, range, numPoints, lineColor, symbol, usesActualData } = canvas.chartData;
         const width = canvas.width;
         const height = canvas.height;
 
@@ -324,18 +447,21 @@ function setupChartHover(canvas) {
         const pointIndex = Math.round((x / width) * (numPoints - 1));
         const point = points[pointIndex];
         
-        // Get the actual price from the row
         const row = canvas.closest('tr');
-        const priceCell = row?.querySelector('.price-cell');
-        const currentPrice = priceCell?.textContent.replace('$', '') || '0';
-        const basePrice = parseFloat(currentPrice.replace(/,/g, ''));
-        
-        // Calculate approximate price for the hovered point (based on the chart data)
-        const priceMultiplier = point / points[points.length - 1];
-        const hoveredPrice = basePrice * priceMultiplier;
+        const parsedBasePrice = parseFloat(row?.dataset.priceUsd || '0');
+        const hasBasePrice = Number.isFinite(parsedBasePrice);
+        const basePriceUsd = hasBasePrice ? parsedBasePrice : 0;
+        const lastPoint = points[points.length - 1];
+
+        let hoveredPriceUsd = basePriceUsd;
+        if (usesActualData) {
+            hoveredPriceUsd = point;
+        } else if (hasBasePrice && Number.isFinite(lastPoint) && lastPoint !== 0) {
+            hoveredPriceUsd = basePriceUsd * (point / lastPoint);
+        }
 
         // Show tooltip
-        tooltip.textContent = `Price ${formatPrice(hoveredPrice)}`;
+        tooltip.textContent = `Price ${formatPrice(hoveredPriceUsd)}`;
         tooltip.style.opacity = '1';
         
         // Position tooltip above the cursor
@@ -369,7 +495,7 @@ function redrawChartWithHover(canvas, hoverIndex) {
     if (!canvas.chartData) return;
 
     const ctx = canvas.getContext('2d');
-    const { points, min, range, numPoints, lineColor } = canvas.chartData;
+    const { points, min, range, numPoints, lineColor, isFlatLine } = canvas.chartData;
     const width = canvas.width;
     const height = canvas.height;
 
@@ -383,7 +509,8 @@ function redrawChartWithHover(canvas, hoverIndex) {
 
     points.forEach((point, index) => {
         const x = (index / (numPoints - 1)) * width;
-        const y = height - ((point - min) / range) * height;
+        const normalized = isFlatLine ? 0.5 : (point - min) / range;
+        const y = height - normalized * height;
         
         if (index === 0) {
             ctx.moveTo(x, y);
@@ -396,7 +523,8 @@ function redrawChartWithHover(canvas, hoverIndex) {
 
     // Draw hover point and vertical line
     const hoverX = (hoverIndex / (numPoints - 1)) * width;
-    const hoverY = height - ((points[hoverIndex] - min) / range) * height;
+    const hoverNormalized = isFlatLine ? 0.5 : (points[hoverIndex] - min) / range;
+    const hoverY = height - hoverNormalized * height;
 
     // Draw vertical dashed line
     ctx.setLineDash([3, 3]);
@@ -425,7 +553,7 @@ function redrawChart(canvas) {
     if (!canvas.chartData) return;
 
     const ctx = canvas.getContext('2d');
-    const { points, min, range, numPoints, lineColor } = canvas.chartData;
+    const { points, min, range, numPoints, lineColor, isFlatLine } = canvas.chartData;
     const width = canvas.width;
     const height = canvas.height;
 
@@ -439,7 +567,8 @@ function redrawChart(canvas) {
 
     points.forEach((point, index) => {
         const x = (index / (numPoints - 1)) * width;
-        const y = height - ((point - min) / range) * height;
+        const normalized = isFlatLine ? 0.5 : (point - min) / range;
+        const y = height - normalized * height;
         
         if (index === 0) {
             ctx.moveTo(x, y);
@@ -503,15 +632,20 @@ function initializeFilters() {
 // Initialize row click handlers
 function initializeRowHandlers() {
     document.addEventListener('click', (e) => {
+        const cardItem = e.target.closest('.markets-card-item[data-symbol]');
+        if (cardItem) {
+            const directId = cardItem.dataset.coinId;
+            if (navigateToCoinDetails(directId)) return;
+            const fallbackSymbol = cardItem.dataset.symbol;
+            const resolved = resolveCoinIdBySymbol(fallbackSymbol);
+            if (navigateToCoinDetails(resolved)) return;
+        }
+
         const row = e.target.closest('tr[data-symbol]');
         if (row) {
             const symbol = row.dataset.symbol;
-            console.log(row.dataset);
-            console.log(marketData);
             const coin_id = marketData.find(coin => coin.symbol === symbol)?.coin_id ;
-            console.log(`Clicked on ${symbol} - Coin ID: ${coin_id}`);
-            // TODO: Navigate to coin detail page
-            window.location.href = `/pages/coin-details.html?coin_id=${coin_id}`;
+            navigateToCoinDetails(coin_id);
         }
     });
 }
@@ -529,11 +663,30 @@ async function fetchMarketData() {
     }
 }
 
+// Fetch cached 24h sparkline data
+async function fetch24hChartData() {
+    try {
+        const data = await jsonFileParser('/data/data_24h.json');
+        chartData24h = Object.entries(data || {}).reduce((acc, [symbol, series]) => {
+            const normalized = normalize24hSeries(series);
+            if (normalized) {
+                acc[symbol.toUpperCase()] = normalized;
+            }
+            return acc;
+        }, {});
+        return chartData24h;
+    } catch (error) {
+        console.error('Error fetching 24h chart data:', error);
+        chartData24h = {};
+        return chartData24h;
+    }
+}
+
 // Fetch new listings from CoinGecko API
 async function fetchNewListings() {
     try {
         // Fetch recently added coins from CoinGecko
-        const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=id_desc&per_page=10&page=1&sparkline=false&locale=en');
+        const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=id_desc&per_page=10&page=1&sparkline=false&locale=en&price_change_percentage=24h');
         
         if (!response.ok) {
             throw new Error('Failed to fetch new listings from CoinGecko');
@@ -547,7 +700,7 @@ async function fetchNewListings() {
             symbol: coin.symbol?.toUpperCase(),
             id: coin.id,
             price: coin.current_price,
-            change24h: coin.price_change_percentage_24h || 0,
+            change24h: coin.price_change_percentage_24h_in_currency ?? coin.price_change_percentage_24h ?? 0,
             volume24h: coin.total_volume,
             marketCap: coin.market_cap,
             low24h: coin.low_24h,
@@ -566,6 +719,36 @@ async function fetchNewListings() {
     }
 }
 
+// Fetch top gainers for hot crypto card
+async function fetchHotCrypto() {
+    try {
+        const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=price_change_percentage_24h_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h');
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch hot crypto data from CoinGecko');
+        }
+
+        const data = await response.json();
+
+        hotCryptoData = data.map(coin => ({
+            name: coin.name,
+            symbol: coin.symbol?.toUpperCase(),
+            id: coin.id,
+            price: coin.current_price,
+            change24h: coin.price_change_percentage_24h_in_currency ?? coin.price_change_percentage_24h ?? 0,
+            marketCap: coin.market_cap,
+            imgUrl: coin.image,
+            tags: ['all']
+        }));
+
+        return hotCryptoData;
+    } catch (error) {
+        console.error('Error fetching hot crypto data:', error);
+        hotCryptoData = [];
+        return hotCryptoData;
+    }
+}
+
 // Initialize the markets page
 async function initializeMarketsPage() {
     console.log('Initializing markets page...');
@@ -573,7 +756,9 @@ async function initializeMarketsPage() {
     // Fetch market data and new listings in parallel
     await Promise.all([
         fetchMarketData(),
-        fetchNewListings()
+        fetchNewListings(),
+        fetch24hChartData(),
+        fetchHotCrypto()
     ]);
     
     // Render market data
@@ -616,7 +801,9 @@ async function initializeMarketsPage() {
     setInterval(async () => {
         await Promise.all([
             fetchMarketData(),
-            fetchNewListings()
+            fetchNewListings(),
+            fetch24hChartData(),
+            fetchHotCrypto()
         ]);
         renderMarketsTable();
     }, 60000);

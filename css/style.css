@@ -27,6 +27,9 @@
 /* 6. Dashboard - Wallet, Portfolio, Balances, Transactions */
 @import url('dashboard.css');
 
+/* 6b. Coin Details - Individual asset view */
+@import url('coin-details.css');
+
 /* 7. Trade - Buy/Sell Crypto Interface */
 @import url('trade.css');
 
@@ -70,6 +73,7 @@
    auth.css          - Login and signup pages, forms
    news.css          - News page, article page, related content
    responsive.css    - All media queries for mobile responsiveness
+   coin-details.css  - Individual coin/asset detail page styles
    trade.css         - Trade page, buy/sell crypto interface
    newspaper_template.css - Styles for newspaper-themed templates
    skeleton.css     - Skeleton screen styles for loading states

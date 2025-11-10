@@ -175,34 +175,6 @@ function initializeNavigation() {
         });
     });
     
-    // Sticky header on scroll with throttling
-    let lastScrollTop = 0;
-    const navBar = document.querySelector('.nav-bar');
-    let scrollTimeout;
-    
-    window.addEventListener('scroll', function() {
-        if (scrollTimeout) {
-            return;
-        }
-        
-        scrollTimeout = setTimeout(function() {
-            scrollTimeout = null;
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (navBar) {
-                if (scrollTop > lastScrollTop && scrollTop > 100) {
-                    // Scrolling down
-                    navBar.style.transform = 'translateY(-100%)';
-                } else {
-                    // Scrolling up
-                    navBar.style.transform = 'translateY(0)';
-                }
-            }
-            
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-        }, 100);
-    }, false);
-    
     console.log('Navigation initialized');
 }
 
