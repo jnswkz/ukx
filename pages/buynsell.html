@@ -79,11 +79,36 @@
             </div>
         </main>
     </div>
+
     <div id="footer-placeholder"></div>
+     <div>
+    <!-- Bong bóng chat -->
+    <div id="chat-button">
+        <img style="width: 55px; height: 55px; border-radius: 50%;" src="/assets/ukx-assistant.png" alt="AI assistant Icon" />
+    </div>
+    
+    <!-- Chat Popup -->
+    <div id="chat-popup" class="hidden">
+        <div class="chat-header">
+        <span>AI Assistant</span>
+        <button id="close-chat">&times;</button>
+        </div>
+    
+        <div class="chat-body" id="chat-body">
+        <div class="bot-message">Hello! How can I help you today?</div>
+        </div>
+    
+        <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Type your message..." />
+        <button id="send-btn">➤</button>
+        </div>
+    </div>
+    </div>
 
 
     <script src="../js/components.js"></script>
     <script src="../js/main.js"></script>
+    <script src="../js/chat.js"></script>
     <script src="/js/buynsell.js">
         
     </script>

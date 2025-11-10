@@ -58,16 +58,19 @@ export async function callApi(message){
     message = prompt + "\nUser: " + message;
     const payload = {
         max_results: 1,
-        model: 'sonar-pro',
+        "model": 'sonar',
         messages: [{
             role: 'user',
             content: [
                 { type: 'text', text: message },
                 { type: 'file_url', file_url: { url: 'https://raw.githubusercontent.com/jnswkz/ukx/refs/heads/main/data/data_24h.json' } },
                 { type: 'file_url', file_url: { url: 'https://raw.githubusercontent.com/jnswkz/ukx/refs/heads/main/data/data_7d.json' } },
-                { type: 'file_url', file_url: { url: 'https://raw.githubusercontent.com/jnswkz/ukx/refs/heads/main/data/data_30_days.json' } }
+                { type: 'file_url', file_url: { url: 'https://raw.githubusercontent.com/jnswkz/ukx/refs/heads/main/data/data_30_days.json' } },
+                { type: 'file_url', file_url: { url: 'https://raw.githubusercontent.com/jnswkz/ukx/refs/heads/main/data/users_data.json' }}
             ]
-        }]
+        }],
+        "stream": false,
+        "enable_search_classifiers": true
     };
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
