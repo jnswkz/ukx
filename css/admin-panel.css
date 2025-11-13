@@ -96,11 +96,11 @@
 
 /* Menu chính */
 .admin-panel-menu {
-  margin-top: -16px;
+  margin-top: -120px;
 }
 
 .admin-panel-sidebar.collapsed .admin-panel-menu {
-  margin-top: -40px;
+  margin-top: -120px;
 }
 
 .admin-panel-menu-item {
