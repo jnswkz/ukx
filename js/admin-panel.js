@@ -58,37 +58,105 @@ document.querySelectorAll(".admin-panel-status-btn").forEach((btn) => {
   });
 });
 
-// Toggle / insert dashboard submenu items when dashboard item clicked
-const dashboardItem = document.querySelector(".admin-panel-menu-item.active");
-const dashboardSubmenu = document.getElementById("dashboard-submenu");
+// Bảng động
+// ====== Ví dụ dữ liệu ======
+const headers = [
+  "Trade ID",
+  "Trade Date",
+  "From",
+  "To",
+  "Coin type",
+  "Price",
+  "Status",
+];
 
-function toggleDashboardSubmenu() {
-  if (!dashboardSubmenu || !dashboardItem) return;
+const rows = [
+  {
+    "Trade ID": 12,
+    "Trade Date": "11/11/2020",
+    From: "Mẫn Dần",
+    To: "Quý Bửu",
+    "Coin type": "BTC",
+    Price: 0.01,
+    Status: {
+      type: "status",
+      kind: "span",
+      class: "completed",
+      text: "Completed",
+    },
+  },
+  {
+    "Trade ID": 13,
+    "Trade Date": "11/11/2020",
+    From: "Ngọc Duy",
+    To: "Basupeso",
+    "Coin type": "ETH",
+    Price: 2.5,
+    Status: { type: "status", kind: "button", class: "public", text: "Public" },
+  },
+  {
+    "Trade ID": 14,
+    "Trade Date": "12/11/2020",
+    From: "Phúc Lâm",
+    To: "Hồng Hà",
+    "Coin type": "USDT",
+    Price: 1500,
+    Status: { type: "status", kind: "button", class: "hide", text: "Hide" },
+  },
+];
 
-  const isOpen = dashboardSubmenu.childElementCount > 0; // Nếu không có con có nghĩa submenu k mở
-  if (isOpen) {
-    dashboardSubmenu.innerHTML = "";
-    dashboardSubmenu.setAttribute("aria-hidden", "true");
-    const arrow = dashboardItem.querySelector(".admin-panel-item-arrow");
-    arrow.textContent = "▾";
-  } else {
-    const items = ["Users", "Trade", "New"];
-    items.forEach((t) => {
-      const div = document.createElement("div");
-      div.className = "admin-panel-submenu-item";
-      div.textContent = t;
-      dashboardSubmenu.appendChild(div);
-    });
-    dashboardSubmenu.setAttribute("aria-hidden", "false");
-    const arrow = dashboardItem.querySelector(".admin-panel-item-arrow");
-    arrow.textContent = "▴";
-  }
-}
+function createAdminTable(headerData, rowData) {
+  const table = document.createElement("table");
+  table.className = "admin-panel-table";
 
-// attach click: clicking anywhere on the dashboard item toggles submenu
-if (dashboardItem) {
-  dashboardItem.addEventListener("click", (e) => {
-    // prevent toggling when clicking links inside submenu area if expanded
-    toggleDashboardSubmenu();
+  // ====== Tạo phần header ======
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
+  headerData.forEach((text) => {
+    const th = document.createElement("th");
+    th.textContent = text;
+    headerRow.appendChild(th);
   });
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  // ====== Tạo phần body ======
+  const tbody = document.createElement("tbody");
+
+  rowData.forEach((row) => {
+    const tr = document.createElement("tr");
+
+    headerData.forEach((key) => {
+      const td = document.createElement("td");
+      const value = row[key];
+
+      // Nếu là object đặc biệt, ví dụ có type/status/button
+      if (typeof value === "object" && value.type === "status") {
+        if (value.kind === "span") {
+          const span = document.createElement("span");
+          span.className = `admin-panel-status ${value.class}`;
+          span.textContent = value.text;
+          td.appendChild(span);
+        } else if (value.kind === "button") {
+          const btn = document.createElement("button");
+          btn.className = `admin-panel-status-btn ${value.class}`;
+          btn.textContent = value.text;
+          td.appendChild(btn);
+        }
+      } else {
+        td.textContent = value;
+      }
+
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  return table;
 }
+
+document
+  .querySelector(".admin-panel")
+  .appendChild(createAdminTable(headers, rows));
