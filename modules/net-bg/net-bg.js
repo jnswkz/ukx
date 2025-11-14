@@ -6,11 +6,13 @@
     }
 
     const instances = [];
+    const canvasInstanceMap = new Map();
 
     canvases.forEach((canvas) => {
         const instance = createNetBackground(canvas);
         if (instance) {
             instances.push(instance);
+            canvasInstanceMap.set(canvas, instance);
         }
     });
 
@@ -29,9 +31,52 @@
 
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
+    const isElementInViewport = (element) => {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.width > 0 &&
+            rect.height > 0 &&
+            rect.bottom >= 0 &&
+            rect.right >= 0 &&
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.left <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    };
+
+    let visibilityObserver = null;
+
+    if ('IntersectionObserver' in window) {
+        visibilityObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const instance = canvasInstanceMap.get(entry.target);
+                if (!instance) {
+                    return;
+                }
+
+                if (entry.isIntersecting || entry.intersectionRatio > 0) {
+                    instance.setActive(true);
+                } else {
+                    instance.setActive(false);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '120px 0px' });
+
+        canvasInstanceMap.forEach((instance, canvas) => {
+            visibilityObserver.observe(canvas);
+            if (isElementInViewport(canvas)) {
+                instance.setActive(true);
+            }
+        });
+    } else {
+        instances.forEach(instance => instance.setActive(true));
+    }
+
     window.addEventListener('beforeunload', () => {
         instances.forEach(instance => instance.destroy());
         themeObserver.disconnect();
+        if (visibilityObserver) {
+            visibilityObserver.disconnect();
+        }
     });
 
     function createNetBackground(canvas) {
@@ -67,7 +112,9 @@
         let mousex = 0;
         let mousey = 0;
         let pointerActive = false;
-        let rafId;
+        let rafId = null;
+        let isActive = false;
+        let interactionBound = false;
 
         function resizeCanvas() {
             const rect = canvas.getBoundingClientRect();
@@ -144,23 +191,28 @@
             ctx.shadowBlur = 0;
         }
 
-        function getRelativePointerPosition(event) {
+        function getRelativePointerPosition(clientX, clientY) {
             const rect = canvas.getBoundingClientRect();
             if (
-                event.clientX < rect.left || event.clientX > rect.right ||
-                event.clientY < rect.top || event.clientY > rect.bottom
+                clientX < rect.left || clientX > rect.right ||
+                clientY < rect.top || clientY > rect.bottom
             ) {
                 return null;
             }
 
             return {
-                x: event.clientX - rect.left,
-                y: event.clientY - rect.top
+                x: clientX - rect.left,
+                y: clientY - rect.top
             };
         }
 
-        const handleMouseMove = (event) => {
-            const pos = getRelativePointerPosition(event);
+        let lastPointerClient = null;
+
+        const updatePointerFromLastClient = () => {
+            if (!lastPointerClient) {
+                return;
+            }
+            const pos = getRelativePointerPosition(lastPointerClient.x, lastPointerClient.y);
             if (!pos) {
                 pointerActive = false;
                 return;
@@ -171,11 +223,20 @@
             mousey = pos.y;
         };
 
+        const handleMouseMove = (event) => {
+            lastPointerClient = { x: event.clientX, y: event.clientY };
+            updatePointerFromLastClient();
+        };
+
         const handleClick = (event) => {
-            const pos = getRelativePointerPosition(event);
+            const pos = getRelativePointerPosition(event.clientX, event.clientY);
             if (!pos) {
                 return;
             }
+            lastPointerClient = { x: event.clientX, y: event.clientY };
+            pointerActive = true;
+            mousex = pos.x;
+            mousey = pos.y;
 
             points.push({
                 x: pos.x,
@@ -189,6 +250,10 @@
         };
 
         function render() {
+            if (!isActive) {
+                return;
+            }
+
             ctx.clearRect(0, 0, width, height);
             movePoints();
 
@@ -277,30 +342,81 @@
 
         const handleMouseLeave = () => {
             pointerActive = false;
+            lastPointerClient = null;
         };
 
-        document.addEventListener('mousemove', handleMouseMove, { passive: true });
-        document.addEventListener('mouseleave', handleMouseLeave);
-        document.addEventListener('click', handleClick);
+        const handleScroll = () => {
+            if (!lastPointerClient) {
+                return;
+            }
+            updatePointerFromLastClient();
+        };
+
+        const addInteractionListeners = () => {
+            if (interactionBound) {
+                return;
+            }
+
+            document.addEventListener('mousemove', handleMouseMove, { passive: true });
+            document.addEventListener('mouseleave', handleMouseLeave);
+            document.addEventListener('click', handleClick);
+            window.addEventListener('scroll', handleScroll, true);
+            interactionBound = true;
+        };
+
+        const removeInteractionListeners = () => {
+            if (!interactionBound) {
+                return;
+            }
+
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseleave', handleMouseLeave);
+            document.removeEventListener('click', handleClick);
+            window.removeEventListener('scroll', handleScroll, true);
+            interactionBound = false;
+        };
 
         const onResize = () => resizeCanvas();
         window.addEventListener('resize', onResize);
+
+        const start = () => {
+            if (isActive) {
+                return;
+            }
+            isActive = true;
+            addInteractionListeners();
+            rafId = requestAnimationFrame(render);
+        };
+
+        const stop = () => {
+            if (!isActive) {
+                return;
+            }
+            isActive = false;
+            removeInteractionListeners();
+            pointerActive = false;
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        };
 
         resizeCanvas();
         updateColors();
         seedPoints();
         mousex = width / 2;
         mousey = height / 2;
-        rafId = requestAnimationFrame(render);
 
         return {
             updateColors,
+            setActive(active) {
+                if (active) {
+                    start();
+                } else {
+                    stop();
+                }
+            },
             destroy() {
-                document.removeEventListener('mousemove', handleMouseMove);
-                document.removeEventListener('mouseleave', handleMouseLeave);
-                document.removeEventListener('click', handleClick);
+                stop();
                 window.removeEventListener('resize', onResize);
-                cancelAnimationFrame(rafId);
             }
         };
     }

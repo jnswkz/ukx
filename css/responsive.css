@@ -7,6 +7,7 @@
    Breakpoint: Large Tablets (900px)
    ======================================== */
 @media (max-width: 900px) {
+    
     .nav-container,
     .hero-container,
     .features-grid,
@@ -155,6 +156,10 @@
    Breakpoint: Mobile Landscape (768px)
    ======================================== */
 @media (max-width: 768px) {
+    /* Hide animated network canvas on smaller devices to improve performance */
+    .net-bg-canvas {
+        display: none !important;
+    }
     /* Typography Scale Down */
     .hero-title {
         font-size: 36px;
@@ -306,6 +311,11 @@
    Breakpoint: Mobile Portrait (640px)
    ======================================== */
 @media (max-width: 640px) {
+    /* Disable animated network canvas on mobile to avoid layout and perf issues */
+    .net-bg-canvas {
+        display: none !important;
+    }
+
     /* Typography Further Scale */
     .hero-title {
         font-size: 28px;
