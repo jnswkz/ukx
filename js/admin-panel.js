@@ -22,7 +22,9 @@ function updateName() {
   nameElement.textContent = storedName;
 }
 
-// Menu item switching logic
+// logic đổi tab
+let loginChartDrawn = false;
+
 function switchSection(section) {
   const addHidden = (selectors) => {
     selectors.forEach((sel) => {
@@ -79,9 +81,11 @@ function switchSection(section) {
       "admin-panel-coin-held-chart-title",
       "admin-panel-age-chart-title",
     ]);
-    // Vẽ chart tt users khi chuyển sang tab Users
-    resizeCanvasToParent("admin-panel-login-chart");
-    drawBarChart("admin-panel-login-chart", loginChartData);
+    if (!loginChartDrawn) {
+      resizeCanvasToParent("admin-panel-login-chart");
+      drawBarChart("admin-panel-login-chart", loginChartData);
+      loginChartDrawn = true;
+    }
   } else if (section === "news") {
     // News view
     addHidden([

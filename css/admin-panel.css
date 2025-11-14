@@ -475,13 +475,15 @@
 
 /* Các chart */
 .admin-panel-bar-chart-container {
-  width: 100%;
+  justify-self: center;
   background: white;
   border-radius: var(--radius-lg);
-  padding: var(--spacing-lg);
   min-height: 400px;
-  color:black;
+  min-width: 100%;
+  padding-bottom: 20px;
+  margin-right: var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
+  color:black;
 }
 /* Bảng giao dịch */
 .admin-panel-table {
