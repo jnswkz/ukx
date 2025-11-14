@@ -12,8 +12,17 @@ function updateTime() {
   time.textContent = getCurrentDateTime();
 }
 
+function updateName() {
+  const nameElement = document.querySelector(".admin-panel-username");
+  if (!nameElement) return;
+  let userData = JSON.parse(window.localStorage.getItem("userData")) || {};
+  const storedName = userData["name"] || "Admin";
+  nameElement.textContent = storedName;
+}
+
 updateTime();
 setInterval(updateTime, 1000);
+updateName();
 
 sidebarToggle.addEventListener("click", () => {
   sidebar.classList.toggle("collapsed");
