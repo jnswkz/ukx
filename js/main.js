@@ -576,15 +576,29 @@ function initializeCTAVideo() {
         if (video.dataset.videoLoaded === 'true') {
             return;
         }
-        const src = video.dataset.videoSrc;
-        if (!src) {
+        const sources = [];
+        const webmSrc = video.dataset.videoSrcWebm;
+        if (webmSrc) {
+            sources.push({ src: webmSrc, type: 'video/webm' });
+        }
+
+        const mp4Src = video.dataset.videoSrcMp4 || video.dataset.videoSrc;
+        if (mp4Src) {
+            sources.push({ src: mp4Src, type: 'video/mp4' });
+        }
+
+        if (sources.length === 0) {
             return;
         }
 
-        const source = document.createElement('source');
-        source.src = src;
-        source.type = 'video/mp4';
-        video.appendChild(source);
+        sources.forEach(({ src, type }) => {
+            const source = document.createElement('source');
+            source.src = src;
+            if (type) {
+                source.type = type;
+            }
+            video.appendChild(source);
+        });
         video.load();
         video.dataset.videoLoaded = 'true';
         // Removed autoplay - video will only play when user clicks play button
