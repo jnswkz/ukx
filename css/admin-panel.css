@@ -3,11 +3,15 @@
   min-height: 100vh;
   background-color: var(--nord0); /* Nền chính đậm */
   font-family: var(--font-primary);
+  padding-right: 20px;
 }
+
 
 /* SIDEBAR */
 .admin-panel-sidebar {
   width: 240px;
+  height: 100vh;
+  top: 0;
   background: var(--nord6); /* Sidebar sáng */
   color: var(--nord0);
   display: flex;
@@ -15,6 +19,7 @@
   justify-content: space-between;
   padding: var(--spacing-md);
   transition: width 0.3s ease;
+  position: sticky;
 }
 
 .admin-panel-info {
@@ -96,11 +101,11 @@
 
 /* Menu chính */
 .admin-panel-menu {
-  margin-top: -120px;
+  margin-top: -30px;
 }
 
 .admin-panel-sidebar.collapsed .admin-panel-menu {
-  margin-top: -120px;
+  margin-top: -30px;
 }
 
 .admin-panel-menu-item {
@@ -229,12 +234,15 @@
   gap: var(--spacing-lg);
 }
 
-.admin-panel-card-left {
+.admin-panel-left {
   flex: 1;
   background: white;
   border-radius: var(--radius-lg);
-  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
   color: var(--nord0);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .admin-panel-card-left h2, .admin-panel-card-right h2 {
@@ -249,6 +257,7 @@
   box-shadow: none !important;
   border-radius: var(--radius-lg);
   padding: var(--spacing-lg) !important;
+  margin-bottom: var(--spacing-lg);
 }
 
 .admin-panel-left .calculator-content {
@@ -402,13 +411,7 @@
   padding: var(--spacing-lg);
   color: var(--nord0);
   margin-bottom: 22px;
-}
-/* Avatar lớn */
-.admin-panel-large-avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  float: right;
+  max-height: 600px;
 }
 
 /* Bộ điều khiển phía trên bảng */
@@ -470,6 +473,16 @@
   min-width: 200px;
 }
 
+/* Các chart */
+.admin-panel-bar-chart-container {
+  width: 100%;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  min-height: 400px;
+  color:black;
+  margin-bottom: var(--spacing-lg);
+}
 /* Bảng giao dịch */
 .admin-panel-table {
   width: 100%;
@@ -523,4 +536,84 @@
 .admin-panel-status-btn.hide {
   background: var(--nord12);
   color: white;
+}
+
+.admin-panel-status.online {
+  background: var(--nord14);
+  color: black;
+}
+
+.admin-panel-status.offline {
+  background: var(--nord12);
+  color: white;
+}
+
+/* ================= Responsive & Density Refinements ================= */
+/* Improve appearance at 100% zoom without relying on browser zoom out */
+.admin-panel-main {
+  padding: clamp(var(--spacing-lg), 3vw, var(--spacing-xl));
+  max-width: 1400px;
+  margin-inline: auto;
+}
+
+.admin-panel-card-left,
+.admin-panel-card-right {
+  padding: clamp(var(--spacing-md), 2vw, var(--spacing-lg));
+}
+
+.admin-panel-top {
+  gap: clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
+}
+
+.admin-panel-table th,
+.admin-panel-table td {
+  padding: clamp(8px, 0.8vw, 12px);
+}
+
+/* Tighter default font sizing for dense data areas */
+.admin-panel-table td,
+.admin-panel-table th,
+.admin-panel-menu-item,
+.admin-panel-submenu-item,
+.admin-panel-status-btn {
+  font-size: clamp(0.75rem, 0.75rem + 0.25vw, 0.95rem);
+}
+
+@media (min-width: 1600px) {
+  .admin-panel-main { max-width: 1500px; }
+}
+
+@media (max-width: 1100px) {
+  .admin-panel-top { flex-direction: column; }
+}
+
+@media (max-width: 900px) {
+  .admin-panel-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    height: 100vh;
+  }
+  .admin-panel-main { margin-left: 240px; }
+  .admin-panel-sidebar.collapsed + .admin-panel-main { margin-left: 80px; }
+}
+
+@media (max-width: 700px) {
+  .admin-panel-sidebar { width: 80px; }
+  .admin-panel-main {
+    margin-left: 80px;
+    padding: clamp(var(--spacing-md), 4vw, var(--spacing-lg));
+  }
+  .admin-panel-sidebar .text,
+  .admin-panel-sidebar .admin-panel-info,
+  .admin-panel-sidebar .admin-panel-submenu,
+  .admin-panel-sidebar .admin-panel-message span,
+  .admin-panel-sidebar .admin-panel-logout span { display: none; }
+}
+
+/* Ensure sidebar collapse doesn't cause overflow on very small viewports */
+@media (max-width: 500px) {
+  .admin-panel-main { margin-left: 0; }
+  .admin-panel-sidebar { transform: translateX(0); }
 }

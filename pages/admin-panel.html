@@ -15,7 +15,7 @@
   <body>
     <div class="admin-panel-container">
       <!-- Sidebar trái -->
-      <aside class="admin-panel-sidebar">
+      <aside class="admin-panel-sidebar collapsed">
         <div class="admin-panel-profile">
           <img
             src="../assets/avatar.png"
@@ -23,11 +23,11 @@
             class="admin-panel-avatar"
           />
           <div class="admin-panel-info">
-            <h3 class="admin-panel-username">Quý Bửu</h3>
+            <h3 class="admin-panel-username">Admin</h3>
             <p class="admin-panel-role">Administrator</p>
           </div>
           <button id="adminSidebarToggle" class="admin-panel-collapse-btn">
-            ❮
+            ❯
           </button>
         </div>
 
@@ -121,23 +121,72 @@
                 </div>
               </div>
             </div>
-            <div class="admin-panel-controls">
-              <div class="admin-panel-controls-btn-container">
-                <button class="admin-panel-btn" id="filter-btn">Filters</button>
-                <button class="admin-panel-btn" id="export-btn">Export</button>
-              </div>
-              <div class="admin-panel-controls-time">Time:</div>
-            </div>
+            <!-- Biểu đồ tròn #1 - users-->
+            <canvas
+              id="admin-panel-age-chart"
+              class="admin-panel-age-chart"
+            ></canvas>
+            <h3
+              style="margin: 0 auto; width: fit-content"
+              class="admin-panel-age-chart-title"
+            >
+              Age Distribution of Users
+            </h3>
           </div>
           <div class="admin-panel-card-right">
-            <h2>Trạng thái giao dịch</h2>
-            <p>Đã có x giao dịch kể từ lần truy cập trước.</p>
+            <!-- Biểu đồ tròn #2 - users -->
+            <canvas
+              id="admin-panel-coin-held-chart"
+              class="admin-panel-coin-held-chart"
+            ></canvas>
+            <h3
+              style="margin: 0 auto; width: fit-content"
+              class="admin-panel-coin-held-chart-title"
+            >
+              Current Coin Holdings Distribution
+            </h3>
+
+            <!-- Biểu đồ thanh #1 - trade -->
+            <canvas
+              id="admin-panel-trade-chart"
+              class="admin-panel-trade-chart"
+            ></canvas>
+            <h3
+              style="margin: 0 auto; width: fit-content"
+              class="admin-panel-trade-chart-title"
+            >
+              Daily Trades Count (Last 5 Days)
+            </h3>
           </div>
         </div>
+        <div class="admin-panel-bar-chart-container">
+          <!-- Biểu đồ thanh #2 - users -->
+          <canvas
+            id="admin-panel-login-chart"
+            class="admin-panel-login-chart"
+          ></canvas>
+          <h3
+            style="margin: 0 auto; width: fit-content"
+            class="admin-panel-login-chart-title"
+          >
+            Daily Logins Count (Last 10 Days)
+          </h3>
+        </div>
+        <div class="admin-panel-controls">
+          <div class="admin-panel-controls-btn-container">
+            <button class="admin-panel-btn" id="filter-btn">Filters</button>
+            <button class="admin-panel-btn" id="export-btn">Export</button>
+          </div>
+          <div class="admin-panel-controls-time">Time:</div>
+        </div>
 
-        <div class="admin-panel"></div>
-
-    <script src="../js/admin-panel.js"></script>
-    <script src="../js/crypto-calculator.js"></script>
+        <!-- Bảng đồ đồ -->
+        <div class="admin-panel-trade"></div>
+        <div class="admin-panel-users"></div>
+        <div class="admin-panel-news"></div>
+      </main>
+    </div>
+    <script type="module" src="../js/admin-panel.js"></script>
+    <script type="module" src="../js/crypto-calculator.js"></script>
   </body>
 </html>
