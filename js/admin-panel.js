@@ -33,6 +33,7 @@ function updateName() {
 // logic đổi tab
 let loginChartDrawn = false;
 let ageChartInstance = null;
+let coinChartInstance = null;
 
 function switchSection(section) {
   const addHidden = (selectors) => {
@@ -95,11 +96,7 @@ function switchSection(section) {
       drawBarChart("admin-panel-login-chart", loginChartData);
       loginChartDrawn = true;
     }
-    const ageCanvas = resizeCanvasToParent("admin-panel-age-chart");
-    if (ageCanvas && ageChartInstance) {
-      ageChartInstance.updateGeometry();
-      ageChartInstance.draw();
-    }
+    stabilizePieCharts();
   } else if (section === "news") {
     // News view
     addHidden([
@@ -460,23 +457,37 @@ function drawCoinHoldingDistributionChart(user_data) {
   if (!canvasEl || dataset.length === 0) {
     return;
   }
-  drawPieChart({
-    canvas: canvasEl,
-    tooltip: "tooltip2",
-    dataset,
-  });
 
+  if (coinChartInstance) {
+    coinChartInstance.updateData(dataset);
+    coinChartInstance.updateGeometry();
+    coinChartInstance.draw();
+  } else {
+    coinChartInstance = drawPieChart({
+      canvas: canvasEl,
+      tooltip: "tooltip2",
+      dataset,
+    });
+  }
 }
 
 drawAgeDistributionChart(user_data);
 drawCoinHoldingDistributionChart(user_data);
-window.addEventListener("resize", () => {
-  const canvas = resizeCanvasToParent("admin-panel-age-chart");
-  if (canvas && ageChartInstance) {
+
+function stabilizePieCharts() {
+  const ageCanvas = resizeCanvasToParent("admin-panel-age-chart");
+  if (ageCanvas && ageChartInstance) {
     ageChartInstance.updateGeometry();
-    ageChartInstance.draw(ageChartInstance.currentHighlightIndex ?? -1);
+    ageChartInstance.draw();
   }
-});
+  const coinCanvas = resizeCanvasToParent("admin-panel-coin-held-chart");
+  if (coinCanvas && coinChartInstance) {
+    coinChartInstance.updateGeometry();
+    coinChartInstance.draw();
+  }
+}
+
+window.addEventListener("resize", stabilizePieCharts);
 
 let logoutBtn = document.getElementById("admin-panel-logout");
 
