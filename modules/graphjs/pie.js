@@ -115,6 +115,9 @@ export class PieChart {
       this.ctx.font = `${fontSize}px Arial`;
       this.ctx.fillStyle = "black";
       const percent = this.total === 0 ? 0 : Math.round((slice.value / this.total) * 100);
+      if (percent === 0) {
+        return;
+      }
       this.ctx.fillText(`${percent}%`, textX, textY);
       this.ctx.fillText(slice.label, textX, textY - fontSize);
     });
