@@ -1,113 +1,202 @@
-// ====== DỮ LIỆU ======
-// Màu thì phải hex và có transparency để khi hover đổi màu đậm hơn
-const data = [
-  { label: "Lâm", value: 40, color: "#ff000080" },
-  { label: "Lộc", value: 25, color: "#36A2EB80" },
-  { label: "Giang", value: 20, color: "#FFCE5680" },
-  { label: "Đông", value: 15, color: "#4BC0C080" },
-  { label: "Khải", value: 100, color:"#0000ff80" },
+const defaultData = [
+  { label: "Lâm", value: 40 },
+  { label: "Lộc", value: 25 },
+  { label: "Giang", value: 20 },
+  { label: "Đông", value: 15 },
+  { label: "Khải", value: 100 },
 ];
 
-// ====== VẼ PIE CHART ======
-const canvas = document.getElementById("pieChart");
-const ctx = canvas.getContext("2d");
-const tooltip = document.getElementById("tooltip");
-let centerX = canvas.width/2, centerY = canvas.width/2, radius = canvas.width/2;
-const total = data.reduce((sum, d) => sum + d.value, 0);
-// tương tự với dòng code này
-// let total = 0;
-// for (let i = 0; i < data.length; i++) {
-//   total += data[i].value;
-// }
-let startAngle = 0;
+const colorPalette = [
+  // "#2E3440", "#3B4252", "#434C5E", "#4C566A",
+  // "#D8DEE9", "#E5E9F0", "#ECEFF4", 
+  "#8FBCBB",
+  "#88C0D0", "#81A1C1", "#5E81AC", "#BF616A",
+  "#D08770", "#EBCB8B", "#A3BE8C", "#B48EAD"
+];
 
-data.forEach(d => {
-  d.startAngle = startAngle;
-  d.endAngle = startAngle + (d.value / total) * 2 * Math.PI;
-  startAngle = d.endAngle;
-});
+const TAU = Math.PI * 2;
 
-function drawChart(highlightIndex = -1) {
-    // data.forEach(d => {
-    // d.startAngle = startAngle;
-    // d.endAngle = startAngle + (d.value / total) * 2 * Math.PI;
-    // startAngle = d.endAngle;
-    // });
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+const resolveElement = (target) => {
+  if (typeof target === "string") {
+    return document.getElementById(target);
+  }
+  return target || null;
+};
 
-  data.forEach((d, i) => {
-    ctx.beginPath();
-    ctx.moveTo(centerX, centerY);
-    ctx.arc(centerX, centerY, radius, d.startAngle, d.endAngle);
+const lightenColor = (color) => {
+  if (!/^#([0-9a-f]{6})$/i.test(color)) {
+    return color;
+  }
+  const r = parseInt(color.slice(1, 3), 16);
+  const g = parseInt(color.slice(3, 5), 16);
+  const b = parseInt(color.slice(5, 7), 16);
+  const lightenChannel = (value) => Math.min(255, Math.round(value + (255 - value) * 0.25));
+  return `rgb(${lightenChannel(r)}, ${lightenChannel(g)}, ${lightenChannel(b)})`;
+};
 
-    ctx.fillStyle = i === highlightIndex ? d.color.slice(0, 7) : d.color;
-    ctx.fill();
-    // if(i===highlightIndex){
-    //   ctx.stroke();
-    // }
-
-    // Vẽ % label
-    const mid = (d.startAngle + d.endAngle) / 2;
-    const textX = centerX + Math.cos(mid) * (radius * 0.75);
-    const textY = centerY + Math.sin(mid) * (radius * 0.75);
-    ctx.fillStyle = "black";
-    let fontSize = canvas.width / 27;
-    ctx.font = `${fontSize}px Arial`;
-    ctx.fillText(Math.round((d.value/total)*100) + "%", textX-10, textY);
-    ctx.fillText(d.label, textX-10, textY-fontSize);
-
-  });
-}
-
-drawChart();
-
-// ====== HOVER DETECTION ======
-let currentHighlightIndex = -1;
-canvas.addEventListener("mousemove", (e) => {
-  const rect = canvas.getBoundingClientRect();
-  const x = e.clientX - rect.left - centerX;
-  const y = e.clientY - rect.top - centerY;
-  const distanceSquared = x*x + y*y;
-
-  if (distanceSquared > radius * radius) {
-    if (tooltip.style.display !== "none" || currentHighlightIndex !== -1) {
-      tooltip.style.display = "none";
-      currentHighlightIndex = -1;
-      drawChart();
+export class PieChart {
+  constructor({ canvas = "pieChart", tooltip = "tooltip", dataset = defaultData, colors = colorPalette } = {}) {
+    this.canvas = resolveElement(canvas);
+    if (!this.canvas) {
+      throw new Error("Pie chart canvas not found");
     }
-    return;
+    this.ctx = this.canvas.getContext("2d");
+    this.tooltip = resolveElement(tooltip);
+    this.colors = colors;
+    this.currentHighlightIndex = -1;
+
+    this.setDataset(dataset);
+    this.updateGeometry();
+    this.draw();
+    this.bindEvents();
   }
 
-  let angle = Math.atan2(y, x);
-  if (angle < 0) angle += 2 * Math.PI;
+  setDataset(dataset) {
+    const sanitized = dataset.map((item) => ({ ...item, value: Number(item.value) || 0 }));
+    this.total = sanitized.reduce((sum, item) => sum + item.value, 0);
+    let startAngle = 0;
 
-  const index = data.findIndex(d => angle >= d.startAngle && angle < d.endAngle);
-
-  if (index !== -1 && index !== currentHighlightIndex) {
-    currentHighlightIndex = index;
-    const d = data[index];
-    drawChart(index);   
-
-    tooltip.style.display = "block";
-    tooltip.style.left = e.pageX + 10 + "px";
-    tooltip.style.top = e.pageY + 10 + "px";
-    tooltip.innerHTML = `<b>${d.label}</b><br>Value: ${d.value}<br>${Math.round((d.value/total)*100)}%`;
-  } else if (index !== -1) {
-    // Update tooltip position without redrawing chart
-    tooltip.style.left = e.pageX + 10 + "px";
-    tooltip.style.top = e.pageY + 10 + "px";
+    this.dataset = sanitized.map((item) => {
+      const slice = { ...item };
+      const sliceAngle = this.total === 0 ? 0 : (slice.value / this.total) * TAU;
+      slice.startAngle = startAngle;
+      slice.endAngle = startAngle + sliceAngle;
+      startAngle = slice.endAngle;
+      return slice;
+    });
   }
-});
-function resizeCanvas() {
-  const rad = document.getElementById("radius").value;
 
-  canvas.width = rad
-  canvas.height = rad
-  centerX = canvas.width/2, centerY = canvas.width/2, radius = canvas.width/2;
-//   let fontSize = canvas.width / 25;
-//   ctx.font = `${fontSize}px Arial`;
+  updateData(dataset) {
+    this.setDataset(dataset);
+    this.draw();
+  }
 
+  updateGeometry() {
+    this.centerX = this.canvas.width / 2;
+    this.centerY = this.canvas.height / 2;
+    this.radius = Math.min(this.centerX, this.centerY);
+  }
 
-  document.getElementById("radiusVal").innerText = rad;
-  drawChart(); 
+  resize(size) {
+    if (typeof size === "number" && size > 0) {
+      this.canvas.width = size;
+      this.canvas.height = size;
+    }
+    this.updateGeometry();
+    this.draw(this.currentHighlightIndex);
+  }
+
+  getColor(index) {
+    return this.colors[index % this.colors.length];
+  }
+
+  draw(highlightIndex = -1) {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    if (!this.dataset.length || this.total === 0) {
+      return;
+    }
+
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "middle";
+
+    this.dataset.forEach((slice, index) => {
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.centerX, this.centerY);
+      this.ctx.arc(this.centerX, this.centerY, this.radius, slice.startAngle, slice.endAngle);
+      const baseColor = this.getColor(index);
+      this.ctx.fillStyle = index === highlightIndex ? lightenColor(baseColor) : baseColor;
+      this.ctx.fill();
+
+      const mid = (slice.startAngle + slice.endAngle) / 2;
+      const textX = this.centerX + Math.cos(mid) * (this.radius * 0.75);
+      const textY = this.centerY + Math.sin(mid) * (this.radius * 0.75);
+      const fontSize = this.canvas.width / 27;
+      this.ctx.font = `${fontSize}px Arial`;
+      this.ctx.fillStyle = "black";
+      const percent = this.total === 0 ? 0 : Math.round((slice.value / this.total) * 100);
+      this.ctx.fillText(`${percent}%`, textX, textY);
+      this.ctx.fillText(slice.label, textX, textY - fontSize);
+    });
+  }
+
+  bindEvents() {
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.canvas.addEventListener("mousemove", this.handleMouseMove);
+    this.canvas.addEventListener("mouseleave", this.handleMouseLeave);
+  }
+
+  handleMouseMove(event) {
+    const rect = this.canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left - this.centerX;
+    const y = event.clientY - rect.top - this.centerY;
+    const distanceSquared = x * x + y * y;
+
+    if (distanceSquared > this.radius * this.radius) {
+      this.resetHover();
+      return;
+    }
+
+    let angle = Math.atan2(y, x);
+    if (angle < 0) angle += TAU;
+
+    const index = this.dataset.findIndex((slice) => angle >= slice.startAngle && angle < slice.endAngle);
+
+    if (index === -1) {
+      this.resetHover();
+      return;
+    }
+
+    if (index !== this.currentHighlightIndex) {
+      this.currentHighlightIndex = index;
+      this.draw(index);
+      this.showTooltip(index, event.pageX, event.pageY);
+    } else {
+      this.positionTooltip(event.pageX, event.pageY);
+    }
+  }
+
+  handleMouseLeave() {
+    this.resetHover();
+  }
+
+  resetHover() {
+    if (this.currentHighlightIndex !== -1) {
+      this.currentHighlightIndex = -1;
+      this.draw();
+    }
+    this.hideTooltip();
+  }
+
+  showTooltip(index, pageX, pageY) {
+    if (!this.tooltip) {
+      return;
+    }
+    const slice = this.dataset[index];
+    const percent = this.total === 0 ? 0 : Math.round((slice.value / this.total) * 100);
+    this.tooltip.style.display = "block";
+    this.tooltip.innerHTML = `<b>${slice.label}</b><br>Value: ${slice.value}<br>${percent}%`;
+    this.positionTooltip(pageX, pageY);
+  }
+
+  positionTooltip(pageX, pageY) {
+    if (!this.tooltip) {
+      return;
+    }
+    this.tooltip.style.left = `${pageX + 10}px`;
+    this.tooltip.style.top = `${pageY + 10}px`;
+  }
+
+  hideTooltip() {
+    if (this.tooltip) {
+      this.tooltip.style.display = "none";
+    }
+  }
 }
+
+export function drawPieChart(options = {}) {
+  return new PieChart(options);
+}
+
+export { defaultData as samplePieData, colorPalette as pieColorPalette };
