@@ -55,6 +55,13 @@ async function initializeLoginForm() {
                 return;
             }
 
+            if (authenticateAdmin (email, password)) {
+                alert('Admin login successful! Redirecting to admin panel...');
+                console.log('Admin login successful');
+                window.location.href = './admin-panel.html';
+                return;
+            }
+
 
             if (authenticateUser(email, password, account_db)) {
                 alert('Login successful!');
@@ -206,6 +213,14 @@ async function connectDb(db_path){
 function authenticateUser(email, password, db) {
     // console.log(typeof db)
     return db.some(user => user.username === email && user.password === password);
+}
+
+function authenticateAdmin(email, password) {
+    const adminCredentials = {
+        email: 'admin@ukx.com',
+        password: 'admin123'
+    };
+    return email === adminCredentials.email && password === adminCredentials.password;
 }
 
 /**
