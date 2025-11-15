@@ -56,6 +56,7 @@ async function initializeLoginForm() {
             }
 
             if (authenticateAdmin (email, password)) {
+                window.localStorage.setItem('adminSession', 'true');
                 alert('Admin login successful! Redirecting to admin panel...');
                 console.log('Admin login successful');
                 window.location.href = './admin-panel.html';

@@ -6,6 +6,12 @@ const sidebarToggle = document.getElementById("adminSidebarToggle");
 const sidebar = document.querySelector(".admin-panel-sidebar");
 const time = document.querySelector(".admin-panel-controls-time");
 
+let adminSessionCurren = window.localStorage.getItem('adminSession');
+if (!adminSessionCurren || adminSessionCurren !== 'true') {
+  alert('You must be logged in as admin to access the admin panel.');
+  window.location.href = './login.html';
+}
+
 function getCurrentDateTime() {
   const now = new Date();
   return now.toLocaleString();
@@ -471,3 +477,12 @@ window.addEventListener("resize", () => {
     ageChartInstance.draw(ageChartInstance.currentHighlightIndex ?? -1);
   }
 });
+
+let logoutBtn = document.getElementById("admin-panel-logout");
+
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    window.location.href = "./login.html";
+    window.localStorage.removeItem("adminSession");
+  });
+}
