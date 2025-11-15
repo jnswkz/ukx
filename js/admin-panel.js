@@ -25,8 +25,8 @@ function updateTime() {
 function updateName() {
   const nameElement = document.querySelector(".admin-panel-username");
   if (!nameElement) return;
-  let userData = JSON.parse(window.localStorage.getItem("userData")) || {};
-  const storedName = userData["name"] || "Admin";
+  let adminData = JSON.parse(window.localStorage.getItem("adminData")) || {};
+  const storedName = adminData["name"] || "Admin";
   nameElement.textContent = storedName;
 }
 
