@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>404 - Page Not Found</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, sans-serif;
+      background: #2E3440;         /* Polar Night */
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: #ECEFF4;               /* Snow Storm */
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ff8560, #ffaa00, #A3BE8C);
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.4rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #D8DEE9; /* Snow Storm light */
+    }
+
+    .subtext {
+      font-size: 0.85rem;
+      color: #AEB5C2;
+      margin-bottom: 2.5rem;
+    }
+
+    .code-404 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      font-size: 8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .code-404 .digit {
+      background: linear-gradient(180deg, #f6ff00, #ff3c00);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 8px 25px rgba(129,161,193,0.35); /* Frost glow */
+    }
+
+    .coin-img {
+      width: 160px;
+      height: auto;
+      filter: drop-shadow(0 0 18px rgba(136,192,208,0.4));
+    }
+
+    .shadow-row {
+      display: flex;
+      justify-content: center;
+      gap: 3.5rem;
+      margin-top: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .shadow {
+      width: 110px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(255, 255, 0, 0.603),
+        rgba(255, 247, 0, 0) 70%
+      );
+    }
+    .coin{
+        width: 130px !important;
+    }
+
+    /* Button quay về trang chủ */
+    .home-btn {
+      display: inline-block;
+      padding: 0.9rem 2.6rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      background: linear-gradient(90deg, #ff8864, #f8b839, #78d4ee);
+      color: #2E3440;
+      box-shadow: 0 12px 35px rgba(171, 191, 152, 0.45);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+    }
+
+    .home-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(180, 226, 185, 0.55);
+      opacity: 0.96;
+    }
+
+    .home-btn:active {
+      transform: translateY(1px) scale(0.97);
+      box-shadow: 0 6px 18px rgba(152, 186, 155, 0.35);
+    }
+
+    .bottom-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 70px;
+      background: linear-gradient(90deg, #5e81ac, #3B4252, #5e81ac);
+    }
+
+    @media (max-width: 768px) {
+      .code-404 {
+        font-size: 5rem;
+        gap: 1.5rem;
+      }
+      .coin-img {
+        width: 120px;
+      }
+      .shadow-row {
+        gap: 4rem;
+      }
+      .shadow {
+        width: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Oops</h1>
+    <p class="subtitle">Something Went Wrong.</p>
+    <p class="subtext">Error 404 Page Not Found</p>
+
+    <div class="code-404">
+      <span class="digit">4</span>
+
+      <!-- Thay đường dẫn ảnh coin ở đây -->
+      <img src="/assets/Break-coin.png" alt="Broken coin" class="coin-img">
+
+      <span class="digit">4</span>
+    </div>
+
+    <div class="shadow-row">
+      <div class="shadow"></div>
+      <div class="shadow coin"></div>
+      <div class="shadow"></div>
+    </div>
+
+    <a href="/" class="home-btn">Back to Homepage</a>
+  </div>
+
+  <div class="bottom-bar"></div>
+</body>
+</html>
