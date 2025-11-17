@@ -61,7 +61,7 @@
           </div>
         </div>
 
-        <button class="admin-panel-logout">
+        <button class="admin-panel-logout" id="admin-panel-logout">
           <img class="icon" src="../assets/logout-icon.svg" alt="Logout" />
         </button>
       </aside>
@@ -121,31 +121,38 @@
                 </div>
               </div>
             </div>
-            <!-- Biểu đồ tròn #1 - users-->
-            <canvas
-              id="admin-panel-age-chart"
-              class="admin-panel-age-chart"
-            ></canvas>
-            <h3
-              style="margin: 0 auto; width: fit-content"
-              class="admin-panel-age-chart-title"
-            >
-              Age Distribution of Users
-            </h3>
+            <div class="admin-panel-pie-charts">
+              <div class="admin-panel-pie-card">
+                <canvas
+                  id="admin-panel-age-chart"
+                  class="admin-panel-age-chart"
+                ></canvas>
+                <div id="tooltip"></div>
+                <h3
+                  style="margin: 0 auto; width: fit-content"
+                  class="admin-panel-age-chart-title"
+                >
+                  Age Distribution of Users
+                </h3>
+              </div>
+              
+            </div>
           </div>
           <div class="admin-panel-card-right">
-            <!-- Biểu đồ tròn #2 - users -->
-            <canvas
-              id="admin-panel-coin-held-chart"
-              class="admin-panel-coin-held-chart"
-            ></canvas>
-            <h3
-              style="margin: 0 auto; width: fit-content"
-              class="admin-panel-coin-held-chart-title"
-            >
-              Current Coin Holdings Distribution
-            </h3>
 
+            <div class="admin-panel-pie-card">
+                <canvas
+                  id="admin-panel-coin-held-chart"
+                  class="admin-panel-coin-held-chart"
+                ></canvas>
+                <div id="tooltip2"></div>
+                <h3
+                  style="margin: 0 auto; width: fit-content"
+                  class="admin-panel-coin-held-chart-title"
+                >
+                  Current Coin Holdings Distribution
+                </h3>
+              </div>
             <!-- Biểu đồ thanh #1 - trade -->
             <canvas
               id="admin-panel-trade-chart"

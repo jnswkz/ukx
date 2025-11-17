@@ -1,8 +1,16 @@
 import { drawBarChart } from "../modules/graphjs/bar.js";
+import { drawPieChart } from "../modules/graphjs/pie.js";
+import { jsonFileParser } from "../modules/json/jsonFileParser.js";
 
 const sidebarToggle = document.getElementById("adminSidebarToggle");
 const sidebar = document.querySelector(".admin-panel-sidebar");
 const time = document.querySelector(".admin-panel-controls-time");
+
+let adminSessionCurren = window.localStorage.getItem('adminSession');
+if (!adminSessionCurren || adminSessionCurren !== 'true') {
+  alert('You must be logged in as admin to access the admin panel.');
+  window.location.href = './login.html';
+}
 
 function getCurrentDateTime() {
   const now = new Date();
@@ -17,13 +25,15 @@ function updateTime() {
 function updateName() {
   const nameElement = document.querySelector(".admin-panel-username");
   if (!nameElement) return;
-  let userData = JSON.parse(window.localStorage.getItem("userData")) || {};
-  const storedName = userData["name"] || "Admin";
+  let adminData = JSON.parse(window.localStorage.getItem("adminData")) || {};
+  const storedName = adminData["name"] || "Admin";
   nameElement.textContent = storedName;
 }
 
 // logic đổi tab
 let loginChartDrawn = false;
+let ageChartInstance = null;
+let coinChartInstance = null;
 
 function switchSection(section) {
   const addHidden = (selectors) => {
@@ -86,6 +96,7 @@ function switchSection(section) {
       drawBarChart("admin-panel-login-chart", loginChartData);
       loginChartDrawn = true;
     }
+    stabilizePieCharts();
   } else if (section === "news") {
     // News view
     addHidden([
@@ -326,8 +337,13 @@ function resizeCanvasToParent(canvasId) {
   if (!canvas) return null;
 
   const parent = canvas.parentElement;
-  canvas.width = parent.clientWidth;
-  canvas.height = parent.clientHeight;
+  if (!parent) return canvas;
+
+  const { clientWidth, clientHeight } = parent;
+  if (clientWidth && clientHeight) {
+    canvas.width = clientWidth;
+    canvas.height = clientHeight;
+  }
 
   return canvas;
 }
@@ -357,3 +373,127 @@ const loginChartData = {
 
 resizeCanvasToParent("admin-panel-trade-chart");
 drawBarChart("admin-panel-trade-chart", tradeChartData);
+
+//"admin-panel-age-chart"
+const user_data = await jsonFileParser("/data/users_data.json");
+
+function drawAgeDistributionChart(user_data) {
+  let age = [];
+  for (let user of user_data) {
+    if (user.age) age.push(user.age);
+  }
+  const ageGroups = {
+    "Under 18": 0,
+    "18-24": 0,
+    "25-34": 0,
+    "35-44": 0,
+    "45-54": 0,
+    "55-64": 0,
+    "65 and over": 0,
+  };
+  for (let a of age) {
+    if (a < 18) ageGroups["Under 18"]++;
+    else if (a <= 24) ageGroups["18-24"]++;
+    else if (a <= 34) ageGroups["25-34"]++;
+    else if (a <= 44) ageGroups["35-44"]++;
+    else if (a <= 54) ageGroups["45-54"]++;
+    else if (a <= 64) ageGroups["55-64"]++;
+    else ageGroups["65 and over"]++;
+  }
+
+  const ageLabels = Object.keys(ageGroups);
+  const ageValues = Object.values(ageGroups);
+
+  const dataset = ageLabels
+    .map((label, index) => ({ label, value: ageValues[index] }))
+    .filter((entry) => entry.value > 0);
+
+  const canvasEl = resizeCanvasToParent("admin-panel-age-chart");
+  if (!canvasEl || dataset.length === 0) {
+    return;
+  }
+
+  if (ageChartInstance) {
+    ageChartInstance.updateData(dataset);
+    ageChartInstance.updateGeometry();
+    ageChartInstance.draw();
+  } else {
+    ageChartInstance = drawPieChart({
+      canvas: canvasEl,
+      tooltip: "tooltip",
+      dataset,
+    });
+  }
+}
+
+function drawCoinHoldingDistributionChart(user_data) {
+  let coins = {};
+  for (let user of user_data) {
+    /**
+     * "coin_holdings": {
+      "XRP": 1571.672,
+      "LTC": 2206.459,
+      "BTC": 1.867138,
+      "DOT": 7969.737
+    }
+     */
+    if (user.coin_holdings) {
+      for (let coin in user.coin_holdings) {
+        if (!coins.hasOwnProperty(coin))
+          coins[coin] = user.coin_holdings[coin];
+        else
+          coins[coin] += user.coin_holdings[coin];
+      }
+    }
+  }
+  // console.log(coins);
+  const coinLabels = Object.keys(coins);
+  const coinValues = Object.values(coins);
+
+  const dataset = coinLabels
+    .map((label, index) => ({ label, value: coinValues[index] }))
+    .filter((entry) => entry.value > 0);
+  const canvasEl = resizeCanvasToParent("admin-panel-coin-held-chart");
+  if (!canvasEl || dataset.length === 0) {
+    return;
+  }
+
+  if (coinChartInstance) {
+    coinChartInstance.updateData(dataset);
+    coinChartInstance.updateGeometry();
+    coinChartInstance.draw();
+  } else {
+    coinChartInstance = drawPieChart({
+      canvas: canvasEl,
+      tooltip: "tooltip2",
+      dataset,
+    });
+  }
+}
+
+drawAgeDistributionChart(user_data);
+drawCoinHoldingDistributionChart(user_data);
+
+function stabilizePieCharts() {
+  const ageCanvas = resizeCanvasToParent("admin-panel-age-chart");
+  if (ageCanvas && ageChartInstance) {
+    ageChartInstance.updateGeometry();
+    ageChartInstance.draw();
+  }
+  const coinCanvas = resizeCanvasToParent("admin-panel-coin-held-chart");
+  if (coinCanvas && coinChartInstance) {
+    coinChartInstance.updateGeometry();
+    coinChartInstance.draw();
+  }
+}
+
+window.addEventListener("resize", stabilizePieCharts);
+
+let logoutBtn = document.getElementById("admin-panel-logout");
+
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    window.location.href = "./login.html";
+    window.localStorage.removeItem("adminSession");
+  });
+}

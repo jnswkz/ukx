@@ -266,6 +266,38 @@
   gap: 16px;
 }
 
+.admin-panel-pie-charts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  background: #f5f6f8;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.admin-panel-pie-card {
+  flex: 1 1 280px;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.admin-panel-pie-card canvas {
+  width: 100%;
+  height: 320px;
+}
+
+.admin-panel-pie-card h3 {
+  margin-top: var(--spacing-md);
+  margin-bottom: 0;
+  text-align: center;
+}
+
 .admin-panel-left .calculator-content h3 {
   margin: 0 0 8px 0 !important;
   font-size: 18px !important;
@@ -493,6 +525,7 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
+
 
 .admin-panel-table th,
 .admin-panel-table td {

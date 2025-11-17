@@ -65,8 +65,7 @@ export async function callApi(message){
                 { type: 'text', text: message },
                 { type: 'file_url', file_url: { url: 'https://raw.githubusercontent.com/jnswkz/ukx/refs/heads/main/data/data_24h.json' } },
                 { type: 'file_url', file_url: { url: 'https://raw.githubusercontent.com/jnswkz/ukx/refs/heads/main/data/data_7d.json' } },
-                { type: 'file_url', file_url: { url: 'https://raw.githubusercontent.com/jnswkz/ukx/refs/heads/main/data/data_30_days.json' } },
-                { type: 'file_url', file_url: { url: 'https://raw.githubusercontent.com/jnswkz/ukx/refs/heads/main/data/users_data.json' }}
+                { type: 'file_url', file_url: { url: 'https://raw.githubusercontent.com/jnswkz/ukx/refs/heads/main/data/data_30_days.json' } }
             ]
         }],
         "stream": false,

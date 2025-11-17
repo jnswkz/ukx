@@ -8,6 +8,12 @@ import {
     OAUTH_ERROR_CODES
 } from "../modules/auth/mockOAuth.js";
 
+const adminCredentials = {
+        email: 'admin@ukx.com',
+        password: 'admin123',
+        name: 'Nguyễn Trần Đức Bo'
+    };
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('UKX Login Page initialized (Figma Design)');
 
@@ -52,6 +58,18 @@ async function initializeLoginForm() {
 
             if (!password) {
                 alert('Please enter your password.');
+                return;
+            }
+
+            if (authenticateAdmin (email, password, adminCredentials)) {
+                window.localStorage.setItem('adminSession', 'true');
+                window.localStorage.setItem('adminData', JSON.stringify({
+                    email: adminCredentials.email,
+                    name: adminCredentials.name
+                }));
+                alert('Admin login successful! Redirecting to admin panel...');
+                console.log('Admin login successful');
+                window.location.href = './admin-panel.html';
                 return;
             }
 
@@ -206,6 +224,11 @@ async function connectDb(db_path){
 function authenticateUser(email, password, db) {
     // console.log(typeof db)
     return db.some(user => user.username === email && user.password === password);
+}
+
+function authenticateAdmin(email, password, adminCredentials) {
+    
+    return email === adminCredentials.email && password === adminCredentials.password;
 }
 
 /**
