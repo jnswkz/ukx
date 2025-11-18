@@ -45,3 +45,6 @@ venv/
 # markdown
 
 md/*
+
+# Exclude playwright test artifacts
+test-results/

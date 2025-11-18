@@ -80,6 +80,27 @@ Navigate to `http://localhost:4173/index.html`. Because scripts use absolute pat
 ### 5. Deploying
 Deployment is static: upload the repo to a host such as Netlify, Vercel Static, GitHub Pages, S3/CloudFront, etc. Ensure `env.js` is populated (or swapped with an environment-specific build step) on the target host.
 
+## Running Playwright Tests
+
+End-to-end smoke coverage for the main product surfaces lives under `tests/`. To run it locally:
+
+1. Install Node deps and Playwright browsers once:
+   ```bash
+   npm install
+   npx playwright install
+   ```
+2. Execute the headless suite:
+   ```bash
+   npm test
+   ```
+3. For interactive debugging you can launch the inspector UI:
+   ```bash
+   npm run test:ui   # headed mode
+   npm run test:debug # headed & paused on first step
+   ```
+
+The Playwright config (`playwright.config.js`) automatically serves the static site via `python3 -m http.server 4173`, stubs external CoinGecko calls, and captures traces/screenshots on failure.
+
 ## Data & Content Sources
 - **Local JSON (`/data`)** – `full_coin_data.json`, `coin_performance_data.json`, `data_24h.json`, `data_7d.json`, `data_30_days.json`, `users_data.json`, etc. They drive dashboard widgets, the calculator, buy/sell screens, and coin details.
 - **News metadata (`data/article_data.json`)** – consumed by `pages/news.html` and coin-detail related articles.

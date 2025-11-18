@@ -1,0 +1,26 @@
+{
+  "name": "ukx",
+  "version": "1.0.0",
+  "description": "UKX Wallet is a multi-page, data-driven marketing and dashboard experience for a fictional crypto investing platform. The site is completely static (HTML/CSS/vanilla JS) but simulates live behavior through JSON data files, CoinGecko market requests, and an AI assistant backed by the Perplexity API. The project ships with reusable components, custom canvas-based charts, news/article generation tooling, and multiple product surfaces (dashboard, buy/sell flows, calculator, simulator, admin panel, etc.).",
+  "main": "env.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jnswkz/ukx.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jnswkz/ukx/issues"
+  },
+  "homepage": "https://github.com/jnswkz/ukx#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.56.1"
+  }
+}
