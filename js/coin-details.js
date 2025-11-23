@@ -4,7 +4,7 @@ import { fetchCoinDetails } from "/modules/coingecko/api.js";
 
 const DEFAULT_COIN_ID = 0;
 
-let view = {};
+let view = {}; // cached DOM elements populated by cacheDom()
 let chartState = {
     period: "24h",
     datasets: {}
@@ -17,17 +17,21 @@ const coinState = {
     basePriceUSD: 0
 };
 
+// Re-render currency-dependent UI when the user preference changes elsewhere.
 window.addEventListener("preferredCurrencyChange", handleCurrencyPreferenceChange);
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Cache frequently-used DOM nodes, setup UI interactions and load the coin.
     view = cacheDom();
     bindTabScroll();
     observeThemeChanges();
+    // Determine coin id from query string; fallback to DEFAULT_COIN_ID.
     const coinId = getCoinIdFromQuery() ?? DEFAULT_COIN_ID;
     loadCoinDetails(coinId);
 });
 
 function handleCurrencyPreferenceChange() {
+    // Called when the app's preferred currency changes; re-render parts that rely on conversion.
     if (!coinState.symbol) return;
     renderOverview(coinState.symbol, coinState.details, coinState.liveData);
     renderStats(coinState.details, coinState.performance, coinState.liveData);
@@ -36,6 +40,7 @@ function handleCurrencyPreferenceChange() {
 }
 
 function cacheDom() {
+    // Return a map of DOM elements used by this module. Centralizing queries reduces redundant lookups.
     return {
         loader: document.getElementById("coinLoader"),
         error: document.getElementById("coinError"),
@@ -73,16 +78,26 @@ function cacheDom() {
     };
 }
 
+/*
+  loadCoinDetails
+  - Loads local JSON files for coin data, historical series and articles.
+  - Attempts to fetch live data for the requested coin symbol. If the fetch fails,
+    the page will gracefully fall back to local data.
+  - Prepares chart datasets and binds UI controls.
+*/
 async function loadCoinDetails(coinId) {
     setLoading(true);
     hideError();
 
     try {
+        // full_coin_data.json maps coin symbols to metadata including coin_page_id
         const fullCoinResponse = await jsonFileParser("/data/full_coin_data.json");
         const coins = fullCoinResponse[0] || {};
 
+        // Find the entry whose coin_page_id matches the requested coinId
         let selectedEntry = Object.entries(coins).find(([, coin]) => coin.coin_page_id === coinId);
         if (!selectedEntry) {
+            // Fallback to first coin in dataset if none matches
             selectedEntry = Object.entries(coins)[0];
         }
 
@@ -92,6 +107,7 @@ async function loadCoinDetails(coinId) {
 
         const [symbol, details] = selectedEntry;
 
+        // Parallel load of performance, historical series, articles and live API data
         const [
             performanceData,
             sevenDayResponse,
@@ -105,28 +121,34 @@ async function loadCoinDetails(coinId) {
             jsonFileParser("/data/data_24h.json"),
             jsonFileParser("/data/data_30_days.json"),
             jsonFileParser("/data/article_data.json"),
+            // fetchCoinDetails could fail (e.g. offline); catch and return null to continue gracefully
             fetchCoinDetails(symbol).catch((error) => {
                 console.warn(`Unable to fetch live data for ${symbol}`, error);
                 return null;
             })
         ]);
 
+        // The JSON parsers return arrays (file content is wrapped) so we guard-access [0]
         const sevenDay = sevenDayResponse[0] || {};
         const twentyFour = twentyFourResponse[0] || {};
         const thirtyDay = thirtyDayResponse[0] || {};
         const articles = Array.isArray(articleData) ? articleData : [];
 
+        // Find performance metadata record for this symbol if present
         const performance = performanceData.find(
             (record) => record.coin === symbol || record.symbol === symbol
         ) || null;
 
+        // Update module state
         coinState.symbol = symbol;
         coinState.details = details;
         coinState.liveData = liveData;
         coinState.performance = performance;
+        // Prefer live current_price, else fallback to details.current_price, else 0
         coinState.basePriceUSD =
             liveData?.current_price ?? details?.current_price ?? 0;
 
+        // Render all sections using the available data (liveData takes precedence where present)
         renderOverview(symbol, details, liveData);
         renderStats(details, performance, liveData);
         renderDescription(liveData?.description || details.description);
@@ -134,6 +156,8 @@ async function loadCoinDetails(coinId) {
         renderPerformance(performance);
         renderNews(articles, details.categories);
         setupConverter(coinState.basePriceUSD, symbol);
+
+        // Prepare chart datasets from the JSON series for the symbol
         prepareChartDatasets(symbol, {
             "24h": twentyFour[symbol],
             "7d": sevenDay[symbol],
@@ -142,6 +166,7 @@ async function loadCoinDetails(coinId) {
         bindChartControls();
         drawChart();
 
+        // Update page title to include the coin name
         document.title = `UKX - ${(liveData?.name || details.coin_name)} price`;
         setLoading(false);
     } catch (error) {
@@ -151,8 +176,16 @@ async function loadCoinDetails(coinId) {
     }
 }
 
+/*
+  Render helpers
+  - Each function below updates parts of the page based on the data provided.
+  - Functions expect that the 'view' map has been populated by cacheDom().
+*/
+
 function renderOverview(symbol, details, liveData) {
     if (!details && !liveData) return;
+
+    // Prefer values from liveData (fresh API) but fall back to static details
     const coinName = liveData?.name || details?.coin_name || symbol;
     const iconUrl = liveData?.image || details?.img_url || "/assets/crypto-default.png";
     const currentPrice = liveData?.current_price ?? details?.current_price ?? 0;
@@ -170,6 +203,7 @@ function renderOverview(symbol, details, liveData) {
         view.coinBreadcrumb.textContent = coinName;
     }
 
+    // Icon updates for both header and converter
     if (view.coinIcon) {
         view.coinIcon.src = iconUrl;
         view.coinIcon.alt = `${coinName} logo`;
@@ -179,6 +213,7 @@ function renderOverview(symbol, details, liveData) {
         view.converterCoinIcon.alt = `${coinName} icon`;
     }
 
+    // Update base price used by converter
     coinState.basePriceUSD = currentPrice;
     view.coinPrice.textContent = formatCurrency(currentPrice);
     updateChangeBadge(view.coinChange, priceChange);
@@ -190,11 +225,13 @@ function renderOverview(symbol, details, liveData) {
         view.coinLow.textContent = formatCurrency(low24h);
     }
 
+    // Update last-updated label; use liveData last_updated when available
     if (view.coinLastUpdated) {
         const timestamp = liveData?.last_updated ? new Date(liveData.last_updated) : new Date();
         view.coinLastUpdated.textContent = `Updated ${timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
     }
     
+    // Chart title and currency button reflect current currency meta
     if (view.chartTitle) {
         const currencyMeta = getCurrencyMeta();
         view.chartTitle.textContent = `${coinName} price in ${currencyMeta.code}`;
@@ -211,6 +248,7 @@ function renderOverview(symbol, details, liveData) {
 function renderStats(details, performance, liveData) {
     if (!details && !liveData) return;
 
+    // Market cap — show compact formatted currency and optional rank badge
     const marketCapValue = liveData?.market_cap ?? details?.market_cap;
     const marketCapRank = liveData?.market_cap_rank;
     if (view.statsMarketCap) {
@@ -223,6 +261,7 @@ function renderStats(details, performance, liveData) {
         }
     }
 
+    // Supply (current / max) displayed compactly
     if (view.statsSupply) {
         view.statsSupply.textContent = formatSupplyValue(
             liveData?.circulating_supply,
@@ -230,16 +269,19 @@ function renderStats(details, performance, liveData) {
         );
     }
 
+    // All-time-high (ath) fallback if missing
     if (view.statsAth) {
         const athValue = liveData?.ath ?? details?.high_24h;
         view.statsAth.textContent = Number.isFinite(athValue) ? formatCurrency(athValue) : "—";
     }
 
+    // Volume uses whichever field is available in the live data source
     if (view.statsVolume) {
         const volumeValue = liveData?.volume_24h ?? liveData?.total_volume;
         view.statsVolume.textContent = formatCompactCurrency(volumeValue);
     }
 
+    // Short performance note or fallback text
     if (view.statsNote) {
         view.statsNote.textContent = performance?.performance || "Watching market momentum";
     }
@@ -247,11 +289,13 @@ function renderStats(details, performance, liveData) {
 
 function renderDescription(description = "") {
     if (!view.description) return;
+    // Remove HTML and normalize whitespace for safe display
     const cleaned = sanitizeDescription(description);
     view.description.textContent = cleaned || "No description provided for this asset.";
 }
 
 function renderTags(categories = []) {
+    // Render up to 12 categories as small chips. If none, show "General".
     view.tags.innerHTML = "";
     if (!Array.isArray(categories) || categories.length === 0) {
         const chip = document.createElement("span");
@@ -272,6 +316,7 @@ function renderTags(categories = []) {
 }
 
 function renderPerformance(performance) {
+    // Renders a small grid showing the performance across several timeframes.
     if (!performance) {
         view.performanceSummary.textContent = "No historical comparison available.";
         view.performanceGrid.innerHTML = "";
@@ -294,6 +339,7 @@ function renderPerformance(performance) {
         const frame = performance[key];
         if (!frame) return;
 
+        // Build a compact performance item; classes indicate positive/negative styling
         const item = document.createElement("div");
         item.className = "coin-performance-item";
         item.innerHTML = `
@@ -310,12 +356,14 @@ function renderPerformance(performance) {
 }
 
 function renderNews(articles, categories = []) {
+    // Show up to 3 most relevant articles. Relevance is based on tag matches and recency.
     view.newsList.innerHTML = "";
     if (!Array.isArray(articles) || articles.length === 0) {
         view.newsList.innerHTML = `<p class="muted">No news to show yet.</p>`;
         return;
     }
 
+    // Create a set of category tags to match against article tags (case-insensitive)
     const normalizedTags = new Set(
         (categories || []).map((tag) => tag.toLowerCase())
     );
@@ -332,6 +380,7 @@ function renderNews(articles, categories = []) {
             };
         })
         .sort((a, b) => {
+            // Sort primarily by number of matches, then by date (newer first)
             if (b.matches === a.matches) {
                 return b.dateValue - a.dateValue;
             }
@@ -355,6 +404,12 @@ function renderNews(articles, categories = []) {
     view.newsList.appendChild(fragment);
 }
 
+/*
+  Converter setup
+  - Simple two-input converter between 1 coin unit and selected fiat currency.
+  - Uses window.UKXCurrency.convertCurrency when available to convert base USD price to selected fiat.
+  - Keeps inputs synchronized (coin -> fiat and fiat -> coin).
+*/
 function setupConverter(priceUSD, symbol) {
     if (!view.converterCoinInput || !view.converterFiatInput) return;
 
@@ -381,10 +436,11 @@ function setupConverter(priceUSD, symbol) {
         view.converterFiatIcon.setAttribute("aria-label", currencyMeta.label);
     }
 
+    // Default converter starts with 1 coin
     view.converterCoinInput.value = "1";
     view.converterFiatInput.value = formatInput(localizedBasePrice);
 
-    let syncing = false;
+    let syncing = false; // guard to avoid infinite update loops
 
     const updateFiat = () => {
         if (syncing) return;
@@ -410,6 +466,7 @@ function setupConverter(priceUSD, symbol) {
     view.converterCoinInput.oninput = updateFiat;
     view.converterFiatInput.oninput = updateCoin;
     view.converterSwap.onclick = () => {
+        // Swap values between coin and fiat inputs (note: swap does not change which currency is displayed)
         const coinValue = parseFloat(view.converterCoinInput.value) || 0;
         const fiatValue = parseFloat(view.converterFiatInput.value) || 0;
         view.converterCoinInput.value = formatInput(
@@ -424,6 +481,11 @@ function setupConverter(priceUSD, symbol) {
     updateFiat();
 }
 
+/*
+  Chart data preparation and rendering
+  - The JSON historical data is converted into series objects with arrays x[] and y[].
+  - localizeDataset will convert USD values to the user's preferred currency when unit === "currency".
+*/
 function prepareChartDatasets(symbol, sources) {
     chartState.datasets = {
         "24h": {
@@ -439,12 +501,14 @@ function prepareChartDatasets(symbol, sources) {
             unit: "number"
         }
     };
+    // Ensure selected period exists, otherwise default to 24h
     if (!chartState.datasets[chartState.period]) {
         chartState.period = "24h";
     }
 }
 
 function localizeDataset(dataset) {
+    // Convert dataset y-values from USD to preferred currency using global UKXCurrency manager if available.
     if (!dataset) return dataset;
     if (dataset.unit !== "currency") {
         return { ...dataset };
@@ -469,6 +533,7 @@ function localizeDataset(dataset) {
 }
 
 function drawChart() {
+    // Get the dataset for the currently selected period, localize values and draw with drawLineGraph()
     const dataset = chartState.datasets[chartState.period];
     if (!dataset) return;
 
@@ -480,8 +545,9 @@ function drawChart() {
 }
 
 function bindChartControls() {
+    // Attach click handlers to chart period buttons (24h/7d/30d).
     view.chartButtons.forEach((button) => {
-        if (button.dataset.bound === "true") return;
+        if (button.dataset.bound === "true") return; // avoid double-binding
         button.dataset.bound = "true";
         button.addEventListener("click", () => {
             if (button.classList.contains("active")) return;
@@ -494,6 +560,7 @@ function bindChartControls() {
 }
 
 function bindTabScroll() {
+    // Bind action to coin-tab elements that smooth-scroll to a page section.
     const tabs = view.tabs ? Array.from(view.tabs) : [];
     tabs.forEach((button) => {
         const target = button?.dataset?.scroll;
@@ -510,6 +577,11 @@ function bindTabScroll() {
     });
 }
 
+/*
+  Series builders
+  - buildSeriesFromObject: takes a mapping of keys -> values, sorts numeric-like keys and returns x,y arrays
+  - buildSeriesFromSevenDay: groups readings keyed by "day{n}_time{m}" and averages per day
+*/
 function buildSeriesFromObject(obj = {}, labelFn = (v) => v) {
     const entries = Object.entries(obj || {}).sort(
         ([a], [b]) => parseNumericKey(a) - parseNumericKey(b)
@@ -524,6 +596,7 @@ function buildSeriesFromObject(obj = {}, labelFn = (v) => v) {
 }
 
 function buildSeriesFromSevenDay(obj = {}) {
+    // Some datasets record values for day/time buckets like "day0_time3". We average by day index.
     const buckets = new Map();
     Object.entries(obj || {}).forEach(([key, value]) => {
         const [dayIndex] = parseSevenDayKey(key);
@@ -539,12 +612,14 @@ function buildSeriesFromSevenDay(obj = {}) {
     Array.from(buckets.keys())
         .sort((a, b) => a - b)
         .forEach((dayIndex) => {
+            // Compute average for the day; filter out non-finite values
             const values = buckets.get(dayIndex).filter((val) => Number.isFinite(val));
             const average =
                 values.length > 0
                     ? values.reduce((sum, val) => sum + val, 0) / values.length
                     : 0;
             x.push(`Day ${dayIndex + 1}`);
+            // Round to 2 decimal places for display consistency
             y.push(Number(average.toFixed(2)));
         });
 
@@ -552,16 +627,24 @@ function buildSeriesFromSevenDay(obj = {}) {
 }
 
 function parseSevenDayKey(key = "") {
+    // Extract day and time numbers from keys like "day0_time12"
     const match = key.match(/day(\d+)_time(\d+)/);
     if (!match) return [0, 0];
     return [Number(match[1]), Number(match[2])];
 }
 
 function parseNumericKey(key = "") {
+    // Remove non-digit/decimal characters and coerce to Number. Used for sorting series keys.
     const numeric = Number(key.replace(/[^\d.]/g, ""));
     return Number.isFinite(numeric) ? numeric : 0;
 }
 
+/*
+  Label formatters for chart x-axis
+  - formatHourLabel: for 24h series (expects hour numbers)
+  - formatDayLabel: for day-based display
+  - formatSequentialLabel: for datasets where index is meaningful (30d)
+*/
 function formatHourLabel(key) {
     const hour = Number(key) || 0;
     return `${String(hour).padStart(2, "0")}:00`;
@@ -576,6 +659,16 @@ function formatSequentialLabel(_, index) {
     return String(index + 1);
 }
 
+/*
+  Utility display helpers
+  - updateChangeBadge: sets element content and positive/negative classes based on numeric change
+  - sanitizeDescription: strips HTML, normalizes whitespace
+  - formatCompactCurrency/formatCompactNumber: compact representations (K/M/B/T)
+  - formatCurrency: uses global currency formatter if present, otherwise falls back to USD formatting
+  - formatPercent: formats percent with sign and two decimals
+  - formatInput: used by converter inputs to format numeric strings with fixed decimal places
+  - formatDate: human-friendly date formatting
+*/
 function updateChangeBadge(element, changeValue) {
     if (!element) return;
     element.classList.remove("positive", "negative");
@@ -589,6 +682,8 @@ function updateChangeBadge(element, changeValue) {
 
 function sanitizeDescription(raw = "") {
     if (typeof raw !== "string") return "";
+    // Convert </p> to paragraph breaks, <br> to newlines, strip remaining tags,
+    // normalize CRLFs and collapse excessive blank lines.
     return raw
         .replace(/<\/p>/gi, "\n\n")
         .replace(/<br\s*\/?>/gi, "\n")
@@ -652,6 +747,7 @@ function formatSupplyValue(current, max) {
 }
 
 function getCurrencyMeta(code) {
+    // Return currency metadata (code, label, symbol, flag). Falls back to USD.
     const fallback = {
         code: "USD",
         label: "US Dollar",
@@ -670,6 +766,7 @@ function formatCurrency(amount = 0) {
     if (typeof formatter === "function") {
         return formatter(numeric, { fromCurrency: "USD" });
     }
+    // Default fallback to en-US USD formatting
     return numeric.toLocaleString("en-US", {
         style: "currency",
         currency: "USD",
@@ -692,6 +789,9 @@ function formatDate(dateString) {
     return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
+/*
+  UI helpers for loading/error states
+*/
 function setLoading(isLoading) {
     if (view.loader) {
         view.loader.style.display = isLoading ? "block" : "none";
@@ -712,6 +812,9 @@ function hideError() {
     }
 }
 
+/*
+  Query parsing and small utilities
+*/
 function getCoinIdFromQuery() {
     const params = new URLSearchParams(window.location.search);
     const coinIdParam = params.get("coin_id");
@@ -721,16 +824,19 @@ function getCoinIdFromQuery() {
 }
 
 function isPositiveTrend(dataset) {
+    // Determine whether the dataset trend is positive by comparing last and first y-values.
     const values = Array.isArray(dataset?.y)
         ? dataset.y.map(Number).filter((value) => Number.isFinite(value))
         : [];
     if (values.length < 2) {
+        // Default to positive when insufficient data to avoid negative visual tone by default
         return true;
     }
     return values[values.length - 1] >= values[0];
 }
 
 function getChartTheme(isTrendPositive = true) {
+    // Choose chart color palette based on trend and document theme (light/dark).
     const isLightTheme =
         document.documentElement.getAttribute("data-theme") === "light";
 
@@ -779,6 +885,12 @@ function getChartTheme(isTrendPositive = true) {
 
 let themeObserverRegistered = false;
 
+/*
+  observeThemeChanges
+  - Observes changes to the document's data-theme attribute and triggers a chart redraw
+    so the chart colors match the new theme (light/dark). A MutationObserver is used
+    to avoid polling and to only react to relevant attribute changes.
+*/
 function observeThemeChanges() {
     if (themeObserverRegistered || typeof MutationObserver === "undefined") {
         return;
@@ -787,7 +899,7 @@ function observeThemeChanges() {
     const observer = new MutationObserver((mutations) => {
         const shouldRedraw = mutations.some(
             (mutation) =>
-                mutation.type === "attributes" && mutation.attributeName === "data-theme"
+                (mutation.type === "attributes" && mutation.attributeName === "data-theme")
         );
         if (shouldRedraw && chartState.datasets[chartState.period]) {
             drawChart();
@@ -802,6 +914,11 @@ function observeThemeChanges() {
     themeObserverRegistered = true;
 }
 
+/*
+  Scrolling helpers:
+  - scrollToSection ensures the targeted element is scrolled to with a calculated offset
+    that considers a sticky header and the coin hero area for consistent positioning.
+*/
 function scrollToSection(element) {
     const offset = getStickyHeaderOffset();
     const documentOffset = element.getBoundingClientRect().top + window.pageYOffset;
@@ -813,6 +930,7 @@ function scrollToSection(element) {
 }
 
 function getStickyHeaderOffset() {
+    // Computes an offset to compensate for a sticky top navigation + hero area to avoid hiding content.
     const navHeight = getCssVariableNumber("--nav-height") ?? 0;
     const navHidden = document.body.classList.contains("nav-hidden");
     const navOffset = navHidden ? 0 : navHeight;
@@ -821,11 +939,12 @@ function getStickyHeaderOffset() {
     const heroHeight = hero?.offsetHeight ?? 0;
     const heroMargin = hero ? Number.parseFloat(getComputedStyle(hero).marginBottom) || 0 : 0;
 
-    const reserveGap = 16;
+    const reserveGap = 16; // small visual gap so content isn't flush to header
     return navOffset + heroHeight + heroMargin + reserveGap;
 }
 
 function getCssVariableNumber(name) {
+    // Read a numeric CSS variable (e.g. --nav-height) and parse it to a number.
     const styles = getComputedStyle(document.documentElement);
     const value = styles.getPropertyValue(name);
     const numeric = Number.parseFloat(value);
