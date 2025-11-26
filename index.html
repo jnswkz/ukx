@@ -15,7 +15,8 @@
     <!-- <link rel="preload" href="/assets/landing_page_image.png" as="image"> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;500;600&family=Inter:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;600&family=Inter:wght@700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;600&family=Inter:wght@700&display=swap" rel="stylesheet"></noscript>
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
@@ -44,7 +45,7 @@
         <main id="main-content" class="landing-main" tabindex="-1">
             <!-- Hero Section -->
             <section class="hero-section section-screen" aria-labelledby="hero-title">
-                <video class="hero-video-background" autoplay muted loop playsinline aria-hidden="true" tabindex="-1" preload="auto">
+                <video class="hero-video-background" autoplay muted loop playsinline aria-hidden="true" tabindex="-1" preload="metadata">
                     <source src="/assets/landing_page_video.webm" type="video/webm">
                     <source src="/assets/landing_page_video.mp4" type="video/mp4">
                     Your browser does not support the video tag.

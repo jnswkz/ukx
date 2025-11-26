@@ -509,8 +509,8 @@ body.nav-hidden .coin-hero {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: transparent;
+    border: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -518,11 +518,7 @@ body.nav-hidden .coin-hero {
     font-weight: 700;
     color: var(--color-text-primary);
     object-fit: cover;
-}
-
-.converter-label img {
-    padding: 4px;
-    background: rgba(0, 0, 0, 0.15);
+    box-shadow: none;
 }
 
 .converter-swap {
@@ -552,6 +548,11 @@ body.nav-hidden .coin-hero {
     height: 65%;
     object-fit: contain;
     transform: translateY(1px);
+    transition: filter 0.2s ease;
+}
+
+[data-theme="dark"] .converter-swap img {
+    filter: invert(1) brightness(1.2);
 }
 
 .coin-about-card .coin-description {

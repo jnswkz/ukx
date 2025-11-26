@@ -11,6 +11,8 @@ import { fetchCurrentPrices, fetchHistoricalPrices, fetchIntradayPrices, fetchMi
 // ========================================
 
 const STORAGE_KEY = 'ukx_trading_simulator';
+const HISTORICAL_CACHE_KEY = 'ukx_historical_cache';
+const HISTORICAL_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 const INITIAL_BALANCE = 10000;
 const TRADING_FEE = 0.001; // 0.1% fee
 
@@ -168,110 +170,239 @@ function hideCoinSwitchLoadingStates() {
 
 async function loadCoinData() {
     try {
-        // Load base coin data from JSON (for images and descriptions)
+        // STEP 1: Load local JSON data first for instant UI
         const response = await fetch('/data/full_coin_data.json');
         const baseData = await response.json();
         
-        // Get list of symbols to fetch
-        const symbols = Object.keys(baseData);
+        // Use local data immediately
+        state.coinData = { ...baseData };
         
-        // Fetch real-time prices from CoinGecko
-        console.log('Fetching real-time prices from CoinGecko...');
-        const livePrice = await rateLimitedFetch(() => fetchCurrentPrices(symbols));
-        
-        // Merge base data with live prices
-        Object.keys(baseData).forEach(symbol => {
-            if (livePrice[symbol]) {
-                // Update with live data
-                state.coinData[symbol] = {
-                    ...baseData[symbol],
-                    current_price: livePrice[symbol].current_price,
-                    price_change_24h: livePrice[symbol].price_change_24h,
-                    market_cap: livePrice[symbol].market_cap,
-                    // Keep high/low from JSON or approximate from current price
-                    high_24h: baseData[symbol].high_24h || livePrice[symbol].current_price * 1.02,
-                    low_24h: baseData[symbol].low_24h || livePrice[symbol].current_price * 0.98
-                };
-            } else {
-                // Use JSON data as fallback
-                state.coinData[symbol] = baseData[symbol];
-            }
-        });
-        
-        console.log('Loaded live prices for', Object.keys(livePrice).length, 'coins');
-        
+        // Show UI with local data right away
         populateCoinDropdown();
-        selectCoin(state.selectedCoin);
         
-        // Load historical data for selected coin
-        await loadHistoricalData(state.selectedCoin);
+        // Load cached historical data if available
+        loadCachedHistoricalData(state.selectedCoin);
         
-        // Hide loading states once data is loaded
+        // Select coin and update UI with local data
+        await selectCoinFast(state.selectedCoin);
+        
+        // Hide loading states - UI is now interactive
         hideLoadingStates();
+        
+        // STEP 2: Fetch live prices in background (non-blocking)
+        fetchLivePricesInBackground(Object.keys(baseData));
+        
+        // STEP 3: Load historical data in background
+        loadHistoricalDataInBackground(state.selectedCoin);
         
     } catch (error) {
         console.error('Failed to load coin data:', error);
-        // Fallback to JSON data
-        try {
-            const response = await fetch('/data/full_coin_data.json');
-            const data = await response.json();
-            state.coinData = data;
-            
-            // Generate synthetic price history as fallback
-            Object.keys(data).forEach(symbol => {
-                state.priceHistory[symbol] = generatePriceHistory(
-                    data[symbol].current_price,
-                    30 // 30 days of history
-                );
-            });
-            
-            populateCoinDropdown();
-            selectCoin(state.selectedCoin);
-            hideLoadingStates();
-        } catch (fallbackError) {
-            showError('Failed to load market data. Please refresh the page.');
-            hideLoadingStates();
-        }
+        showError('Failed to load market data. Please refresh the page.');
+        hideLoadingStates();
     }
 }
 
 /**
- * Load historical price data from CoinGecko
+ * Fast coin selection without waiting for API calls
  */
-async function loadHistoricalData(symbol) {
+async function selectCoinFast(symbol) {
+    state.selectedCoin = symbol;
+    const coin = state.coinData[symbol];
+    
+    if (!coin) return;
+    
+    // Update selector button
+    document.getElementById('selectedCoinIcon').src = coin.img_url;
+    document.getElementById('selectedCoinIcon').alt = symbol;
+    document.getElementById('selectedCoinSymbol').textContent = symbol;
+    document.getElementById('selectedCoinName').textContent = coin.coin_name;
+    
+    // Generate synthetic history if not available
+    if (!state.priceHistory[symbol]) {
+        state.priceHistory[symbol] = generatePriceHistory(coin.current_price, 30);
+    }
+    
+    updateUI();
+}
+
+/**
+ * Fetch live prices in background without blocking UI
+ */
+async function fetchLivePricesInBackground(symbols) {
     try {
-        console.log(`Loading historical data for ${symbol}...`);
+        const livePrice = await rateLimitedFetch(() => fetchCurrentPrices(symbols));
         
-        // Fetch different time ranges in batches to respect rate limits
-        const data30d = await rateLimitedFetch(() => fetchHistoricalPrices(symbol, 30));
-        const data7d = await rateLimitedFetch(() => fetchHistoricalPrices(symbol, 7));
-        const data1d = await rateLimitedFetch(() => fetchIntradayPrices(symbol));
+        // Update state with live prices
+        Object.keys(state.coinData).forEach(symbol => {
+            if (livePrice[symbol]) {
+                state.coinData[symbol] = {
+                    ...state.coinData[symbol],
+                    current_price: livePrice[symbol].current_price,
+                    price_change_24h: livePrice[symbol].price_change_24h,
+                    market_cap: livePrice[symbol].market_cap,
+                    high_24h: state.coinData[symbol].high_24h || livePrice[symbol].current_price * 1.02,
+                    low_24h: state.coinData[symbol].low_24h || livePrice[symbol].current_price * 0.98
+                };
+            }
+        });
         
-        // Store in state
+        // Refresh UI with live data
+        updatePriceDisplay();
+        updateMarketStats();
+        populateCoinDropdown();
+    } catch (error) {
+        console.warn('Failed to fetch live prices, using cached data:', error);
+    }
+}
+
+/**
+ * Load historical data in background without blocking UI
+ */
+async function loadHistoricalDataInBackground(symbol) {
+    // Check cache first
+    const cached = getCachedHistoricalData(symbol);
+    if (cached) {
+        state.priceHistory[symbol] = cached;
+        updateChart();
+        return;
+    }
+    
+    try {
+        // Fetch all time periods in parallel (single batch)
+        const [data30d, data7d, data1d] = await Promise.all([
+            fetchHistoricalPrices(symbol, 30).catch(() => null),
+            fetchHistoricalPrices(symbol, 7).catch(() => null),
+            fetchIntradayPrices(symbol).catch(() => null)
+        ]);
+        
         if (!state.priceHistory[symbol]) {
             state.priceHistory[symbol] = {};
         }
         
-        state.priceHistory[symbol]['30d'] = data30d;
-        state.priceHistory[symbol]['7d'] = data7d;
-        state.priceHistory[symbol]['24h'] = data1d;
-        state.priceHistory[symbol]['1h'] = data1d.slice(-4); // Last 4 hours
-        state.priceHistory[symbol]['4h'] = data1d.slice(-16); // Last 16 hours
+        if (data30d) state.priceHistory[symbol]['30d'] = data30d;
+        if (data7d) state.priceHistory[symbol]['7d'] = data7d;
+        if (data1d) {
+            state.priceHistory[symbol]['24h'] = data1d;
+            state.priceHistory[symbol]['1h'] = data1d.slice(-4);
+            state.priceHistory[symbol]['4h'] = data1d.slice(-16);
+        }
         
-        // For longer periods, use approximation from 30d data
-        state.priceHistory[symbol]['90d'] = data30d; // Use 30d as proxy
-        state.priceHistory[symbol]['1y'] = data30d; // Use 30d as proxy
+        // Cache the data
+        cacheHistoricalData(symbol, state.priceHistory[symbol]);
         
-        console.log(`Loaded historical data for ${symbol}`);
+        updateChart();
+    } catch (error) {
+        console.warn(`Failed to load historical data for ${symbol}:`, error);
+    }
+}
+
+/**
+ * Get cached historical data
+ */
+function getCachedHistoricalData(symbol) {
+    try {
+        const cached = localStorage.getItem(`${HISTORICAL_CACHE_KEY}_${symbol}`);
+        if (!cached) return null;
+        
+        const { data, timestamp } = JSON.parse(cached);
+        
+        // Check if cache is expired
+        if (Date.now() - timestamp > HISTORICAL_CACHE_TTL) {
+            localStorage.removeItem(`${HISTORICAL_CACHE_KEY}_${symbol}`);
+            return null;
+        }
+        
+        // Restore Date objects
+        Object.keys(data).forEach(period => {
+            if (Array.isArray(data[period])) {
+                data[period] = data[period].map(item => ({
+                    ...item,
+                    time: item.time ? new Date(item.time) : undefined
+                }));
+            }
+        });
+        
+        return data;
+    } catch {
+        return null;
+    }
+}
+
+/**
+ * Cache historical data
+ */
+function cacheHistoricalData(symbol, data) {
+    try {
+        localStorage.setItem(`${HISTORICAL_CACHE_KEY}_${symbol}`, JSON.stringify({
+            data,
+            timestamp: Date.now()
+        }));
+    } catch (error) {
+        // Storage might be full, ignore
+    }
+}
+
+/**
+ * Load cached historical data on startup
+ */
+function loadCachedHistoricalData(symbol) {
+    const cached = getCachedHistoricalData(symbol);
+    if (cached) {
+        state.priceHistory[symbol] = cached;
+    }
+}
+
+/**
+ * Load historical price data from CoinGecko (used when switching coins)
+ * Now uses parallel fetches and caching for better performance
+ */
+async function loadHistoricalData(symbol) {
+    // Check cache first
+    const cached = getCachedHistoricalData(symbol);
+    if (cached) {
+        state.priceHistory[symbol] = cached;
+        updateChart();
+        return;
+    }
+    
+    try {
+        // Fetch all time periods in parallel
+        const [data30d, data7d, data1d] = await Promise.all([
+            fetchHistoricalPrices(symbol, 30).catch(() => null),
+            fetchHistoricalPrices(symbol, 7).catch(() => null),
+            fetchIntradayPrices(symbol).catch(() => null)
+        ]);
+        
+        if (!state.priceHistory[symbol]) {
+            state.priceHistory[symbol] = {};
+        }
+        
+        if (data30d) {
+            state.priceHistory[symbol]['30d'] = data30d;
+            state.priceHistory[symbol]['90d'] = data30d;
+            state.priceHistory[symbol]['1y'] = data30d;
+        }
+        if (data7d) state.priceHistory[symbol]['7d'] = data7d;
+        if (data1d) {
+            state.priceHistory[symbol]['24h'] = data1d;
+            state.priceHistory[symbol]['1h'] = data1d.slice(-4);
+            state.priceHistory[symbol]['4h'] = data1d.slice(-16);
+        }
+        
+        // Cache the data
+        cacheHistoricalData(symbol, state.priceHistory[symbol]);
+        
         updateChart();
         
     } catch (error) {
         console.error(`Failed to load historical data for ${symbol}:`, error);
         // Fallback to generated data
-        state.priceHistory[symbol] = generatePriceHistory(
-            state.coinData[symbol].current_price,
-            30
-        );
+        if (!state.priceHistory[symbol]) {
+            state.priceHistory[symbol] = generatePriceHistory(
+                state.coinData[symbol]?.current_price || 1000,
+                30
+            );
+        }
         updateChart();
     }
 }
@@ -1091,29 +1222,37 @@ async function selectCoin(symbol) {
     
     if (!coin) return;
     
-    // Show skeleton states while switching
-    showCoinSwitchLoadingStates();
-    
-    // Update selector button
+    // Update selector button immediately
     document.getElementById('selectedCoinIcon').src = coin.img_url;
     document.getElementById('selectedCoinIcon').alt = symbol;
     document.getElementById('selectedCoinSymbol').textContent = symbol;
     document.getElementById('selectedCoinName').textContent = coin.coin_name;
     
-    // Load historical data if not already loaded
-    if (!state.priceHistory[symbol] || !state.priceHistory[symbol]['24h']) {
-        await loadHistoricalData(symbol);
+    // Try to use cached/generated data first for instant feedback
+    const hasCachedData = state.priceHistory[symbol] && 
+        (state.priceHistory[symbol]['24h'] || Array.isArray(state.priceHistory[symbol]));
+    
+    if (!hasCachedData) {
+        // Generate synthetic data for instant display
+        state.priceHistory[symbol] = generatePriceHistory(coin.current_price, 30);
     }
     
-    // Load minute data if viewing short timeframes
+    // Update UI immediately with available data
+    updateUI();
+    
+    // Load real historical data in background if not cached
+    if (!hasCachedData || !getCachedHistoricalData(symbol)) {
+        showCoinSwitchLoadingStates();
+        loadHistoricalDataInBackground(symbol).then(() => {
+            hideCoinSwitchLoadingStates();
+        });
+    }
+    
+    // Load minute data in background if needed
     if ((state.currentPeriod === '1m' || state.currentPeriod === '5m') && 
         (!state.priceHistory[symbol] || !state.priceHistory[symbol]['1m'])) {
-        await loadMinuteData(symbol);
+        loadMinuteData(symbol);
     }
-    
-    // Update UI and hide loading states
-    updateUI();
-    hideCoinSwitchLoadingStates();
 }
 
 // ========================================

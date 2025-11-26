@@ -22,6 +22,7 @@ let currentFilter = 'all';
 let currentPage = 1;
 const itemsPerPage = 5;
 let chartData24h = {};
+let searchQuery = '';
 
 function getCurrencyManager() {
     return window.UKXCurrency || null;
@@ -184,6 +185,16 @@ function filterMarketData(data, filter) {
     return data.filter(coin => coin.tags.includes(filter));
 }
 
+function applySearchFilter(data) {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return data;
+    return data.filter((coin) => {
+        const name = coin.name?.toLowerCase() || '';
+        const symbol = coin.symbol?.toLowerCase() || '';
+        return name.includes(query) || symbol.includes(query);
+    });
+}
+
 // Paginate market data
 function paginateData(data, page, perPage) {
     const start = (page - 1) * perPage;
@@ -236,7 +247,8 @@ function renderMarketsTable() {
     if (!tbody) return;
 
     // Filter and paginate data
-    const filteredData = filterMarketData(marketData, currentFilter);
+    let filteredData = filterMarketData(marketData, currentFilter);
+    filteredData = applySearchFilter(filteredData);
     const paginatedData = paginateData(filteredData, currentPage, itemsPerPage);
 
     // Clear existing rows
@@ -642,6 +654,16 @@ function initializeFilters() {
     });
 }
 
+function initializeSearch() {
+    const searchInput = document.getElementById('marketsSearch');
+    if (!searchInput) return;
+    searchInput.addEventListener('input', () => {
+        searchQuery = searchInput.value || '';
+        currentPage = 1;
+        renderMarketsTable();
+    });
+}
+
 // Initialize row click handlers
 function initializeRowHandlers() {
     document.addEventListener('click', (e) => {
@@ -695,11 +717,35 @@ async function fetch24hChartData() {
     }
 }
 
-// Fetch new listings from CoinGecko API
+// Fetch new listings from CoinGecko API (with rate limit handling)
+let _lastCoinGeckoFetch = 0;
+const COINGECKO_MIN_INTERVAL = 12000; // 12 seconds between API calls to avoid rate limiting
+
+async function fetchWithRateLimit(url) {
+    const now = Date.now();
+    const timeSinceLastFetch = now - _lastCoinGeckoFetch;
+    
+    if (timeSinceLastFetch < COINGECKO_MIN_INTERVAL) {
+        await new Promise(resolve => setTimeout(resolve, COINGECKO_MIN_INTERVAL - timeSinceLastFetch));
+    }
+    
+    _lastCoinGeckoFetch = Date.now();
+    const response = await fetch(url);
+    
+    // Handle rate limiting (429)
+    if (response.status === 429) {
+        console.warn('CoinGecko rate limit hit, backing off...');
+        await new Promise(resolve => setTimeout(resolve, 30000)); // Wait 30s
+        return fetch(url); // Retry once
+    }
+    
+    return response;
+}
+
 async function fetchNewListings() {
     try {
         // Fetch recently added coins from CoinGecko
-        const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=id_desc&per_page=10&page=1&sparkline=false&locale=en&price_change_percentage=24h');
+        const response = await fetchWithRateLimit('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=id_desc&per_page=10&page=1&sparkline=false&locale=en&price_change_percentage=24h');
         
         if (!response.ok) {
             throw new Error('Failed to fetch new listings from CoinGecko');
@@ -722,7 +768,6 @@ async function fetchNewListings() {
             tags: ['all']
         }));
         
-        console.log('Fetched new listings from CoinGecko:', newListingsData.length);
         return newListingsData;
     } catch (error) {
         console.error('Error fetching new listings from CoinGecko:', error);
@@ -735,7 +780,7 @@ async function fetchNewListings() {
 // Fetch top gainers for hot crypto card
 async function fetchHotCrypto() {
     try {
-        const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=price_change_percentage_24h_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h');
+        const response = await fetchWithRateLimit('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=price_change_percentage_24h_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h');
 
         if (!response.ok) {
             throw new Error('Failed to fetch hot crypto data from CoinGecko');
@@ -764,21 +809,22 @@ async function fetchHotCrypto() {
 
 // Initialize the markets page
 async function initializeMarketsPage() {
-    console.log('Initializing markets page...');
-    
-    // Fetch market data and new listings in parallel
+    // Fetch local data first (fast), then CoinGecko data (with rate limiting)
     await Promise.all([
         fetchMarketData(),
-        fetchNewListings(),
-        fetch24hChartData(),
-        fetchHotCrypto()
+        fetch24hChartData()
     ]);
     
-    // Render market data
+    // Render with local data immediately
     renderMarketsTable();
+
+    // Then fetch CoinGecko data in background (sequentially to respect rate limits)
+    fetchNewListings().then(() => updateMarketCards());
+    fetchHotCrypto().then(() => updateMarketCards());
 
     // Initialize filters
     initializeFilters();
+    initializeSearch();
 
     // Initialize row click handlers
     initializeRowHandlers();
@@ -810,16 +856,21 @@ async function initializeMarketsPage() {
         attributeFilter: ['data-theme']
     });
 
-    // Auto-refresh data every 60 seconds
+    // Auto-refresh local data every 60 seconds, CoinGecko every 2 minutes (rate limit friendly)
     setInterval(async () => {
         await Promise.all([
             fetchMarketData(),
-            fetchNewListings(),
-            fetch24hChartData(),
-            fetchHotCrypto()
+            fetch24hChartData()
         ]);
         renderMarketsTable();
     }, 60000);
+    
+    // CoinGecko data refresh (less frequent to avoid rate limits)
+    setInterval(async () => {
+        await fetchNewListings();
+        await fetchHotCrypto();
+        updateMarketCards();
+    }, 120000); // 2 minutes
 }
 
 // Initialize when DOM is ready

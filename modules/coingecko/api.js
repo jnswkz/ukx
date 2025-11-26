@@ -420,9 +420,10 @@ export async function fetch5MinuteData(symbol) {
 /**
  * Rate limiting helper - wait between API calls
  * CoinGecko free tier: ~10-30 calls/minute
+ * Reduced interval for better performance while staying within limits
  */
 let lastCallTime = 0;
-const MIN_CALL_INTERVAL = 2000; // 2 seconds between calls
+const MIN_CALL_INTERVAL = 1200; // 1.2 seconds between calls (allows ~50/min, well under limit)
 
 export async function rateLimitedFetch(fetchFunction) {
     const now = Date.now();
@@ -433,5 +434,44 @@ export async function rateLimitedFetch(fetchFunction) {
     }
     
     lastCallTime = Date.now();
-    return await fetchFunction();
+    
+    try {
+        return await fetchFunction();
+    } catch (error) {
+        // Handle rate limit errors gracefully
+        if (error.message && error.message.includes('429')) {
+            console.warn('Rate limited, waiting 30s before retry...');
+            await new Promise(resolve => setTimeout(resolve, 30000));
+            lastCallTime = Date.now();
+            return await fetchFunction();
+        }
+        throw error;
+    }
+}
+
+/**
+ * Batch multiple API calls with intelligent rate limiting
+ * Useful for fetching multiple pieces of data in parallel
+ */
+export async function batchFetch(fetchFunctions) {
+    const results = [];
+    const batchSize = 3; // Process 3 at a time
+    
+    for (let i = 0; i < fetchFunctions.length; i += batchSize) {
+        const batch = fetchFunctions.slice(i, i + batchSize);
+        const batchResults = await Promise.all(
+            batch.map(fn => fn().catch(err => {
+                console.warn('Batch fetch error:', err);
+                return null;
+            }))
+        );
+        results.push(...batchResults);
+        
+        // Wait between batches
+        if (i + batchSize < fetchFunctions.length) {
+            await new Promise(resolve => setTimeout(resolve, MIN_CALL_INTERVAL));
+        }
+    }
+    
+    return results;
 }

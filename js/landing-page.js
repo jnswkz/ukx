@@ -1,7 +1,4 @@
-console.log('landing-page.js: Script loaded');
-
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('UKX Landing Page initialized');
 
     // ========== Intro Reveal ==========
     initializeLandingIntro();
@@ -37,52 +34,81 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 function initializeFAQ() {
     const faqItems = document.querySelectorAll('.faq-item');
-    
+
+    const closeItem = (item) => {
+        const toggle = item.querySelector('.faq-toggle');
+        const answer = item.querySelector('.faq-answer');
+        if (!toggle || !answer) return;
+
+        item.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        answer.setAttribute('aria-hidden', 'true');
+
+        const startHeight = answer.scrollHeight;
+        answer.style.height = `${startHeight}px`;
+        answer.style.opacity = '1';
+
+        requestAnimationFrame(() => {
+            answer.style.height = '0px';
+            answer.style.opacity = '0';
+        });
+    };
+
+    const openItem = (item) => {
+        const toggle = item.querySelector('.faq-toggle');
+        const answer = item.querySelector('.faq-answer');
+        if (!toggle || !answer) return;
+
+        item.classList.add('open');
+        toggle.setAttribute('aria-expanded', 'true');
+        answer.setAttribute('aria-hidden', 'false');
+
+        const targetHeight = answer.scrollHeight;
+        answer.style.height = `${targetHeight}px`;
+        answer.style.opacity = '1';
+
+        const handleOpenEnd = (event) => {
+            if (event.propertyName !== 'height') return;
+            if (!item.classList.contains('open')) {
+                answer.removeEventListener('transitionend', handleOpenEnd);
+                return;
+            }
+            answer.style.height = 'auto';
+            answer.removeEventListener('transitionend', handleOpenEnd);
+        };
+
+        answer.addEventListener('transitionend', handleOpenEnd);
+    };
+
     faqItems.forEach(item => {
         const toggle = item.querySelector('.faq-toggle');
         const answer = item.querySelector('.faq-answer');
-        if (answer && !answer.hasAttribute('hidden')) {
-            answer.setAttribute('hidden', '');
-        }
-        if (toggle && !toggle.hasAttribute('aria-expanded')) {
-            toggle.setAttribute('aria-expanded', 'false');
-        }
-        
-        if (toggle && answer) {
-            toggle.addEventListener('click', function() {
-                const isOpen = item.classList.contains('open');
 
-                // Close all other FAQ items
-                faqItems.forEach(otherItem => {
-                    if (otherItem === item) {
-                        return;
-                    }
-                    otherItem.classList.remove('open');
-                    const otherToggle = otherItem.querySelector('.faq-toggle');
-                    const otherAnswer = otherItem.querySelector('.faq-answer');
-                    if (otherToggle) {
-                        otherToggle.setAttribute('aria-expanded', 'false');
-                    }
-                    if (otherAnswer && !otherAnswer.hasAttribute('hidden')) {
-                        otherAnswer.setAttribute('hidden', '');
-                    }
-                });
-                
-                // Toggle current item
-                if (isOpen) {
-                    item.classList.remove('open');
-                    toggle.setAttribute('aria-expanded', 'false');
-                    answer.setAttribute('hidden', '');
-                } else {
-                    item.classList.add('open');
-                    toggle.setAttribute('aria-expanded', 'true');
-                    answer.removeAttribute('hidden');
+        if (!toggle || !answer) return;
+
+        answer.style.height = '0px';
+        answer.style.opacity = '0';
+        answer.setAttribute('aria-hidden', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+        
+        toggle.addEventListener('click', function() {
+            const isOpen = item.classList.contains('open');
+
+            // Close all other FAQ items
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    closeItem(otherItem);
                 }
             });
-        }
+            
+            // Toggle current item
+            if (isOpen) {
+                closeItem(item);
+            } else {
+                openItem(item);
+            }
+        });
     });
-    
-    console.log('FAQ accordion initialized');
 }
 
 /**

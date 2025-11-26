@@ -238,17 +238,8 @@ function initializeNavbar() {
     logoutBtnMobile.addEventListener("click", handleLogout);
   }
   // Theme toggle functionality is now handled in main.js
-  console.log(
-    "Checking for initializeThemeToggle:",
-    typeof window.initializeThemeToggle
-  );
   if (typeof window.initializeThemeToggle === "function") {
-    console.log("Calling initializeThemeToggle from components.js");
     window.initializeThemeToggle();
-  } else {
-    console.warn(
-      "initializeThemeToggle not available yet, will be initialized by main.js"
-    );
   }
 
   // Login button
@@ -380,7 +371,6 @@ function initializeChat() {
     // Gọi API ở đây
     return "Placeholder";
   }
-  console.log("Chat popup initialized");
 }
 
 /**

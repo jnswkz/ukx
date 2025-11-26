@@ -7,6 +7,37 @@ async function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// ========== Coin Data Cache (Performance Optimization) ==========
+// Cache coin data to avoid repeated JSON fetches
+let _coinDataCache = null;
+let _coinDataPromise = null;
+
+async function getCoinDataCache() {
+    // Return cached data if available
+    if (_coinDataCache !== null) {
+        return _coinDataCache;
+    }
+    // If a fetch is already in progress, wait for it
+    if (_coinDataPromise !== null) {
+        return _coinDataPromise;
+    }
+    // Fetch and cache
+    _coinDataPromise = (async () => {
+        try {
+            const parsed = await jsonFileParser('/data/full_coin_data.json');
+            _coinDataCache = Array.isArray(parsed) ? parsed[0] || {} : parsed || {};
+            return _coinDataCache;
+        } catch (e) {
+            console.error('Error loading coin data cache:', e);
+            _coinDataCache = {};
+            return _coinDataCache;
+        } finally {
+            _coinDataPromise = null;
+        }
+    })();
+    return _coinDataPromise;
+}
+
 function markSkeletonLoaded(element) {
     if (!element) return;
     if (element.classList.contains('skeleton')) {
@@ -108,25 +139,37 @@ window.addEventListener('preferredCurrencyChange', () => {
     renderTotalBalance();
 });
 
-async function to_usd(id){
-    const parsed = await jsonFileParser('/data/full_coin_data.json');
-    const coins_data = Array.isArray(parsed) ? parsed[0] || {} : parsed || {};
+// ========== Optimized Coin Data Lookups (use cache) ==========
+async function to_usd(id) {
+    const coins_data = await getCoinDataCache();
     if (!coins_data[id] || typeof coins_data[id] !== 'object') return null;
     return coins_data[id]['current_price'];
 }
 
-async function to_coin_name(id){
-    const parsed = await jsonFileParser('/data/full_coin_data.json');
-    const coins_data = Array.isArray(parsed) ? parsed[0] || {} : parsed || {};
+async function to_coin_name(id) {
+    const coins_data = await getCoinDataCache();
     if (!coins_data[id] || typeof coins_data[id] !== 'object') return null;
     return coins_data[id]['coin_name'];
 }
 
-async function to_coin_image(id){
-    const parsed = await jsonFileParser('/data/full_coin_data.json');
-    const coins_data = Array.isArray(parsed) ? parsed[0] || {} : parsed || {};
+async function to_coin_image(id) {
+    const coins_data = await getCoinDataCache();
     if (!coins_data[id] || typeof coins_data[id] !== 'object') return null;
     return coins_data[id]['img_url'];
+}
+
+// Batch lookup for multiple coins (parallel, single cache fetch)
+async function getCoinInfo(id) {
+    const coins_data = await getCoinDataCache();
+    const coin = coins_data[id];
+    if (!coin || typeof coin !== 'object') {
+        return { price: null, name: id, imgUrl: '' };
+    }
+    return {
+        price: coin['current_price'] ?? null,
+        name: coin['coin_name'] ?? id,
+        imgUrl: coin['img_url'] ?? ''
+    };
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
@@ -380,8 +423,6 @@ function initializeWalletDashboard() {
             filterTransactions(currentFilter);
         });
     }
-
-    console.log('Wallet dashboard initialized');
 }
 
 /**
@@ -416,21 +457,30 @@ async function populateWalletData(userData = {}, uiRefs = {}) {
     const balances = [];
     const coinHoldings = userData?.coin_holdings || {};
 
-    for (const key in coinHoldings) {
-        if (!Object.prototype.hasOwnProperty.call(coinHoldings, key)) continue;
-
+    // Pre-fetch coin data cache once, then process all holdings in parallel
+    await getCoinDataCache();
+    
+    const holdingKeys = Object.keys(coinHoldings).filter(key => 
+        Object.prototype.hasOwnProperty.call(coinHoldings, key)
+    );
+    
+    // Process all coins in parallel using the cached data
+    const balancePromises = holdingKeys.map(async (key) => {
         const availableAmount = Number(coinHoldings[key]) || 0;
-        const usdPrice = await to_usd(key);
-        const usdValue = Number.isFinite(availableAmount) ? availableAmount * (usdPrice ?? 0) : 0;
-        balances.push({
+        const coinInfo = await getCoinInfo(key);
+        const usdValue = Number.isFinite(availableAmount) ? availableAmount * (coinInfo.price ?? 0) : 0;
+        return {
             symbol: key,
-            name: (await to_coin_name(key)) || key, 
+            name: coinInfo.name || key,
             available: availableAmount,
-            locked: Math.random() < 0.5 ? parseFloat((Math.random() * 0.1).toFixed(4)) : 0.0, // Random locked 
+            locked: Math.random() < 0.5 ? parseFloat((Math.random() * 0.1).toFixed(4)) : 0.0,
             usdValue: Number.isFinite(usdValue) ? usdValue : 0,
-            imgUrl: (await to_coin_image(key)) || ''
-        });
-    }
+            imgUrl: coinInfo.imgUrl || ''
+        };
+    });
+    
+    const resolvedBalances = await Promise.all(balancePromises);
+    balances.push(...resolvedBalances);
     
     // Sample transaction data
     const transactions = [
