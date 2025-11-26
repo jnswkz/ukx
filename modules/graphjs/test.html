@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GraphJS Test</title>
-    <!-- <script src="../graphjs/graphjs.js"></script> -->
+    <!-- <script src="../graphjs/graphjs.js" defer></script> -->
 </html>
 
 <body>
@@ -24,8 +24,8 @@
         <canvas id="bar-graph-2" width="1000" height="500"></canvas>
     </div>
 
-    <script src="../graphjs/line.js"></script>
-    <script src="../graphjs/bar.js"></script>
+    <script src="../graphjs/line.js" defer></script>
+    <script src="../graphjs/bar.js" defer></script>
     <script type="module">
         import { jsonFileParser } from '/modules/json/jsonFileParser.js';
         import { drawLineGraph } from '/modules/graphjs/line.js';

@@ -303,13 +303,26 @@ function updateMarketCards() {
     }
 }
 
-function generateMockSparkline(change24h = 0) {
+function createSeededRandom(seedString = '') {
+    // Simple LCG using a hash derived from the symbol so re-renders stay consistent
+    let seed = Array.from(String(seedString).toUpperCase()).reduce((hash, char) => {
+        return (hash * 31 + char.charCodeAt(0)) >>> 0;
+    }, 0) || 123456789;
+
+    return () => {
+        seed = (1664525 * seed + 1013904223) >>> 0;
+        return seed / 2 ** 32;
+    };
+}
+
+function generateMockSparkline(symbol = '', change24h = 0) {
+    const seededRandom = createSeededRandom(symbol);
     const points = [];
     const numPoints = 24;
     let value = 100;
 
     for (let i = 0; i < numPoints; i++) {
-        value += (Math.random() - 0.48) * 5;
+        value += (seededRandom() - 0.48) * 5;
         points.push(value);
     }
 
@@ -332,7 +345,7 @@ function drawMiniChart(symbol, change24h) {
     const numericChange = Number.isFinite(Number(change24h)) ? Number(change24h) : 0;
     const realSeries = getChartSeriesForSymbol(symbol);
     const hasRealSeries = Array.isArray(realSeries) && realSeries.length > 1;
-    const points = hasRealSeries ? [...realSeries] : generateMockSparkline(numericChange);
+    const points = hasRealSeries ? [...realSeries] : generateMockSparkline(symbol, numericChange);
     const numPoints = points.length;
 
     const min = Math.min(...points);

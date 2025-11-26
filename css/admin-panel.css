@@ -652,3 +652,9 @@
   .admin-panel-main { margin-left: 0; }
   .admin-panel-sidebar { transform: translateX(0); }
 }
+
+/* Ensure hidden class can override flex layouts for admin pie sections */
+.admin-panel-pie-charts.hidden,
+.admin-panel-pie-card.hidden {
+  display: none !important;
+}

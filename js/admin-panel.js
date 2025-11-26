@@ -6,10 +6,10 @@ const sidebarToggle = document.getElementById("adminSidebarToggle");
 const sidebar = document.querySelector(".admin-panel-sidebar");
 const time = document.querySelector(".admin-panel-controls-time");
 
-let adminSessionCurren = window.localStorage.getItem('adminSession');
-if (!adminSessionCurren || adminSessionCurren !== 'true') {
-  alert('You must be logged in as admin to access the admin panel.');
-  window.location.href = './login.html';
+let adminSessionCurren = window.localStorage.getItem("adminSession");
+if (!adminSessionCurren || adminSessionCurren !== "true") {
+  alert("You must be logged in as admin to access the admin panel.");
+  window.location.href = "./login.html";
 }
 
 function getCurrentDateTime() {
@@ -61,6 +61,8 @@ function switchSection(section) {
       "admin-panel-news",
       "admin-panel-coin-held-chart-title",
       "admin-panel-age-chart-title",
+      "admin-panel-pie-charts",
+      "admin-panel-pie-card",
     ]);
     removeHidden([
       "admin-panel-trade",
@@ -90,6 +92,8 @@ function switchSection(section) {
       "admin-panel-card-right",
       "admin-panel-coin-held-chart-title",
       "admin-panel-age-chart-title",
+      "admin-panel-pie-charts",
+      "admin-panel-pie-card",
     ]);
     if (!loginChartDrawn) {
       resizeCanvasToParent("admin-panel-login-chart");
@@ -113,6 +117,8 @@ function switchSection(section) {
       "admin-panel-card-right",
       "admin-panel-coin-held-chart-title",
       "admin-panel-age-chart-title",
+      "admin-panel-pie-charts",
+      "admin-panel-pie-card",
     ]);
     removeHidden(["admin-panel-news"]);
   }
@@ -439,10 +445,8 @@ function drawCoinHoldingDistributionChart(user_data) {
      */
     if (user.coin_holdings) {
       for (let coin in user.coin_holdings) {
-        if (!coins.hasOwnProperty(coin))
-          coins[coin] = user.coin_holdings[coin];
-        else
-          coins[coin] += user.coin_holdings[coin];
+        if (!coins.hasOwnProperty(coin)) coins[coin] = user.coin_holdings[coin];
+        else coins[coin] += user.coin_holdings[coin];
       }
     }
   }
