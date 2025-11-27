@@ -145,12 +145,28 @@ updateTime();
 setInterval(updateTime, 1000);
 updateName();
 
+function updateToggleIcon() {
+  if (!sidebarToggle || !sidebar) return;
+  const isMobile = window.matchMedia("(max-width: 900px)").matches;
+  if (isMobile) {
+    sidebarToggle.textContent = sidebar.classList.contains("collapsed")
+      ? "☰"
+      : "✕";
+  } else {
+    sidebarToggle.textContent = sidebar.classList.contains("collapsed")
+      ? "❯"
+      : "❮";
+  }
+}
+
+updateToggleIcon();
+
 sidebarToggle.addEventListener("click", () => {
   sidebar.classList.toggle("collapsed");
-  sidebarToggle.textContent = sidebar.classList.contains("collapsed")
-    ? "❯"
-    : "❮";
+  updateToggleIcon();
 });
+
+window.addEventListener("resize", updateToggleIcon);
 
 // Dynamic table
 // ====== sample data for trade table ======
