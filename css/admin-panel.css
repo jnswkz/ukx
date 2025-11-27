@@ -1,7 +1,8 @@
+/* Main dark background */
 .admin-panel-container {
   display: flex;
   min-height: 100vh;
-  background-color: var(--nord0); /* Nền chính đậm */
+  background-color: var(--nord0); /* Main dark background */
   font-family: var(--font-primary);
   padding-right: 20px;
 }
@@ -12,7 +13,7 @@
   width: 240px;
   height: 100vh;
   top: 0;
-  background: var(--nord6); /* Sidebar sáng */
+  background: var(--nord6); /* Light sidebar */
   color: var(--nord0);
   display: flex;
   flex-direction: column;
@@ -72,7 +73,7 @@
   pointer-events: auto;
 }
 
-/* Ảnh đại diện và nút thu gọn */
+/* Avatar and collapse button */
 .admin-panel-profile {
   display: flex;
   align-items: center;
@@ -99,7 +100,7 @@
   z-index: 1001;
 }
 
-/* Menu chính */
+/* Main menu */
 .admin-panel-menu {
   margin-top: -30px;
 }
@@ -181,7 +182,7 @@
   color: var(--nord3);
 }
 
-/* Tin nhắn */
+/* Messages */
 .admin-panel-messages {
   margin-top: var(--spacing-lg);
   display: flex;
@@ -210,7 +211,7 @@
   border-radius: 50%;
 }
 
-/* Nút đăng xuất */
+/* Logout button */
 .admin-panel-logout {
   border: none;
   padding: 10px;
@@ -223,7 +224,7 @@
   margin-right: -20px;
 }
 
-/* ========== PHẦN NỘI DUNG ========== */
+/* ========== CONTENT SECTION ========== */
 .admin-panel-main {
   flex: 1;
   padding: var(--spacing-xl);
@@ -446,7 +447,7 @@
   max-height: 600px;
 }
 
-/* Bộ điều khiển phía trên bảng */
+/* Top controls above the table */
 .admin-panel-controls {
   display: flex;
   align-items: center;
@@ -505,7 +506,7 @@
   min-width: 200px;
 }
 
-/* Các chart */
+/* Charts */
 .admin-panel-bar-chart-container {
   justify-self: center;
   background: white;
@@ -517,7 +518,7 @@
   margin-bottom: var(--spacing-lg);
   color:black;
 }
-/* Bảng giao dịch */
+/* Transaction table */
 .admin-panel-table {
   width: 100%;
   border-collapse: collapse;
@@ -540,7 +541,7 @@
   color: var(--nord0);
 }
 
-/* Trạng thái */
+/* Status */
 .admin-panel-status {
   padding: 6px 12px;
   border-radius: var(--radius-md);
@@ -553,7 +554,7 @@
   color: var(--nord0);
 }
 
-/* Nút đổi trạng thái */
+/* Status change button */
 .admin-panel-status-btn {
   border: none;
   border-radius: var(--radius-md);

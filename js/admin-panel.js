@@ -30,7 +30,7 @@ function updateName() {
   nameElement.textContent = storedName;
 }
 
-// logic đổi tab
+// tab switching logic
 let loginChartDrawn = false;
 let ageChartInstance = null;
 let coinChartInstance = null;
@@ -124,7 +124,7 @@ function switchSection(section) {
   }
 }
 
-// Mặc định hiển thị tab Trade
+// Show Trade tab by default
 switchSection("trade");
 
 document.querySelectorAll(".admin-panel-menu-item").forEach((item) => {
@@ -152,8 +152,8 @@ sidebarToggle.addEventListener("click", () => {
     : "❮";
 });
 
-// Bảng động
-// ====== dữ liệu mẫu cho bảng trade ======
+// Dynamic table
+// ====== sample data for trade table ======
 const headers = [
   "Trade ID",
   "Trade Date",
@@ -203,7 +203,7 @@ function createAdminTable(headerData, rowData) {
   const table = document.createElement("table");
   table.className = "admin-panel-table";
 
-  // Tạo phần header
+  // Create header section
   const thead = document.createElement("thead");
   const headerRow = document.createElement("tr");
   headerData.forEach((text) => {
@@ -214,7 +214,7 @@ function createAdminTable(headerData, rowData) {
   thead.appendChild(headerRow);
   table.appendChild(thead);
 
-  // Tạo phần body
+  // Create body section
   const tbody = document.createElement("tbody");
 
   rowData.forEach((row) => {
@@ -223,7 +223,7 @@ function createAdminTable(headerData, rowData) {
       const td = document.createElement("td");
       const value = row[key];
 
-      // Nếu là status(object)
+      // If it's a status (object)
       if (typeof value === "object" && value.type === "status") {
         if (value.kind === "span") {
           const span = document.createElement("span");
@@ -321,7 +321,7 @@ document
   .querySelector(".admin-panel-news")
   .appendChild(createAdminTable(newsHeaders, newsRows));
 
-// nút status
+// status button
 document.querySelectorAll(".admin-panel-status-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     console.log("Clicked");
