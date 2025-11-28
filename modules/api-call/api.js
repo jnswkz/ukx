@@ -9,6 +9,39 @@ const API_KEY = API;
 const responseCache = new Map();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
+// Persisted state for chat coin preview charts
+const CHAT_CHART_STATE_KEY = 'ukx_chat_chart_periods';
+
+function readStoredChartState() {
+    try {
+        const raw = localStorage.getItem(CHAT_CHART_STATE_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch (error) {
+        console.warn('Unable to read chat chart state from storage', error);
+        return {};
+    }
+}
+
+function getStoredChartPeriod(symbol) {
+    if (!symbol) return null;
+    const state = readStoredChartState();
+    const key = symbol.toUpperCase();
+    return state[key] || null;
+}
+
+function persistChartPeriod(symbol, period) {
+    if (!symbol || !period) return;
+    const key = symbol.toUpperCase();
+    const nextState = readStoredChartState();
+    nextState[key] = period;
+    try {
+        localStorage.setItem(CHAT_CHART_STATE_KEY, JSON.stringify(nextState));
+    } catch (error) {
+        console.warn('Unable to persist chat chart state', error);
+    }
+}
+
 // Preloaded context data (loaded once)
 let preloadedContext = null;
 let contextLoadPromise = null;
@@ -521,8 +554,8 @@ async function addCoinShortcuts(response, userMessage) {
             const marketCapFormatted = formatCompactNumber(marketCap);
             
             coinCards.push(
-                `<a href="/pages/coin-details.html?id=${pageId}" class="coin-card-link">` +
-                `<div class="coin-preview-card" data-symbol="${symbol}">` +
+                `<a href="/pages/markets.html" class="coin-card-link" data-destination="markets">` +
+                `<div class="coin-preview-card" data-symbol="${symbol}" data-coin-id="${pageId}">` +
                 `<div class="coin-preview-header">` +
                 `<img src="${coin.img_url}" alt="${symbol}" class="coin-preview-icon">` +
                 `<div class="coin-preview-info">` +
@@ -557,7 +590,7 @@ async function addCoinShortcuts(response, userMessage) {
                 `</div>` +
                 `</div>` +
                 `<div class="coin-preview-action">` +
-                `<span>View full details →</span>` +
+                `<span>View market →</span>` +
                 `</div>` +
                 `</div>` +
                 `</a>`
@@ -793,26 +826,55 @@ function drawMiniChartTooltip(canvas, index) {
 function initializeMiniChart(chartId, symbol) {
     setTimeout(async () => {
         const canvas = document.getElementById(chartId);
-        if (!canvas) return;
+        if (!canvas || canvas.dataset.bound === 'true') return;
         
         const container = canvas.closest('.coin-preview-card');
         if (!container) return;
-        
-        const link = container.closest('.coin-card-link');
+        canvas.dataset.bound = 'true';
         
         // Set canvas size
         const rect = canvas.getBoundingClientRect();
         canvas.width = rect.width || 240;
         canvas.height = rect.height || 80;
         
-        // Get current period from buttons
-        let currentPeriod = '24h';
+        const periodBtns = Array.from(container.querySelectorAll('.chat-chart-btn'));
+        const savedPeriod = getStoredChartPeriod(symbol);
         const activeBtn = container.querySelector('.chat-chart-btn.active');
-        if (activeBtn) currentPeriod = activeBtn.dataset.period;
+        const defaultBtn =
+            (savedPeriod && container.querySelector(`.chat-chart-btn[data-period="${savedPeriod}"]`)) ||
+            activeBtn ||
+            periodBtns[0] ||
+            null;
+        
+        const setActiveButton = (targetBtn) => {
+            periodBtns.forEach((btn) => btn.classList.toggle('active', btn === targetBtn));
+        };
+        
+        setActiveButton(defaultBtn);
+        let currentPeriod = defaultBtn?.dataset?.period || '24h';
+        
+        const updateRangeLabels = (series = []) => {
+            if (!Array.isArray(series) || series.length === 0) return;
+            const min = Math.min(...series);
+            const max = Math.max(...series);
+            const highEl = container.querySelector('.chat-chart-high');
+            const lowEl = container.querySelector('.chat-chart-low');
+            if (highEl) highEl.textContent = `$${formatPriceCompact(max)}`;
+            if (lowEl) lowEl.textContent = `$${formatPriceCompact(min)}`;
+        };
         
         // Load and draw chart
-        const priceData = await loadPriceData(currentPeriod);
-        const prices = extractPrices(priceData[symbol], currentPeriod);
+        let priceData = await loadPriceData(currentPeriod);
+        let prices = extractPrices(priceData?.[symbol], currentPeriod);
+        
+        if (prices.length < 2 && currentPeriod !== '24h') {
+            currentPeriod = '24h';
+            priceData = await loadPriceData(currentPeriod);
+            prices = extractPrices(priceData?.[symbol], currentPeriod);
+            const fallbackBtn = container.querySelector('.chat-chart-btn[data-period="24h"]');
+            if (fallbackBtn) setActiveButton(fallbackBtn);
+        }
+        
         const coinData = await loadCoinData();
         const coin = coinData[symbol];
         const isUp = coin && (coin.price_change_24h || 0) >= 0;
@@ -820,14 +882,8 @@ function initializeMiniChart(chartId, symbol) {
         
         if (prices.length >= 2) {
             drawMiniChart(canvas, prices, lineColor);
-            
-            // Update high/low
-            const min = Math.min(...prices);
-            const max = Math.max(...prices);
-            const highEl = container.querySelector('.chat-chart-high');
-            const lowEl = container.querySelector('.chat-chart-low');
-            if (highEl) highEl.textContent = `$${formatPriceCompact(max)}`;
-            if (lowEl) lowEl.textContent = `$${formatPriceCompact(min)}`;
+            updateRangeLabels(prices);
+            persistChartPeriod(symbol, currentPeriod);
         }
         
         // Prevent link navigation on canvas interaction
@@ -872,28 +928,23 @@ function initializeMiniChart(chartId, symbol) {
         });
         
         // Period button handlers - prevent navigation and switch period
-        const periodBtns = container.querySelectorAll('.chat-chart-btn');
         periodBtns.forEach(btn => {
             btn.addEventListener('click', async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 
-                periodBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+                if (btn.classList.contains('active')) return;
                 
-                const period = btn.dataset.period;
+                setActiveButton(btn);
+                
+                const period = btn.dataset.period || '24h';
                 const data = await loadPriceData(period);
-                const newPrices = extractPrices(data[symbol], period);
+                const newPrices = extractPrices(data?.[symbol], period);
                 
                 if (newPrices.length >= 2) {
                     drawMiniChart(canvas, newPrices, lineColor);
-                    
-                    const min = Math.min(...newPrices);
-                    const max = Math.max(...newPrices);
-                    const highEl = container.querySelector('.chat-chart-high');
-                    const lowEl = container.querySelector('.chat-chart-low');
-                    if (highEl) highEl.textContent = `$${formatPriceCompact(max)}`;
-                    if (lowEl) lowEl.textContent = `$${formatPriceCompact(min)}`;
+                    updateRangeLabels(newPrices);
+                    persistChartPeriod(symbol, period);
                 }
             });
         });
@@ -901,21 +952,71 @@ function initializeMiniChart(chartId, symbol) {
 }
 
 /**
+ * Rehydrate coin preview charts that are already in the DOM (e.g., from chat history)
+ */
+export function rehydrateChatCharts(root = document) {
+    const scope = root || document;
+    const cards = scope.querySelectorAll('.coin-preview-card[data-symbol]');
+    cards.forEach((card) => {
+        const symbol = card.dataset.symbol;
+        const canvas = card.querySelector('.coin-preview-canvas');
+        if (!symbol || !canvas) return;
+        initializeMiniChart(canvas.id, symbol);
+    });
+}
+
+/**
  * Extract prices array from data object based on period
  */
 function extractPrices(priceObj, period) {
     if (!priceObj) return [];
-    
-    const prices = [];
     const maxPoints = period === '24h' ? 24 : period === '7d' ? 7 : 30;
-    
-    for (let i = 0; i < maxPoints; i++) {
-        if (priceObj[i] !== undefined) {
-            prices.push(priceObj[i]);
-        }
+
+    // Arrays are returned directly (coerced to numbers)
+    if (Array.isArray(priceObj)) {
+        return priceObj
+            .map((value) => Number(value))
+            .filter((value) => Number.isFinite(value))
+            .slice(0, maxPoints);
     }
-    
-    return prices;
+
+    if (typeof priceObj !== 'object') return [];
+
+    // Special handling for 7d data shaped like day0_time0 → average per day
+    if (period === '7d') {
+        const buckets = new Map();
+        Object.entries(priceObj).forEach(([key, value]) => {
+            const match = key.match(/day(\d+)_time\d+/);
+            if (!match) return;
+            const day = Number(match[1]);
+            if (!Number.isFinite(day)) return;
+            if (!buckets.has(day)) buckets.set(day, []);
+            buckets.get(day).push(Number(value));
+        });
+
+        const averages = Array.from(buckets.entries())
+            .sort((a, b) => a[0] - b[0])
+            .map(([, values]) => {
+                const valid = values.filter((val) => Number.isFinite(val));
+                if (valid.length === 0) return null;
+                return valid.reduce((sum, val) => sum + val, 0) / valid.length;
+            })
+            .filter((val) => Number.isFinite(val));
+
+        return averages.slice(0, maxPoints);
+    }
+
+    // Generic object: sort by numeric portion of key (day0, 0, 1, 2, …)
+    const entries = Object.entries(priceObj)
+        .map(([key, value]) => {
+            const numericKey = Number(key.toString().replace(/[^\\d.]/g, ''));
+            return { numericKey, value: Number(value) };
+        })
+        .filter((entry) => Number.isFinite(entry.numericKey) && Number.isFinite(entry.value))
+        .sort((a, b) => a.numericKey - b.numericKey)
+        .slice(0, maxPoints);
+
+    return entries.map((entry) => entry.value);
 }
 
 /**

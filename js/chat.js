@@ -3,6 +3,25 @@
 
 const CHAT_HISTORY_KEY = 'ukx_chat_history';
 const MAX_HISTORY_MESSAGES = 50; // Limit stored messages to prevent localStorage bloat
+let apiModulePromise;
+
+function getApiModule() {
+    if (!apiModulePromise) {
+        apiModulePromise = import('/modules/api-call/api.js');
+    }
+    return apiModulePromise;
+}
+
+async function rehydrateChatChartsSafely() {
+    try {
+        const { rehydrateChatCharts } = await getApiModule();
+        if (typeof rehydrateChatCharts === 'function') {
+            rehydrateChatCharts(document);
+        }
+    } catch (error) {
+        console.warn('Could not rehydrate chat charts', error);
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Chat assistant initialized');
@@ -84,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Scroll to bottom
             chatBody.scrollTop = chatBody.scrollHeight;
             console.log(`Loaded ${messages.length} messages from history`);
+            rehydrateChatChartsSafely();
         } catch (e) {
             console.warn('Could not load chat history:', e);
         }
@@ -135,9 +155,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             // Import the API call function dynamically
-            const { callApi } = await import('/modules/api-call/api.js');
+            const { callApi, rehydrateChatCharts } = await getApiModule();
             const answer = await callApi(text);
             botMsg.innerHTML = answer || "I'm sorry, I couldn't process your request at this time.";
+            if (typeof rehydrateChatCharts === 'function') {
+                rehydrateChatCharts(document);
+            }
         } catch (error) {
             console.error('Error fetching assistant reply:', error);
             botMsg.textContent = error?.message || "Sorry, I'm having trouble responding right now.";

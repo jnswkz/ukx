@@ -14,7 +14,8 @@ const coinState = {
     details: null,
     liveData: null,
     performance: null,
-    basePriceUSD: 0
+    basePriceUSD: 0,
+    priceChange24h: null
 };
 
 // Re-render currency-dependent UI when the user preference changes elsewhere.
@@ -146,7 +147,7 @@ async function loadCoinDetails(coinId) {
         coinState.performance = performance;
         // Prefer live current_price, else fallback to details.current_price, else 0
         coinState.basePriceUSD =
-            liveData?.current_price ?? details?.current_price ?? 0;
+            details?.current_price ?? liveData?.current_price ?? 0;
 
         // Render all sections using the available data (liveData takes precedence where present)
         renderOverview(symbol, details, liveData);
@@ -188,10 +189,11 @@ function renderOverview(symbol, details, liveData) {
     // Prefer values from liveData (fresh API) but fall back to static details
     const coinName = liveData?.name || details?.coin_name || symbol;
     const iconUrl = liveData?.image || details?.img_url || "/assets/crypto-default.png";
-    const currentPrice = liveData?.current_price ?? details?.current_price ?? 0;
-    const priceChange = liveData?.price_change_24h ?? details?.price_change_24h ?? 0;
-    const high24h = liveData?.high_24h ?? details?.high_24h ?? currentPrice;
-    const low24h = liveData?.low_24h ?? details?.low_24h ?? currentPrice;
+    // Prefer local dataset values so coin details matches the markets page; fallback to live API.
+    const currentPrice = details?.current_price ?? liveData?.current_price ?? 0;
+    const priceChange = details?.price_change_24h ?? liveData?.price_change_24h ?? 0;
+    const high24h = details?.high_24h ?? liveData?.high_24h ?? currentPrice;
+    const low24h = details?.low_24h ?? liveData?.low_24h ?? currentPrice;
 
     if (view.coinName) {
         view.coinName.textContent = coinName;
@@ -215,6 +217,9 @@ function renderOverview(symbol, details, liveData) {
 
     // Update base price used by converter
     coinState.basePriceUSD = currentPrice;
+    coinState.priceChange24h = Number.isFinite(Number(priceChange))
+        ? Number(priceChange)
+        : null;
     view.coinPrice.textContent = formatCurrency(currentPrice);
     updateChangeBadge(view.coinChange, priceChange);
     
@@ -248,8 +253,8 @@ function renderOverview(symbol, details, liveData) {
 function renderStats(details, performance, liveData) {
     if (!details && !liveData) return;
 
-    // Market cap — show compact formatted currency and optional rank badge
-    const marketCapValue = liveData?.market_cap ?? details?.market_cap;
+    // Market cap — prefer local dataset to stay in sync with markets table; show rank from live when present
+    const marketCapValue = details?.market_cap ?? liveData?.market_cap;
     const marketCapRank = liveData?.market_cap_rank;
     if (view.statsMarketCap) {
         view.statsMarketCap.textContent = formatCompactCurrency(marketCapValue);
@@ -264,21 +269,25 @@ function renderStats(details, performance, liveData) {
     // Supply (current / max) displayed compactly
     if (view.statsSupply) {
         view.statsSupply.textContent = formatSupplyValue(
-            liveData?.circulating_supply,
-            liveData?.max_supply
+            details?.circulating_supply ?? liveData?.circulating_supply,
+            details?.max_supply ?? liveData?.max_supply
         );
     }
 
     // All-time-high (ath) fallback if missing
     if (view.statsAth) {
-        const athValue = liveData?.ath ?? details?.high_24h;
+        const athValue = details?.high_24h ?? liveData?.ath;
         view.statsAth.textContent = Number.isFinite(athValue) ? formatCurrency(athValue) : "—";
     }
 
-    // Volume uses whichever field is available in the live data source
+    // Volume uses local data first to mirror markets, with live fallback
     if (view.statsVolume) {
-        const volumeValue = liveData?.volume_24h ?? liveData?.total_volume;
-        view.statsVolume.textContent = formatCompactCurrency(volumeValue);
+        const volumeValue =
+            details?.total_volume ??
+            details?.volume_24h ??
+            liveData?.volume_24h ??
+            liveData?.total_volume;
+        view.statsVolume.textContent = volumeValue ? formatCompactCurrency(volumeValue) : "—";
     }
 
     // Short performance note or fallback text
@@ -538,7 +547,9 @@ function drawChart() {
     if (!dataset) return;
 
     const localizedDataset = localizeDataset(dataset);
-    const trendIsPositive = isPositiveTrend(localizedDataset);
+    const trendIsPositive = Number.isFinite(coinState.priceChange24h)
+        ? coinState.priceChange24h >= 0
+        : isPositiveTrend(localizedDataset);
     const theme = getChartTheme(trendIsPositive);
 
     drawLineGraph("coinPriceChart", localizedDataset, theme);
