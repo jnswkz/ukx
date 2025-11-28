@@ -135,24 +135,22 @@
                   Age Distribution of Users
                 </h3>
               </div>
-              
             </div>
           </div>
           <div class="admin-panel-card-right">
-
             <div class="admin-panel-pie-card">
-                <canvas
-                  id="admin-panel-coin-held-chart"
-                  class="admin-panel-coin-held-chart"
-                ></canvas>
-                <div id="tooltip2"></div>
-                <h3
-                  style="margin: 0 auto; width: fit-content"
-                  class="admin-panel-coin-held-chart-title"
-                >
-                  Current Coin Holdings Distribution
-                </h3>
-              </div>
+              <canvas
+                id="admin-panel-coin-held-chart"
+                class="admin-panel-coin-held-chart"
+              ></canvas>
+              <div id="tooltip2"></div>
+              <h3
+                style="margin: 0 auto; width: fit-content"
+                class="admin-panel-coin-held-chart-title"
+              >
+                Current Coin Holdings Distribution
+              </h3>
+            </div>
             <!-- Biểu đồ thanh #1 - trade -->
             <canvas
               id="admin-panel-trade-chart"
@@ -188,9 +186,15 @@
         </div>
 
         <!-- Bảng đồ đồ -->
-        <div class="admin-panel-trade"></div>
-        <div class="admin-panel-users"></div>
-        <div class="admin-panel-news"></div>
+        <div class="admin-panel-table-wrapper">
+          <div class="admin-panel-trade"></div>
+        </div>
+        <div class="admin-panel-table-wrapper">
+          <div class="admin-panel-users"></div>
+        </div>
+        <div class="admin-panel-table-wrapper">
+          <div class="admin-panel-news"></div>
+        </div>
       </main>
     </div>
     <script type="module" src="../js/admin-panel.js"></script>

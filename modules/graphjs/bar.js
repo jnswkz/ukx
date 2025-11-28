@@ -20,16 +20,15 @@ export function drawBarChart(canvasId, data) {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Kích thước biểu đồ dùng slot để tránh tràn & chồng lấn
   const padding = 50;
   const chartWidth = canvas.width - padding * 2;
   const chartHeight = canvas.height - padding * 2;
-  const maxY = Math.max(...y) * 1.1; // thêm 10%
+  const maxY = Math.max(...y) * 1.1; // add 10%
   const slotWidth = chartWidth / y.length;
   const barWidth = Math.max(6, slotWidth * 0.65);
   const sideOffset = (slotWidth - barWidth) / 2;
 
-  // Vẽ trục tọa độ
+  // Draw coordinate axes
   ctx.strokeStyle = "#333";
   ctx.lineWidth = 2;
   ctx.beginPath();
@@ -38,12 +37,12 @@ export function drawBarChart(canvasId, data) {
   ctx.lineTo(canvas.width - padding, canvas.height - padding);
   ctx.stroke();
 
-  // Gradient cho các bar
+  // Gradient for the bars
   const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
   gradient.addColorStop(0, color1);
   gradient.addColorStop(1, color2);
 
-  // Vẽ các bar
+  // Draw the bars
   ctx.fillStyle = gradient;
   for (let i = 0; i < y.length; i++) {
     const barHeight = (y[i] / maxY) * chartHeight;
@@ -52,14 +51,14 @@ export function drawBarChart(canvasId, data) {
 
     ctx.fillRect(barX, barY, barWidth, barHeight);
 
-    // Nhãn giá trị cụa bar
+    // Label the bar value
     ctx.fillStyle =
       parseInt(color2.slice(1), 16) > 0xffffff / 2 ? "#000" : "#fff";
     ctx.font = "14px sans-serif";
     ctx.textAlign = "center";
     ctx.fillText(y[i], barX + barWidth / 2, barY + 20);
 
-    // Nhãn trục X
+    // X-axis label
     ctx.fillStyle = "#444";
     ctx.textAlign = "center";
     ctx.fillText(x[i], barX + barWidth / 2, canvas.height - padding + 20);

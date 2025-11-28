@@ -1,9 +1,10 @@
+/* Main dark background */
 .admin-panel-container {
   display: flex;
   min-height: 100vh;
-  background-color: var(--nord0); /* Nền chính đậm */
+  background-color: var(--nord0); /* Main dark background */
   font-family: var(--font-primary);
-  padding-right: 20px;
+  overflow-x: hidden;
 }
 
 
@@ -12,7 +13,7 @@
   width: 240px;
   height: 100vh;
   top: 0;
-  background: var(--nord6); /* Sidebar sáng */
+  background: var(--nord6); /* Light sidebar */
   color: var(--nord0);
   display: flex;
   flex-direction: column;
@@ -72,7 +73,7 @@
   pointer-events: auto;
 }
 
-/* Ảnh đại diện và nút thu gọn */
+/* Avatar and collapse button */
 .admin-panel-profile {
   display: flex;
   align-items: center;
@@ -99,7 +100,7 @@
   z-index: 1001;
 }
 
-/* Menu chính */
+/* Main menu */
 .admin-panel-menu {
   margin-top: -30px;
 }
@@ -181,7 +182,7 @@
   color: var(--nord3);
 }
 
-/* Tin nhắn */
+/* Messages */
 .admin-panel-messages {
   margin-top: var(--spacing-lg);
   display: flex;
@@ -210,7 +211,7 @@
   border-radius: 50%;
 }
 
-/* Nút đăng xuất */
+/* Logout button */
 .admin-panel-logout {
   border: none;
   padding: 10px;
@@ -223,14 +224,15 @@
   margin-right: -20px;
 }
 
-/* ========== PHẦN NỘI DUNG ========== */
+/* ========== CONTENT SECTION ========== */
 .admin-panel-main {
   flex: 1;
   padding: var(--spacing-xl);
 }
 
 .admin-panel-top {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--spacing-lg);
 }
 
@@ -446,7 +448,7 @@
   max-height: 600px;
 }
 
-/* Bộ điều khiển phía trên bảng */
+/* Top controls above the table */
 .admin-panel-controls {
   display: flex;
   align-items: center;
@@ -505,21 +507,29 @@
   min-width: 200px;
 }
 
-/* Các chart */
+/* Charts */
 .admin-panel-bar-chart-container {
   justify-self: center;
   background: white;
   border-radius: var(--radius-lg);
   min-height: 400px;
-  min-width: 100%;
+  width: 100%;
   padding-bottom: 20px;
-  margin-right: var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
   color:black;
 }
-/* Bảng giao dịch */
+
+/* Responsive table wrapper */
+.admin-panel-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Transaction table */
 .admin-panel-table {
   width: 100%;
+  min-width: 600px;
   border-collapse: collapse;
   background: white;
   border-radius: var(--radius-lg);
@@ -540,7 +550,7 @@
   color: var(--nord0);
 }
 
-/* Trạng thái */
+/* Status */
 .admin-panel-status {
   padding: 6px 12px;
   border-radius: var(--radius-md);
@@ -553,7 +563,7 @@
   color: var(--nord0);
 }
 
-/* Nút đổi trạng thái */
+/* Status change button */
 .admin-panel-status-btn {
   border: none;
   border-radius: var(--radius-md);
@@ -623,34 +633,137 @@
 }
 
 @media (max-width: 900px) {
+  /* Convert sidebar to top navbar */
+  .admin-panel-container { 
+    flex-direction: column;
+  }
+  
   .admin-panel-sidebar {
-    position: fixed;
-    left: 0;
+    width: 100%;
+    height: auto;
+    position: sticky;
     top: 0;
     z-index: 1000;
-    height: 100vh;
+    padding: 12px var(--spacing-md);
   }
-  .admin-panel-main { margin-left: 240px; }
-  .admin-panel-sidebar.collapsed + .admin-panel-main { margin-left: 80px; }
+  
+  .admin-panel-sidebar.collapsed { 
+    width: 100%;
+  }
+
+
+  
+  .admin-panel-profile {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  
+  /* Compact header on mobile */
+  .admin-panel-info { 
+    margin-left: 8px;
+  }
+  .admin-panel-username { 
+    font-size: 14px;
+  }
+  .admin-panel-role { 
+    display: none;
+  }
+  .admin-panel-avatar { 
+    margin-top: -28px;
+    width: 32px;
+    height: 32px;
+  }
+  
+  /* Menu collapses under top bar */
+  .admin-panel-menu {
+    margin-top: 8px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  
+  .admin-panel-sidebar:not(.collapsed) .admin-panel-menu {
+    max-height: 500px;
+  }
+  
+  .admin-panel-messages,
+  .admin-panel-logout { 
+    display: none;
+  }
+  
+  .admin-panel-sidebar:not(.collapsed) .admin-panel-messages {
+    display: flex;
+    margin-top: var(--spacing-md);
+  }
+  
+  .admin-panel-sidebar:not(.collapsed) .admin-panel-logout {
+    display: block;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  /* Show text when expanded */
+  .admin-panel-sidebar.collapsed .text,
+  .admin-panel-sidebar.collapsed .admin-panel-submenu,
+  .admin-panel-sidebar.collapsed .admin-panel-message span,
+  .admin-panel-sidebar.collapsed .admin-panel-logout span { 
+    display: inline;
+  }
+  
+  .admin-panel-main {
+    margin-left: 0;
+    padding: var(--spacing-md);
+    width: 100%;
+  }
+  
+  .admin-panel-top {
+    grid-template-columns: 1fr;
+  }
+  
+  .calculator-container {
+    display: none !important;
+  }
 }
 
 @media (max-width: 700px) {
-  .admin-panel-sidebar { width: 80px; }
-  .admin-panel-main {
-    margin-left: 80px;
-    padding: clamp(var(--spacing-md), 4vw, var(--spacing-lg));
+  .admin-panel-pie-card canvas { 
+    height: 240px;
   }
-  .admin-panel-sidebar .text,
-  .admin-panel-sidebar .admin-panel-info,
-  .admin-panel-sidebar .admin-panel-submenu,
-  .admin-panel-sidebar .admin-panel-message span,
-  .admin-panel-sidebar .admin-panel-logout span { display: none; }
+  
+  .admin-panel-bar-chart-container { 
+    min-height: 300px;
+  }
+  
+  .admin-panel-controls {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .admin-panel-controls-time {
+    width: 100%;
+    text-align: center;
+  }
 }
 
-/* Ensure sidebar collapse doesn't cause overflow on very small viewports */
-@media (max-width: 500px) {
-  .admin-panel-main { margin-left: 0; }
-  .admin-panel-sidebar { transform: translateX(0); }
+@media (max-width: 520px) {
+  .admin-panel-pie-charts { 
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+  
+  .admin-panel-pie-card { 
+    padding: var(--spacing-sm);
+  }
+  
+  .admin-panel-pie-card canvas { 
+    height: 200px;
+  }
+  
+  .admin-panel-btn { 
+    padding: 6px 12px;
+    font-size: 14px;
+  }
 }
 
 /* Ensure hidden class can override flex layouts for admin pie sections */

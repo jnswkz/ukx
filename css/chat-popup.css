@@ -1,6 +1,6 @@
 /* Chat Popup Styles - Integrated with Nord Theme */
 
-/* Bong bóng chat */
+/* Chat bubble */
 #chat-button {
   position: fixed;
   bottom: 30px;
@@ -27,12 +27,12 @@
   box-shadow: 0 8px 25px rgba(0,0,0,0.35);
 }
 
-/* Cho nó không bị trùng với #chat-popup display:flex */
+/* Prevent conflict with #chat-popup display:flex */
 #chat-popup.hidden, #chat-button.hidden{
   display: none;
 }
 
-/* Hộp chat bật lên */
+/* Chat popup box */
 #chat-popup {
   position: fixed;
   bottom: 100px;
@@ -50,7 +50,7 @@
   z-index: 1001;
 }
 
-/* Ẩn/hiện */
+/* Show/Hide */
 .hidden {
   display: none;
 }
@@ -98,7 +98,7 @@
   background: rgba(255,255,255,0.15);
 }
 
-/* Nội dung chat */
+/* Chat content */
 .chat-body {
   flex: 1;
   padding: 16px;
@@ -143,7 +143,7 @@
   padding: 12px 20px;
 }
 
-/* Input của tin nhắn */
+/* Message input */
 .chat-input {
   display: flex;
   border-top: 1px solid var(--color-border);
@@ -189,13 +189,13 @@
   transform: scale(1.02);
 }
 
-/* Hiệu ứng bật chat */
+/* Chat popup animation */
 @keyframes slideUp {
   from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 
-/* thanh cuon */
+/* Scrollbar */
 .chat-body::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 10px;
