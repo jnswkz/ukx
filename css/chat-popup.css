@@ -94,6 +94,13 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
+.chat-header .chat-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  pointer-events: none;
+}
+
 .chat-header button:hover {
   background: rgba(255,255,255,0.15);
 }

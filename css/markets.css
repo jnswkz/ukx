@@ -483,4 +483,15 @@
     .markets-title {
         font-size: 13px;
     }
+
+    .markets-card-item {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .markets-card-item-value {
+        text-align: right;
+    }
 }

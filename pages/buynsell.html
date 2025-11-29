@@ -90,17 +90,22 @@
     <!-- Chat Popup -->
     <div id="chat-popup" class="hidden">
         <div class="chat-header">
-        <span>AI Assistant</span>
-        <button id="close-chat">&times;</button>
+            <span>AI Assistant</span>
+            <div class="chat-header-actions">
+                <button id="clear-chat" type="button" title="Start a new chat" aria-label="Start a new chat session">
+                    <img src="/assets/toggleAnswer_light.svg" alt="" class="chat-icon">
+                </button>
+                <button id="close-chat" type="button" aria-label="Close chat">&times;</button>
+            </div>
         </div>
     
         <div class="chat-body" id="chat-body">
-        <div class="bot-message">Hello! How can I help you today?</div>
+            <div class="bot-message">Hello! How can I help you today?</div>
         </div>
     
         <div class="chat-input">
-        <input type="text" id="user-input" placeholder="Type your message..." />
-        <button id="send-btn">➤</button>
+            <input type="text" id="user-input" placeholder="Type your message..." />
+            <button id="send-btn" type="button">➤</button>
         </div>
     </div>
     </div>

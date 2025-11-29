@@ -139,6 +139,11 @@ test.describe('UKX smoke journey', () => {
 
         await page.locator('#coinLoader').waitFor({ state: 'hidden' });
 
+        await expect(page.locator('[data-skeleton="coin-hero"]')).toHaveClass(/is-loaded/);
+        await expect(page.locator('[data-skeleton="coin-chart"]')).toHaveClass(/is-loaded/);
+        await expect(page.locator('[data-skeleton="coin-hero"]')).not.toHaveClass(/skeleton/);
+        await expect(page.locator('[data-skeleton="coin-chart"]')).not.toHaveClass(/skeleton/);
+
         await expect(page.locator('#coinName')).toHaveText(/Mock Bitcoin/i);
         await expect(page.locator('#coinPrice')).toContainText('64,250.43');
         await expect(page.locator('#coinChange')).toContainText('+2.15%');

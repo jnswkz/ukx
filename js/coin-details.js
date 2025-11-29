@@ -17,6 +17,16 @@ const coinState = {
     basePriceUSD: 0,
     priceChange24h: null
 };
+const SKELETON_SELECTORS = [
+    '[data-skeleton="coin-hero"]',
+    '[data-skeleton="coin-chart"]',
+    '[data-skeleton="coin-stats"]',
+    '[data-skeleton="coin-converter"]',
+    '[data-skeleton="coin-about"]',
+    '[data-skeleton="coin-performance"]',
+    '[data-skeleton="coin-tags"]',
+    '[data-skeleton="coin-news"]'
+];
 
 // Re-render currency-dependent UI when the user preference changes elsewhere.
 window.addEventListener("preferredCurrencyChange", handleCurrencyPreferenceChange);
@@ -88,6 +98,7 @@ function cacheDom() {
 */
 async function loadCoinDetails(coinId) {
     setLoading(true);
+    setSkeletonState(true);
     hideError();
 
     try {
@@ -147,7 +158,7 @@ async function loadCoinDetails(coinId) {
         coinState.performance = performance;
         // Prefer live current_price, else fallback to details.current_price, else 0
         coinState.basePriceUSD =
-            details?.current_price ?? liveData?.current_price ?? 0;
+            liveData?.current_price ?? details?.current_price ?? 0;
 
         // Render all sections using the available data (liveData takes precedence where present)
         renderOverview(symbol, details, liveData);
@@ -169,11 +180,11 @@ async function loadCoinDetails(coinId) {
 
         // Update page title to include the coin name
         document.title = `UKX - ${(liveData?.name || details.coin_name)} price`;
-        setLoading(false);
     } catch (error) {
         console.error("Error loading coin details:", error);
         showError("We could not load this coin right now. Please try again in a minute.");
-        setLoading(false);
+    } finally {
+        await finalizeLoadingState();
     }
 }
 
@@ -189,11 +200,11 @@ function renderOverview(symbol, details, liveData) {
     // Prefer values from liveData (fresh API) but fall back to static details
     const coinName = liveData?.name || details?.coin_name || symbol;
     const iconUrl = liveData?.image || details?.img_url || "/assets/crypto-default.png";
-    // Prefer local dataset values so coin details matches the markets page; fallback to live API.
-    const currentPrice = details?.current_price ?? liveData?.current_price ?? 0;
-    const priceChange = details?.price_change_24h ?? liveData?.price_change_24h ?? 0;
-    const high24h = details?.high_24h ?? liveData?.high_24h ?? currentPrice;
-    const low24h = details?.low_24h ?? liveData?.low_24h ?? currentPrice;
+    // Prefer live API values when available; fall back to bundled dataset to stay resilient offline.
+    const currentPrice = liveData?.current_price ?? details?.current_price ?? 0;
+    const priceChange = liveData?.price_change_24h ?? details?.price_change_24h ?? 0;
+    const high24h = liveData?.high_24h ?? details?.high_24h ?? currentPrice;
+    const low24h = liveData?.low_24h ?? details?.low_24h ?? currentPrice;
 
     if (view.coinName) {
         view.coinName.textContent = coinName;
@@ -807,6 +818,52 @@ function setLoading(isLoading) {
     if (view.loader) {
         view.loader.style.display = isLoading ? "block" : "none";
     }
+}
+
+function setSkeletonState(isLoading) {
+    SKELETON_SELECTORS.forEach((selector) => {
+        document.querySelectorAll(selector).forEach((element) => {
+            element.classList.toggle("skeleton", isLoading);
+            element.classList.toggle("is-loaded", !isLoading);
+            element.setAttribute("aria-busy", isLoading ? "true" : "false");
+        });
+    });
+}
+
+async function finalizeLoadingState() {
+    try {
+        await waitForCriticalAssets();
+    } catch (error) {
+        console.warn("Asset wait skipped:", error);
+    }
+    setSkeletonState(false);
+    setLoading(false);
+}
+
+function waitForImage(el) {
+    return new Promise((resolve) => {
+        if (!el || el.complete) {
+            resolve();
+            return;
+        }
+        const cleanup = () => {
+            el.removeEventListener("load", cleanup);
+            el.removeEventListener("error", cleanup);
+            resolve();
+        };
+        el.addEventListener("load", cleanup);
+        el.addEventListener("error", cleanup);
+        setTimeout(cleanup, 1500);
+    });
+}
+
+async function waitForCriticalAssets() {
+    const assets = [];
+    if (view.coinIcon) assets.push(waitForImage(view.coinIcon));
+    if (view.converterCoinIcon && view.converterCoinIcon !== view.coinIcon) {
+        assets.push(waitForImage(view.converterCoinIcon));
+    }
+    await Promise.all(assets);
 }
 
 function showError(message) {

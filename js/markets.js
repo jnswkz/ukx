@@ -273,17 +273,18 @@ function renderMarketsTable() {
 
 // Update hot crypto and new listings cards with real data
 function updateMarketCards() {
-    const createCardMarkup = (coin, valueContent) => {
+    const createCardMarkup = (coin, valueContent, tone) => {
         const symbol = coin.symbol || coin.id || '';
         const coinId = coin.coin_id ?? resolveCoinIdBySymbol(symbol) ?? '';
         const image = coin.imgUrl || coin.image || '';
+        const toneClass = tone === 'positive' ? 'positive' : tone === 'negative' ? 'negative' : '';
         return `
             <div class="markets-card-item" data-symbol="${symbol}" data-coin-id="${coinId}">
                 <div class="markets-card-item-name">
                     <img src="${image}" alt="${symbol}" style="width: 24px; height: 24px; border-radius: 50%;" onerror="this.style.display='none';">
                     <span>${coin.name}</span>
                 </div>
-                <div class="markets-card-item-value">${valueContent}</div>
+                <div class="markets-card-item-value ${toneClass}">${valueContent}</div>
             </div>
         `;
     };
@@ -302,7 +303,11 @@ function updateMarketCards() {
     if (hotCryptoList && hotSource.length > 0) {
         hotCryptoList.innerHTML = hotSource.map(coin => {
             const changeValue = formatChangePercentage(coin.change24h ?? coin.price_change_percentage_24h ?? 0);
-            return createCardMarkup(coin, changeValue);
+            const numericChange = Number(coin.change24h ?? coin.price_change_percentage_24h ?? 0);
+            const tone = Number.isFinite(numericChange)
+                ? (numericChange >= 0 ? 'positive' : 'negative')
+                : '';
+            return createCardMarkup(coin, changeValue, tone);
         }).join('');
     }
 
@@ -310,7 +315,7 @@ function updateMarketCards() {
     if (newListingsCard && newListingsSource.length > 0) {
         newListingsCard.innerHTML = newListingsSource.map(coin => {
             const priceValue = formatPrice(coin.price ?? coin.current_price);
-            return createCardMarkup(coin, priceValue);
+            return createCardMarkup(coin, priceValue, '');
         }).join('');
     }
 }
