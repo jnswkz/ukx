@@ -469,9 +469,8 @@ function setupChartHover(canvas) {
             return;
         }
 
-        const { points, min, range, numPoints, lineColor, symbol, usesActualData } = canvas.chartData;
+        const { points, numPoints, usesActualData } = canvas.chartData;
         const width = canvas.width;
-        const height = canvas.height;
 
         // Find nearest point
         const pointIndex = Math.round((x / width) * (numPoints - 1));

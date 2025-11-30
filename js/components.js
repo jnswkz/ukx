@@ -128,9 +128,9 @@
   }
 
   function getCurrencyMetadata(currency = null) {
-    const normalized =
-      normalizeCurrency(currency) || getPreferredCurrency() || DEFAULT_CURRENCY;
-    const meta = CURRENCY_MAP[normalized] || CURRENCY_MAP[DEFAULT_CURRENCY];
+    const normalizedInput = normalizeCurrency(currency);
+    const resolved = normalizedInput ?? getPreferredCurrency();
+    const meta = CURRENCY_MAP[resolved] || CURRENCY_MAP[DEFAULT_CURRENCY];
     return { ...meta };
   }
 
@@ -368,8 +368,8 @@ function initializeChat() {
   }
 
   function botReply(message) {
-    // Gọi API ở đây
-    return "Placeholder";
+    // Echo back the prompt as a lightweight placeholder until API wiring is added
+    return `You said: ${message}`;
   }
 }
 

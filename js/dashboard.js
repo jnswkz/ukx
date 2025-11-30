@@ -140,24 +140,6 @@ window.addEventListener('preferredCurrencyChange', () => {
 });
 
 // ========== Optimized Coin Data Lookups (use cache) ==========
-async function to_usd(id) {
-    const coins_data = await getCoinDataCache();
-    if (!coins_data[id] || typeof coins_data[id] !== 'object') return null;
-    return coins_data[id]['current_price'];
-}
-
-async function to_coin_name(id) {
-    const coins_data = await getCoinDataCache();
-    if (!coins_data[id] || typeof coins_data[id] !== 'object') return null;
-    return coins_data[id]['coin_name'];
-}
-
-async function to_coin_image(id) {
-    const coins_data = await getCoinDataCache();
-    if (!coins_data[id] || typeof coins_data[id] !== 'object') return null;
-    return coins_data[id]['img_url'];
-}
-
 // Batch lookup for multiple coins (parallel, single cache fetch)
 async function getCoinInfo(id) {
     const normalizedId = typeof id === 'string' ? id.toUpperCase() : id;

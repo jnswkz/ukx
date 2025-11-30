@@ -245,7 +245,7 @@ function drawCurrentPriceIndicator(ctx, currentPrice, chartLeft, chartTop, chart
 /**
  * Draw crosshair and tooltip on hover
  */
-function drawCrosshair(ctx, mouseX, mouseY, candle, chartLeft, chartTop, chartHeight, chartWidth, minPrice, maxPrice) {
+function drawCrosshair(ctx, mouseX, mouseY, candle, chartLeft, chartTop, chartHeight, chartWidth) {
     const crosshairColor = 'rgba(255, 255, 255, 0.3)';
     
     // Vertical line
@@ -584,8 +584,7 @@ export function addCandlestickInteractivity(canvasId) {
             // Draw crosshair and tooltip
             const ctx = canvas.getContext('2d');
             drawCrosshair(ctx, mouseX, mouseY, candle, 
-                data.chartLeft, data.chartTop, data.chartHeight, data.chartWidth,
-                data.paddedMin, data.paddedMax);
+                data.chartLeft, data.chartTop, data.chartHeight, data.chartWidth);
         }
     });
     

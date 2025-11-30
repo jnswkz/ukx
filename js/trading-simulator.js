@@ -353,61 +353,6 @@ function loadCachedHistoricalData(symbol) {
 }
 
 /**
- * Load historical price data from CoinGecko (used when switching coins)
- * Now uses parallel fetches and caching for better performance
- */
-async function loadHistoricalData(symbol) {
-    // Check cache first
-    const cached = getCachedHistoricalData(symbol);
-    if (cached) {
-        state.priceHistory[symbol] = cached;
-        updateChart();
-        return;
-    }
-    
-    try {
-        // Fetch all time periods in parallel
-        const [data30d, data7d, data1d] = await Promise.all([
-            fetchHistoricalPrices(symbol, 30).catch(() => null),
-            fetchHistoricalPrices(symbol, 7).catch(() => null),
-            fetchIntradayPrices(symbol).catch(() => null)
-        ]);
-        
-        if (!state.priceHistory[symbol]) {
-            state.priceHistory[symbol] = {};
-        }
-        
-        if (data30d) {
-            state.priceHistory[symbol]['30d'] = data30d;
-            state.priceHistory[symbol]['90d'] = data30d;
-            state.priceHistory[symbol]['1y'] = data30d;
-        }
-        if (data7d) state.priceHistory[symbol]['7d'] = data7d;
-        if (data1d) {
-            state.priceHistory[symbol]['24h'] = data1d;
-            state.priceHistory[symbol]['1h'] = data1d.slice(-4);
-            state.priceHistory[symbol]['4h'] = data1d.slice(-16);
-        }
-        
-        // Cache the data
-        cacheHistoricalData(symbol, state.priceHistory[symbol]);
-        
-        updateChart();
-        
-    } catch (error) {
-        console.error(`Failed to load historical data for ${symbol}:`, error);
-        // Fallback to generated data
-        if (!state.priceHistory[symbol]) {
-            state.priceHistory[symbol] = generatePriceHistory(
-                state.coinData[symbol]?.current_price || 1000,
-                30
-            );
-        }
-        updateChart();
-    }
-}
-
-/**
  * Load minute-level data for short timeframes
  */
 async function loadMinuteData(symbol) {
@@ -815,74 +760,6 @@ function showChartLoading(message = 'Loading chart data...') {
     ctx.stroke();
 }
 
-function generateHourlyCandles(dailyHistory) {
-    if (!dailyHistory || dailyHistory.length === 0) return [];
-    
-    const today = dailyHistory[dailyHistory.length - 1];
-    const hourlyCandles = [];
-    const now = new Date();
-    
-    // Generate 24 hourly candles for today
-    let price = today.open || today.price;
-    
-    for (let i = 23; i >= 0; i--) {
-        const time = new Date(now);
-        time.setHours(time.getHours() - i);
-        
-        const open = price;
-        const volatility = 0.005; // 0.5% volatility per hour
-        
-        const high = price * (1 + Math.random() * volatility);
-        const low = price * (1 - Math.random() * volatility);
-        const close = low + (high - low) * Math.random();
-        
-        hourlyCandles.push({
-            date: time.toLocaleTimeString('en-US', { 
-                hour: '2-digit', 
-                minute: '2-digit',
-                hour12: false 
-            }),
-            open: open,
-            high: high,
-            low: low,
-            close: close,
-            price: close,
-            volume: Math.random() * 50 + 10
-        });
-        
-        price = close;
-    }
-    
-    // Make sure last candle matches current price
-    hourlyCandles[hourlyCandles.length - 1].close = today.close || today.price;
-    hourlyCandles[hourlyCandles.length - 1].price = today.close || today.price;
-    
-    return hourlyCandles;
-}
-
-
-
-function getCoinColor(symbol) {
-    const colors = {
-        'BTC': '#f7931a',
-        'ETH': '#627eea',
-        'USDT': '#26a17b',
-        'BNB': '#f3ba2f',
-        'SOL': '#00d4aa',
-        'ADA': '#0033ad',
-        'XRP': '#23292f',
-        'DOT': '#e6007a',
-        'DOGE': '#c2a633',
-        'AVAX': '#e84142',
-        'SHIB': '#ffa409',
-        'MATIC': '#8247e5',
-        'LTC': '#345d9d',
-        'UNI': '#ff007a',
-        'LINK': '#2a5ada'
-    };
-    
-    return colors[symbol] || '#22c55e';
-}
 
 function updateMarketStats() {
     const coin = state.coinData[state.selectedCoin];

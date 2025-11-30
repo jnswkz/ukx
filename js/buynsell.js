@@ -26,7 +26,6 @@ let activeDropdown = null;
 document.addEventListener('DOMContentLoaded', async function() {
     // DOM elements
     const tabs = document.querySelectorAll('.trade-tab');
-    const input1Label = document.getElementById('input1Label');
     const submitBtn = document.getElementById('tradeSubmitBtn');
     const payCurrency = document.getElementById('payCurrency');
     const receiveCurrency = document.getElementById('receiveCurrency');

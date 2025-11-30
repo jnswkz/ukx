@@ -225,11 +225,6 @@ const headers = {
   'Authorization': `Bearer ${API_KEY}`
 };
 
-const payload = {
-  model: 'sonar-pro',
-  messages: [{ role: 'user', content: 'What were the results of the 2025 French Open Finals?' }]
-};
-
 // Try several possible response paths and return first non-empty string
 function extractTextFromResponse(data) {
   if (!data) return null;
@@ -1038,10 +1033,6 @@ function formatPriceCompact(price) {
 function addNewsLinks(response, userMessage) {
     const combinedText = (userMessage + ' ' + response).toLowerCase();
     const matchedCategories = new Set();
-    
-    // Check if user is asking about news
-    const newsKeywords = ['news', 'article', 'learn', 'read', 'what is', 'how does', 'explain', 'tell me about', 'information'];
-    const isNewsQuery = newsKeywords.some(kw => combinedText.includes(kw));
     
     // Find matching categories
     for (const [category, data] of Object.entries(NEWS_CATEGORIES)) {

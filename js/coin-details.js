@@ -153,24 +153,25 @@ async function loadCoinDetails(coinId) {
 
         // Update module state
         coinState.symbol = symbol;
-        coinState.details = details;
+        const safeDetails = details || {};
+        coinState.details = safeDetails;
         coinState.liveData = liveData;
         coinState.performance = performance;
         // Prefer live current_price, else fallback to details.current_price, else 0
         coinState.basePriceUSD =
-            liveData?.current_price ?? details?.current_price ?? 0;
+            liveData?.current_price ?? safeDetails.current_price ?? 0;
 
         // Render all sections using the available data (liveData takes precedence where present)
-        renderOverview(symbol, details, liveData);
-        renderStats(details, performance, liveData);
-        renderDescription(liveData?.description || details.description);
-        renderTags(details.categories);
+        renderOverview(symbol, safeDetails, liveData);
+        renderStats(safeDetails, performance, liveData);
+        renderDescription(liveData?.description || safeDetails.description);
+        renderTags(safeDetails.categories);
         renderPerformance(performance);
-        renderNews(articles, details.categories);
+        renderNews(articles, safeDetails.categories);
         setupConverter(coinState.basePriceUSD, symbol);
 
         // Prepare chart datasets from the JSON series for the symbol
-        prepareChartDatasets(symbol, {
+        prepareChartDatasets({
             "24h": twentyFour[symbol],
             "7d": sevenDay[symbol],
             "30d": thirtyDay[symbol]
@@ -179,7 +180,7 @@ async function loadCoinDetails(coinId) {
         drawChart();
 
         // Update page title to include the coin name
-        document.title = `UKX - ${(liveData?.name || details.coin_name)} price`;
+        document.title = `UKX - ${(liveData?.name || safeDetails.coin_name || symbol)} price`;
     } catch (error) {
         console.error("Error loading coin details:", error);
         showError("We could not load this coin right now. Please try again in a minute.");
@@ -506,7 +507,7 @@ function setupConverter(priceUSD, symbol) {
   - The JSON historical data is converted into series objects with arrays x[] and y[].
   - localizeDataset will convert USD values to the user's preferred currency when unit === "currency".
 */
-function prepareChartDatasets(symbol, sources) {
+function prepareChartDatasets(sources) {
     chartState.datasets = {
         "24h": {
             ...buildSeriesFromObject(sources["24h"], formatHourLabel),
@@ -664,17 +665,11 @@ function parseNumericKey(key = "") {
 /*
   Label formatters for chart x-axis
   - formatHourLabel: for 24h series (expects hour numbers)
-  - formatDayLabel: for day-based display
   - formatSequentialLabel: for datasets where index is meaningful (30d)
 */
 function formatHourLabel(key) {
     const hour = Number(key) || 0;
     return `${String(hour).padStart(2, "0")}:00`;
-}
-
-function formatDayLabel(key) {
-    const day = Number(key.replace("day", "")) || 0;
-    return `Day ${day + 1}`;
 }
 
 function formatSequentialLabel(_, index) {
