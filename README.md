@@ -1,3 +1,4 @@
+[![DeepScan grade](https://deepscan.io/api/teams/28275/projects/30501/branches/980424/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=28275&pid=30501&bid=980424)
 # UKX Wallet
 
 UKX Wallet is a multi-page, data-driven marketing and dashboard experience for a fictional crypto investing platform. The site is completely static (HTML/CSS/vanilla JS) but simulates live behavior through JSON data files, CoinGecko market requests, and an AI assistant backed by the Perplexity API. The project ships with reusable components, custom canvas-based charts, news/article generation tooling, and multiple product surfaces (dashboard, buy/sell flows, calculator, simulator, admin panel, etc.).
