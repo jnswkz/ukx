@@ -2,6 +2,7 @@
 // Handles chat popup functionality across all pages
 
 const CHAT_HISTORY_KEY = 'ukx_chat_history';
+const CHAT_UI_STATE_KEY = 'ukx_chat_ui_state';
 const MAX_HISTORY_MESSAGES = 50; // Limit stored messages to prevent localStorage bloat
 let apiModulePromise;
 
@@ -36,17 +37,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load chat history on page load
     loadChatHistory();
+    restoreUiState();
 
     function openPopup() {
         if (!popup) return;
         popup.classList.remove('hidden');
         userInput && userInput.focus();
         chatBody && (chatBody.scrollTop = chatBody.scrollHeight);
+        persistUiState(true);
     }
 
     function closePopup() {
         if (!popup) return;
         popup.classList.add('hidden');
+        persistUiState(false);
     }
 
     // Save chat history to localStorage
@@ -124,12 +128,45 @@ document.addEventListener('DOMContentLoaded', function() {
         chatBody.innerHTML = '<div class="bot-message">Hello! How can I help you today?</div>';
         
         console.log('Chat history cleared');
+        persistUiState(popup ? !popup.classList.contains('hidden') : false, userInput?.value ?? '');
+    }
+
+    function persistUiState(isOpen = false, draftValue = userInput?.value ?? '') {
+        try {
+            const payload = {
+                isOpen: Boolean(isOpen),
+                draft: draftValue
+            };
+            localStorage.setItem(CHAT_UI_STATE_KEY, JSON.stringify(payload));
+        } catch (error) {
+            console.warn('Could not persist chat UI state:', error);
+        }
+    }
+
+    function restoreUiState() {
+        try {
+            const raw = localStorage.getItem(CHAT_UI_STATE_KEY);
+            if (!raw) return;
+            const parsed = JSON.parse(raw);
+            if (parsed && typeof parsed === 'object') {
+                if (typeof parsed.draft === 'string' && userInput) {
+                    userInput.value = parsed.draft;
+                }
+                if (parsed.isOpen) {
+                    openPopup();
+                }
+            }
+        } catch (error) {
+            console.warn('Could not restore chat UI state:', error);
+        }
     }
 
     async function sendMessage() {
         if (!userInput || !chatBody) return;
         const text = userInput.value.trim();
         if (!text) return;
+
+        persistUiState(true, '');
 
         // Add user message
         const userMsg = document.createElement('div');
@@ -171,6 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Save chat history after each exchange
             saveChatHistory();
+            persistUiState(!popup?.classList.contains('hidden'), '');
         }
     }
 
@@ -186,6 +224,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (userInput) userInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') sendMessage();
+    });
+    if (userInput) userInput.addEventListener('input', () => {
+        persistUiState(!popup?.classList.contains('hidden'), userInput.value);
     });
 
     console.log('Chat assistant event listeners attached');

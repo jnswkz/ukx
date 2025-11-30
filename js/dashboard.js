@@ -160,16 +160,27 @@ async function to_coin_image(id) {
 
 // Batch lookup for multiple coins (parallel, single cache fetch)
 async function getCoinInfo(id) {
+    const normalizedId = typeof id === 'string' ? id.toUpperCase() : id;
     const coins_data = await getCoinDataCache();
-    const coin = coins_data[id];
+    const coin = coins_data[normalizedId] || coins_data[id];
     if (!coin || typeof coin !== 'object') {
-        return { price: null, name: id, imgUrl: '' };
+        return { price: null, name: id, imgUrl: '', coinId: null };
     }
     return {
         price: coin['current_price'] ?? null,
         name: coin['coin_name'] ?? id,
-        imgUrl: coin['img_url'] ?? ''
+        imgUrl: coin['img_url'] ?? '',
+        coinId: coin['coin_page_id'] ?? null
     };
+}
+
+async function resolveCoinId(symbol) {
+    if (!symbol) return null;
+    const normalizedSymbol = typeof symbol === 'string' ? symbol.toUpperCase() : symbol;
+    const coins_data = await getCoinDataCache();
+    const coin = coins_data[normalizedSymbol] || coins_data[symbol];
+    const coinId = coin?.coin_page_id;
+    return Number.isFinite(Number(coinId)) ? Number(coinId) : null;
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
@@ -306,6 +317,30 @@ document.addEventListener('DOMContentLoaded', async function() {
         transactionsList,
         portfolioTotal
     });
+
+    if (balancesList) {
+        const handleBalanceActivation = async (event) => {
+            const isClick = event.type === 'click';
+            const isKeyboard = event.type === 'keydown' && (event.key === 'Enter' || event.key === ' ');
+            if (!isClick && !isKeyboard) return;
+            if (isKeyboard) {
+                event.preventDefault();
+            }
+            const item = event.target.closest('.balance-item');
+            if (!item) return;
+            const datasetId = item.dataset.coinId;
+            const hasDatasetId = typeof datasetId === 'string' && datasetId.trim() !== '';
+            let coinId = hasDatasetId && Number.isFinite(Number(datasetId)) ? Number(datasetId) : null;
+            const symbol = item.dataset.symbol;
+            if (coinId === null && symbol) {
+                coinId = await resolveCoinId(symbol);
+            }
+            if (coinId === null) return;
+            window.location.href = `/pages/coin-details.html?coin_id=${coinId}`;
+        };
+        balancesList.addEventListener('click', handleBalanceActivation);
+        balancesList.addEventListener('keydown', handleBalanceActivation);
+    }
 });
 
 /**
@@ -475,7 +510,8 @@ async function populateWalletData(userData = {}, uiRefs = {}) {
             available: availableAmount,
             locked: Math.random() < 0.5 ? parseFloat((Math.random() * 0.1).toFixed(4)) : 0.0,
             usdValue: Number.isFinite(usdValue) ? usdValue : 0,
-            imgUrl: coinInfo.imgUrl || ''
+            imgUrl: coinInfo.imgUrl || '',
+            coinId: coinInfo.coinId ?? null
         };
     });
     
@@ -583,7 +619,7 @@ function renderBalancesList() {
         return;
     }
     listEl.innerHTML = balances.map(balance => `
-        <div class="balance-item">
+        <div class="balance-item" data-coin-id="${balance.coinId ?? ''}" data-symbol="${balance.symbol}" role="button" tabindex="0">
             <div class="balance-info">
                 <div class="balance-icon">${balance.imgUrl ? `<img src="${balance.imgUrl}" alt="${balance.name} logo">` : balance.symbol.slice(0, 3).toUpperCase()}</div>
                 <div class="balance-details">

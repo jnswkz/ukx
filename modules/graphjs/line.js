@@ -216,6 +216,15 @@ function draw_tooltip(ctx, x, y, label, value, fontSize = 12, theme = null, unit
 
     ctx.restore();
 }
+
+function removeChartListeners(canvas) {
+    const listeners = canvas._chartListeners;
+    if (!Array.isArray(listeners)) return;
+    listeners.forEach(({ type, handler, options }) => {
+        canvas.removeEventListener(type, handler, options);
+    });
+}
+
 /**
  * Main drawing function with improved rendering
  */
@@ -350,9 +359,11 @@ function draw(canvas, data, theme, highlightIndex = -1) {
     });
 }
 export function drawLineGraph(canvasID, data, themeOrBgColor, lineColor, pointColor) {
-    console.log(data);
     const canvas = document.getElementById(canvasID);
     if (!canvas) return;
+
+    // Avoid stacking duplicate listeners when the chart redraws.
+    removeChartListeners(canvas);
 
     // make the drawing buffer match the displayed (CSS) size
     const rect = canvas.getBoundingClientRect();
@@ -470,7 +481,7 @@ export function drawLineGraph(canvasID, data, themeOrBgColor, lineColor, pointCo
     redraw();
 
     // Wheel zoom handler
-    canvas.addEventListener('wheel', function(event) {
+    const wheelHandler = function(event) {
         event.preventDefault();
         
         const rect = canvas.getBoundingClientRect();
@@ -485,20 +496,22 @@ export function drawLineGraph(canvasID, data, themeOrBgColor, lineColor, pointCo
             state.zoom = newZoom;
             redraw();
         }
-    }, { passive: false });
+    };
+    canvas.addEventListener('wheel', wheelHandler, { passive: false });
     
     // Mouse down - start dragging
-    canvas.addEventListener('mousedown', function(event) {
+    const mouseDownHandler = function(event) {
         if (event.button === 0) { // Left mouse button
             state.isDragging = true;
             state.lastMouseX = event.clientX;
             state.lastMouseY = event.clientY;
             canvas.style.cursor = 'grabbing';
         }
-    });
+    };
+    canvas.addEventListener('mousedown', mouseDownHandler);
     
     // Mouse move - drag or hover
-    canvas.addEventListener('mousemove', function(event) {
+    const mouseMoveHandler = function(event) {
         if (state.isDragging) {
             // Dragging mode
             const deltaX = event.clientX - state.lastMouseX;
@@ -581,23 +594,26 @@ export function drawLineGraph(canvasID, data, themeOrBgColor, lineColor, pointCo
             redraw();
             canvas.style.cursor = state.zoom > 1 ? 'grab' : 'default';
         }
-    }, { passive: true });
+    };
+    canvas.addEventListener('mousemove', mouseMoveHandler, { passive: true });
     
     // Mouse up - stop dragging
-    canvas.addEventListener('mouseup', function(event) {
+    const mouseUpHandler = function(event) {
         if (event.button === 0) {
             state.isDragging = false;
             canvas.style.cursor = state.zoom > 1 ? 'grab' : 'default';
         }
-    });
+    };
+    canvas.addEventListener('mouseup', mouseUpHandler);
 
-    canvas.addEventListener('mouseleave', function() {
+    const mouseLeaveHandler = function() {
         state.isDragging = false;
         redraw();
-    }, { passive: true });
+    };
+    canvas.addEventListener('mouseleave', mouseLeaveHandler, { passive: true });
     
     // Double-click to reset to initial view
-    canvas.addEventListener('dblclick', function(event) {
+    const doubleClickHandler = function(event) {
         event.preventDefault();
         
         state.zoom = state.initialZoom || 1;
@@ -606,5 +622,15 @@ export function drawLineGraph(canvasID, data, themeOrBgColor, lineColor, pointCo
         
         redraw();
         canvas.style.cursor = state.zoom > 1 ? 'grab' : 'default';
-    });
+    };
+    canvas.addEventListener('dblclick', doubleClickHandler);
+
+    canvas._chartListeners = [
+        { type: 'wheel', handler: wheelHandler, options: { passive: false } },
+        { type: 'mousedown', handler: mouseDownHandler },
+        { type: 'mousemove', handler: mouseMoveHandler, options: { passive: true } },
+        { type: 'mouseup', handler: mouseUpHandler },
+        { type: 'mouseleave', handler: mouseLeaveHandler, options: { passive: true } },
+        { type: 'dblclick', handler: doubleClickHandler }
+    ];
 }
