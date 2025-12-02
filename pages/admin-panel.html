@@ -3,18 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bảng điều khiển Admin</title>
+    <title>Admin Panel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;500;600&family=Inter:wght@700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/style.css" />
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
   </head>
   <body>
     <div class="admin-panel-container">
-      <!-- Sidebar trái -->
+      <!-- Left Sidebar -->
       <aside class="admin-panel-sidebar collapsed">
         <div class="admin-panel-profile">
           <img
@@ -46,10 +48,14 @@
             <img class="icon" src="../assets/news-icon.svg" alt="News" />
             <span class="text">News</span>
           </div>
+          <div class="admin-panel-menu-item">
+            <img class="icon" src="../assets/chatbot-icon.svg" alt="AI" />
+            <span class="text">AI</span>
+          </div>
         </nav>
 
         <div class="admin-panel-messages">
-          <h4>TIN NHẮN</h4>
+          <h4>Message</h4>
           <div class="admin-panel-message">
             <img src="../assets/avatar.png" /> <span>Mẫn Dần</span>
           </div>
@@ -66,7 +72,7 @@
         </button>
       </aside>
 
-      <!-- Khu vực panel chính -->
+      <!-- admin panel main section -->
       <main class="admin-panel-main">
         <div class="admin-panel-top">
           <div class="admin-panel-left">
@@ -76,7 +82,7 @@
             >
               <div class="calculator-content">
                 <h3 style="margin-bottom: 20px; font-size: 18px">
-                  Quy đổi tiền tệ
+                  Currency Converter
                 </h3>
 
                 <div class="calculator-input-group">
@@ -151,7 +157,7 @@
                 Current Coin Holdings Distribution
               </h3>
             </div>
-            <!-- Biểu đồ thanh #1 - trade -->
+            <!-- Bar chart #1 - trade -->
             <canvas
               id="admin-panel-trade-chart"
               class="admin-panel-trade-chart"
@@ -165,7 +171,7 @@
           </div>
         </div>
         <div class="admin-panel-bar-chart-container">
-          <!-- Biểu đồ thanh #2 - users -->
+          <!-- Bar chart #2 - users -->
           <canvas
             id="admin-panel-login-chart"
             class="admin-panel-login-chart"
@@ -185,7 +191,7 @@
           <div class="admin-panel-controls-time">Time:</div>
         </div>
 
-        <!-- Bảng đồ đồ -->
+        <!-- admin panel main section -->
         <div class="admin-panel-table-wrapper">
           <div class="admin-panel-trade"></div>
         </div>
@@ -195,6 +201,61 @@
         <div class="admin-panel-table-wrapper">
           <div class="admin-panel-news"></div>
         </div>
+
+        <!-- AI Section -->
+        <section class="admin-panel-ai hidden">
+          <div class="admin-panel-ai-left">
+            <p class="admin-panel-ai-eyebrow">AI Control</p>
+            <h2>Ask about users, coins, or trades</h2>
+            <p class="admin-panel-ai-status" id="admin-ai-status">
+              Ready for a question
+            </p>
+            <div class="admin-panel-ai-chips">
+              <button class="admin-ai-chip" data-prompt="Give me a quick health summary with online users, trades this week, and which coins dominate holdings.">
+                Health snapshot
+              </button>
+              <button class="admin-ai-chip" data-prompt="Which coins do our users hold the most? Add a short risk note.">
+                Top holdings
+              </button>
+              <button class="admin-ai-chip" data-prompt="Show me login and trade momentum for the last few days.">
+                Momentum
+              </button>
+            </div>
+            <div class="admin-panel-ai-input">
+              <textarea
+                id="admin-ai-input"
+                rows="3"
+                placeholder="E.g. Which coins drive the most volume and how many users are active today?"
+              ></textarea>
+              <button id="admin-ai-submit" class="admin-panel-ai-submit">
+                Ask AI
+              </button>
+            </div>
+            <p class="admin-panel-ai-footnote">
+              The assistant sees aggregated holdings, user mix, login trends, and live trade volume.
+            </p>
+          </div>
+          <div class="admin-panel-ai-right">
+            <div class="admin-panel-ai-thread">
+              <div class="admin-panel-ai-thread-header">
+                <span>Conversation</span>
+                <button id="admin-ai-clear-history" class="admin-ai-clear-btn" title="Clear chat history">
+                  Clear
+                </button>
+              </div>
+              <div class="admin-panel-ai-thread-body" id="admin-ai-thread">
+                <div class="admin-ai-empty">Ask a question to start the thread.</div>
+              </div>
+            </div>
+            <div class="admin-panel-ai-chart">
+              <div class="admin-ai-chart-header">
+                <span class="admin-ai-chart-title" id="admin-ai-chart-title">Top coin holdings</span>
+                <span class="admin-ai-chart-note" id="admin-ai-chart-note"></span>
+              </div>
+              <canvas id="admin-ai-chart"></canvas>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
     <script type="module" src="../js/admin-panel.js"></script>
