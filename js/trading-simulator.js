@@ -46,13 +46,17 @@ document.addEventListener('DOMContentLoaded', () => {
 // Login Status Check
 // ========================================
 
+function isLoggedIn() {
+    return localStorage.getItem('isLoggedIn') === 'true';
+}
+
 function checkLoginStatus() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const loggedIn = isLoggedIn();
     const loginPrompt = document.getElementById('loginPrompt');
     const orderFormContainer = document.getElementById('orderFormContainer');
     const holdingsSection = document.querySelector('.holdings-section');
     
-    if (!isLoggedIn) {
+    if (!loggedIn) {
         // Show login prompt, hide order form
         if (loginPrompt) loginPrompt.style.display = 'flex';
         if (orderFormContainer) orderFormContainer.style.display = 'none';
@@ -565,15 +569,18 @@ function updateBalanceDisplay() {
 }
 
 function updatePortfolioValue() {
+    const loggedIn = isLoggedIn();
     let totalValue = 0;
     let totalCost = 0;
     
-    Object.entries(state.holdings).forEach(([symbol, holding]) => {
-        const currentPrice = state.coinData[symbol]?.current_price || 0;
-        const value = holding.amount * currentPrice;
-        totalValue += value;
-        totalCost += holding.totalCost;
-    });
+    if (loggedIn) {
+        Object.entries(state.holdings).forEach(([symbol, holding]) => {
+            const currentPrice = state.coinData[symbol]?.current_price || 0;
+            const value = holding.amount * currentPrice;
+            totalValue += value;
+            totalCost += holding.totalCost;
+        });
+    }
     
     const portfolioValueEl = document.getElementById('portfolioValue');
     portfolioValueEl.textContent = `$${formatNumber(totalValue)}`;
@@ -643,33 +650,10 @@ function updateChart() {
     
     // Convert history to candle format
     const candles = history.map(h => {
-        // Handle both Date objects and strings
-        let timeLabel = h.time;
-        if (timeLabel instanceof Date) {
-            if (period === '1m' || period === '5m') {
-                // Show time with seconds for minute views
-                timeLabel = timeLabel.toLocaleTimeString('en-US', { 
-                    hour: '2-digit', 
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: false 
-                });
-            } else if (period === '24h' || period === '1h' || period === '4h') {
-                timeLabel = timeLabel.toLocaleTimeString('en-US', { 
-                    hour: '2-digit', 
-                    minute: '2-digit',
-                    hour12: false 
-                });
-            } else {
-                timeLabel = timeLabel.toLocaleDateString('en-US', { 
-                    month: 'short', 
-                    day: 'numeric' 
-                });
-            }
-        }
+        const timeLabel = formatTimeLabel(h.time || h.date, period);
         
         return {
-            time: h.date || timeLabel,
+            time: timeLabel,
             open: h.open || h.price,
             high: h.high || h.price,
             low: h.low || h.price,
@@ -738,12 +722,13 @@ function updateMarketStats() {
     const coin = state.coinData[state.selectedCoin];
     if (!coin) return;
     
+    const loggedIn = isLoggedIn();
     document.getElementById('high24h').textContent = `$${formatPrice(coin.high_24h)}`;
     document.getElementById('low24h').textContent = `$${formatPrice(coin.low_24h)}`;
     document.getElementById('marketCap').textContent = formatMarketCap(coin.market_cap);
     
-    const holding = state.holdings[state.selectedCoin];
-    document.getElementById('userHoldings').textContent = holding 
+    const holding = loggedIn ? state.holdings[state.selectedCoin] : null;
+    document.getElementById('userHoldings').textContent = holding && loggedIn
         ? `${formatAmount(holding.amount)} ${state.selectedCoin}`
         : `0.00 ${state.selectedCoin}`;
 }
@@ -804,6 +789,20 @@ function updateOrderSummary() {
 
 function updateHoldings() {
     const holdingsList = document.getElementById('holdingsList');
+    const loggedIn = isLoggedIn();
+    
+    if (!loggedIn) {
+        holdingsList.innerHTML = `
+            <div class="empty-state">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <p>Login Required</p>
+                <span>Login to view your holdings</span>
+            </div>
+        `;
+        return;
+    }
     
     // Show skeleton loading if coin data is not loaded yet
     if (Object.keys(state.coinData).length === 0) {
@@ -1294,4 +1293,50 @@ function formatMarketCap(cap) {
     } else {
         return `$${formatNumber(cap)}`;
     }
+}
+
+function formatTimeLabel(timeValue, period) {
+    if (!timeValue) return '';
+    
+    const asDate = (value) => {
+        if (value instanceof Date) return value;
+        if (typeof value === 'number') {
+            const date = new Date(value);
+            return isNaN(date.getTime()) ? null : date;
+        }
+        if (typeof value === 'string') {
+            const parsed = new Date(value);
+            return isNaN(parsed.getTime()) ? null : parsed;
+        }
+        return null;
+    };
+    
+    const date = asDate(timeValue);
+    if (!date) {
+        // Already formatted string or unknown type
+        return String(timeValue);
+    }
+    
+    if (period === '1m' || period === '5m') {
+        return date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+    }
+    
+    if (period === '24h' || period === '1h' || period === '4h') {
+        return date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        });
+    }
+    
+    // Default: show date for multi-day views (7d, 30d, etc.)
+    return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric'
+    });
 }

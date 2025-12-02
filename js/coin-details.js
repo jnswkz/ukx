@@ -157,9 +157,9 @@ async function loadCoinDetails(coinId) {
         coinState.details = safeDetails;
         coinState.liveData = liveData;
         coinState.performance = performance;
-        // Prefer live current_price, else fallback to details.current_price, else 0
+        // Prefer bundled/local price first, then live price as a fallback
         coinState.basePriceUSD =
-            liveData?.current_price ?? safeDetails.current_price ?? 0;
+            safeDetails.current_price ?? liveData?.current_price ?? 0;
 
         // Render all sections using the available data (liveData takes precedence where present)
         renderOverview(symbol, safeDetails, liveData);
@@ -201,11 +201,11 @@ function renderOverview(symbol, details, liveData) {
     // Prefer values from liveData (fresh API) but fall back to static details
     const coinName = liveData?.name || details?.coin_name || symbol;
     const iconUrl = liveData?.image || details?.img_url || "/assets/crypto-default.png";
-    // Prefer live API values when available; fall back to bundled dataset to stay resilient offline.
-    const currentPrice = liveData?.current_price ?? details?.current_price ?? 0;
-    const priceChange = liveData?.price_change_24h ?? details?.price_change_24h ?? 0;
-    const high24h = liveData?.high_24h ?? details?.high_24h ?? currentPrice;
-    const low24h = liveData?.low_24h ?? details?.low_24h ?? currentPrice;
+    // Price should come from local bundle; live values only fill gaps
+    const currentPrice = details?.current_price ?? liveData?.current_price ?? 0;
+    const priceChange = details?.price_change_24h ?? liveData?.price_change_24h ?? 0;
+    const high24h = details?.high_24h ?? liveData?.high_24h ?? currentPrice;
+    const low24h = details?.low_24h ?? liveData?.low_24h ?? currentPrice;
 
     if (view.coinName) {
         view.coinName.textContent = coinName;

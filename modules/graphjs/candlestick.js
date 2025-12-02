@@ -96,16 +96,14 @@ function drawXAxis(ctx, candles, chartLeft, chartTop, chartHeight, candleWidth, 
         
         // Format time label
         let label = candle.time;
-        if (typeof label === 'string') {
-            // If it's a date string
-            const date = new Date(label);
-            if (!isNaN(date.getTime())) {
-                label = date.toLocaleTimeString('en-US', { 
-                    hour: '2-digit', 
-                    minute: '2-digit',
-                    hour12: false 
-                });
-            }
+        if (label instanceof Date) {
+            // Default: show a short date when a Date slips through
+            label = label.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        } else if (label === undefined || label === null) {
+            label = '';
+        } else {
+            // Preserve preformatted strings (from updateChart) without re-parsing
+            label = String(label);
         }
         
         ctx.fillText(label, x, y);
@@ -448,6 +446,11 @@ export function drawCandlestickChart(canvasId, candles, options = {}) {
         paddedMax: finalMax,
         fontSize
     };
+    
+    // Keep interactivity state in sync with the newest candle set to avoid hover jitter
+    if (canvas._chartState) {
+        canvas._chartState.originalCandles = candles;
+    }
 }
 
 /**
