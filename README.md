@@ -1,173 +1,129 @@
 [![DeepScan grade](https://deepscan.io/api/teams/28275/projects/30501/branches/980424/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=28275&pid=30501&bid=980424)
 # UKX Wallet
 
-UKX Wallet is a multi-page, data-driven marketing and dashboard experience for a fictional crypto investing platform. The site is completely static (HTML/CSS/vanilla JS) but simulates live behavior through JSON data files, CoinGecko market requests, and an AI assistant backed by the Perplexity API. The project ships with reusable components, custom canvas-based charts, news/article generation tooling, and multiple product surfaces (dashboard, buy/sell flows, calculator, simulator, admin panel, etc.).
+UKX Wallet is a static, multi-page experience for a fictional crypto investing platform. Everything runs in the browser (HTML/CSS/vanilla JS) but feels live through JSON data, CoinGecko lookups, and an AI assistant powered by Perplexity. The repo ships reusable components, a custom canvas chart engine, Playwright smoke tests, and a Markdown-to-news pipeline.
 
-## Highlights
-- **Full product funnel** – landing page, auth screens, dashboard, markets, calculators, simulator, payment, and admin tooling under `pages/`.
-- **Reusable UI primitives** – navbar, footer, chat popup, and currency manager loaded once via `js/components.js` across every page.
-- **Dynamic data** – local JSON datasets in `/data`, optional CoinGecko lookups (`modules/coingecko`), and a Perplexity-powered assistant (`modules/api-call`).
-- **Custom visualization layer** – high-performance `<canvas>` renderer in `modules/graphjs/line.js` for spark-lines, crosshairs, tooltips, and skeleton states.
-- **Editorial workflow** – Markdown + frontmatter articles transformed into fully styled news pages with `script.py`.
+## Features
+- Landing → auth → dashboard funnel plus markets, buy/sell, payment, simulator, calculator, news, and admin pages under `pages/`.
+- Shared navbar/footer/chat + currency manager injected via `js/components.js` across every page.
+- Data-backed UI using local JSON in `data/` with optional CoinGecko fetchers in `modules/coingecko/`.
+- Perplexity-backed assistant used by the chat popup and dashboard helper (`modules/api-call/`).
+- Canvas sparkline/line renderer with crosshairs and tooltips in `modules/graphjs/`.
+- Editorial workflow: Markdown + frontmatter turned into styled news pages via `script.py`.
 
-## Tech Stack
-- Semantic HTML5, vanilla ES modules, and modular CSS (split per feature under `css/`).
-- Canvas-based charts and animated network/particle backgrounds (`modules/net-bg`, `js/particles.js`).
-- External services: CoinGecko public markets API and Perplexity Chat Completions (Sonar models).
-- Python tooling (`script.py`) with `python-frontmatter`, `markdown-it-py`, and `beautifulsoup4` for content generation.
+## Stack
+- Semantic HTML5, modular CSS per feature (`css/`), ES modules in `js/`.
+- Canvas visuals and particle/network backgrounds (`modules/net-bg`, `js/particles.js`).
+- External services: CoinGecko REST + Perplexity Chat Completions.
+- Playwright for E2E smoke coverage (`tests/`), Python tooling for article generation.
 
-## Repository Layout
+## Project Structure
 ```
 .
-├── assets/                     # Videos, hero imagery, icons
-├── components/                 # Shared HTML fragments (navbar, footer, chat)
-├── css/                        # Page-specific and shared styles (base, layout, responsive, modules)
-├── data/                       # Mock/backfilled JSON used across dashboards & calculators
-├── js/                         # Page entry scripts (dashboard, markets, payments, etc.)
-├── modules/
-│   ├── api-call/               # Perplexity integration (uses env.js API key)
-│   ├── auth/                   # Mock OAuth flow, localStorage persistence
-│   ├── coingecko/              # Re-usable CoinGecko data fetchers
-│   ├── graphjs/                # Canvas line chart renderer
-│   ├── json/                   # Thin JSON file fetch helper
-│   ├── login-check/            # Redirect logic for auth-only pages
-│   └── net-bg/                 # Animated network background experiments
-├── pages/                      # All secondary pages (dashboard, markets, news, etc.)
-├── env.js                      # Stores the Perplexity API token (do **not** commit real keys)
-├── script.py                   # Markdown → news article pipeline
-├── template.md                 # Example article input file
-└── index.html                  # Marketing home page entry point
+├── assets/            # Videos, hero art, icons
+├── components/        # Navbar, footer, chat popup fragments
+├── css/               # Base + page-specific styles
+├── data/              # JSON datasets powering the UI
+├── js/                # Page entry scripts (dashboard, markets, auth, etc.)
+├── modules/           # Reusable logic (api-call, auth, coingecko, graphjs, login-check, net-bg)
+├── pages/             # All HTML pages (dashboard, markets, news, admin, etc.)
+├── env.js             # Exports the Perplexity API key (keep real keys private)
+├── script.py          # Markdown → news HTML generator
+├── template.md        # Example article input
+└── playwright.config.js
 ```
 
-## Getting Started
-### Prerequisites
-- A modern browser that supports ES modules (`import` in the browser).
-- Any static HTTP server (Python, `serve`, `http-server`, nginx, etc.). Directly opening files via `file://` will break `fetch()` calls for JSON/components.
-- Optional: Python 3.10+ if you plan to run the news/article generator.
+## Pages and Entrypoints
+- Landing: `index.html` + `js/main.js`, `js/components.js`, `js/particles.js`
+- Dashboard: `pages/dashboard.html` + `js/dashboard.js`
+- Markets: `pages/markets.html` + `js/markets.js`
+- Coin details: `pages/coin-details.html` + `js/coin-details.js`
+- Calculator: `pages/crypto-calculator.html` + `js/crypto-calculator.js`
+- Trading simulator: `pages/trading-simulator.html` + `js/trading-simulator.js`
+- Buy/Sell + Payment: `pages/buynsell.html`, `pages/payment.html` + `js/buynsell.js`, `js/payment.js`
+- News hub and generated articles: `pages/news.html`, `pages/news/*.html` + `js/news.js`
+- Auth: `pages/login.html`, `pages/signup.html` + `js/login.js`, `js/signup.js`, `modules/auth/mockOAuth.js`
+- Admin: `pages/admin-panel.html` + `js/admin-panel.js` (driven by `data/accounts_data.json`)
 
-### 1. Clone the repo
+Every page loads `js/components.js` to inject shared UI, manage currency, and wire the chat shell.
+
+## Setup
+### Prerequisites
+- Any modern browser.
+- Static HTTP server (Python `http.server`, `npx http-server`, `serve`, nginx, etc.). Opening files with `file://` will break `fetch()` calls.
+- Optional: Node 18+ for Playwright tests, Python 3.10+ for the news generator.
+
+### 1) Clone
 ```bash
 git clone <repo-url>
 cd ukx
 ```
 
-### 2. Configure the Perplexity API key
-`modules/api-call/api.js` imports `API` from `env.js`. Replace the placeholder token with your Perplexity key:
+### 2) Configure the Perplexity API key
+`modules/api-call/api.js` imports `API` from `env.js`. Replace the placeholder with your key and keep real credentials out of version control:
 ```js
 // env.js
 export const API = 'pplx-XXXXXXXXXXXXXXXXXXXXXXXX';
 ```
-Keep the file out of version control when committing real credentials.
 
-### 3. (Optional) Install Python tooling for articles
+### 3) Serve the site
+Run from the repo root so absolute fetch paths work:
+```bash
+# Python (default for tests)
+python3 -m http.server 5500
+# or
+npx http-server -p 5500
+# or
+serve -l 5500
+```
+Then open `http://127.0.0.1:5500/index.html` (or matching port).
+
+### 4) Optional: install Python deps for news generation
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install python-frontmatter markdown-it-py beautifulsoup4
 ```
 
-### 4. Run a local static server from the repo root
-Pick any option:
+## Running Tests (Playwright)
 ```bash
-# Option A: Python
-python -m http.server 4173
-# Option B: npx http-server
-npx http-server -p 4173
-# Option C: serve (npm i -g serve)
-serve -l 4173
+npm install
+npx playwright install
+npm test          # headless
+npm run test:ui   # headed inspector
+npm run test:debug # headed + pause on first step
 ```
-Navigate to `http://localhost:4173/index.html`. Because scripts use absolute paths (`/modules/...`), make sure the server root is the project root.
+`playwright.config.js` auto-starts `python3 -m http.server 5500`, stubs external CoinGecko traffic, and saves traces/screenshots on failure.
 
-### 5. Deploying
-Deployment is static: upload the repo to a host such as Netlify, Vercel Static, GitHub Pages, S3/CloudFront, etc. Ensure `env.js` is populated (or swapped with an environment-specific build step) on the target host.
-
-## Running Playwright Tests
-
-End-to-end smoke coverage for the main product surfaces lives under `tests/`. To run it locally:
-
-1. Install Node deps and Playwright browsers once:
-   ```bash
-   npm install
-   npx playwright install
-   ```
-2. Execute the headless suite:
-   ```bash
-   npm test
-   ```
-3. For interactive debugging you can launch the inspector UI:
-   ```bash
-   npm run test:ui   # headed mode
-   npm run test:debug # headed & paused on first step
-   ```
-
-The Playwright config (`playwright.config.js`) automatically serves the static site via `python3 -m http.server 4173`, stubs external CoinGecko calls, and captures traces/screenshots on failure.
-
-## Data & Content Sources
-- **Local JSON (`/data`)** – `full_coin_data.json`, `coin_performance_data.json`, `data_24h.json`, `data_7d.json`, `data_30_days.json`, `users_data.json`, etc. They drive dashboard widgets, the calculator, buy/sell screens, and coin details.
-- **News metadata (`data/article_data.json`)** – consumed by `pages/news.html` and coin-detail related articles.
-- **CoinGecko (`modules/coingecko/api.js`)** – optional live fetch for quote, ATH, supply, and historical candles per symbol. Falls back to local JSON if the request fails.
-- **Perplexity assistant (`modules/api-call/api.js`)** – powers `js/chat.js` and dashboard assistant prompts. Attaches GitHub-hosted JSON files as context to keep responses grounded.
-- **Currency state (`window.UKXCurrency`)** – defined in `js/components.js`, persists preferred currency (USD/VND) in `localStorage` and emits `preferredCurrencyChange` events consumed by multiple pages.
-
-### Handling JSON updates
-1. Edit the relevant file under `/data` (keep shapes consistent with existing entries).
-2. If you add keys, update the consuming UI (e.g., `js/dashboard.js`, `js/coin-details.js`, `js/crypto-calculator.js`).
-3. If serving from GitHub Pages, remember the Perplexity prompts reference specific raw URLs; update `modules/api-call/api.js` if the repo owner/branch changes.
-
-## Pages & Entry Scripts
-| Surface | HTML | JS Entrypoint | Notes |
-| --- | --- | --- | --- |
-| Landing / marketing | `index.html` | `js/main.js`, `js/components.js`, `js/particles.js` | Hero video, feature grids, FAQ accordion, CTA form, theme toggle, animated stats. |
-| Dashboard | `pages/dashboard.html` | `js/dashboard.js` | Portfolio cards, currency-aware totals, AI assistant, watchlists, skeleton loaders, custom charts. |
-| Coin details | `pages/coin-details.html` | `js/coin-details.js` | Deep-dive per coin, multi-period chart, converter, news feed, CoinGecko live data fallback. |
-| Markets | `pages/markets.html` | `js/markets.js` | Market table, filters, detail modals fed by `data/full_coin_data.json`. |
-| Crypto calculator | `pages/crypto-calculator.html` | `js/crypto-calculator.js` | Dual crypto/fiat converter with searchable dropdowns and login-aware CTAs. |
-| Trading simulator | `pages/trading-simulator.html` | `js/trading-simulator.js` | Simulated orders, risk metrics, and pseudo-PnL scenarios. |
-| Buy & Sell | `pages/buynsell.html` | `js/buynsell.js` | Guided buy/sell steps, balance checks, order preview. |
-| Payment & checkout | `pages/payment.html` | `js/payment.js` | Wallet selection, invoice summary, and confirmation flows. |
-| News hub | `pages/news.html` + `pages/news/*.html` | `js/news.js` | Lists generated articles (`data/article_data.json`) and links to rendered HTML pages. |
-| Auth | `pages/login.html`, `pages/signup.html` | `js/login.js`, `js/signup.js`, `modules/auth/mockOAuth.js` | LocalStorage-based login, email/password validation, mock OAuth prompts. |
-| Admin | `pages/admin-panel.html` | `js/admin-panel.js` | User/accounts table hooked to `data/accounts_data.json`. |
-| Misc utility pages | `pages/thankyou.html`, `pages/article.html`, etc. | Matching JS files | Lightweight confirmation or reader experiences. |
-
-Every page loads `js/components.js` to inject the navbar/footer/chat markup and to initialize shared behaviors (currency toggle, component fetches, chat popup shell, etc.).
-
-## Component & Theming System
-- **Theme** – `js/main.js` sets the `data-theme` attribute based on `localStorage` and exposes `initializeThemeToggle()` for the navbar toggle button.
-- **Currency manager** – `window.UKXCurrency` (in `js/components.js`) normalizes formatting/conversion and emits events for consumers like the dashboard, markets, and coin details.
-- **Reusable components** – HTML fragments in `/components` are fetched at runtime and injected into placeholders. Update these files once to reflect across the entire site.
-- **Chat popup** – `components/chat-popup.html` + `js/chat.js`; automatically wires to the Perplexity backend when present.
-
-## Generating News Articles
-1. Drop Markdown files with YAML frontmatter (see `template.md`) into an `md/` directory.
-2. Activate your virtual environment (see “Prerequisites”).
+## Content Workflow (News)
+1. Drop Markdown files with YAML frontmatter into `md/` (see `template.md`).
+2. Activate the virtualenv (if using one).
 3. Run `python script.py`.
-4. For each Markdown file the script will:
-   - Parse metadata (title, author, date, tags).
-   - Merge the HTML into `pages/newspaper_template.html` to create `pages/news/<slug>.html`.
-   - Append the article metadata to `data/article_data.json` (used by the news list and coin detail pages).
-5. Commit the generated HTML + updated JSON if you want the article to appear in production.
+4. The script renders `pages/news/<slug>.html` using `pages/newspaper_template.html` and appends metadata to `data/article_data.json`.
 
-## External Services & Environment
-| Service | Location | Notes |
-| --- | --- | --- |
-| CoinGecko REST | `modules/coingecko/api.js` | Public requests are rate limited (~50 req/min). Handle errors to avoid blocking UI; modules already fail gracefully. |
-| Perplexity Chat Completions | `modules/api-call/api.js` | Requires a valid `pplx-` key. Requests attach project JSON files for grounding; update URLs if the repo/branch changes. |
-| LocalStorage keys | `theme`, `ukxPreferredCurrency`, `isLoggedIn`, `ukx::oauthUsers` | Clear them to reset theme/currency/auth state while testing. |
+## Data and Services
+- Local JSON: `data/full_coin_data.json`, `data/coin_performance_data.json`, `data/data_24h.json`, `data/data_7d.json`, `data/data_30_days.json`, `data/users_data.json`, `data/accounts_data.json`, `data/article_data.json`.
+- CoinGecko: optional live fetchers in `modules/coingecko/api.js`; UI falls back to JSON when calls fail or are throttled.
+- Perplexity assistant: `modules/api-call/api.js` powers `js/chat.js` and dashboard prompts; grounding files are referenced via GitHub raw URLs—update if the repo path changes.
+- Currency state: `window.UKXCurrency` (in `js/components.js`) normalizes conversion/formatting and emits `preferredCurrencyChange`.
 
-## Development Tips
-- Always run from the repo root so absolute fetch paths (`/data/...`, `/components/...`) resolve correctly.
-- When adding a new page, include `<script type="module" src="/js/components.js"></script>` so shared components and currency management remain consistent.
-- Use `window.UKXCurrency.formatCurrency()` instead of manual formatting to keep conversions and precision aligned with the rest of the app.
-- Keep JSON structures backward-compatible; page scripts expect specific keys (see `js/dashboard.js`, `js/coin-details.js`, etc.).
-- For additional datasets, consider extending `data/` and updating `modules/api-call/api.js` if you want the AI assistant to read them.
+### Updating JSON
+1. Edit the relevant file under `data/` (keep shapes consistent).
+2. Update consuming scripts if you add fields (`js/dashboard.js`, `js/coin-details.js`, `js/crypto-calculator.js`, etc.).
+3. If hosting elsewhere (e.g., GitHub Pages), adjust grounding URLs in `modules/api-call/api.js` if the owner/branch changes.
+
+## Dev Tips
+- Always serve from the repo root to avoid 404s on `/components` and `/data`.
+- Use `window.UKXCurrency.formatCurrency()` instead of manual number formatting.
+- When adding pages, include `<script type="module" src="/js/components.js"></script>` to stay consistent with shared UI and currency handling.
+- Playwright tests assume port 5500; update `playwright.config.js` if you change it.
 
 ## Troubleshooting
-- **Component fetch failures** – Verify you are not on `file://` and that the server root is the repo root; otherwise `/components/...` returns 404.
-- **Assistant errors / 401** – Confirm `env.js` exports a valid Perplexity key and that the model name allowed by your plan (default: `sonar`).
-- **CoinGecko throttling** – The public API enforces strict limits. Cache responses or lean on the local JSON files when developing offline.
-- **Login redirect loops** – `modules/login-check/login-check.js` guards `dashboard.html`. Remove or adjust it if you build additional private pages.
-- **Currency mismatch** – If conversions look wrong, clear the `ukxPreferredCurrency` key in your browser storage.
+- Components not loading: ensure you are not on `file://` and that the server root is the repo root.
+- Assistant errors/401: verify `env.js` contains a valid `pplx-` key and the model is allowed by your plan.
+- CoinGecko rate limits: rely on bundled JSON while developing.
+- Auth loops: `modules/login-check/login-check.js` guards the dashboard; adjust if you add new private routes.
+- Currency mismatch: clear `ukxPreferredCurrency` in localStorage.
 
 ## License
-No explicit license file is provided. Treat the contents as proprietary unless the repository owner specifies otherwise.
+No license file is present; treat the contents as proprietary unless the owner states otherwise.
