@@ -366,8 +366,8 @@ async function drawBalanceChart(userData = {}, chartContainer, colorScheme = 'li
         const colors = {
             light: {
                 background: 'rgba(236, 239, 244, 1)',     // --nord6: light background
-                line: 'rgba(94, 129, 172, 1)',            // --nord10: deep blue line
-                point: 'rgba(129, 161, 193, 1)',          // --nord9: lighter blue point
+                line: 'rgba(52, 199, 89, 1)',             // crisp green line for light mode
+                point: 'rgba(46, 160, 72, 1)',            // darker green points
                 grid: 'rgba(76, 86, 106, 0.1)',           // --nord3: subtle grid
                 text: 'rgba(46, 52, 64, 0.8)',            // --nord0: dark text
                 tooltip: {

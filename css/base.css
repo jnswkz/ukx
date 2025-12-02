@@ -113,6 +113,11 @@
     /* Icon background helper for light mode */
     --icon-bg-light: rgba(38, 38, 38, 0.9);
     --icon-border-light: rgba(0,0,0,0.12);
+
+    /* Scrollbar */
+    --scrollbar-track: rgba(255, 255, 255, 0.05);
+    --scrollbar-thumb: rgba(136, 192, 208, 0.5);
+    --scrollbar-thumb-hover: rgba(136, 192, 208, 0.8);
 }
 
 /* ========== Light Mode Theme ========== */
@@ -146,6 +151,11 @@
     /* Icon helpers for light theme */
     --icon-bg: var(--icon-bg-light);
     --icon-border: var(--icon-border-light);
+
+    /* Scrollbar */
+    --scrollbar-track: rgba(0, 0, 0, 0.05);
+    --scrollbar-thumb: rgba(94, 129, 172, 0.55);
+    --scrollbar-thumb-hover: rgba(94, 129, 172, 0.8);
 }
 
 /* ========== System Preference Detection ========== */
@@ -181,6 +191,30 @@ body {
     overflow-x: hidden;
     min-height: 100vh;
     transition: background-color 0.3s ease, color 0.3s ease;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    scrollbar-width: thin;
+}
+
+/* Global scrollbar styling */
+*::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: var(--radius-md);
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-md);
+    border: 2px solid var(--scrollbar-track);
+    transition: background 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
 }
 
 /* ========== Accessibility ========== */

@@ -998,14 +998,6 @@ function initializeEventListeners() {
             document.querySelectorAll('.time-period-btn').forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
             state.currentPeriod = e.target.dataset.period;
-            
-            // Load minute data if needed
-            if ((state.currentPeriod === '1m' || state.currentPeriod === '5m') && 
-                state.priceHistory[state.selectedCoin] &&
-                !state.priceHistory[state.selectedCoin]['1m']) {
-                await loadMinuteData(state.selectedCoin);
-            }
-            
             updateChart();
         });
     });
@@ -1125,11 +1117,6 @@ async function selectCoin(symbol) {
         });
     }
     
-    // Load minute data in background if needed
-    if ((state.currentPeriod === '1m' || state.currentPeriod === '5m') && 
-        (!state.priceHistory[symbol] || !state.priceHistory[symbol]['1m'])) {
-        loadMinuteData(symbol);
-    }
 }
 
 // ========================================
