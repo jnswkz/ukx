@@ -204,7 +204,10 @@ document.addEventListener('DOMContentLoaded', function() {
         } finally {
             clearInterval(typingInterval);
             botMsg.classList.remove('is-waiting');
-            chatBody.scrollTop = chatBody.scrollHeight;
+            // Scroll to show the bot message from its start, not all the way to bottom
+            const botMsgTop = botMsg.offsetTop - chatBody.offsetTop;
+            const desiredScroll = botMsgTop - 10; // 10px padding above the message
+            chatBody.scrollTop = Math.max(0, desiredScroll);
             
             // Save chat history after each exchange
             saveChatHistory();
