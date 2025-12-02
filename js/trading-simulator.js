@@ -4,7 +4,7 @@
  */
 
 import { drawCandlestickChart, addCandlestickInteractivity } from '../modules/graphjs/candlestick.js';
-import { fetchCurrentPrices, fetchHistoricalPrices, fetchIntradayPrices, fetchMinuteData, fetch5MinuteData, rateLimitedFetch } from '../modules/coingecko/api.js';
+import { fetchCurrentPrices, fetchHistoricalPrices, fetchIntradayPrices, rateLimitedFetch } from '../modules/coingecko/api.js';
 
 // ========================================
 // State Management
