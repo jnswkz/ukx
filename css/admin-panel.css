@@ -4,7 +4,6 @@
   min-height: 100vh;
   background-color: var(--nord0); /* Main dark background */
   font-family: var(--font-primary);
-  overflow-x: hidden;
 }
 
 
@@ -20,7 +19,7 @@
   justify-content: space-between;
   padding: var(--spacing-md);
   transition: width 0.3s ease;
-  position: sticky;
+  position: sticky ;
 }
 
 .admin-panel-info {
