@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin AI Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Barlow:wght@400;500;600&family=Inter:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <div class="admin-panel-container">
+      <aside class="admin-panel-sidebar collapsed">
+        <div class="admin-panel-profile">
+          <img
+            src="../assets/avatar.png"
+            alt="User"
+            class="admin-panel-avatar"
+          />
+          <div class="admin-panel-info">
+            <h3 class="admin-panel-username">Admin</h3>
+            <p class="admin-panel-role">Administrator</p>
+          </div>
+          <button id="adminSidebarToggle" class="admin-panel-collapse-btn">
+            ❯
+          </button>
+        </div>
+
+        <nav class="admin-panel-menu">
+          <div class="admin-panel-menu-title">Main</div>
+          <div class="admin-panel-menu-item">
+            <img class="icon" src="../assets/trading-icon.svg" alt="Trade" />
+            <span class="text">Trade</span>
+          </div>
+
+          <div class="admin-panel-menu-item">
+            <img class="icon" src="../assets/users-icon.svg" alt="Users" />
+            <span class="text">Users</span>
+          </div>
+          <div class="admin-panel-menu-item">
+            <img class="icon" src="../assets/news-icon.svg" alt="News" />
+            <span class="text">News</span>
+          </div>
+          <div class="admin-panel-menu-item active">
+            <img class="icon" src="../assets/chatbot-icon.svg" alt="AI" />
+            <span class="text">AI</span>
+          </div>
+        </nav>
+
+        <div class="admin-panel-messages">
+          <h4>TIN NHẮN</h4>
+          <div class="admin-panel-message">
+            <img src="../assets/avatar.png" /> <span>Mẫn Dần</span>
+          </div>
+          <div class="admin-panel-message">
+            <img src="../assets/avatar.png" /> <span>Kudo Skibidi</span>
+          </div>
+          <div class="admin-panel-message">
+            <img src="../assets/avatar.png" /> <span>Basupeso</span>
+          </div>
+        </div>
+
+        <button class="admin-panel-logout" id="admin-panel-logout">
+          <img class="icon" src="../assets/logout-icon.svg" alt="Logout" />
+        </button>
+      </aside>
+
+      <main class="admin-panel-main">
+        <div class="admin-panel-controls">
+          <div class="admin-panel-controls-time">Time:</div>
+        </div>
+
+        <section class="admin-panel-ai">
+          <div class="admin-panel-ai-left">
+            <p class="admin-panel-ai-eyebrow">AI Control</p>
+            <h2>Ask about users, coins, or trades</h2>
+            <p class="admin-panel-ai-status" id="admin-ai-status">
+              Ready for a question
+            </p>
+            <div class="admin-panel-ai-chips">
+              <button class="admin-ai-chip" data-prompt="Give me a quick health summary with online users, trades this week, and which coins dominate holdings.">
+                Health snapshot
+              </button>
+              <button class="admin-ai-chip" data-prompt="Which coins do our users hold the most? Add a short risk note.">
+                Top holdings
+              </button>
+              <button class="admin-ai-chip" data-prompt="Show me login and trade momentum for the last few days.">
+                Momentum
+              </button>
+            </div>
+            <div class="admin-panel-ai-input">
+              <textarea
+                id="admin-ai-input"
+                rows="3"
+                placeholder="E.g. Which coins drive the most volume and how many users are active today?"
+              ></textarea>
+              <button id="admin-ai-submit" class="admin-panel-ai-submit">
+                Ask AI
+              </button>
+            </div>
+            <p class="admin-panel-ai-footnote">
+              The assistant sees aggregated holdings, user mix, login trends, and live trade volume.
+            </p>
+          </div>
+          <div class="admin-panel-ai-right">
+            <div class="admin-panel-ai-response" id="admin-ai-response">
+              Ask a question to get a short summary and a chart suggestion.
+            </div>
+            <div class="admin-panel-ai-chart">
+              <canvas id="admin-ai-chart"></canvas>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="../js/admin-ai.js"></script>
+  </body>
+</html>
