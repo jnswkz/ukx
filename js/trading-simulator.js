@@ -352,33 +352,6 @@ function loadCachedHistoricalData(symbol) {
     }
 }
 
-/**
- * Load minute-level data for short timeframes
- */
-async function loadMinuteData(symbol) {
-    try {
-        console.log(`Loading minute data for ${symbol}...`);
-        
-        const [data1m, data5m] = await Promise.all([
-            rateLimitedFetch(() => fetchMinuteData(symbol, 60)),
-            rateLimitedFetch(() => fetch5MinuteData(symbol))
-        ]);
-        
-        if (!state.priceHistory[symbol]) {
-            state.priceHistory[symbol] = {};
-        }
-        
-        state.priceHistory[symbol]['1m'] = data1m;
-        state.priceHistory[symbol]['5m'] = data5m;
-        
-        console.log(`Loaded minute data for ${symbol} (1m: ${data1m.length} points, 5m: ${data5m.length} points)`);
-        updateChart();
-        
-    } catch (error) {
-        console.error(`Failed to load minute data for ${symbol}:`, error);
-    }
-}
-
 function populateCoinDropdown() {
     const dropdownList = document.getElementById('coinDropdownList');
     dropdownList.innerHTML = '';
