@@ -169,8 +169,7 @@ sidebarToggle.addEventListener("click", () => {
 window.addEventListener("resize", updateToggleIcon);
 
 // Dynamic table
-// ====== sample data for trade table ======
-const headers = [
+const tradeHeaders = [
   "Trade ID",
   "Trade Date",
   "From",
@@ -180,40 +179,197 @@ const headers = [
   "Status",
 ];
 
-const rows = [
-  {
-    "Trade ID": 12,
-    "Trade Date": "11/11/2020",
-    From: "Mẫn Dần",
-    To: "Quý Bửu",
-    "Coin type": "BTC",
-    Price: 0.01,
-    Status: {
+const tradeCoinTypes = [
+  "BTC",
+  "ETH",
+  "USDT",
+  "LTC",
+  "XRP",
+  "SOL",
+  "BNB",
+  "ADA",
+  "DOGE",
+  "DOT",
+];
+
+let accountsDataPromise;
+const tradeTableContainer = document.querySelector(".admin-panel-trade");
+const TRADE_CHART_ID = "admin-panel-trade-chart";
+const MAX_TRADES = 50;
+const REALTIME_INTERVAL_MS = 8000;
+
+let tradeState = { rows: [], chartData: { x: [], y: [] } };
+let nextTradeId = 1;
+
+function getRandomItem(list) {
+  if (!list || list.length === 0) return null;
+  return list[Math.floor(Math.random() * list.length)];
+}
+
+function getRandomPrice(coin) {
+  const ranges = {
+    BTC: [0.01, 2],
+    ETH: [0.25, 15],
+    USDT: [250, 5000],
+    LTC: [5, 80],
+    XRP: [500, 5000],
+    SOL: [2, 50],
+    BNB: [0.5, 15],
+    ADA: [800, 8000],
+    DOGE: [1500, 20000],
+    DOT: [50, 400],
+  };
+  const [min, max] = ranges[coin] || [20, 1200];
+  const price = Math.random() * (max - min) + min;
+  return Number(price.toFixed(2));
+}
+
+function getRandomStatus() {
+  const statusRoll = Math.random();
+  if (statusRoll > 0.65) {
+    return {
       type: "status",
       kind: "span",
       class: "completed",
       text: "Completed",
-    },
-  },
-  {
-    "Trade ID": 13,
-    "Trade Date": "11/11/2020",
-    From: "Ngọc Duy",
-    To: "Basupeso",
-    "Coin type": "ETH",
-    Price: 2.5,
-    Status: { type: "status", kind: "button", class: "public", text: "Public" },
-  },
-  {
-    "Trade ID": 14,
-    "Trade Date": "12/11/2020",
-    From: "Phúc Lâm",
-    To: "Hồng Hà",
-    "Coin type": "USDT",
-    Price: 1500,
-    Status: { type: "status", kind: "button", class: "hide", text: "Hide" },
-  },
-];
+    };
+  }
+  const isPublic = Math.random() > 0.4;
+  return {
+    type: "status",
+    kind: "button",
+    class: isPublic ? "public" : "hide",
+    text: isPublic ? "Public" : "Hide",
+  };
+}
+
+function getRandomTradeDate(daysBack = 30) {
+  const daysAgo = Math.floor(Math.random() * daysBack);
+  const date = new Date();
+  date.setDate(date.getDate() - daysAgo);
+  return date;
+}
+
+function formatChartDate(date) {
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
+async function fetchAccountsData() {
+  if (!accountsDataPromise) {
+    accountsDataPromise = fetch("../data/accounts_data.json").then((res) =>
+      res.json()
+    );
+  }
+  return accountsDataPromise;
+}
+
+function buildTradeRow(id, date, accounts) {
+  const fromUser = getRandomItem(accounts) || {};
+  let toUser = getRandomItem(accounts) || {};
+  const fromName = fromUser.name || fromUser.username || "User";
+  let toName = toUser.name || toUser.username || "User";
+
+  if (fromName === toName && accounts.length > 1) {
+    while (toName === fromName) {
+      toUser = getRandomItem(accounts) || {};
+      toName = toUser.name || toUser.username || "User";
+    }
+  }
+
+  const coin = getRandomItem(tradeCoinTypes) || "BTC";
+
+  return {
+    "Trade ID": id,
+    "Trade Date": date.toLocaleDateString("en-US"),
+    tradeDate: date.toISOString(),
+    From: fromName,
+    To: toName,
+    "Coin type": coin,
+    Price: getRandomPrice(coin),
+    Status: getRandomStatus(),
+  };
+}
+
+async function generateRandomTradeData(count = 20) {
+  const accounts = (await fetchAccountsData()) || [];
+  const desiredCount = Math.max(count, 5);
+  const lastFiveDayLabels = getLastXDays(5);
+  const trades = [];
+  const now = new Date();
+  const startId = Math.floor(Math.random() * 9000) + 1000;
+
+  // Seed one trade per recent day so the chart never renders empty bars.
+  lastFiveDayLabels.forEach((label, index) => {
+    const date = new Date(now);
+    const daysBack = lastFiveDayLabels.length - 1 - index;
+    date.setDate(now.getDate() - daysBack);
+    trades.push(buildTradeRow(startId + trades.length, date, accounts));
+  });
+
+  while (trades.length < desiredCount) {
+    const date = getRandomTradeDate(30);
+    trades.push(buildTradeRow(startId + trades.length, date, accounts));
+  }
+
+  trades.sort(
+    (a, b) =>
+      new Date(b["Trade Date"]).getTime() -
+      new Date(a["Trade Date"]).getTime()
+  );
+
+  return { trades, nextId: startId + trades.length };
+}
+
+function computeTradeChartData(rows) {
+  const labels = getLastXDays(5);
+  const counts = Object.fromEntries(labels.map((label) => [label, 0]));
+
+  rows.forEach((row) => {
+    const rawDate = row.tradeDate || row["Trade Date"];
+    const parsed = rawDate ? new Date(rawDate) : null;
+    if (!parsed || Number.isNaN(parsed.getTime())) return;
+    const label = formatChartDate(parsed);
+    if (counts[label] !== undefined) counts[label] += 1;
+  });
+
+  return { x: labels, y: labels.map((label) => counts[label]) };
+}
+
+function renderTradeTable(rows) {
+  if (!tradeTableContainer) return;
+  tradeTableContainer.innerHTML = "";
+  tradeTableContainer.appendChild(createAdminTable(tradeHeaders, rows));
+  wireStatusButtons();
+}
+
+function drawTradeChart(chartData) {
+  resizeCanvasToParent(TRADE_CHART_ID);
+  drawBarChart(TRADE_CHART_ID, chartData);
+}
+
+function updateTradeUI() {
+  renderTradeTable(tradeState.rows);
+  tradeState.chartData = computeTradeChartData(tradeState.rows);
+  drawTradeChart(tradeState.chartData);
+}
+
+async function addRealtimeTrade() {
+  const accounts = (await fetchAccountsData()) || [];
+  const newTrade = buildTradeRow(nextTradeId++, new Date(), accounts);
+  tradeState.rows.unshift(newTrade);
+  if (tradeState.rows.length > MAX_TRADES) {
+    tradeState.rows.pop();
+  }
+  updateTradeUI();
+}
+
+function startRealtimeTrades() {
+  setInterval(() => {
+    addRealtimeTrade().catch((err) =>
+      console.error("Realtime trade update failed", err)
+    );
+  }, REALTIME_INTERVAL_MS);
+}
 
 function createAdminTable(headerData, rowData) {
   const table = document.createElement("table");
@@ -267,8 +423,7 @@ function createAdminTable(headerData, rowData) {
 }
 
 async function getProcessedUserData() {
-  const response = await fetch("../data/accounts_data.json");
-  const data = await response.json();
+  const data = await fetchAccountsData();
   //  {user_id: 1, username: 'donamtrum@jns.co.it', password: '3nm155!%EKte', name: 'Đỗ Nam Trum'}
 
   let usersHeaders = ["user_id", "Username", "Name", "Online_status"];
@@ -323,9 +478,11 @@ async function getProcessedNewsData() {
   });
   return { newsHeaders, newsRows };
 }
-document
-  .querySelector(".admin-panel-trade")
-  .appendChild(createAdminTable(headers, rows));
+const { trades: tradeRows, nextId } = await generateRandomTradeData(24);
+tradeState.rows = tradeRows;
+nextTradeId = nextId;
+updateTradeUI();
+startRealtimeTrades();
 
 const { usersHeaders, usersRows } = await getProcessedUserData();
 document
@@ -337,21 +494,24 @@ document
   .querySelector(".admin-panel-news")
   .appendChild(createAdminTable(newsHeaders, newsRows));
 
-// status button
-document.querySelectorAll(".admin-panel-status-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    console.log("Clicked");
-    if (btn.classList.contains("public")) {
-      btn.classList.remove("public");
-      btn.classList.add("hide");
-      btn.textContent = "Hide";
-    } else {
-      btn.classList.remove("hide");
-      btn.classList.add("public");
-      btn.textContent = "Public";
-    }
+function wireStatusButtons() {
+  document.querySelectorAll(".admin-panel-status-btn").forEach((btn) => {
+    if (btn.dataset.wired === "true") return;
+    btn.dataset.wired = "true";
+    btn.addEventListener("click", () => {
+      if (btn.classList.contains("public")) {
+        btn.classList.remove("public");
+        btn.classList.add("hide");
+        btn.textContent = "Hide";
+      } else {
+        btn.classList.remove("hide");
+        btn.classList.add("public");
+        btn.textContent = "Public";
+      }
+    });
   });
-});
+}
+wireStatusButtons();
 
 // chart
 function resizeCanvasToParent(canvasId) {
@@ -383,18 +543,10 @@ function getLastXDays(X) {
   return days;
 }
 
-const tradeChartData = {
-  x: getLastXDays(5),
-  y: [1242, 1350, 1420, 1282, 1100],
-};
-
 const loginChartData = {
   x: getLastXDays(10),
   y: [562, 600, 580, 620, 700, 552, 800, 820, 900, 950],
 };
-
-resizeCanvasToParent("admin-panel-trade-chart");
-drawBarChart("admin-panel-trade-chart", tradeChartData);
 
 //"admin-panel-age-chart"
 const user_data = await jsonFileParser("/data/users_data.json");
