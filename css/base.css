@@ -51,8 +51,6 @@
     /* Accent colors (same for both modes) */
     --color-accent-primary: var(--nord8);
     --color-accent-secondary: var(--nord10);
-    --color-accent-gold: #cfa03a;
-    --color-accent-gold-strong: #e5b94c;
     --color-success: var(--nord14);
     --color-warning: var(--nord13);
     --color-error: var(--nord11);
