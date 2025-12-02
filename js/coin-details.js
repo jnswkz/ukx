@@ -903,16 +903,30 @@ function getChartTheme(isTrendPositive = true) {
     const isLightTheme =
         document.documentElement.getAttribute("data-theme") === "light";
 
+    const rootStyle = getComputedStyle(document.documentElement);
+    const positiveLine =
+        rootStyle.getPropertyValue("--color-chart-positive").trim() ||
+        "rgba(47, 122, 85, 1)";
+    const positivePoint =
+        rootStyle.getPropertyValue("--color-chart-positive-strong").trim() ||
+        "rgba(36, 94, 67, 1)";
+    const negativeLine =
+        rootStyle.getPropertyValue("--color-chart-negative").trim() ||
+        "rgba(191, 97, 106, 1)";
+    const negativePoint =
+        rootStyle.getPropertyValue("--color-chart-negative-strong").trim() ||
+        "rgba(167, 69, 80, 1)";
+
     const trendColors = isTrendPositive
         ? {
-              line: "rgba(163, 190, 140, 1)",
-              point: "rgba(129, 199, 132, 1)",
-              tooltipLabel: "rgba(129, 199, 132, 0.9)"
+              line: positiveLine,
+              point: positivePoint,
+              tooltipLabel: positiveLine
           }
         : {
-              line: "rgba(191, 97, 106, 1)",
-              point: "rgba(208, 135, 112, 1)",
-              tooltipLabel: "rgba(191, 97, 106, 0.85)"
+              line: negativeLine,
+              point: negativePoint,
+              tooltipLabel: negativeLine
           };
 
     if (isLightTheme) {

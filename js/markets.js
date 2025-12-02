@@ -373,8 +373,14 @@ function drawMiniChart(symbol, change24h) {
 
     // Get colors from CSS variables for theme support
     const computedStyle = getComputedStyle(document.documentElement);
-    const successColor = computedStyle.getPropertyValue('--color-success').trim();
-    const errorColor = computedStyle.getPropertyValue('--color-error').trim();
+    const successColor =
+        computedStyle.getPropertyValue('--color-chart-positive').trim() ||
+        computedStyle.getPropertyValue('--color-success').trim() ||
+        '#2f7a55';
+    const errorColor =
+        computedStyle.getPropertyValue('--color-chart-negative').trim() ||
+        computedStyle.getPropertyValue('--color-error').trim() ||
+        '#b7495a';
 
     // Determine trend based on real data if available
     let effectiveChange = numericChange;

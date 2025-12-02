@@ -55,24 +55,30 @@
 }
 
 .btn-hero-primary {
-    background: var(--color-button-primary-bg);
+    background: linear-gradient(135deg, var(--color-button-primary-bg), var(--color-accent-gold));
     color: var(--color-button-primary-text);
-    border-color: var(--color-border);
+    border-color: color-mix(in srgb, var(--color-accent-gold) 70%, var(--color-border) 30%);
     backdrop-filter: blur(6px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
 }
 
 .btn-hero-primary:hover {
-    background: var(--color-button-primary-hover);
+    background: linear-gradient(135deg, var(--color-button-primary-hover), var(--color-accent-gold-strong));
+    transform: translateY(-1px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.32);
 }
 
 .btn-hero-secondary {
-    background: var(--color-button-secondary-bg);
-    color: var(--color-button-secondary-text);
-    border-color: transparent;
+    background: color-mix(in srgb, var(--color-accent-gold) 18%, var(--color-background-card) 82%);
+    color: var(--color-text-primary);
+    border-color: color-mix(in srgb, var(--color-accent-gold) 70%, var(--color-border) 30%);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
 }
 
 .btn-hero-secondary:hover {
-    background: var(--color-button-secondary-hover);
+    background: color-mix(in srgb, var(--color-accent-gold) 35%, var(--color-background-card) 65%);
+    color: var(--color-text-inverse);
+    transform: translateY(-1px);
 }
 
 /* Feature Button */
@@ -213,14 +219,42 @@
 
 /* ========== Card Components ========== */
 .feature-card {
-    background: var(--color-background-card);
-    border: 1px solid var(--color-border);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+        145deg,
+        color-mix(in srgb, var(--color-background-card) 90%, var(--color-accent-gold) 10%),
+        color-mix(in srgb, var(--color-background-card) 82%, transparent)
+    );
+    border: 1px solid color-mix(in srgb, var(--color-accent-gold) 35%, var(--color-border) 65%);
     border-radius: var(--radius-lg);
     padding: var(--spacing-3xl) var(--spacing-2xl);
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xl);
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+}
+
+.feature-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--color-accent-gold) 14%, transparent) 0%, transparent 40%);
+    pointer-events: none;
+    opacity: 0.7;
+    z-index: 0;
+}
+
+.feature-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 44px rgba(0, 0, 0, 0.25);
+    border-color: color-mix(in srgb, var(--color-accent-gold) 50%, var(--color-border) 50%);
 }
 
 .feature-content {
@@ -289,5 +323,3 @@
 [data-theme="light"] .icon-expand--light {
     display: block;
 }
-
-

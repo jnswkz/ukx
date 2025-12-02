@@ -51,11 +51,17 @@
     /* Accent colors (same for both modes) */
     --color-accent-primary: var(--nord8);
     --color-accent-secondary: var(--nord10);
+    --color-accent-gold: #cfa03a;
+    --color-accent-gold-strong: #e5b94c;
     --color-success: var(--nord14);
     --color-warning: var(--nord13);
     --color-error: var(--nord11);
     --color-info: var(--nord9);
     --color-purple: var(--nord15);
+    --color-chart-positive: var(--color-success);
+    --color-chart-positive-strong: #7ca56f;
+    --color-chart-negative: var(--color-error);
+    --color-chart-negative-strong: #d67883;
     --color-success-hover: #8FAE7A;
     --color-error-hover: #BF616A;
     
@@ -130,6 +136,10 @@
     --color-button-secondary-bg: var(--nord14);
     --color-button-secondary-hover: #8FAE7A;
     --color-button-secondary-text: var(--nord0);
+    --color-chart-positive: #2f7a55;
+    --color-chart-positive-strong: #245f43;
+    --color-chart-negative: #b7495a;
+    --color-chart-negative-strong: #9f3245;
     
     /* Navigation in light mode */
     --color-nav-bg: var(--nord5);

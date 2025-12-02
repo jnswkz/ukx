@@ -298,6 +298,13 @@
         font-size: 32px;
     }
     
+    .article-meta {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 8px 14px;
+        font-size: 13px;
+    }
+    
     .article-section-title {
         font-size: 24px;
     }
@@ -326,6 +333,11 @@
     .hero-stats {
         font-size: 14px;
         line-height: 24px;
+    }
+    
+    .article-meta {
+        font-size: 12px;
+        gap: 6px 12px;
     }
     
     .section-title {
@@ -392,13 +404,23 @@
     .hero-buttons {
         flex-direction: column;
         width: 100%;
+        max-width: 520px;
+        margin-left: auto;
+        margin-right: auto;
         gap: var(--spacing-sm);
+        align-items: stretch;
     }
     
     .btn-hero-primary,
     .btn-hero-secondary {
         width: 100%;
+        font-size: 16px;
         padding: 16px var(--spacing-lg);
+    }
+    
+    .hero-buttons .email-input {
+        width: 100%;
+        flex: 1 1 auto;
     }
     
     /* Features */
