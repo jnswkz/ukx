@@ -822,18 +822,64 @@
 }
 
 .graphjs-tooltip {
-  position: absolute;
+  position: fixed;
   display: none;
-  background: white;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   color: #0f172a;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 6px 10px;
+  border-radius: 10px;
+  padding: 10px 14px;
   font-size: 12px;
-  font-weight: 600;
   pointer-events: none;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  z-index: 10000;
+  min-width: 100px;
+  text-align: center;
+}
+
+.graphjs-tooltip-label {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.graphjs-tooltip-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  background: linear-gradient(135deg, #7b5cf6, #f1449d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.graphjs-tooltip-percent {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.graphjs-tooltip-percent-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-top: 6px;
+}
+
+.graphjs-tooltip-color {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
 }
 
 /* Responsive table wrapper */

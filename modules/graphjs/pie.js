@@ -177,9 +177,21 @@ export class PieChart {
       return;
     }
     const slice = this.dataset[index];
-    const percent = this.total === 0 ? 0 : Math.round((slice.value / this.total) * 100);
+    const percent = this.total === 0 ? 0 : ((slice.value / this.total) * 100).toFixed(1);
+    const formattedValue = Number.isFinite(slice.value) && Math.abs(slice.value) >= 1000 
+      ? slice.value.toLocaleString(undefined, { maximumFractionDigits: 2 })
+      : Number(slice.value.toFixed(2));
+    const color = this.getColor(index);
+    
     this.tooltip.style.display = "block";
-    this.tooltip.innerHTML = `<b>${slice.label}</b><br>Value: ${slice.value}<br>${percent}%`;
+    this.tooltip.innerHTML = `
+      <div class="graphjs-tooltip-label">${slice.label}</div>
+      <div class="graphjs-tooltip-value">${formattedValue}</div>
+      <div class="graphjs-tooltip-percent-row">
+        <span class="graphjs-tooltip-color" style="background: ${color};"></span>
+        <span>${percent}% of total</span>
+      </div>
+    `;
     this.positionTooltip(pageX, pageY);
   }
 
@@ -187,8 +199,26 @@ export class PieChart {
     if (!this.tooltip) {
       return;
     }
-    this.tooltip.style.left = `${pageX + 10}px`;
-    this.tooltip.style.top = `${pageY + 10}px`;
+    const padding = 12;
+    
+    // Ensure tooltip is visible to measure
+    this.tooltip.style.display = "block";
+    const rect = this.tooltip.getBoundingClientRect();
+    
+    // Use clientX/clientY relative coordinates for fixed positioning
+    const clientX = pageX - (window.pageXOffset || document.documentElement.scrollLeft || 0);
+    const clientY = pageY - (window.pageYOffset || document.documentElement.scrollTop || 0);
+    
+    const desiredLeft = clientX + padding;
+    const desiredTop = clientY - rect.height - padding;
+    const maxLeft = window.innerWidth - rect.width - padding;
+    const maxTop = window.innerHeight - rect.height - padding;
+    
+    const left = Math.max(4, Math.min(desiredLeft, maxLeft));
+    const top = Math.max(4, Math.min(desiredTop, maxTop));
+    
+    this.tooltip.style.left = `${left}px`;
+    this.tooltip.style.top = `${top}px`;
   }
 
   hideTooltip() {

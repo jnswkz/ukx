@@ -11,6 +11,11 @@ function formatValue(value) {
   return Number(value.toFixed(2));
 }
 
+function formatPercentage(value, total) {
+  if (!Number.isFinite(value) || !Number.isFinite(total) || total === 0) return null;
+  return ((value / total) * 100).toFixed(1);
+}
+
 function getTooltipEl(options = {}) {
   if (options.tooltipElement) {
     if (typeof options.tooltipElement === "string") {
@@ -18,49 +23,70 @@ function getTooltipEl(options = {}) {
     }
     return options.tooltipElement;
   }
-  let el = document.querySelector(".graphjs-tooltip");
+  // Use a dedicated global tooltip for charts without a specific tooltip element
+  let el = document.getElementById("graphjs-global-tooltip");
   if (!el) {
     el = document.createElement("div");
+    el.id = "graphjs-global-tooltip";
     el.className = "graphjs-tooltip";
     document.body.appendChild(el);
   }
   return el;
 }
 
+function buildTooltipContent(bar, state) {
+  const { label, value } = bar;
+  const total = state.total || 0;
+  const percent = formatPercentage(value, total);
+  
+  let html = `<div class="graphjs-tooltip-label">${label}</div>`;
+  html += `<div class="graphjs-tooltip-value">${formatValue(value)}</div>`;
+  if (percent !== null) {
+    html += `<div class="graphjs-tooltip-percent">${percent}% of total</div>`;
+  }
+  return html;
+}
+
 function positionTooltip(tooltip, event) {
   if (!tooltip) return;
-  const scrollX =
-    window.pageXOffset || document.documentElement.scrollLeft || 0;
-  const scrollY =
-    window.pageYOffset || document.documentElement.scrollTop || 0;
   const padding = 12;
 
   // Ensure we can measure size before clamping
   tooltip.style.display = "block";
   const rect = tooltip.getBoundingClientRect();
-  const desiredLeft = scrollX + event.clientX + padding;
-  const desiredTop = scrollY + event.clientY - rect.height - padding;
-  const maxLeft = scrollX + window.innerWidth - rect.width - padding;
-  const maxTop = scrollY + window.innerHeight - rect.height - padding;
-  const left = Math.max(scrollX + 4, Math.min(desiredLeft, maxLeft));
-  const top = Math.max(scrollY + 4, Math.min(desiredTop, maxTop));
+  
+  // Use clientX/clientY for fixed positioning
+  const desiredLeft = event.clientX + padding;
+  const desiredTop = event.clientY - rect.height - padding;
+  const maxLeft = window.innerWidth - rect.width - padding;
+  const maxTop = window.innerHeight - rect.height - padding;
+  const left = Math.max(4, Math.min(desiredLeft, maxLeft));
+  const top = Math.max(4, Math.min(desiredTop, maxTop));
 
   tooltip.style.left = `${left}px`;
   tooltip.style.top = `${top}px`;
 }
 
-function wireTooltip(canvas, tooltip) {
+function wireTooltip(canvas, tooltip, bars, total) {
   if (!canvas || !tooltip) return;
-  if (canvas.dataset.graphjsTooltip === "true") return;
+  
+  // Remove old listeners if re-wiring
+  const existingState = chartStateByCanvas.get(canvas);
+  if (existingState && existingState._mouseMoveHandler) {
+    canvas.removeEventListener("mousemove", existingState._mouseMoveHandler);
+    canvas.removeEventListener("mouseleave", existingState._mouseLeaveHandler);
+  }
 
-  canvas.addEventListener("mousemove", (event) => {
+  const mouseMoveHandler = (event) => {
     const state = chartStateByCanvas.get(canvas);
-    if (!state || !state.bars.length) return;
-    const { bars } = state;
+    if (!state || !state.bars || !state.bars.length) return;
+    const currentTooltip = state.tooltip;
+    if (!currentTooltip) return;
+    
     const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
-    const hovered = bars.find(
+    const hovered = state.bars.find(
       (bar) =>
         x >= bar.x &&
         x <= bar.x + bar.width &&
@@ -68,18 +94,31 @@ function wireTooltip(canvas, tooltip) {
         y <= bar.y + bar.height
     );
     if (!hovered) {
-      tooltip.style.display = "none";
+      currentTooltip.style.display = "none";
       return;
     }
-    tooltip.textContent = `${hovered.label}: ${formatValue(hovered.value)}`;
-    positionTooltip(tooltip, event);
-  });
+    currentTooltip.innerHTML = buildTooltipContent(hovered, state);
+    positionTooltip(currentTooltip, event);
+  };
 
-  canvas.addEventListener("mouseleave", () => {
-    tooltip.style.display = "none";
-  });
+  const mouseLeaveHandler = () => {
+    const state = chartStateByCanvas.get(canvas);
+    if (state && state.tooltip) {
+      state.tooltip.style.display = "none";
+    }
+  };
 
-  canvas.dataset.graphjsTooltip = "true";
+  canvas.addEventListener("mousemove", mouseMoveHandler);
+  canvas.addEventListener("mouseleave", mouseLeaveHandler);
+
+  // Store everything in state at once
+  chartStateByCanvas.set(canvas, {
+    bars,
+    tooltip,
+    total,
+    _mouseMoveHandler: mouseMoveHandler,
+    _mouseLeaveHandler: mouseLeaveHandler
+  });
 }
 
 export function drawBarChart(canvasId, data, options = {}) {
@@ -161,7 +200,9 @@ export function drawBarChart(canvasId, data, options = {}) {
     ctx.stroke();
   }
 
+  const total = yValues.reduce((sum, val) => sum + (Number(val) || 0), 0);
   const tooltip = getTooltipEl(options);
-  chartStateByCanvas.set(canvas, { bars, tooltip });
-  wireTooltip(canvas, tooltip);
+  
+  // Wire tooltip and set state in one place
+  wireTooltip(canvas, tooltip, bars, total);
 }

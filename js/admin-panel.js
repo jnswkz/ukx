@@ -823,9 +823,16 @@ function buildAssistantSnapshot() {
   };
 }
 
+function shouldUsePieChart(question) {
+  const lower = (question || "").toLowerCase();
+  const pieKeywords = ["percent", "percentage", "%", "proportion", "ratio", "distribution", "breakdown", "share", "composition"];
+  return pieKeywords.some((keyword) => lower.includes(keyword));
+}
+
 function pickChartForQuestion(question) {
   const snapshot = buildAssistantSnapshot();
   const lower = (question || "").toLowerCase();
+  const usePie = shouldUsePieChart(question);
   
   if (lower.includes("login") || lower.includes("signin") || lower.includes("session") || lower.includes("active")) {
     return {
@@ -833,6 +840,7 @@ function pickChartForQuestion(question) {
       labels: snapshot.loginSnapshot.labels,
       values: snapshot.loginSnapshot.values,
       note: "User login sessions over the past 10 days",
+      type: usePie ? "pie" : "bar",
     };
   }
   
@@ -842,6 +850,7 @@ function pickChartForQuestion(question) {
       labels: snapshot.age.labels,
       values: snapshot.age.values,
       note: `Average age: ${snapshot.avgAge ?? "N/A"}`,
+      type: usePie ? "pie" : "bar",
     };
   }
   
@@ -852,6 +861,7 @@ function pickChartForQuestion(question) {
       labels: ["Completed", "Public", "Hidden"],
       values: [s.completed, s.public, s.hidden],
       note: `Total trades: ${snapshot.tradeSnapshot.total}`,
+      type: usePie ? "pie" : "bar",
     };
   }
   
@@ -861,6 +871,7 @@ function pickChartForQuestion(question) {
       labels: snapshot.tradeSnapshot.chartData.x,
       values: snapshot.tradeSnapshot.chartData.y,
       note: "Daily trade count",
+      type: usePie ? "pie" : "bar",
     };
   }
   
@@ -870,6 +881,7 @@ function pickChartForQuestion(question) {
       labels: snapshot.loginSnapshot.labels,
       values: snapshot.loginSnapshot.values,
       note: "Tracking user engagement trend",
+      type: "bar", // Trend data is best shown as bar chart
     };
   }
   
@@ -879,6 +891,7 @@ function pickChartForQuestion(question) {
       labels: snapshot.coinEntries.map(([coin]) => coin),
       values: snapshot.coinEntries.map(([, value]) => Number(Number(value).toFixed(2))),
       note: `${snapshot.totalUsers} total users, ~${snapshot.estimatedOnline} online`,
+      type: usePie ? "pie" : "bar",
     };
   }
   
@@ -888,6 +901,7 @@ function pickChartForQuestion(question) {
       labels: snapshot.age.labels,
       values: snapshot.age.values,
       note: `${snapshot.totalUsers} total users`,
+      type: usePie ? "pie" : "bar",
     };
   }
 
@@ -896,6 +910,7 @@ function pickChartForQuestion(question) {
     labels: snapshot.coinEntries.map(([coin]) => coin),
     values: snapshot.coinEntries.map(([, value]) => Number(Number(value).toFixed(2))),
     note: "Most held cryptocurrencies by users",
+    type: usePie ? "pie" : "bar",
   };
 }
 
@@ -950,6 +965,8 @@ function resizeAiCanvasToParent(canvas) {
   return target;
 }
 
+let adminAiPieChartInstance = null;
+
 function renderAssistantChart(chart, animate = false) {
   adminAiLastChart = chart || null;
   if (!adminAiChartCanvas) return;
@@ -974,7 +991,35 @@ function renderAssistantChart(chart, animate = false) {
   }
   
   const sanitizedValues = (chart.values || []).map((val) => Number.isFinite(Number(val)) ? Number(val) : 0);
-  drawBarChart(canvas, { x: chart.labels, y: sanitizedValues }, { maxLabelLength: 8, labelFont: "12px Inter, sans-serif", valueFont: "12px Inter, sans-serif" });
+  
+  // Render pie chart if type is "pie", otherwise bar chart
+  if (chart.type === "pie") {
+    const dataset = chart.labels.map((label, index) => ({
+      label,
+      value: sanitizedValues[index] || 0,
+    })).filter((entry) => entry.value > 0);
+    
+    if (adminAiPieChartInstance) {
+      adminAiPieChartInstance.updateData(dataset);
+      adminAiPieChartInstance.updateGeometry();
+      adminAiPieChartInstance.draw();
+    } else {
+      adminAiPieChartInstance = drawPieChart({
+        canvas: canvas,
+        tooltip: "admin-ai-chart-tooltip",
+        dataset,
+      });
+    }
+  } else {
+    // Clear pie chart instance if switching to bar chart
+    adminAiPieChartInstance = null;
+    drawBarChart(canvas, { x: chart.labels, y: sanitizedValues }, { 
+      maxLabelLength: 8, 
+      labelFont: "12px Inter, sans-serif", 
+      valueFont: "12px Inter, sans-serif",
+      tooltipElement: "admin-ai-chart-tooltip"
+    });
+  }
 }
 
 function setAssistantStatus(text, state = "ready") {
@@ -1166,6 +1211,7 @@ function normalizeAssistantResponse(rawContent, question) {
   const snapshot = buildAssistantSnapshot();
   const fallbackChart = pickChartForQuestion(question);
   const fallbackBullets = buildOfflineBullets(snapshot, question);
+  const usePie = shouldUsePieChart(question);
 
   const summary = (parsed?.summary || parsed?.answer || parsed?.content || "").toString();
   const bulletsSource = (Array.isArray(parsed?.bullets) && parsed.bullets) || (Array.isArray(parsed?.insights) && parsed.insights) || [];
@@ -1179,6 +1225,7 @@ function normalizeAssistantResponse(rawContent, question) {
       labels: parsed.chart.labels.slice(0, 10),
       values: parsed.chart.values.slice(0, 10).map((v) => Number(v) || 0),
       note: parsed.chart.note || fallbackChart.note || "",
+      type: usePie ? "pie" : (parsed.chart.type || "bar"),
     };
   }
 
